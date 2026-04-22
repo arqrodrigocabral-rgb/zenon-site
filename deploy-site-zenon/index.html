@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zenon — Curadoria de ambientes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #f5f1ea;
+    --bg-alt: #ebe4d8;
+    --ink: #1f1b16;
+    --ink-soft: #4a423a;
+    --line: #c9bfae;
+    --accent: #7a4a2b;
+    --paper: #fbf8f2;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Inter', system-ui, sans-serif;
+    font-weight:300;
+    line-height:1.6;
+    font-size:17px;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,h4{font-family:'Cormorant Garamond', Georgia, serif; font-weight:400; letter-spacing:.005em; line-height:1.15}
+  a{color:inherit;text-decoration:none}
+  img{display:block;max-width:100%;height:auto}
+
+  /* NAV */
+  header.nav{
+    position:sticky;top:0;z-index:50;
+    background:rgba(245,241,234,.92);
+    backdrop-filter:saturate(140%) blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{
+    max-width:1280px;margin:0 auto;
+    padding:18px 32px;
+    display:flex;align-items:baseline;justify-content:space-between;gap:32px;
+  }
+  .brand{
+    font-family:'Cormorant Garamond', serif;
+    font-size:28px;letter-spacing:.18em;text-transform:uppercase;
+  }
+  .brand span{color:var(--accent)}
+  nav ul{list-style:none;display:flex;gap:28px;flex-wrap:wrap}
+  nav a{
+    font-size:13px;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--ink-soft);
+    padding-bottom:4px;border-bottom:1px solid transparent;
+    transition:color .2s, border-color .2s;
+  }
+  nav a:hover{color:var(--ink);border-color:var(--accent)}
+
+  /* HERO */
+  .hero{
+    max-width:1280px;margin:0 auto;
+    padding:120px 32px 80px;
+  }
+  .hero .eyebrow{
+    font-size:12px;letter-spacing:.32em;text-transform:uppercase;color:var(--accent);
+    margin-bottom:24px;
+  }
+  .hero h1{
+    font-size:clamp(56px, 9vw, 128px);
+    line-height:.95;
+    margin-bottom:32px;
+    font-weight:300;
+  }
+  .hero h1 em{font-style:italic;color:var(--accent)}
+  .hero p{
+    max-width:620px;font-size:19px;color:var(--ink-soft);
+  }
+  .hero .triade{
+    margin-top:64px;
+    display:grid;grid-template-columns:repeat(3,1fr);gap:24px;
+    border-top:1px solid var(--line);
+    padding-top:32px;
+  }
+  .triade .item .num{
+    font-family:'Cormorant Garamond', serif;font-size:14px;color:var(--accent);
+    letter-spacing:.18em;
+  }
+  .triade .item h3{font-size:32px;margin:6px 0 8px}
+  .triade .item p{font-size:14px;color:var(--ink-soft);max-width:280px}
+
+  /* SECTION */
+  section{padding:96px 32px;border-top:1px solid var(--line)}
+  .section-inner{max-width:1280px;margin:0 auto}
+  .section-head{
+    display:grid;grid-template-columns:1fr 2fr;gap:48px;
+    margin-bottom:64px;align-items:end;
+  }
+  .section-head .eyebrow{
+    font-size:12px;letter-spacing:.32em;text-transform:uppercase;color:var(--accent);
+    margin-bottom:16px;
+  }
+  .section-head h2{font-size:clamp(40px, 5vw, 72px);font-weight:300}
+  .section-head h2 em{font-style:italic;color:var(--accent)}
+  .section-head .lede{font-size:17px;color:var(--ink-soft);max-width:540px}
+
+  /* GRIDS */
+  .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:32px}
+  .grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+
+  .card{
+    background:var(--paper);
+    border:1px solid var(--line);
+    overflow:hidden;
+    display:flex;flex-direction:column;
+    transition:transform .35s ease, box-shadow .35s ease;
+  }
+  .card:hover{transform:translateY(-4px);box-shadow:0 20px 40px -28px rgba(31,27,22,.35)}
+  .card .img{
+    aspect-ratio: 4/5;
+    overflow:hidden;background:var(--bg-alt);
+  }
+  .card .img img{width:100%;height:100%;object-fit:cover;transition:transform .8s ease}
+  .card:hover .img img{transform:scale(1.04)}
+  .card .body{padding:20px 22px 28px}
+  .card .num{
+    font-family:'Cormorant Garamond', serif;font-size:13px;color:var(--accent);
+    letter-spacing:.2em;
+  }
+  .card h4{font-size:26px;margin:4px 0 8px;font-weight:400}
+  .card p{font-size:14px;color:var(--ink-soft);line-height:1.55}
+
+  .grid-4 .card .img{aspect-ratio: 1/1}
+  .grid-4 .card h4{font-size:22px}
+
+  /* SOBRE */
+  #sobre .section-inner{max-width:900px}
+  #sobre .manifest{
+    font-family:'Cormorant Garamond', serif;
+    font-size:clamp(28px, 3.4vw, 44px);
+    line-height:1.25;font-weight:300;
+    margin-bottom:48px;
+  }
+  #sobre .manifest em{color:var(--accent);font-style:italic}
+  #sobre .pillars{
+    display:grid;grid-template-columns:repeat(2,1fr);gap:32px;
+    border-top:1px solid var(--line);padding-top:40px;
+  }
+  #sobre .pillars h4{font-size:22px;margin-bottom:8px}
+  #sobre .pillars p{color:var(--ink-soft);font-size:15px}
+
+  /* CONTATO */
+  #contato{background:var(--ink);color:var(--bg)}
+  #contato .section-head h2,
+  #contato .section-head .lede{color:var(--bg)}
+  #contato .eyebrow{color:#c8a07a}
+  #contato .channels{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:32px;margin-top:32px;
+  }
+  #contato .channels a{
+    display:block;border:1px solid #3a322a;padding:32px 28px;
+    transition:background .2s, border-color .2s;
+  }
+  #contato .channels a:hover{background:#2a241e;border-color:#c8a07a}
+  #contato .channels .label{
+    font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:#c8a07a;margin-bottom:12px;
+  }
+  #contato .channels .val{font-family:'Cormorant Garamond', serif;font-size:24px}
+
+  footer{
+    padding:32px;border-top:1px solid #3a322a;background:var(--ink);color:#9a8f80;
+    text-align:center;font-size:13px;letter-spacing:.1em;
+  }
+
+  @media (max-width: 900px){
+    .nav-inner{flex-direction:column;align-items:flex-start;gap:14px;padding:16px 20px}
+    nav ul{gap:18px}
+    .hero{padding:80px 20px 56px}
+    .hero .triade{grid-template-columns:1fr;gap:24px}
+    section{padding:72px 20px}
+    .section-head{grid-template-columns:1fr;gap:24px}
+    .grid-3{grid-template-columns:repeat(2,1fr);gap:20px}
+    .grid-4{grid-template-columns:repeat(2,1fr);gap:16px}
+    #sobre .pillars{grid-template-columns:1fr}
+    #contato .channels{grid-template-columns:1fr}
+  }
+  @media (max-width: 540px){
+    .grid-3, .grid-4{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<header class="nav">
+  <div class="nav-inner">
+    <a href="#topo" class="brand">Zen<span>o</span>n</a>
+    <nav>
+      <ul>
+        <li><a href="#estilos">Estilos</a></li>
+        <li><a href="#materiais">Materiais</a></li>
+        <li><a href="#momentos">Momentos</a></li>
+        <li><a href="#sobre">Sobre</a></li>
+        <li><a href="#contato">Contato</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="topo" style="border-top:none">
+  <div class="eyebrow">Curadoria de ambientes</div>
+  <h1>Imóveis lidos como <em>linguagem</em>.</h1>
+  <p>A Zenon trabalha na interseção entre imóveis, ambientes e identidade. Cada espaço é lido por três dimensões — estilo, material e momento — antes de qualquer recomendação.</p>
+
+  <div class="triade">
+    <div class="item">
+      <div class="num">01 — Estilos</div>
+      <h3>Linguagem</h3>
+      <p>Seis vocabulários estéticos para descrever um ambiente sem reduzi-lo a uma tendência.</p>
+    </div>
+    <div class="item">
+      <div class="num">02 — Materiais</div>
+      <h3>Matéria</h3>
+      <p>Doze matérias-primas que definem peso, temperatura e textura do espaço.</p>
+    </div>
+    <div class="item">
+      <div class="num">03 — Momentos</div>
+      <h3>Uso</h3>
+      <p>Seis cenas reais de habitar — porque um espaço só existe quando alguém o usa.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ESTILOS -->
+<section id="estilos">
+  <div class="section-inner">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">01 — Estilos</div>
+        <h2>Seis <em>linguagens</em>.</h2>
+      </div>
+      <p class="lede">Estilos não são fórmulas. São pontos de partida para entender o que um ambiente comunica antes mesmo de ser mobiliado.</p>
+    </div>
+
+    <div class="grid-3">
+      <article class="card">
+        <div class="img"><img src="1-biofilico.png" alt="Estilo biofílico"></div>
+        <div class="body">
+          <div class="num">01</div>
+          <h4>Biofílico</h4>
+          <p>O verde como estrutura, não como enfeite. Madeira viva, luz filtrada, ar.</p>
+        </div>
+      </article>
+      <article class="card">
+        <div class="img"><img src="2-minimalista.png" alt="Estilo minimalista"></div>
+        <div class="body">
+          <div class="num">02</div>
+          <h4>Minimalista</h4>
+          <p>Subtração como método. Cada objeto presente porque é necessário.</p>
+        </div>
+      </article>
+      <article class="card">
+        <div class="img"><img src="3-aconchegante.png" alt="Estilo aconchegante"></div>
+        <div class="body">
+          <div class="num">03</div>
+          <h4>Aconchegante</h4>
+          <p>Tons quentes, texturas macias, luz baixa. Espaço para ficar em silêncio.</p>
+        </div>
+      </article>
+      <article class="card">
+        <div class="img"><img src="4-industrial.png" alt="Estilo industrial"></div>
+        <div class="body">
+          <div class="num">04</div>
+          <h4>Industrial</h4>
+          <p>Concreto, ferro, vidro. A estrutura à mostra, sem disfarce.</p>
+        </div>
+      </article>
+      <article class="card">
+        <div class="img"><img src="5-classico.png" alt="Estilo clássico"></div>
+        <div class="body">
+          <div class="num">05</div>
+          <h4>Clássico</h4>
+          <p>Proporção, simetria, repertório. Um repertório que envelhece bem.</p>
+        </div>
+      </article>
+      <article class="card">
+        <div class="img"><img src="6-artesanal.png" alt="Estilo artesanal"></div>
+        <div class="body">
+          <div class="num">06</div>
+          <h4>Artesanal</h4>
+          <p>A marca da mão. Pequenas irregularidades como assinatura.</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- MATERIAIS -->
+<section id="materiais" style="background:var(--bg-alt)">
+  <div class="section-inner">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">02 — Materiais</div>
+        <h2>Doze <em>matérias</em>.</h2>
+      </div>
+      <p class="lede">Antes de cor ou forma, o material decide o peso do ambiente. Esta é a paleta tátil da Zenon.</p>
+    </div>
+
+    <div class="grid-4">
+      <article class="card"><div class="img"><img src="7-madeira-clara.png" alt="Madeira clara"></div><div class="body"><div class="num">07</div><h4>Madeira clara</h4><p>Calor leve, luz que rebate.</p></div></article>
+      <article class="card"><div class="img"><img src="8-madeira-escura.png" alt="Madeira escura"></div><div class="body"><div class="num">08</div><h4>Madeira escura</h4><p>Densidade, sombra, repouso.</p></div></article>
+      <article class="card"><div class="img"><img src="9-pedra.png" alt="Pedra"></div><div class="body"><div class="num">09</div><h4>Pedra</h4><p>Permanência. Tempo geológico no ambiente.</p></div></article>
+      <article class="card"><div class="img"><img src="10-cimento.png" alt="Cimento"></div><div class="body"><div class="num">10</div><h4>Cimento</h4><p>Superfície neutra que estrutura tudo ao redor.</p></div></article>
+      <article class="card"><div class="img"><img src="11-ceramica.png" alt="Cerâmica"></div><div class="body"><div class="num">11</div><h4>Cerâmica</h4><p>Terra cozida. Imperfeição como acabamento.</p></div></article>
+      <article class="card"><div class="img"><img src="12-metal.png" alt="Metal"></div><div class="body"><div class="num">12</div><h4>Metal</h4><p>Linha precisa, reflexo controlado.</p></div></article>
+      <article class="card"><div class="img"><img src="13-linho.png" alt="Linho"></div><div class="body"><div class="num">13</div><h4>Linho</h4><p>Trama natural, queda leve, frescor.</p></div></article>
+      <article class="card"><div class="img"><img src="14-veludo.png" alt="Veludo"></div><div class="body"><div class="num">14</div><h4>Veludo</h4><p>Profundidade tátil. Luz que se acomoda.</p></div></article>
+      <article class="card"><div class="img"><img src="15-boucle.png" alt="Bouclé"></div><div class="body"><div class="num">15</div><h4>Bouclé</h4><p>Volume macio. Textura como gesto.</p></div></article>
+      <article class="card"><div class="img"><img src="16-palha.png" alt="Palha"></div><div class="body"><div class="num">16</div><h4>Palha</h4><p>Trançado vivo. Memória rural na peça contemporânea.</p></div></article>
+      <article class="card"><div class="img"><img src="17-couro.png" alt="Couro"></div><div class="body"><div class="num">17</div><h4>Couro</h4><p>Material que envelhece junto com a casa.</p></div></article>
+      <article class="card"><div class="img"><img src="18-estampado.png" alt="Estampado"></div><div class="body"><div class="num">18</div><h4>Estampado</h4><p>Padronagem como acento. Usar com economia.</p></div></article>
+    </div>
+  </div>
+</section>
+
+<!-- MOMENTOS -->
+<section id="momentos">
+  <div class="section-inner">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">03 — Momentos</div>
+        <h2>Seis <em>cenas</em>.</h2>
+      </div>
+      <p class="lede">Um ambiente só termina de existir quando alguém o habita. Estes são os momentos que a Zenon projeta para acontecer.</p>
+    </div>
+
+    <div class="grid-3">
+      <article class="card">
+        <div class="img"><img src="19-manha.png" alt="Manhã"></div>
+        <div class="body"><div class="num">19</div><h4>Manhã</h4><p>Luz crua, ritmo lento, café na mão.</p></div>
+      </article>
+      <article class="card">
+        <div class="img"><img src="20-festa.png" alt="Festa"></div>
+        <div class="body"><div class="num">20</div><h4>Festa</h4><p>Espaço que comporta gente e som sem perder o eixo.</p></div>
+      </article>
+      <article class="card">
+        <div class="img"><img src="21-trabalho.png" alt="Trabalho"></div>
+        <div class="body"><div class="num">21</div><h4>Trabalho</h4><p>Concentração possível dentro de casa.</p></div>
+      </article>
+      <article class="card">
+        <div class="img"><img src="22-leitura.png" alt="Leitura"></div>
+        <div class="body"><div class="num">22</div><h4>Leitura</h4><p>Canto, luz pontual, tempo suspenso.</p></div>
+      </article>
+      <article class="card">
+        <div class="img"><img src="23-cozinha.png" alt="Cozinha"></div>
+        <div class="body"><div class="num">23</div><h4>Cozinha</h4><p>Centro funcional da casa. Onde a vida se divide.</p></div>
+      </article>
+      <article class="card">
+        <div class="img"><img src="24-varanda.png" alt="Varanda"></div>
+        <div class="body"><div class="num">24</div><h4>Varanda</h4><p>Limite habitado entre dentro e fora.</p></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- SOBRE -->
+<section id="sobre" style="background:var(--paper)">
+  <div class="section-inner">
+    <div class="eyebrow" style="font-size:12px;letter-spacing:.32em;text-transform:uppercase;color:var(--accent);margin-bottom:24px">Sobre</div>
+
+    <p class="manifest">
+      A Zenon é uma marca de <em>curadoria</em>. Trabalha imóveis e ambientes pelo que comunicam antes do que vendem. Menos itens, mais intenção.
+    </p>
+
+    <div class="pillars">
+      <div>
+        <h4>Curadoria acima de volume</h4>
+        <p>Cada ambiente, projeto e recomendação passa por filtro. Nada entra por inércia.</p>
+      </div>
+      <div>
+        <h4>Clareza antes de adorno</h4>
+        <p>Texto direto, layout limpo, processo legível. A forma serve à decisão.</p>
+      </div>
+      <div>
+        <h4>Consistência é cuidado</h4>
+        <p>Numeração, tom e estilo se repetem em todo material. Nada é descartável.</p>
+      </div>
+      <div>
+        <h4>Autonomia com rastro</h4>
+        <p>Toda entrega fica arquivada e rastreável. O que existe, existe por escrito.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTATO -->
+<section id="contato">
+  <div class="section-inner">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">Contato</div>
+        <h2>Conversar é <em>simples</em>.</h2>
+      </div>
+      <p class="lede">Sem formulário. Escolha o canal, escreva uma linha sobre o ambiente ou imóvel, e a conversa começa.</p>
+    </div>
+
+    <div class="channels">
+      <a href="mailto:zenon.gestao@gmail.com">
+        <div class="label">E-mail</div>
+        <div class="val">zenon.gestao@gmail.com</div>
+      </a>
+      <a href="#">
+        <div class="label">Instagram</div>
+        <div class="val">@zenon</div>
+      </a>
+      <a href="#">
+        <div class="label">WhatsApp</div>
+        <div class="val">Direto</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  ZENON · Curadoria de ambientes · 2026
+</footer>
+
+</body>
+</html>
