@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Proposta — Zenon Sistema</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shell.css">
+<style>
+  main.det{max-width:1320px;padding:22px 32px 64px;display:flex;flex-direction:column;gap:18px}
+
+  .crumbs{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-mute);font-weight:600;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+  .crumbs a{color:var(--ink-soft);text-decoration:none}
+  .crumbs a:hover{color:var(--accent-ink)}
+  .crumbs .sep{color:var(--line-strong)}
+  .crumbs .grow{flex:1}
+
+  .pp-head{background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:24px 28px;display:grid;grid-template-columns:1fr auto;gap:24px;align-items:start}
+  .pp-code{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-mute);font-weight:700;margin-bottom:6px}
+  .pp-head h1{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:38px;font-weight:500;line-height:1.08;color:var(--ink);margin-bottom:10px;letter-spacing:-.005em}
+  .pp-head h1 em{font-style:italic;color:var(--accent-ink)}
+  .pp-line{font-size:13.5px;color:var(--ink-body);margin-bottom:14px;line-height:1.55}
+  .pp-line a{color:var(--accent-ink);text-decoration:none;border-bottom:1px dotted var(--accent)}
+  .pp-line a:hover{color:var(--ink)}
+  .pp-line strong{color:var(--ink);font-weight:600}
+  .pp-tags{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+
+  .pp-actions{display:flex;flex-direction:column;gap:8px;min-width:210px}
+  .pp-actions .btn{font-family:'Inter',sans-serif;font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;padding:9px 16px;border-radius:3px;cursor:pointer;text-align:center;text-decoration:none;border:1px solid var(--line-strong);color:var(--ink-soft);background:var(--bg)}
+  .pp-actions .btn:hover{border-color:var(--accent);color:var(--accent-ink);background:var(--accent-soft)}
+  .pp-actions .btn.primary{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .pp-actions .btn.primary:hover{background:var(--accent-ink);border-color:var(--accent-ink);color:#fff}
+  .pp-actions .btn.warn{color:var(--warn);border-color:var(--line-strong)}
+  .pp-actions .btn.warn:hover{border-color:var(--warn);background:var(--warn-soft);color:var(--warn)}
+
+  .pp-kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:0;border-top:1px solid var(--line-soft);padding-top:16px;margin-top:4px}
+  .pp-kpi{padding:0 16px;border-right:1px solid var(--line-soft);display:flex;flex-direction:column;gap:4px}
+  .pp-kpi:first-child{padding-left:0}
+  .pp-kpi:last-child{border-right:none;padding-right:0}
+  .pp-kpi .lb{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-mute);font-weight:700}
+  .pp-kpi .vl{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:24px;font-weight:600;color:var(--ink);line-height:1}
+  .pp-kpi .vl em{font-style:italic;color:var(--accent-ink)}
+  .pp-kpi .sub{font-size:11px;color:var(--ink-soft)}
+
+  .sub-tabs{display:flex;gap:0;border-bottom:1px solid var(--line);background:var(--paper);border:1px solid var(--line);border-radius:4px 4px 0 0;padding:0 6px}
+  .sub-tabs a{font-family:'Inter',sans-serif;font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;color:var(--ink-mute);padding:14px 18px;text-decoration:none;border-bottom:2px solid transparent;margin-bottom:-1px;cursor:pointer}
+  .sub-tabs a.on{color:var(--ink);border-bottom-color:var(--accent)}
+  .sub-tabs a:hover{color:var(--ink)}
+  .sub-tabs .ct{display:inline-block;margin-left:6px;font-size:10px;background:var(--accent-soft);color:var(--accent-ink);padding:1px 7px;border-radius:10px;font-weight:700;letter-spacing:.04em}
+
+  .two-col{display:grid;grid-template-columns:1.5fr 1fr;gap:20px}
+  @media (max-width:1080px){.two-col{grid-template-columns:1fr}}
+  .col{display:flex;flex-direction:column;gap:18px}
+
+  .card{background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:20px 22px}
+  .card h3{font-family:'Inter',sans-serif;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-mute);font-weight:700;padding-bottom:10px;border-bottom:1px solid var(--line-soft);margin-bottom:14px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+  .card h3 .h3-actions{display:flex;gap:8px;align-items:center}
+  .card h3 a{font-size:10px;color:var(--accent-ink);text-decoration:none;letter-spacing:.14em;font-weight:600}
+  .card h3 a:hover{color:var(--ink)}
+
+  .scope-tbl{width:100%;border-collapse:collapse;font-size:13.5px}
+  .scope-tbl th{text-align:left;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-mute);font-weight:700;padding:9px 8px 9px 0;border-bottom:1px solid var(--line-soft)}
+  .scope-tbl td{padding:12px 8px 12px 0;border-bottom:1px solid var(--line-soft);vertical-align:top;color:var(--ink-body);line-height:1.4}
+  .scope-tbl td.cat{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-mute);font-weight:700;width:120px;padding-top:14px}
+  .scope-tbl td.name{color:var(--ink);font-weight:500}
+  .scope-tbl td.val{text-align:right;font-variant-numeric:tabular-nums;font-weight:600;color:var(--ink);white-space:nowrap;width:130px}
+  .scope-tbl td.rm{width:24px;text-align:right;padding-right:0}
+  .scope-tbl tr.total td{font-weight:700;border-top:2px solid var(--ink);border-bottom:none;padding-top:14px;font-size:15px}
+  .scope-tbl tr.total td.val{color:var(--accent-ink);font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:23px}
+  .scope-tbl tr.desc td.val{color:var(--warn)}
+  .scope-tbl tr.desc td.name{color:var(--warn)}
+
+  .pay-tbl{width:100%;border-collapse:collapse;font-size:13px}
+  .pay-tbl th{text-align:left;padding:9px 8px;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-mute);font-weight:700;border-bottom:1px solid var(--line-soft);background:var(--bg-alt)}
+  .pay-tbl td{padding:11px 8px;border-bottom:1px solid var(--line-soft);color:var(--ink);vertical-align:middle;line-height:1.4}
+  .pay-tbl td.n{text-align:center;width:46px;font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:17px;color:var(--accent-ink);font-weight:600}
+  .pay-tbl td.n.ok{color:var(--ok)}
+  .pay-tbl td.val{text-align:right;font-weight:700;color:var(--ink);font-variant-numeric:tabular-nums;white-space:nowrap}
+  .pay-tbl td.val.ok{color:var(--ok)}
+  .pay-tbl tr.ok{background:rgba(45,90,53,.05)}
+  .pay-tbl .stat{font-size:10px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;padding:3px 8px;border-radius:10px;cursor:pointer;display:inline-block}
+  .pay-tbl .stat.ok{background:var(--ok-soft);color:var(--ok)}
+  .pay-tbl .stat.warn{background:var(--accent-soft);color:var(--accent-ink)}
+  .pay-tbl td.rm{width:24px;text-align:right;padding-right:0}
+  .pct-inline-edit{cursor:pointer;padding:2px 6px;border-radius:3px;border:1px dashed transparent;transition:background .15s,border-color .15s}
+  .pct-inline-edit:hover{background:var(--accent-soft);border-color:var(--accent)}
+  .pct-inline-edit.editing{background:var(--paper);border-color:var(--accent);border-style:solid}
+  .pct-inline-edit input{border:none;outline:none;background:transparent;font:inherit;color:inherit;width:56px;text-align:right}
+
+  .add-row-wrap{margin-top:12px;display:flex;gap:8px;align-items:center}
+
+  .tl{display:flex;flex-direction:column;gap:0;position:relative;padding-left:22px}
+  .tl::before{content:'';position:absolute;left:6px;top:6px;bottom:6px;width:1px;background:var(--line-soft)}
+  .tl-ev{padding:10px 0;position:relative;border-bottom:1px dashed var(--line-soft)}
+  .tl-ev:last-child{border-bottom:none}
+  .tl-ev::before{content:'';position:absolute;left:-20px;top:14px;width:9px;height:9px;border-radius:50%;background:var(--paper);border:2px solid var(--ink-mute)}
+  .tl-ev.ok::before{border-color:var(--ok);background:var(--ok)}
+  .tl-ev.info::before{border-color:var(--info);background:var(--info)}
+  .tl-ev.warn::before{border-color:var(--warn);background:var(--warn)}
+  .tl-ev .dt{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-mute);font-weight:700}
+  .tl-ev .tt{font-size:13px;color:var(--ink);font-weight:500;margin:3px 0}
+  .tl-ev .dc{font-size:12px;color:var(--ink-soft);line-height:1.5}
+
+  .att-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+  .att{background:var(--bg-alt);border:1px solid var(--line-soft);border-radius:3px;padding:11px 14px;display:flex;gap:10px;align-items:center;text-decoration:none;transition:border-color .15s,background .15s}
+  .att:hover{border-color:var(--accent);background:var(--paper)}
+  .att .ext{font-size:10px;letter-spacing:.12em;font-weight:700;color:#fff;background:var(--ink);padding:3px 7px;border-radius:2px;font-family:'Inter',sans-serif;min-width:38px;text-align:center}
+  .att .ext.pdf{background:#b53939}
+  .att .ext.xls{background:#2d6a4f}
+  .att .ext.dwg{background:#4a4a6a}
+  .att .nm{font-size:12px;color:var(--ink);font-weight:500;line-height:1.3;flex:1}
+
+  .info-grid{display:grid;grid-template-columns:130px 1fr;gap:10px 14px;align-items:baseline;font-size:12.5px}
+  .info-grid dt{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-mute);font-weight:700}
+  .info-grid dd{color:var(--ink)}
+
+  .status-banner{background:var(--accent-soft);border:1px solid var(--accent);border-radius:4px;padding:13px 18px;display:flex;gap:14px;align-items:center}
+  .status-banner.rascunho{background:var(--warn-soft);border-color:var(--warn)}
+  .status-banner .ico{width:30px;height:30px;background:var(--accent);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;flex-shrink:0}
+  .status-banner.rascunho .ico{background:var(--warn)}
+  .status-banner .txt{flex:1}
+  .status-banner .tt{font-size:13px;font-weight:700;color:var(--ink);margin-bottom:2px}
+  .status-banner .sub{font-size:12px;color:var(--ink-body)}
+  .status-banner .sub a{color:var(--ink);border-bottom:1px dotted var(--accent);text-decoration:none}
+
+  .err-box{background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:40px;text-align:center}
+  .err-box h1{font-family:'Fraunces',serif;font-size:28px;color:var(--ink);margin-bottom:12px}
+  .err-box p{color:var(--ink-soft);font-size:13px;margin-bottom:22px}
+  .err-box a{color:var(--accent-ink);text-decoration:none;font-weight:600;font-size:12px;letter-spacing:.14em;text-transform:uppercase}
+
+  .mini-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:12px}
+  .mini-grid .lbl{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-mute);font-weight:700;display:block;margin-bottom:2px}
+  .mini-grid .val-strong{color:var(--ink);font-weight:600}
+  .mini-grid .val{color:var(--ink)}
+  .mini-grid .full{grid-column:1/-1}
+  .mini-grid .obs-box{background:var(--bg-alt);padding:10px 12px;border-radius:3px;font-size:12px;line-height:1.5;color:var(--ink-body)}
+
+  .note{background:var(--bg-alt);border-left:2px solid var(--accent);padding:10px 14px;border-radius:2px}
+  .note .hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
+  .note .au{font-size:11px;font-weight:700;color:var(--ink);letter-spacing:.08em}
+  .note .dt{font-size:10px;color:var(--ink-mute);letter-spacing:.1em}
+  .note .tx{font-size:13px;color:var(--ink-body);line-height:1.55}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-inner">
+    <div class="brand">Zen<span>o</span>n — Sistema</div>
+    <div class="search"><input type="search" placeholder="Buscar…"></div>
+    <div class="fx-chip" title="Cotação do dólar (USD/BRL)">
+      <span class="fx-code">USD</span>
+      <span class="fx-val"><span class="cur">R$</span>—</span>
+      <span class="fx-delta flat">…</span>
+      <div class="fx-tip"></div>
+    </div>
+
+    <div class="user-menu">
+      <button type="button" class="user-trigger" onclick="ZenonUser.toggleDropdown(event)" aria-haspopup="true" aria-expanded="false">
+        <span class="u-name" data-user-name>Rodrigo</span>
+        <span class="avatar" data-user="me">R</span>
+        <span class="u-caret">▾</span>
+      </button>
+      <div class="user-dropdown" role="menu">
+        <div class="ud-head">
+          <span class="avatar" data-user="me">R</span>
+          <div>
+            <div class="name" data-user-name>Rodrigo</div>
+            <div class="role" data-user-role>Sócio · Arquiteto responsável</div>
+          </div>
+        </div>
+        <a href="sistema-perfil.html"><span class="ic">◎</span>Ver perfil</a>
+        <a href="sistema-configuracoes.html"><span class="ic">⚙</span>Configurações</a>
+        <a href="sistema-empresa.html"><span class="ic">⌂</span>Dados da empresa</a>
+        <a href="https://www.notion.so/Zenon" target="_blank"><span class="ic">✱</span>Atividades · Notion ↗</a>
+        <div class="ud-sep"></div>
+        <a href="sistema-login.html" class="sign-out"><span class="ic">↪</span>Sair</a>
+      </div>
+    </div>
+  </div>
+  <nav class="tabs">
+    <a href="sistema-painel.html">Painel</a>
+    <a href="sistema-clientes.html">Clientes</a>
+    <a href="sistema-projetos.html">Projetos</a>
+    <a href="sistema-obra.html">Obra</a>
+    <a href="sistema-obra-financeiro.html">Obra financeiro</a>
+    <a href="sistema-propostas.html" class="active">Propostas</a>
+    <a href="sistema-financeiro.html">Financeiro</a>
+    <a href="sistema-empresa.html">Empresa</a>
+    <a href="sistema-log.html">Log da equipe</a>
+  </nav>
+</header>
+
+<main class="det" id="det-main">
+  <!-- conteúdo injetado dinamicamente -->
+</main>
+
+<script src="sistema-data.js"></script>
+<script src="sistema-edit.js"></script>
+<script>
+(function () {
+  const SD = window.SistemaData;
+  if (!SD) {
+    document.getElementById('det-main').innerHTML = '<div class="err-box"><h1>Dados não carregados</h1><p>sistema-data.js não foi encontrado.</p><a href="sistema-propostas.html">← Voltar para propostas</a></div>';
+    return;
+  }
+
+  const id = SD.getParam('id') || SD.getParam('p') || 'PRO-1';
+  const root = document.getElementById('det-main');
+
+  function fmt(n) { return SD.fmtBRL(Number(n) || 0); }
+  function brShort(n) { return 'R$ ' + ((Number(n)||0)/1000).toFixed(((Number(n)||0)%1000===0?0:1)).replace('.',',') + 'k'; }
+
+  function buildEditAttr(path, type, fmt) {
+    return ' data-edit="proposta:' + id + ':' + path + '"'
+         + (type ? ' data-edit-type="' + type + '"' : '')
+         + (fmt ? ' data-edit-fmt="' + fmt + '"' : '');
+  }
+
+  function render() {
+    const pp = SD.getProposta(id);
+    if (!pp) {
+      root.innerHTML = '<div class="err-box"><h1>Proposta não encontrada</h1><p>O identificador <strong>'+id+'</strong> não existe na base de dados.</p><a href="sistema-propostas.html">← Voltar para propostas</a></div>';
+      document.title = 'Proposta não encontrada — Zenon Sistema';
+      return;
+    }
+    document.title = pp.id + ' ' + pp.clienteNome + ' — Zenon Sistema';
+
+    const cli  = SD.getCliente(pp.cliente);
+    const proj = SD.getProjeto(pp.projetoId);
+    const fin  = SD.getFinanceiro(pp.financeiroId);
+
+    const isAprovada = pp.status === 'Aprovada';
+    const isRascunho = pp.status === 'Rascunho';
+    const badgeClass = pp.statusBadge || 'neutral';
+
+    const itensCount = pp.itens.length;
+    const parcelasCount = pp.parcelas.length;
+    const totalRecebido = pp.parcelas.filter(p => p.status === 'Recebido').reduce((s,p)=> s + (Number(p.valor)||0), 0);
+    const temRecebido = totalRecebido > 0;
+    const sinalPct = pp.parcelas[0] ? Math.round((pp.parcelas[0].valor / pp.valorTotal) * 100) : null;
+
+    /* ----- Breadcrumb com pill "editado" ----- */
+    let crumbsHtml = '<div class="crumbs">'
+      + '<a href="sistema-propostas.html">Propostas</a>'
+      + '<span class="sep">›</span>'
+      + '<span>'+pp.id+' · '+pp.clienteNome+'</span>'
+      + '<span class="grow"></span>'
+      + '<span id="ovbar-mount"></span>'
+      + '</div>';
+
+    /* ----- Status banner ----- */
+    const bannerHtml = isAprovada
+      ? '<div class="status-banner"><span class="ico">✓</span><div class="txt">'
+        + '<div class="tt">Proposta aprovada em '+pp.data+'</div>'
+        + '<div class="sub">Execução via projeto <a href="sistema-projeto-detalhe.html?p='+pp.projetoId+'">'+(proj ? proj.titulo : pp.projetoId)+'</a>'
+        + (fin ? ' · Financeiro ativo <a href="sistema-financeiro.html">'+fin.id+'</a>' : '')
+        + '.</div></div></div>'
+      : '<div class="status-banner rascunho"><span class="ico">✎</span><div class="txt">'
+        + '<div class="tt">Proposta em rascunho · aguardando assinatura</div>'
+        + '<div class="sub">Enviada em '+pp.data+' · validade '+pp.validade+'</div></div></div>';
+
+    /* ----- Tags ----- */
+    const tags = [];
+    tags.push('<span class="badge '+badgeClass+'">'+pp.status+'</span>');
+    if (isAprovada) tags.push('<span class="badge info">Assinatura digital</span>');
+    if (isAprovada && temRecebido) tags.push('<span class="badge ok">'+pp.parcelas.filter(p=>p.status==='Recebido').length+'/'+parcelasCount+' parcelas pagas</span>');
+    if (isRascunho) tags.push('<span class="badge warn">Aguardando cliente</span>');
+
+    /* ----- KPIs (varia por status) ----- */
+    const kpiHtml = isAprovada
+      ? '<div class="pp-kpis">'
+        + '<div class="pp-kpi"><span class="lb">Valor total</span><span class="vl"><em>'+brShort(pp.valorTotal)+'</em></span><span class="sub">'+fmt(pp.valorTotal)+'</span></div>'
+        + (pp.parcelas[0] ? '<div class="pp-kpi"><span class="lb">Entrada</span><span class="vl">'+brShort(pp.parcelas[0].valor)+'</span><span class="sub">'+(sinalPct ? sinalPct+'% · '+pp.parcelas[0].desc : pp.parcelas[0].desc)+'</span></div>' : '')
+        + '<div class="pp-kpi"><span class="lb">Parcelas</span><span class="vl">'+parcelasCount+'×</span><span class="sub">'+pp.parcelas.filter(p=>p.status==='Recebido').length+' recebida(s)</span></div>'
+        + '<div class="pp-kpi"><span class="lb">Recebido</span><span class="vl">'+brShort(totalRecebido)+'</span><span class="sub">'+(pp.valorTotal? Math.round(totalRecebido/pp.valorTotal*100):0)+'% do total</span></div>'
+        + '<div class="pp-kpi"><span class="lb">Itens</span><span class="vl">'+itensCount+'</span><span class="sub">escopo detalhado</span></div>'
+        + '</div>'
+      : '<div class="pp-kpis">'
+        + '<div class="pp-kpi"><span class="lb">Valor proposto</span><span class="vl"><em>'+brShort(pp.valorTotal)+'</em></span><span class="sub">'+fmt(pp.valorTotal)+'</span></div>'
+        + '<div class="pp-kpi"><span class="lb">Validade</span><span class="vl" style="font-size:18px"><span'+buildEditAttr('validade','text')+'>'+pp.validade+'</span></span><span class="sub">prazo de assinatura</span></div>'
+        + '<div class="pp-kpi"><span class="lb">Itens</span><span class="vl">'+itensCount+'</span><span class="sub">escopo em rascunho</span></div>'
+        + '<div class="pp-kpi"><span class="lb">Parcelas</span><span class="vl">'+(parcelasCount||'—')+'</span><span class="sub">'+(parcelasCount?'definidas':'a definir')+'</span></div>'
+        + '<div class="pp-kpi"><span class="lb">Meio</span><span class="vl" style="font-size:13px;line-height:1.3"><span'+buildEditAttr('meio','text')+'>'+pp.meio+'</span></span><span class="sub">forma de pagamento</span></div>'
+        + '</div>';
+
+    /* ----- Hero ----- */
+    const heroHtml = '<section class="pp-head">'
+      + '<div>'
+      + '<div class="pp-code">'+pp.id+' · Versão 1 · '+pp.status+'</div>'
+      + '<h1><span'+buildEditAttr('titulo','text')+'>'+pp.titulo+'</span></h1>'
+      + '<div class="pp-line">'
+      + 'Cliente: '+(cli ? '<a href="sistema-cliente-detalhe.html?id='+cli.id+'">'+cli.nome+'</a>' : '<span>'+pp.clienteNome+'</span>')
+      + (proj ? ' · Projeto: <a href="sistema-projeto-detalhe.html?p='+proj.id+'">'+proj.titulo+'</a>' : '')
+      + ' · Unidade: <strong>Yvyra Lab</strong> · Emitida em <span'+buildEditAttr('data','text')+'>'+pp.data+'</span>'
+      + (isAprovada ? '' : ' · Validade <span'+buildEditAttr('validade','text')+'>'+pp.validade+'</span>')
+      + '</div>'
+      + '<div class="pp-tags">'+tags.join('')+'</div>'
+      + kpiHtml
+      + '</div>'
+      + '<div class="pp-actions">'
+      + '<button type="button" class="btn primary" onclick="baixarPdf()">Baixar PDF</button>'
+      + (isAprovada
+          ? '<button type="button" class="btn" onclick="reenviarProposta()">Reenviar ao cliente</button>'
+          : '<button type="button" class="btn primary" onclick="enviarRascunho()" style="background:var(--accent-ink);border-color:var(--accent-ink)">Enviar ao cliente</button>')
+      + '<button type="button" class="btn" onclick="duplicarProposta()">Duplicar como nova</button>'
+      + '<button type="button" class="btn" onclick="abrirPortal()">Ver no portal ↗</button>'
+      + '<button type="button" class="btn warn" onclick="arquivarProposta()">Arquivar</button>'
+      + '</div>'
+      + '</section>';
+
+    /* ----- Sub-tabs ----- */
+    const subTabs = '<nav class="sub-tabs">'
+      + '<a href="#visao-geral" class="on" data-sub="visao">Visão geral</a>'
+      + '<a href="#escopo" data-sub="escopo">Escopo <span class="ct">'+itensCount+'</span></a>'
+      + '<a href="#pagamento" data-sub="pag">Pagamento <span class="ct">'+(parcelasCount||0)+'×</span></a>'
+      + '<a href="#cliente" data-sub="cli">Cliente</a>'
+      + '<a href="#arquivos" data-sub="arq">Arquivos</a>'
+      + '</nav>';
+
+    /* ----- Escopo (editável) ----- */
+    const escopoRows = pp.itens.map((it, i) => {
+      const isDesc = (Number(it.valor)||0) < 0;
+      return '<tr'+(isDesc?' class="desc"':'')+'>'
+        + '<td class="cat"><span'+buildEditAttr('itens.'+i+'.categoria','text')+'>'+(it.categoria||'—')+'</span></td>'
+        + '<td class="name"><span'+buildEditAttr('itens.'+i+'.descricao','text')+'>'+(it.descricao||'—')+'</span></td>'
+        + '<td class="val"><span'+buildEditAttr('itens.'+i+'.valor','currency','brl')+' data-raw="'+it.valor+'">'+fmt(it.valor)+'</span></td>'
+        + '<td class="rm"><button type="button" class="row-rm-btn" title="Remover item" onclick="rmItem('+i+')">×</button></td>'
+        + '</tr>';
+    }).join('');
+
+    const escopoHtml = '<div class="card" id="escopo">'
+      + '<h3>Escopo e valores <span class="h3-actions">'
+      + '<button type="button" class="row-add-btn" onclick="addItem(false)">+ Item</button>'
+      + '<button type="button" class="row-add-btn" onclick="addItem(true)" style="border-color:var(--warn);color:var(--warn)">− Desconto</button>'
+      + '</span></h3>'
+      + '<table class="scope-tbl">'
+      + '<thead><tr><th style="width:120px">Categoria</th><th>Item / descrição</th><th style="text-align:right">Valor</th><th></th></tr></thead>'
+      + '<tbody>'
+      + escopoRows
+      + '<tr class="total"><td colspan="2">Total da proposta</td><td class="val">'+fmt(pp.valorTotal)+'</td><td></td></tr>'
+      + '</tbody></table>'
+      + '<p style="margin-top:10px;font-size:11px;color:var(--ink-mute);font-style:italic">Clique em qualquer valor para editar. Total recalcula automaticamente.</p>'
+      + '</div>';
+
+    /* ----- Pagamento ----- */
+    let pagHtml = '';
+    if (parcelasCount) {
+      const rows = pp.parcelas.map((pa, i) => {
+        const pago = pa.status === 'Recebido';
+        const pctNum = pp.valorTotal ? (pa.valor / pp.valorTotal) * 100 : 0;
+        const pct = Math.round(pctNum);
+        const pctFmt = Number.isInteger(pctNum) ? pct : pctNum.toFixed(1).replace('.',',');
+        return '<tr'+(pago?' class="ok"':'')+'>'
+          + '<td class="n'+(pago?' ok':'')+'">'+(pa.n || (i+1))+'</td>'
+          + '<td><span'+buildEditAttr('parcelas.'+i+'.desc','text')+'>'+pa.desc+'</span></td>'
+          + '<td style="text-align:right;font-weight:600;color:var(--ink-soft)"><span class="pct-inline-edit" data-pct-idx="'+i+'" data-pct-raw="'+pctNum.toFixed(2)+'" title="Clique para ajustar o % (o valor R$ recalcula pelo total da proposta)">'+pctFmt+'%</span></td>'
+          + '<td class="val'+(pago?' ok':'')+'"><span'+buildEditAttr('parcelas.'+i+'.valor','currency','brl')+' data-raw="'+pa.valor+'" title="Clique para editar o valor (o % recalcula automaticamente)">'+fmt(pa.valor)+'</span></td>'
+          + '<td style="font-size:11.5px;color:'+(pago?'var(--ok)':'var(--warn)')+'"><span'+buildEditAttr('parcelas.'+i+'.venc','text')+'>'+pa.venc+'</span>'+(pago?' · pago':'')+'</td>'
+          + '<td style="text-align:center"><span class="stat '+(pago?'ok':'warn')+'"'+buildEditAttr('parcelas.'+i+'.status','select')+' data-edit-options="Recebido,Pendente,Aguardando ALF,Aguardando assinatura,Atrasado">'+pa.status+'</span></td>'
+          + '<td class="rm"><button type="button" class="row-rm-btn" title="Remover parcela" onclick="rmParcela('+i+')">×</button></td>'
+          + '</tr>';
+      }).join('');
+
+      // Check soma das parcelas vs valorTotal
+      const somaParc = pp.parcelas.reduce((s,p)=> s + (Number(p.valor)||0), 0);
+      const diff = somaParc - pp.valorTotal;
+      const diffAbs = Math.abs(diff);
+      let somaBadge = '';
+      if (pp.valorTotal && diffAbs >= 1) {
+        const sinal = diff > 0 ? '+' : '−';
+        somaBadge = ' · <span style="color:'+(diffAbs > pp.valorTotal*0.005 ? 'var(--warn)':'var(--ink-soft)')+'">soma das parcelas: '+fmt(somaParc)+' ('+sinal+fmt(diffAbs)+')</span>';
+      }
+      pagHtml = '<div class="card" id="pagamento">'
+        + '<h3>Condições de pagamento <span class="h3-actions">'
+        + '<button type="button" class="row-add-btn" onclick="addParcela()">+ Parcela</button>'
+        + '</span></h3>'
+        + '<p style="font-size:12px;color:var(--ink-soft);margin-bottom:10px;line-height:1.5">Total <strong style="color:var(--ink)">'+fmt(pp.valorTotal)+'</strong>'+somaBadge+' · '+parcelasCount+' parcela(s) · via <strong style="color:var(--ink)"><span'+buildEditAttr('meio','text')+'>'+pp.meio+'</span></strong>.</p>'
+        + '<table class="pay-tbl">'
+        + '<thead><tr><th style="text-align:center;width:46px">#</th><th>Etapa / gatilho</th><th style="text-align:right;width:60px">%</th><th style="text-align:right">Valor</th><th>Vence</th><th style="text-align:center;width:120px">Status</th><th></th></tr></thead>'
+        + '<tbody>'+rows+'</tbody>'
+        + '</table>'
+        + '<div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--line-soft);font-size:12px;color:var(--ink-soft);line-height:1.6">'
+        + '<strong style="color:var(--ink)">Observação:</strong> <span'+buildEditAttr('obs','textarea')+'>'+pp.obs+'</span>'
+        + '</div>'
+        + '</div>';
+    } else {
+      pagHtml = '<div class="card" id="pagamento">'
+        + '<h3>Condições de pagamento <span class="h3-actions"><button type="button" class="row-add-btn" onclick="addParcela()">+ Adicionar parcela</button></span></h3>'
+        + '<p style="font-size:13px;color:var(--ink-body);line-height:1.6">Parcelas a definir. Meio de pagamento pré-acordado: <strong style="color:var(--ink)"><span'+buildEditAttr('meio','text')+'>'+pp.meio+'</span></strong>.</p>'
+        + '<p style="font-size:12px;color:var(--ink-mute);margin-top:8px"><span'+buildEditAttr('obs','textarea')+'>'+pp.obs+'</span></p>'
+        + '</div>';
+    }
+
+    /* ----- Cliente card ----- */
+    const ini = pp.clienteNome.split(/\s+/).slice(0,2).map(s=>s[0]).join('').toUpperCase();
+    const clienteCard = '<div class="card" id="cliente">'
+      + '<h3>Cliente'+(cli ? ' <a href="sistema-cliente-detalhe.html?id='+cli.id+'">Abrir ficha →</a>':'')+'</h3>'
+      + '<div style="display:flex;gap:14px;align-items:center;margin-bottom:14px">'
+      + '<div style="width:50px;height:50px;border-radius:50%;background:var(--accent-soft);color:var(--accent-ink);display:flex;align-items:center;justify-content:center;font-family:\'Fraunces\',serif;font-size:20px;font-weight:600">'+ini+'</div>'
+      + '<div>'
+      + '<div style="font-size:15px;font-weight:600;color:var(--ink);margin-bottom:3px">'+pp.clienteNome+'</div>'
+      + '<div style="font-size:12px;color:var(--ink-soft)">'+(cli ? (cli.tipo+' · '+(cli.doc||'—')) : '—')+'</div>'
+      + '</div>'
+      + '</div>'
+      + (cli ? '<div class="mini-grid">'
+        + '<div><span class="lbl">E-mail</span><span class="val">'+(cli.email||'—')+'</span></div>'
+        + '<div><span class="lbl">Telefone</span><span class="val">'+(cli.telefone||'—')+'</span></div>'
+        + '<div class="full"><span class="lbl">Endereço</span><span class="val">'+(cli.endereco||'—')+'</span></div>'
+        + (cli.obs ? '<div class="full"><div class="obs-box"><span class="lbl" style="margin-bottom:4px">Observação</span>'+cli.obs+'</div></div>':'')
+        + '</div>' : '')
+      + '</div>';
+
+    /* ----- Projeto vinculado ----- */
+    const projetoCard = proj
+      ? '<div class="card">'
+        + '<h3>Projeto vinculado <a href="sistema-projeto-detalhe.html?p='+proj.id+'">Abrir →</a></h3>'
+        + '<div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0 12px;border-bottom:1px solid var(--line-soft);gap:10px">'
+        + '<span style="font-size:13px;color:var(--ink);font-weight:600;line-height:1.3">'+proj.titulo+'</span>'
+        + '<span style="font-size:10px;letter-spacing:.14em;text-transform:uppercase;padding:3px 8px;border-radius:10px;background:var(--accent-soft);color:var(--accent-ink);font-weight:700;white-space:nowrap">'+proj.status+'</span>'
+        + '</div>'
+        + '<div class="mini-grid" style="margin-top:12px">'
+        + '<div><span class="lbl">Tipo</span><span class="val">'+proj.tipo+'</span></div>'
+        + '<div><span class="lbl">Fase</span><span class="val">'+proj.fase+'</span></div>'
+        + '<div><span class="lbl">Progresso</span><span class="val-strong">'+proj.progresso+'%</span></div>'
+        + '<div><span class="lbl">Prazo</span><span class="val">'+proj.prazoFinal+'</span></div>'
+        + '</div>'
+        + '</div>'
+      : '';
+
+    /* ----- Financeiro vinculado ----- */
+    const finCard = fin
+      ? '<div class="card">'
+        + '<h3>Financeiro vinculado <a href="sistema-financeiro.html">Abrir →</a></h3>'
+        + '<div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0 12px;border-bottom:1px solid var(--line-soft);gap:10px">'
+        + '<span style="font-size:13px;color:var(--ink);font-weight:600">'+fin.id+' · '+fin.titulo+'</span>'
+        + '<span style="font-size:10px;letter-spacing:.14em;text-transform:uppercase;padding:3px 8px;border-radius:10px;background:var(--accent-soft);color:var(--accent-ink);font-weight:700">'+fin.unidade+'</span>'
+        + '</div>'
+        + '<div class="mini-grid" style="margin-top:12px">'
+        + '<div><span class="lbl">Total</span><span class="val-strong">'+fmt(fin.total)+'</span></div>'
+        + '<div><span class="lbl">Recebido</span><span style="color:var(--ok);font-weight:600">'+fmt(fin.recebido)+'</span></div>'
+        + '<div><span class="lbl">A receber</span><span style="color:var(--warn);font-weight:600">'+fmt(fin.aReceber)+'</span></div>'
+        + '<div><span class="lbl">Forma</span><span class="val">'+fin.forma+'</span></div>'
+        + '</div>'
+        + '</div>'
+      : '';
+
+    /* ----- Timeline ----- */
+    const tlEvents = [];
+    if (isAprovada) {
+      tlEvents.push({kind:'ok', dt:pp.data, tt:'Proposta aprovada e assinada', dc:'Execução liberada via '+(proj?proj.titulo:'projeto vinculado')+'.'});
+      pp.parcelas.filter(p=>p.status==='Recebido').forEach(p => {
+        tlEvents.push({kind:'ok', dt:p.venc, tt:'Parcela '+p.n+' recebida — '+fmt(p.valor), dc:p.desc+'. Pagamento via '+(pp.meio||'').split(' ')[0]+'.'});
+      });
+      pp.parcelas.filter(p=>p.status!=='Recebido').forEach(p => {
+        tlEvents.push({kind:'info', dt:p.venc, tt:'Parcela '+p.n+' a receber — '+fmt(p.valor), dc:p.desc+'.'});
+      });
+    } else {
+      tlEvents.push({kind:'warn', dt:pp.data, tt:'Rascunho enviado ao cliente', dc:pp.obs});
+      tlEvents.push({kind:'info', dt:pp.validade, tt:'Validade da proposta', dc:'Até esta data para assinatura. Após, requer nova emissão.'});
+    }
+
+    const interacoesHtml = '<div class="card">'
+      + '<h3>Interações e parcelas</h3>'
+      + '<div class="tl">'
+      + tlEvents.map(ev => '<div class="tl-ev '+ev.kind+'">'
+          + '<div class="dt">'+ev.dt+'</div>'
+          + (ev.tt ? '<div class="tt">'+ev.tt+'</div>' : '')
+          + '<div class="dc">'+ev.dc+'</div>'
+          + '</div>').join('')
+      + '</div>'
+      + '</div>';
+
+    /* ----- Arquivos ----- */
+    const arquivosHtml = '<div class="card" id="arquivos">'
+      + '<h3>Anexos da proposta <span class="h3-actions"><button type="button" class="row-add-btn" onclick="anexarArquivo()">+ Anexar</button></span></h3>'
+      + '<div class="att-grid">'
+      + '<a class="att" href="#" onclick="event.preventDefault();_toast(\'PDF da proposta gerado\',\'ok\')"><span class="ext pdf">PDF</span><span class="nm">Proposta_'+pp.id+'_v1.pdf</span></a>'
+      + '<a class="att" href="#" onclick="event.preventDefault();_toast(\'Portfólio aberto\',\'ok\')"><span class="ext pdf">PDF</span><span class="nm">Portfolio_Zenon.pdf</span></a>'
+      + (isAprovada ? '<a class="att" href="#" onclick="event.preventDefault();_toast(\'Contrato baixado\',\'ok\')"><span class="ext pdf">PDF</span><span class="nm">Contrato_assinado_'+pp.data.replace(/\s/g,'').replace(/\//g,'-')+'.pdf</span></a>' : '')
+      + (proj ? '<a class="att" href="sistema-projeto-detalhe.html?p='+proj.id+'"><span class="ext dwg">DWG</span><span class="nm">Pastas do projeto vinculado</span></a>' : '')
+      + '</div>'
+      + '</div>';
+
+    /* ----- Notas ----- */
+    const notasHtml = '<div class="card"><h3>Nota de contexto</h3>'
+      + '<div class="note"><div class="hd"><span class="au">Rodrigo · '+pp.data+'</span><span class="dt">emissão</span></div>'
+      + '<div class="tx"><span'+buildEditAttr('obs','textarea')+'>'+pp.obs+'</span></div></div>'
+      + '</div>';
+
+    /* ----- Render ----- */
+    root.innerHTML = crumbsHtml
+      + bannerHtml
+      + heroHtml
+      + subTabs
+      + '<div class="two-col">'
+      + '<div class="col">' + escopoHtml + pagHtml + notasHtml + '</div>'
+      + '<div class="col">' + interacoesHtml + clienteCard + projetoCard + finCard + arquivosHtml + '</div>'
+      + '</div>';
+
+    /* ----- Mount override bar ----- */
+    if (window.SistemaEdit && SD.hasOverride('proposta', id)) {
+      const bar = window.SistemaEdit.mountOverrideBar('proposta', id);
+      const slot = document.getElementById('ovbar-mount');
+      if (bar && slot) slot.appendChild(bar);
+    }
+  }
+
+  // estado para "tab ativa" persistir entre re-renders
+  let activeSub = 'visao';
+  function reapplyTab() {
+    document.querySelectorAll('.sub-tabs a').forEach(a => {
+      a.classList.toggle('on', a.getAttribute('data-sub') === activeSub);
+    });
+  }
+
+  render();
+  reapplyTab();
+
+  /* ----- Re-render on edit ----- */
+  document.addEventListener('sistema-edit-saved', (e) => {
+    if (e.detail.tipo !== 'proposta' || e.detail.id !== id) return;
+    // re-renderiza para atualizar totais/KPIs e estado consistente
+    render();
+    reapplyTab();
+  });
+
+  /* ----- Edição inline do % das parcelas (atualiza o valor R$) ----- */
+  document.addEventListener('click', (e) => {
+    const cell = e.target.closest('.pct-inline-edit');
+    if (!cell) return;
+    if (cell.classList.contains('editing')) return;
+    e.preventDefault();
+    e.stopPropagation();
+
+    const idx = parseInt(cell.dataset.pctIdx, 10);
+    const cur = parseFloat(cell.dataset.pctRaw || '0') || 0;
+
+    cell.classList.add('editing');
+    const orig = cell.innerHTML;
+    const inp = document.createElement('input');
+    inp.type = 'text';
+    inp.inputMode = 'decimal';
+    inp.value = Number.isInteger(cur) ? String(cur) : cur.toFixed(1).replace('.',',');
+    cell.innerHTML = '';
+    cell.appendChild(inp);
+    cell.insertAdjacentText('beforeend', '%');
+    inp.focus();
+    inp.select();
+
+    let done = false;
+    function commit() {
+      if (done) return; done = true;
+      let raw = inp.value.trim().replace('%','').replace(',','.');
+      const newPct = parseFloat(raw);
+      cell.classList.remove('editing');
+      if (isNaN(newPct) || newPct < 0) {
+        cell.innerHTML = orig;
+        return;
+      }
+      const pp = SD.getProposta(id);
+      if (!pp || !pp.valorTotal) {
+        cell.innerHTML = orig;
+        _toast('Defina o total da proposta primeiro', 'warn');
+        return;
+      }
+      const novoValor = Math.round(pp.valorTotal * newPct / 100 * 100) / 100;
+      SD.update('proposta', id, 'parcelas.'+idx+'.valor', novoValor);
+      // sistema-edit-saved não dispara para update programático — chamamos render direto
+      render();
+      reapplyTab();
+      _toast('✓ Parcela ajustada para '+newPct.toFixed(1).replace('.',',')+'% ('+SD.fmtBRL(novoValor)+')', 'ok');
+    }
+    function cancel() {
+      if (done) return; done = true;
+      cell.classList.remove('editing');
+      cell.innerHTML = orig;
+    }
+    inp.addEventListener('blur', commit);
+    inp.addEventListener('keydown', (ev) => {
+      if (ev.key === 'Enter') { ev.preventDefault(); inp.blur(); }
+      else if (ev.key === 'Escape') {
+        ev.preventDefault();
+        inp.removeEventListener('blur', commit);
+        cancel();
+      }
+    });
+  });
+
+  /* ----- Sub-tab navigation ----- */
+  document.addEventListener('click', (e) => {
+    const t = e.target.closest('.sub-tabs a[data-sub]');
+    if (!t) return;
+    e.preventDefault();
+    activeSub = t.getAttribute('data-sub');
+    document.querySelectorAll('.sub-tabs a').forEach(a=> a.classList.toggle('on', a===t));
+    const href = t.getAttribute('href');
+    if (href && href.startsWith('#') && href.length > 1) {
+      const tgt = document.querySelector(href);
+      if (tgt) tgt.scrollIntoView({ behavior:'smooth', block:'start' });
+    }
+  });
+
+  /* ----- Add / remove handlers (globais para usar onclick) ----- */
+  window.addItem = function (asDesconto) {
+    const novo = asDesconto
+      ? { categoria: 'Desconto', descricao: 'Novo desconto', valor: -0 }
+      : { categoria: 'Serviço',  descricao: 'Novo item',     valor: 0 };
+    SD.pushArray('proposta', id, 'itens', novo);
+    render(); reapplyTab();
+    _toast(asDesconto ? '✓ Desconto adicionado · clique para editar' : '✓ Item adicionado · clique para editar', 'ok');
+  };
+  window.rmItem = function (i) {
+    if (!confirm('Remover este item da proposta?')) return;
+    SD.spliceArray('proposta', id, 'itens', i);
+    render(); reapplyTab();
+    _toast('Item removido', 'warn');
+  };
+  window.addParcela = function () {
+    const pp = SD.getProposta(id);
+    const n = (pp.parcelas.length + 1) + 'ª';
+    SD.pushArray('proposta', id, 'parcelas', { n: n, desc: 'Nova parcela', venc: '— / —', valor: 0, status: 'Pendente' });
+    render(); reapplyTab();
+    _toast('✓ Parcela adicionada', 'ok');
+  };
+  window.rmParcela = function (i) {
+    if (!confirm('Remover esta parcela?')) return;
+    SD.spliceArray('proposta', id, 'parcelas', i);
+    render(); reapplyTab();
+    _toast('Parcela removida', 'warn');
+  };
+})();
+
+/* ============================================================
+   Ações da barra (toasts + simulações)
+   ============================================================ */
+function _toast(msg, kind){
+  const t = document.createElement('div');
+  const bg = kind === 'warn' ? '#8a2b1f' : (kind === 'ok' ? '#2a6040' : '#1a1a1a');
+  t.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:'+bg+';color:#fff;padding:11px 22px;border-radius:4px;font-family:Inter,sans-serif;font-size:13px;font-weight:500;z-index:9999;box-shadow:0 10px 28px rgba(0,0,0,.22);transition:opacity .4s';
+  t.textContent = msg;
+  document.body.appendChild(t);
+  setTimeout(()=> t.style.opacity='0', 2400);
+  setTimeout(()=> t.remove(), 2900);
+}
+function baixarPdf(){ _toast('✓ PDF da proposta gerado · download iniciado', 'ok'); }
+function abrirPortal(){ _toast('Portal do cliente abriria em nova aba', 'ok'); }
+function duplicarProposta(){
+  if(!confirm('Criar uma cópia desta proposta como nova?')) return;
+  _toast('✓ Proposta duplicada — abrindo o rascunho…', 'ok');
+  setTimeout(()=> location.href = 'sistema-proposta-nova.html', 900);
+}
+function reenviarProposta(){
+  if(!confirm('Reenviar a proposta por e-mail ao cliente?')) return;
+  _toast('✓ Proposta reenviada ao cliente', 'ok');
+}
+function enviarRascunho(){
+  if(!confirm('Enviar este rascunho ao cliente para assinatura?')) return;
+  _toast('✓ Rascunho enviado ao cliente', 'ok');
+}
+function arquivarProposta(){
+  if(!confirm('Arquivar esta proposta? Ela some da lista ativa e vai pro histórico.')) return;
+  _toast('✓ Proposta arquivada', 'warn');
+  setTimeout(()=> location.href = 'sistema-propostas.html', 900);
+}
+function anexarArquivo(){
+  const fi = document.createElement('input');
+  fi.type = 'file'; fi.style.display = 'none';
+  fi.onchange = () => { if (fi.files && fi.files[0]) _toast('✓ '+fi.files[0].name+' anexado', 'ok'); };
+  document.body.appendChild(fi); fi.click(); setTimeout(()=>fi.remove(),200);
+}
+</script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script src="supabase-client.js"></script>
+  <script src="shell-user.js"></script>
+<script src="shell-fx.js"></script>
+</body>
+</html>
