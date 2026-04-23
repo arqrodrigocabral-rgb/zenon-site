@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Novo cliente — Zenon Sistema</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shell.css">
+<style>
+  main.form{max-width:960px;padding:24px 36px 72px;display:flex;flex-direction:column;gap:22px}
+
+  .crumbs{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-mute);font-weight:600;display:flex;gap:8px;align-items:center}
+  .crumbs a{color:var(--ink-soft);text-decoration:none}
+  .crumbs a:hover{color:var(--accent-ink)}
+  .crumbs .sep{color:var(--line-strong)}
+
+  .form-head{background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:26px 30px;display:flex;justify-content:space-between;align-items:flex-start;gap:20px}
+  .form-head h1{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:36px;font-weight:400;color:var(--ink);line-height:1.05}
+  .form-head h1 em{font-style:italic;color:var(--accent-ink)}
+  .form-head p{font-size:13px;color:var(--ink-body);margin-top:6px;max-width:520px;line-height:1.6}
+  .form-head .status{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-mute);font-weight:700}
+
+  .form-group{background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:24px 28px;display:flex;flex-direction:column;gap:18px}
+  .fg-head{padding-bottom:14px;border-bottom:1px solid var(--line-soft)}
+  .fg-head h3{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:22px;font-weight:500;color:var(--ink);line-height:1}
+  .fg-head h3 em{font-style:italic;color:var(--accent-ink)}
+  .fg-head .sub{font-size:12px;color:var(--ink-soft);margin-top:4px}
+
+  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+  .grid.three{grid-template-columns:repeat(3,1fr)}
+  .grid .span-2{grid-column:span 2}
+  .grid .span-3{grid-column:span 3}
+
+  .field{display:flex;flex-direction:column;gap:6px}
+  .field label{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft);font-weight:600}
+  .field label .req{color:var(--alert)}
+  .field input,.field select,.field textarea{border:1px solid var(--line);background:var(--bg);padding:10px 13px;font-family:'Inter',sans-serif;font-size:13px;color:var(--ink);border-radius:3px;transition:border-color .15s}
+  .field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--accent)}
+  .field textarea{resize:vertical;min-height:80px;line-height:1.5}
+  .field .hint{font-size:11px;color:var(--ink-mute);margin-top:2px}
+
+  .seg{display:flex;gap:0;border:1px solid var(--line);border-radius:3px;overflow:hidden}
+  .seg button{flex:1;background:var(--bg);border:none;padding:10px;font-family:'Inter',sans-serif;font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:600;color:var(--ink-soft);cursor:pointer;border-right:1px solid var(--line)}
+  .seg button:last-child{border-right:none}
+  .seg button.on{background:var(--ink);color:#fff}
+
+  .chk-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+  .chk{display:flex;gap:8px;align-items:center;padding:9px 12px;background:var(--bg);border:1px solid var(--line-soft);border-radius:3px;cursor:pointer;font-size:12px;color:var(--ink-body);transition:all .15s}
+  .chk:hover{border-color:var(--line-strong)}
+  .chk.on{background:var(--accent-soft);border-color:var(--accent);color:var(--accent-ink);font-weight:600}
+  .chk .bx{width:14px;height:14px;border:1.5px solid var(--line-strong);border-radius:2px;flex-shrink:0}
+  .chk.on .bx{background:var(--accent);border-color:var(--accent)}
+
+  .foot{position:sticky;bottom:0;background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:16px 24px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 -4px 12px rgba(26,22,18,.04)}
+  .foot .msg{font-size:12px;color:var(--ink-soft)}
+  .foot .actions{display:flex;gap:10px}
+  .btn{font-family:'Inter',sans-serif;font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;padding:11px 22px;border-radius:3px;cursor:pointer;text-align:center;text-decoration:none;border:1px solid var(--line-strong);color:var(--ink-soft);background:var(--bg)}
+  .btn:hover{border-color:var(--accent);color:var(--accent-ink)}
+  .btn.primary{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .btn.primary:hover{background:var(--accent-ink);border-color:var(--accent-ink);color:#fff}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-inner">
+    <div class="brand">Zen<span>o</span>n — Sistema</div>
+    <div class="search"><input type="search" placeholder="Buscar…"></div>
+    <div class="fx-chip" title="Cotação do dólar (USD/BRL)">
+      <span class="fx-code">USD</span>
+      <span class="fx-val"><span class="cur">R$</span>—</span>
+      <span class="fx-delta flat">…</span>
+      <div class="fx-tip"></div>
+    </div>
+
+    <div class="user-menu">
+      <button type="button" class="user-trigger" onclick="ZenonUser.toggleDropdown(event)" aria-haspopup="true" aria-expanded="false">
+        <span class="u-name" data-user-name>Rodrigo</span>
+        <span class="avatar" data-user="me">R</span>
+        <span class="u-caret">▾</span>
+      </button>
+      <div class="user-dropdown" role="menu">
+        <div class="ud-head">
+          <span class="avatar" data-user="me">R</span>
+          <div>
+            <div class="name" data-user-name>Rodrigo</div>
+            <div class="role" data-user-role>Sócio · Arquiteto responsável</div>
+          </div>
+        </div>
+        <a href="sistema-perfil.html"><span class="ic">◎</span>Ver perfil</a>
+        <a href="sistema-configuracoes.html"><span class="ic">⚙</span>Configurações</a>
+        <a href="sistema-empresa.html"><span class="ic">⌂</span>Dados da empresa</a>
+        <a href="https://www.notion.so/Zenon" target="_blank"><span class="ic">✱</span>Atividades · Notion ↗</a>
+        <div class="ud-sep"></div>
+        <a href="sistema-login.html" class="sign-out"><span class="ic">↪</span>Sair</a>
+      </div>
+    </div>
+  </div>
+  <nav class="tabs">
+    <a href="sistema-painel.html">Painel</a>
+    <a href="sistema-clientes.html" class="active">Clientes</a>
+    <a href="sistema-projetos.html">Projetos</a>
+    <a href="sistema-obra.html">Obra</a>
+    <a href="sistema-obra-financeiro.html">Obra financeiro</a>
+    <a href="sistema-propostas.html">Propostas</a>
+    <a href="sistema-financeiro.html">Financeiro</a>
+    <a href="sistema-empresa.html">Empresa</a>
+    <a href="sistema-log.html">Log da equipe</a>
+  </nav>
+</header>
+
+<main class="form">
+
+  <div class="crumbs">
+    <a href="sistema-clientes.html">Clientes</a>
+    <span class="sep">›</span>
+    <span>Novo cadastro</span>
+  </div>
+
+  <!-- HEAD -->
+  <section class="form-head">
+    <div>
+      <h1>Novo <em>cliente</em></h1>
+      <p>Preencha as informações essenciais. Campos com * são obrigatórios. Você poderá complementar dados depois — inclusive anexar documentos e criar projetos vinculados.</p>
+    </div>
+    <span class="status">Rascunho</span>
+  </section>
+
+  <!-- IDENTIFICAÇÃO -->
+  <section class="form-group">
+    <div class="fg-head">
+      <h3><em>Identificação</em></h3>
+      <div class="sub">Dados básicos para cadastro, contratos e emissão de notas</div>
+    </div>
+
+    <div class="field">
+      <label>Tipo de pessoa <span class="req">*</span></label>
+      <div class="seg">
+        <button class="on">Pessoa física</button>
+        <button>Pessoa jurídica</button>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="field span-2">
+        <label>Nome completo <span class="req">*</span></label>
+        <input type="text" placeholder="Ex: Rafael Monici">
+      </div>
+      <div class="field">
+        <label>CPF <span class="req">*</span></label>
+        <input type="text" placeholder="000.000.000-00">
+      </div>
+      <div class="field">
+        <label>RG</label>
+        <input type="text" placeholder="00.000.000-0">
+      </div>
+      <div class="field">
+        <label>Data de nascimento</label>
+        <input type="date">
+      </div>
+      <div class="field">
+        <label>Profissão</label>
+        <input type="text" placeholder="Ex: Advogada">
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTATO -->
+  <section class="form-group">
+    <div class="fg-head">
+      <h3><em>Contato</em></h3>
+      <div class="sub">Como falar com o cliente durante o projeto</div>
+    </div>
+
+    <div class="grid">
+      <div class="field">
+        <label>E-mail principal <span class="req">*</span></label>
+        <input type="email" placeholder="nome@email.com">
+      </div>
+      <div class="field">
+        <label>E-mail secundário</label>
+        <input type="email" placeholder="Opcional">
+      </div>
+      <div class="field">
+        <label>Telefone / WhatsApp <span class="req">*</span></label>
+        <input type="tel" placeholder="(00) 00000-0000">
+      </div>
+      <div class="field">
+        <label>Canal preferido</label>
+        <select>
+          <option>WhatsApp</option>
+          <option>E-mail</option>
+          <option>Telefone</option>
+          <option>Presencial</option>
+        </select>
+      </div>
+    </div>
+  </section>
+
+  <!-- ENDEREÇO -->
+  <section class="form-group">
+    <div class="fg-head">
+      <h3><em>Endereço</em></h3>
+      <div class="sub">Usado em contratos, boletos e notas fiscais</div>
+    </div>
+
+    <div class="grid three">
+      <div class="field">
+        <label>CEP</label>
+        <input type="text" placeholder="00000-000">
+      </div>
+      <div class="field span-2">
+        <label>Logradouro</label>
+        <input type="text" placeholder="Rua, Avenida, etc">
+      </div>
+      <div class="field">
+        <label>Número</label>
+        <input type="text">
+      </div>
+      <div class="field">
+        <label>Complemento</label>
+        <input type="text" placeholder="Apto, bloco...">
+      </div>
+      <div class="field">
+        <label>Bairro</label>
+        <input type="text">
+      </div>
+      <div class="field">
+        <label>Cidade</label>
+        <input type="text" placeholder="São Paulo">
+      </div>
+      <div class="field">
+        <label>Estado</label>
+        <select>
+          <option>SP</option>
+          <option>RJ</option>
+          <option>MG</option>
+          <option>PR</option>
+          <option>SC</option>
+          <option>RS</option>
+          <option>DF</option>
+          <option>BA</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>País</label>
+        <input type="text" value="Brasil">
+      </div>
+    </div>
+  </section>
+
+  <!-- RELACIONAMENTO -->
+  <section class="form-group">
+    <div class="fg-head">
+      <h3><em>Relacionamento</em></h3>
+      <div class="sub">Como esse cliente chegou na Zenon e que unidades de negócio podem atendê-lo</div>
+    </div>
+
+    <div class="grid">
+      <div class="field">
+        <label>Origem</label>
+        <select>
+          <option>Indicação</option>
+          <option>Instagram</option>
+          <option>Site</option>
+          <option>Google</option>
+          <option>Portfolio</option>
+          <option>Evento</option>
+          <option>Outro</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Indicado por</label>
+        <input type="text" placeholder="Nome do indicador (se houver)">
+      </div>
+      <div class="field">
+        <label>Data do primeiro contato</label>
+        <input type="date">
+      </div>
+      <div class="field">
+        <label>Responsável no time</label>
+        <select>
+          <option>Rodrigo Cabral</option>
+          <option>Anderson</option>
+          <option>Luana</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Unidades de negócio de interesse</label>
+      <div class="chk-grid">
+        <div class="chk on"><span class="bx"></span> Yvyra Arquitetura</div>
+        <div class="chk"><span class="bx"></span> Zenon Stay</div>
+        <div class="chk"><span class="bx"></span> Zenon Co. (gestão)</div>
+      </div>
+      <div class="hint" style="margin-top:8px;font-size:11px;color:var(--ink-mute);line-height:1.5">
+        Cabana e Casa Blue são despesas pessoais centralizadas — não aparecem aqui porque não atendem clientes externos.
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Tags</label>
+      <input type="text" placeholder="Separe por vírgula: VIP, recorrente, imprensa...">
+    </div>
+  </section>
+
+  <!-- ACESSO AO PORTAL -->
+  <section class="form-group">
+    <div class="fg-head">
+      <h3><em>Acesso ao portal do cliente</em></h3>
+      <div class="sub">Slug gerado automaticamente — portal.zenonco.com.br/<strong style="color:var(--accent-ink)">juliana-reis</strong></div>
+    </div>
+
+    <div class="grid">
+      <div class="field">
+        <label>Slug do portal</label>
+        <input type="text" placeholder="juliana-reis" value="juliana-reis">
+        <span class="hint">Apenas letras minúsculas, números e traços</span>
+      </div>
+      <div class="field">
+        <label>Enviar convite de acesso</label>
+        <div class="seg">
+          <button class="on">Sim, agora</button>
+          <button>Depois</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NOTAS INTERNAS -->
+  <section class="form-group">
+    <div class="fg-head">
+      <h3><em>Notas internas</em></h3>
+      <div class="sub">Visível apenas para o time. O cliente não verá.</div>
+    </div>
+
+    <div class="field">
+      <label>Observações</label>
+      <textarea placeholder="Preferências, histórico, contexto útil pro time..."></textarea>
+    </div>
+  </section>
+
+  <!-- FOOT -->
+  <div class="foot">
+    <span class="msg">Alterações salvas automaticamente como rascunho</span>
+    <div class="actions">
+      <a href="sistema-clientes.html" class="btn">Cancelar</a>
+      <button type="button" class="btn" onclick="salvarRascunhoCliente()">Salvar rascunho</button>
+      <a href="sistema-cliente-detalhe.html" class="btn primary" onclick="return criarCliente(event)">Criar cliente</a>
+    </div>
+  </div>
+
+</main>
+
+<script>
+  function salvarRascunhoCliente(){
+    const nome = document.querySelector('input[name="nome"], input[placeholder*="Nome"], input[placeholder*="nome"]')?.value
+              || document.querySelector('.form-side input[type="text"]')?.value
+              || 'Cliente sem nome';
+    const toast = document.createElement('div');
+    toast.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1a1a1a;color:#fff;padding:12px 20px;border-radius:4px;font-family:Inter,sans-serif;font-size:13px;z-index:9999;box-shadow:0 10px 28px rgba(0,0,0,.22)';
+    toast.textContent = '✓ Rascunho salvo · "' + nome + '"';
+    document.body.appendChild(toast);
+    setTimeout(()=> toast.style.opacity='0', 2400);
+    setTimeout(()=> toast.remove(), 2900);
+  }
+  function criarCliente(ev){
+    const obrigatorios = document.querySelectorAll('input[required], select[required]');
+    let falta = false;
+    obrigatorios.forEach(inp=>{
+      if(!inp.value || !inp.value.trim()){ inp.style.borderColor = '#c62828'; falta = true; }
+      else{ inp.style.borderColor = ''; }
+    });
+    if(falta){
+      if(ev) ev.preventDefault();
+      alert('Preencha os campos obrigatórios antes de criar.');
+      return false;
+    }
+    return true;
+  }
+</script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script src="supabase-client.js"></script>
+  <script src="shell-user.js"></script>
+<script src="shell-fx.js"></script>
+</body>
+</html>
