@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Empresa — Zenon Sistema</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shell.css">
+<style>
+  main.emp{max-width:1280px;padding:24px 36px 56px;display:grid;grid-template-columns:240px 1fr;gap:28px;align-items:start}
+  @media (max-width:1000px){main.emp{grid-template-columns:1fr}}
+  html{scroll-behavior:smooth}
+  section[id]{scroll-margin-top:104px}
+
+  /* Side nav */
+  .emp-side{position:sticky;top:104px;background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:18px 0;display:flex;flex-direction:column}
+  .emp-side .sh{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:22px;font-weight:500;color:var(--ink);padding:0 20px 14px;border-bottom:1px solid var(--line-soft);margin-bottom:8px}
+  .emp-side .sh em{font-style:italic;color:var(--accent-ink)}
+  .emp-side a{display:flex;justify-content:space-between;align-items:center;font-family:'Inter',sans-serif;font-size:12px;letter-spacing:.06em;color:var(--ink-soft);text-decoration:none;padding:9px 20px;font-weight:500;border-left:2px solid transparent;transition:all .15s}
+  .emp-side a:hover{color:var(--ink);background:var(--bg-alt)}
+  .emp-side a.on{color:var(--ink);border-left-color:var(--accent);background:var(--bg-alt);font-weight:600}
+  .emp-side .grp{font-family:'Inter',sans-serif;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-mute);padding:14px 20px 4px;font-weight:700}
+  .emp-side .grp:first-of-type{padding-top:4px}
+  .emp-side a .dot{width:8px;height:8px;border-radius:50%;margin-right:8px;display:inline-block;flex-shrink:0}
+  .emp-side a .dot.zco{background:var(--ink)}
+  .emp-side a .dot.zst{background:var(--accent-ink)}
+  .emp-side a .dot.yv{background:#7a5a2e}
+  .emp-side a .dot.zv{background:#2e4f3a}
+
+  /* Main */
+  .emp-main{display:flex;flex-direction:column;gap:22px}
+  .emp-head h1{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:40px;font-weight:400;color:var(--ink);line-height:1.05}
+  .emp-head h1 em{font-style:italic;color:var(--accent-ink)}
+  .emp-head p{font-size:13px;color:var(--ink-body);margin-top:8px;max-width:740px;line-height:1.65}
+  .emp-head .ribbon{display:inline-flex;align-items:center;gap:10px;background:var(--accent-soft);border:1px solid #dcc99b;border-radius:3px;padding:6px 12px;font-size:11.5px;color:var(--accent-ink);font-weight:600;letter-spacing:.04em;margin-top:10px}
+  .emp-head .ribbon em{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-style:italic;font-weight:500}
+
+  /* Summary bar */
+  .emp-sumario{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:4px 0 8px}
+  @media (max-width:900px){.emp-sumario{grid-template-columns:repeat(2,1fr)}}
+  .emp-sumario .s{background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:14px 16px;display:flex;flex-direction:column;gap:4px}
+  .emp-sumario .s .l{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-mute);font-weight:700}
+  .emp-sumario .s .n{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:24px;color:var(--accent-ink);font-weight:500;line-height:1;margin-top:2px}
+  .emp-sumario .s .m{font-size:11px;color:var(--ink-soft);margin-top:4px}
+
+  /* Section wrap */
+  .sec{background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:26px 30px;display:flex;flex-direction:column;gap:16px}
+  .sec > h2{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:26px;font-weight:500;color:var(--ink);padding-bottom:14px;border-bottom:1px solid var(--line-soft);display:flex;justify-content:space-between;align-items:baseline;gap:14px;margin-bottom:0}
+  .sec > h2 em{font-style:italic;color:var(--accent-ink)}
+  .sec > h2 .sh-meta{font-family:'Inter',sans-serif;font-size:11px;color:var(--ink-mute);letter-spacing:.12em;text-transform:uppercase;font-weight:600}
+
+  /* Identidade hero */
+  .id-hero{display:flex;gap:18px;align-items:flex-start}
+  .id-hero .av{width:76px;height:76px;border-radius:4px;background:var(--ink);display:flex;align-items:center;justify-content:center;font-family:'Fraunces','Source Serif 4',Georgia,serif;font-style:italic;font-size:36px;color:#fff;flex-shrink:0}
+  .id-hero .txt{flex:1;display:flex;flex-direction:column;gap:6px}
+  .id-hero h3{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:30px;font-weight:500;color:var(--ink);line-height:1.05}
+  .id-hero h3 em{font-style:italic;color:var(--accent-ink)}
+  .id-hero .sub{font-size:13px;color:var(--ink-body);line-height:1.55;max-width:680px}
+  .id-hero .chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}
+
+  .badge{display:inline-block;font-size:10px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;padding:3px 9px;border-radius:10px;border:1px solid transparent}
+  .badge.ok{background:#e8f3ea;color:#2d6a4f;border-color:#b7d7c0}
+  .badge.warn{background:#fff4e2;color:#8e5a2b;border-color:#e2c79a}
+  .badge.info{background:#e3e9f5;color:#335077;border-color:#b8c7df}
+  .badge.off{background:var(--line-soft);color:var(--ink-mute);border-color:var(--line)}
+
+  /* Grid fiscal / endereço / contato */
+  .kv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px 18px}
+  @media (max-width:720px){.kv-grid{grid-template-columns:repeat(2,1fr)}}
+  .kv{display:flex;flex-direction:column;gap:3px}
+  .kv .k{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-mute);font-weight:700}
+  .kv .v{font-size:13px;color:var(--ink);font-weight:500;font-variant-numeric:tabular-nums;line-height:1.35;word-break:break-word}
+  .kv .v.soft{color:var(--ink-soft);font-weight:400}
+  .kv .v a{color:var(--accent-ink);text-decoration:none;border-bottom:1px dotted var(--accent)}
+  .kv.wide{grid-column:span 2}
+  .kv.full{grid-column:1 / -1}
+
+  .sub-hd{font-family:'Inter',sans-serif;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-soft);font-weight:700;padding:4px 0;display:flex;justify-content:space-between;align-items:baseline}
+  .sub-hd .ico{font-family:'Inter',sans-serif;font-size:10px;color:var(--ink-mute);letter-spacing:.14em;text-transform:uppercase;font-weight:500}
+
+  /* Blocos: split horizontal fiscal/endereco/contato */
+  .blocks{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  @media (max-width:900px){.blocks{grid-template-columns:1fr}}
+  .block-box{background:var(--bg-alt);border:1px solid var(--line-soft);border-radius:3px;padding:16px 18px;display:flex;flex-direction:column;gap:10px}
+  .block-box .hd{font-family:'Inter',sans-serif;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-soft);font-weight:700;padding-bottom:8px;border-bottom:1px solid var(--line-soft)}
+  .block-box .line{display:flex;justify-content:space-between;align-items:baseline;gap:10px;font-size:12.5px;color:var(--ink)}
+  .block-box .line .k{color:var(--ink-mute);font-size:10px;letter-spacing:.14em;text-transform:uppercase;font-weight:600}
+  .block-box .line .v{font-weight:500;font-variant-numeric:tabular-nums;text-align:right;word-break:break-word}
+
+  /* Marca cards */
+  .brand-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  @media (max-width:900px){.brand-grid{grid-template-columns:1fr}}
+  .brand-card{background:var(--bg-alt);border:1px solid var(--line-soft);border-radius:4px;padding:20px 22px;display:flex;flex-direction:column;gap:10px;position:relative;overflow:hidden}
+  .brand-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+  .brand-card.yv::before{background:#7a5a2e}
+  .brand-card.zst::before{background:var(--accent-ink)}
+  .brand-card.zv::before{background:#2e4f3a}
+  .brand-card .bc-head{display:flex;gap:12px;align-items:flex-start}
+  .brand-card .bc-head .lg{width:44px;height:44px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-family:'Fraunces','Source Serif 4',Georgia,serif;font-style:italic;font-size:22px;color:#fff;flex-shrink:0;font-weight:500}
+  .brand-card.yv .lg{background:#7a5a2e}
+  .brand-card.zst .lg{background:var(--accent-ink)}
+  .brand-card.zv .lg{background:#2e4f3a}
+  .brand-card h4{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:22px;font-weight:500;color:var(--ink);line-height:1.1}
+  .brand-card h4 em{font-style:italic;color:var(--accent-ink)}
+  .brand-card .bc-tag{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-mute);font-weight:600;margin-top:2px}
+  .brand-card .bc-desc{font-size:12.5px;color:var(--ink-body);line-height:1.55;margin-top:4px}
+  .brand-card .bc-lines{display:flex;flex-direction:column;gap:5px;margin-top:6px;padding-top:12px;border-top:1px solid var(--line-soft)}
+  .brand-card .bc-lines .line{display:flex;justify-content:space-between;gap:8px;font-size:11.5px}
+  .brand-card .bc-lines .line .k{color:var(--ink-mute);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:700}
+  .brand-card .bc-lines .line .v{color:var(--ink);font-weight:500;font-variant-numeric:tabular-nums;text-align:right}
+  .brand-card .chips{display:flex;gap:5px;flex-wrap:wrap;margin-top:6px}
+
+  /* Certificado card */
+  .cert-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+  @media (max-width:720px){.cert-grid{grid-template-columns:1fr}}
+  .cert-card{background:#fff;border:1px solid var(--line);border-radius:4px;padding:14px 16px;display:flex;flex-direction:column;gap:8px}
+  .cert-card .t{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+  .cert-card .t .l{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-mute);font-weight:700}
+  .cert-card .nm{font-size:13.5px;color:var(--ink);font-weight:600}
+  .cert-card .val{font-size:11.5px;color:var(--ink-soft);line-height:1.5}
+  .cert-card .val strong{color:var(--ok)}
+  .cert-card .val strong.warn{color:var(--warn)}
+  .cert-card .row-act{display:flex;gap:6px;margin-top:4px;flex-wrap:wrap}
+
+  /* Banco card */
+  .bk-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+  @media (max-width:720px){.bk-grid{grid-template-columns:1fr}}
+  .bk-card{background:var(--bg-alt);border:1px solid var(--line-soft);border-radius:4px;padding:14px 16px;display:flex;gap:12px;position:relative}
+  .bk-card.default{border-left:3px solid var(--accent)}
+  .bk-logo{width:40px;height:40px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'Inter',sans-serif;font-weight:700;font-size:12px;color:#fff;flex-shrink:0;letter-spacing:.02em}
+  .bk-logo.inter{background:#ff7a00}
+  .bk-logo.btg{background:#003b65}
+  .bk-logo.nubank{background:#820ad1}
+  .bk-logo.bb{background:#fac800;color:#00468c}
+  .bk-body{flex:1;display:flex;flex-direction:column;gap:4px}
+  .bk-body .title{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:18px;font-weight:500;color:var(--ink);line-height:1.1}
+  .bk-body .title em{font-style:italic;color:var(--accent-ink)}
+  .bk-body .sub{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-mute);font-weight:600}
+  .bk-body .detail{display:grid;grid-template-columns:1fr 1fr;gap:6px 12px;font-size:11.5px;color:var(--ink-soft);margin-top:4px;font-variant-numeric:tabular-nums}
+  .bk-body .detail strong{color:var(--ink);font-weight:600;display:block;margin-top:1px;font-size:12px}
+  .bk-def-badge{position:absolute;top:10px;right:12px;font-size:8.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;background:var(--accent-soft);color:var(--accent-ink);padding:2px 7px;border-radius:10px}
+
+  /* Docs library */
+  .docs-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  @media (max-width:900px){.docs-grid{grid-template-columns:1fr 1fr}}
+  @media (max-width:580px){.docs-grid{grid-template-columns:1fr}}
+  .doc-card{background:var(--bg-alt);border:1px solid var(--line-soft);border-radius:3px;padding:14px 16px;display:flex;flex-direction:column;gap:6px;transition:border-color .15s,background .15s;position:relative}
+  .doc-card:hover{border-color:var(--accent);background:#fff}
+  .doc-card .dc-hd{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+  .doc-card .dc-hd .icn{width:32px;height:32px;border-radius:4px;background:var(--paper);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-family:'Fraunces','Source Serif 4',Georgia,serif;font-style:italic;font-size:13px;color:var(--accent-ink);font-weight:600;flex-shrink:0}
+  .doc-card .dc-hd .icn.pdf{color:#b53939}
+  .doc-card .dc-hd .icn.xlsx{color:#2d6a4f}
+  .doc-card .dc-hd .icn.img{color:#335077}
+  .doc-card .dc-meta{font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-mute);font-weight:700}
+  .doc-card .dc-name{font-size:13px;color:var(--ink);font-weight:600;line-height:1.3}
+  .doc-card .dc-sub{font-size:11.5px;color:var(--ink-soft);line-height:1.4}
+  .doc-card .dc-foot{display:flex;justify-content:space-between;align-items:center;margin-top:6px;padding-top:8px;border-top:1px solid var(--line-soft);font-size:10px;color:var(--ink-mute);font-weight:500}
+  .doc-card .dc-foot a{color:var(--accent-ink);text-decoration:none;border-bottom:1px dotted var(--accent);font-size:10px;letter-spacing:.08em;text-transform:uppercase;font-weight:700}
+  .doc-card .dc-foot a:hover{color:var(--ink)}
+
+  /* Upload zone */
+  .upload-zone{background:#fdfbf5;border:1px dashed var(--accent);border-radius:3px;padding:22px 24px;text-align:center;display:flex;flex-direction:column;gap:6px;align-items:center}
+  .upload-zone .lg{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:22px;font-style:italic;color:var(--accent-ink);font-weight:500}
+  .upload-zone .dsc{font-size:12.5px;color:var(--ink-body);line-height:1.5;max-width:460px}
+  .upload-zone .btn{font-family:'Inter',sans-serif;font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;padding:9px 18px;border-radius:3px;cursor:pointer;background:var(--ink);color:#fff;border:none;margin-top:6px}
+  .upload-zone .btn:hover{background:var(--accent-ink)}
+
+  /* Btn std */
+  .btn{font-family:'Inter',sans-serif;font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;padding:9px 18px;border-radius:3px;cursor:pointer;text-align:center;text-decoration:none;border:1px solid var(--line-strong);color:var(--ink-soft);background:var(--bg);display:inline-block}
+  .btn:hover{border-color:var(--accent);color:var(--accent-ink)}
+  .btn.small{font-size:10px;padding:6px 12px;letter-spacing:.1em}
+  .btn.primary{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .btn.primary:hover{background:var(--accent-ink);border-color:var(--accent-ink);color:#fff}
+  .btn.ghost{background:transparent;border-color:var(--line)}
+
+  /* Socios */
+  .socios{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+  @media (max-width:720px){.socios{grid-template-columns:1fr}}
+  .socio{background:var(--bg-alt);border:1px solid var(--line-soft);border-radius:3px;padding:14px 16px;display:flex;gap:14px;align-items:center}
+  .socio .av2{width:40px;height:40px;border-radius:50%;background:var(--accent-soft);color:var(--accent-ink);display:flex;align-items:center;justify-content:center;font-family:'Fraunces','Source Serif 4',Georgia,serif;font-weight:600;font-size:16px;flex-shrink:0}
+  .socio .info{flex:1;display:flex;flex-direction:column;gap:3px}
+  .socio .info .nm{font-size:13.5px;color:var(--ink);font-weight:600}
+  .socio .info .cpf{font-size:11px;color:var(--ink-mute);font-variant-numeric:tabular-nums;letter-spacing:.02em}
+  .socio .info .role{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);font-weight:600;margin-top:1px}
+  .socio .pct{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:22px;color:var(--accent-ink);font-weight:500;font-variant-numeric:tabular-nums}
+
+  /* Nota informativa */
+  .info-box{background:#e3e9f5;border:1px solid #b8c7df;border-radius:4px;padding:12px 16px;display:flex;gap:10px;align-items:flex-start;font-size:12.5px;color:#335077;line-height:1.5}
+  .info-box .ico{font-size:16px;flex-shrink:0;margin-top:-1px}
+  .info-box strong{color:#1f3a5f}
+
+  /* Warning banner */
+  .wn{background:#fff4e2;border:1px solid #e2c79a;border-radius:4px;padding:12px 16px;display:flex;gap:10px;align-items:flex-start;font-size:12.5px;color:#8e5a2b;line-height:1.5}
+  .wn .ico{font-size:16px;flex-shrink:0;margin-top:-1px}
+  .wn strong{color:#6b3d15}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-inner">
+    <div class="brand">Zen<span>o</span>n — Sistema</div>
+    <div class="search"><input type="search" placeholder="Buscar projeto, cliente, obra, proposta…"></div>
+    <div class="fx-chip" title="Cotação do dólar (USD/BRL)">
+      <span class="fx-code">USD</span>
+      <span class="fx-val"><span class="cur">R$</span>—</span>
+      <span class="fx-delta flat">…</span>
+      <div class="fx-tip"></div>
+    </div>
+
+    <div class="user-menu">
+      <button type="button" class="user-trigger" onclick="ZenonUser.toggleDropdown(event)" aria-haspopup="true" aria-expanded="false">
+        <span class="u-name" data-user-name>Rodrigo</span>
+        <span class="avatar" data-user="me">R</span>
+        <span class="u-caret">▾</span>
+      </button>
+      <div class="user-dropdown" role="menu">
+        <div class="ud-head">
+          <span class="avatar" data-user="me">R</span>
+          <div>
+            <div class="name" data-user-name>Rodrigo</div>
+            <div class="role" data-user-role>Sócio · Arquiteto responsável</div>
+          </div>
+        </div>
+        <a href="sistema-perfil.html"><span class="ic">◎</span>Ver perfil</a>
+        <a href="sistema-configuracoes.html"><span class="ic">⚙</span>Configurações</a>
+        <a href="sistema-empresa.html"><span class="ic">⌂</span>Dados da empresa</a>
+        <a href="https://www.notion.so/Zenon" target="_blank"><span class="ic">✱</span>Atividades · Notion ↗</a>
+        <div class="ud-sep"></div>
+        <a href="sistema-login.html" class="sign-out"><span class="ic">↪</span>Sair</a>
+      </div>
+    </div>
+  </div>
+  <nav class="tabs">
+    <a href="sistema-painel.html">Painel</a>
+    <a href="sistema-clientes.html">Clientes</a>
+    <a href="sistema-projetos.html">Projetos</a>
+    <a href="sistema-obra.html">Obra</a>
+    <a href="sistema-obra-financeiro.html">Obra financeiro</a>
+    <a href="sistema-propostas.html">Propostas</a>
+    <a href="sistema-financeiro.html">Financeiro</a>
+    <a href="sistema-empresa.html" class="active">Empresa</a>
+    <a href="sistema-log.html">Log da equipe</a>
+  </nav>
+</header>
+
+<main class="emp">
+
+  <!-- SIDE NAV -->
+  <aside class="emp-side">
+    <div class="sh"><em>Empresa</em></div>
+
+    <div class="grp">Identidade</div>
+    <a href="#identidade" class="on">Dados fiscais</a>
+    <a href="#responsavel">Responsável técnico</a>
+
+    <div class="grp">Marcas internas</div>
+    <a href="#yvyra-arq"><span><span class="dot yv"></span>Yvyra Arquitetura</span></a>
+    <a href="#zenon-stay"><span><span class="dot zst"></span>Zenon Stay</span></a>
+    <a href="#zenon-vision"><span><span class="dot zv"></span>Zenon Vision</span></a>
+
+    <div class="grp">Consolidado</div>
+    <a href="#certificados">Certificados &amp; credenciais</a>
+    <a href="#socios">Sócios</a>
+    <a href="#bancos">Contas bancárias</a>
+    <a href="#documentos">Biblioteca de documentos</a>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="emp-main">
+
+    <div class="emp-head">
+      <h1><em>Empresa</em> — um CNPJ, três marcas.</h1>
+      <p>A Zenon é uma única empresa guarda-chuva. Sob o mesmo CNPJ operam três marcas internas — <strong style="color:var(--ink)">Yvyra Arquitetura</strong> (projetos), <strong style="color:var(--ink)">Zenon Stay</strong> (hospedagem) e <strong style="color:var(--ink)">Zenon Vision</strong> (gestão própria interna). Esta é a fonte única de dados fiscais, certificado A1, contas bancárias, sócios e biblioteca de documentos oficiais.</p>
+      <div class="ribbon"><em>Entidade fiscal única:</em> <strong>Cabral e Lima Design LTDA</strong> · CNPJ 59.525.877/0001-49</div>
+    </div>
+
+    <!-- KPIs -->
+    <div class="emp-sumario">
+      <div class="s"><div class="l">Marcas internas</div><div class="n">3</div><div class="m">Yvyra · Zenon Stay · Zenon Vision</div></div>
+      <div class="s"><div class="l">Faturamento 2026</div><div class="n">R$ 33.3k</div><div class="m">Acumulado jan → abril</div></div>
+      <div class="s"><div class="l">Certificado A1</div><div class="n">Válido</div><div class="m">Até 12/09/2026</div></div>
+      <div class="s"><div class="l">Contas ativas</div><div class="n">4</div><div class="m">2 PJ · 2 PF pessoais</div></div>
+    </div>
+
+    <!-- ═════════════════════════ IDENTIDADE FISCAL ═════════════════════════ -->
+    <section class="sec" id="identidade">
+      <h2><em>Identidade</em> fiscal <span class="sh-meta">Dados da matriz · um CNPJ único</span></h2>
+
+      <div class="id-hero">
+        <div class="av">Z</div>
+        <div class="txt">
+          <h3>Cabral e Lima Design <em>LTDA</em></h3>
+          <div class="sub">Sociedade empresária limitada. CNPJ único de toda a operação — arquitetura, hospedagem e gestão interna emitem sob esta mesma entidade. Sede em São Francisco Xavier, São José dos Campos / SP. Nomes fantasia: Yvyra · Shamballa Co. · Zenon.</div>
+          <div class="chips">
+            <span class="badge ok">PJ ativa</span>
+            <span class="badge ok">Certificado A1 válido</span>
+            <span class="badge ok">NFS-e habilitada</span>
+            <span class="badge info">CAU/BR A148704-5</span>
+          </div>
+        </div>
+        <a href="sistema-configuracoes.html#empresa" class="btn small">Editar dados</a>
+      </div>
+
+      <div class="sub-hd">Dados fiscais</div>
+      <div class="kv-grid">
+        <div class="kv"><span class="k">Razão social</span><span class="v">Cabral e Lima Design LTDA</span></div>
+        <div class="kv"><span class="k">Nomes fantasia</span><span class="v">Yvyra · Shamballa Co. · Zenon</span></div>
+        <div class="kv"><span class="k">CNPJ</span><span class="v">59.525.877/0001-49</span></div>
+        <div class="kv"><span class="k">Inscrição estadual</span><span class="v soft">Isento · serviços</span></div>
+        <div class="kv"><span class="k">Inscrição municipal</span><span class="v soft">Pendente de cadastro</span></div>
+        <div class="kv"><span class="k">Regime tributário</span><span class="v">Simples Nacional</span></div>
+        <div class="kv"><span class="k">CNAE principal</span><span class="v">71.11-1-00 · Serviços de arquitetura</span></div>
+        <div class="kv"><span class="k">CNAEs secundários</span><span class="v soft">A confirmar no cartão CNPJ</span></div>
+        <div class="kv"><span class="k">Data de abertura</span><span class="v soft">—</span></div>
+        <div class="kv"><span class="k">Natureza jurídica</span><span class="v">206-2 · Sociedade Empresária Limitada</span></div>
+        <div class="kv"><span class="k">Capital social</span><span class="v soft">—</span></div>
+        <div class="kv"><span class="k">Situação cadastral</span><span class="v" style="color:var(--ok);font-weight:600">Ativa</span></div>
+      </div>
+
+      <div class="blocks">
+        <div class="block-box">
+          <div class="hd">Sede</div>
+          <div class="line"><span class="k">Logradouro</span><span class="v">Estrada de Santa Barbara, 7000</span></div>
+          <div class="line"><span class="k">Complemento</span><span class="v">7ª travessa, 412 · casa 2</span></div>
+          <div class="line"><span class="k">Bairro</span><span class="v">São Francisco Xavier</span></div>
+          <div class="line"><span class="k">Cidade / UF</span><span class="v">São José dos Campos / SP</span></div>
+          <div class="line"><span class="k">CEP</span><span class="v">12.249-000</span></div>
+        </div>
+        <div class="block-box">
+          <div class="hd">Contato institucional</div>
+          <div class="line"><span class="k">E-mail principal</span><span class="v">arq.rodrigocabral@gmail.com</span></div>
+          <div class="line"><span class="k">Financeiro</span><span class="v">zenon.gestao@gmail.com</span></div>
+          <div class="line"><span class="k">Telefone 1</span><span class="v">(11) 9 4030-0048</span></div>
+          <div class="line"><span class="k">Telefone 2</span><span class="v">(11) 9 4084-4909</span></div>
+          <div class="line"><span class="k">Instagram</span><span class="v">@shamballa_co · @yvyra.viva</span></div>
+          <div class="line"><span class="k">Site</span><span class="v">zenonco.com.br</span></div>
+        </div>
+        <div class="block-box" id="responsavel">
+          <div class="hd">Responsável técnico</div>
+          <div class="line"><span class="k">Arquiteto</span><span class="v">Rodrigo Cabral e Lima</span></div>
+          <div class="line"><span class="k">CAU/BR</span><span class="v">A148704-5</span></div>
+          <div class="line"><span class="k">E-mail</span><span class="v">arq.rodrigocabral@gmail.com</span></div>
+          <div class="line"><span class="k">Situação</span><span class="v" style="color:var(--ok);font-weight:600">Ativo · em dia</span></div>
+        </div>
+      </div>
+
+      <div class="info-box"><span class="ico">ⓘ</span><div><strong>Toda emissão de NFS-e sai deste CNPJ.</strong> Yvyra Arquitetura, Zenon Stay e Zenon Vision são marcas visuais internas para organizar proposta comercial e identidade visual — juridicamente, a nota é sempre emitida pela Cabral e Lima Design LTDA A alíquota aplicada varia conforme CNAE do serviço prestado (arquitetura, hospedagem ou fotografia).</div></div>
+    </section>
+
+    <!-- ═════════════════════════ MARCAS INTERNAS ═════════════════════════ -->
+    <section class="sec" id="marcas">
+      <h2><em>Marcas</em> internas <span class="sh-meta">3 divisões visuais · 1 entidade fiscal</span></h2>
+      <p style="font-size:12.5px;color:var(--ink-body);line-height:1.55;margin:0">Cada marca tem paleta visual própria, escopo de serviço e identidade comercial — mas compartilham CNPJ, certificado A1, contas bancárias e obrigações tributárias. As marcas aparecem como opção em Propostas (emissor visual) e como filtro em Financeiro (para KPIs por braço).</p>
+
+      <div class="brand-grid">
+
+        <!-- YVYRA ARQUITETURA -->
+        <div class="brand-card yv" id="yvyra-arq">
+          <div class="bc-head">
+            <div class="lg">Y</div>
+            <div>
+              <h4><em>Yvyra</em> Arquitetura</h4>
+              <div class="bc-tag">Projetos · arquitetura</div>
+            </div>
+          </div>
+          <div class="bc-desc">Marca comercial usada pra projetos de arquitetura residencial, comercial e corporativa. Identidade visual terrosa (tons de ocre/amadeirado), linha autoral. Propostas saem com o logotipo Yvyra mas a NFS-e sai pelo CNPJ Zenon.</div>
+          <div class="bc-lines">
+            <div class="line"><span class="k">Emissor de proposta</span><span class="v">Yvyra Arq</span></div>
+            <div class="line"><span class="k">CNAE aplicado</span><span class="v">71.11-1-00</span></div>
+            <div class="line"><span class="k">Responsável técnico</span><span class="v">Rodrigo</span></div>
+            <div class="line"><span class="k">Participação 2026</span><span class="v">~62% receita</span></div>
+          </div>
+          <div class="chips">
+            <span class="badge ok">Ativa</span>
+            <span class="badge info">Marca principal</span>
+          </div>
+        </div>
+
+        <!-- ZENON STAY -->
+        <div class="brand-card zst" id="zenon-stay">
+          <div class="bc-head">
+            <div class="lg">S</div>
+            <div>
+              <h4>Zenon <em>Stay</em></h4>
+              <div class="bc-tag">Hospedagem · estadias</div>
+            </div>
+          </div>
+          <div class="bc-desc">Marca de hospitalidade — estadias em imóveis próprios ou curadoria de parceiros. Identidade clara, acolhedora. Emite recibos de hospedagem sob o CNPJ Zenon (CNAE secundário 55.90-6-99 ativado). Primeira unidade: APT 344.</div>
+          <div class="bc-lines">
+            <div class="line"><span class="k">Emissor de proposta</span><span class="v">Zenon Stay</span></div>
+            <div class="line"><span class="k">CNAE aplicado</span><span class="v">55.90-6-99</span></div>
+            <div class="line"><span class="k">Unidades</span><span class="v">1 · APT 344</span></div>
+            <div class="line"><span class="k">Participação 2026</span><span class="v">~24% receita</span></div>
+          </div>
+          <div class="chips">
+            <span class="badge ok">Ativa</span>
+            <span class="badge warn">APT 344 pendente</span>
+          </div>
+        </div>
+
+        <!-- ZENON VISION -->
+        <div class="brand-card zv" id="zenon-vision">
+          <div class="bc-head">
+            <div class="lg">V</div>
+            <div>
+              <h4>Zenon <em>Vision</em></h4>
+              <div class="bc-tag">Interno · gestão própria</div>
+            </div>
+          </div>
+          <div class="bc-desc">Braço <strong>interno</strong> da Zenon. Não vende pra cliente externo, não emite proposta comercial nem NFS-e. Usado pra gerir interesses próprios — patrimônio, ativos, portfolio interno, imóveis em estudo. Não entra no pipeline comercial nem nos KPIs de receita.</div>
+          <div class="bc-lines">
+            <div class="line"><span class="k">Emissor de proposta</span><span class="v soft" style="color:var(--ink-mute)">Não emite</span></div>
+            <div class="line"><span class="k">CNAE aplicado</span><span class="v soft" style="color:var(--ink-mute)">Interno</span></div>
+            <div class="line"><span class="k">Responsável</span><span class="v">Rodrigo &amp; Thereza</span></div>
+            <div class="line"><span class="k">Função</span><span class="v">Gestão interna</span></div>
+          </div>
+          <div class="chips">
+            <span class="badge off">Sem faturamento externo</span>
+            <span class="badge info">Gestão patrimonial</span>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="wn"><span class="ico">⚠</span><div><strong>APT 344 (Zenon Stay) pendente:</strong> aguardando endereço completo, metragem e fotos do Zenon pra cadastrar a unidade no sistema. Enquanto isso, reservas da APT 344 são lançadas manualmente no Financeiro com tag <em>Zenon Stay · APT 344</em>.</div></div>
+    </section>
+
+    <!-- ═════════════════════════ CERTIFICADOS ═════════════════════════ -->
+    <section class="sec" id="certificados">
+      <h2><em>Certificados</em> &amp; credenciais <span class="sh-meta">.pfx · senha criptografada · gov.br</span></h2>
+      <p style="font-size:12.5px;color:var(--ink-body);line-height:1.55;margin:0">Credenciais digitais usadas pra assinar NFS-e, acessar e-CAC / SEFAZ / SEBRAE e comunicar-se oficialmente com Receita, Prefeitura e conselhos profissionais. Os arquivos .pfx ficam cifrados no KV do Cloudflare — a senha nunca é armazenada em texto puro.</p>
+
+      <div class="cert-grid">
+
+        <div class="cert-card">
+          <div class="t">
+            <div>
+              <div class="l">Zenon PJ · A1 (NFS-e)</div>
+              <div class="nm">zenon-a1.pfx</div>
+            </div>
+            <span class="badge ok">Válido</span>
+          </div>
+          <div class="val">Emitido por <strong style="color:var(--ink)">Serasa RFB v5</strong> · titular CNPJ 59.525.877/0001-49</div>
+          <div class="val">Validade até <strong>12/09/2026</strong> · faltam <strong style="color:var(--ok)">146 dias</strong></div>
+          <div class="val">Usado em NFS-e de arquitetura, hospedagem e fotografia interna.</div>
+          <div class="row-act">
+            <a href="#" class="btn small">Substituir</a>
+            <a href="#" class="btn small">Testar assinatura</a>
+            <a href="#" class="btn small">Histórico</a>
+          </div>
+        </div>
+
+        <div class="cert-card">
+          <div class="t">
+            <div>
+              <div class="l">Rodrigo · e-CPF A1</div>
+              <div class="nm">rodrigo-ecpf-a1.pfx</div>
+            </div>
+            <span class="badge ok">Válido</span>
+          </div>
+          <div class="val">Titular: <strong style="color:var(--ink)">Rodrigo Cabral</strong> · CPF a cadastrar</div>
+          <div class="val">Usado pra assinatura de contratos PF, e-CAC pessoal e certidões CAU · validade a registrar</div>
+          <div class="row-act">
+            <a href="#" class="btn small">Substituir</a>
+            <a href="#" class="btn small">Testar assinatura</a>
+          </div>
+        </div>
+
+        <div class="cert-card">
+          <div class="t">
+            <div>
+              <div class="l">CAU/BR · Rodrigo</div>
+              <div class="nm">Registro profissional</div>
+            </div>
+            <span class="badge ok">Ativo</span>
+          </div>
+          <div class="val">Registro <strong style="color:var(--ink)">A148704-5</strong> · responsável técnico pela Cabral e Lima Design LTDA</div>
+          <div class="val">Anuidade 2026 paga · próxima em 31/03/2027</div>
+          <div class="row-act">
+            <a href="#" class="btn small">Certidão de acervo</a>
+          </div>
+        </div>
+
+        <div class="cert-card">
+          <div class="t">
+            <div>
+              <div class="l">gov.br · Rodrigo</div>
+              <div class="nm">Nível prata</div>
+            </div>
+            <span class="badge info">Vinculado</span>
+          </div>
+          <div class="val">CPF vinculado à conta gov.br com validação facial — acesso a e-CAC, SEFAZ-SP, Receita Federal e JUCESP.</div>
+          <div class="val">Procuração eletrônica pra Thereza ativa até <strong>31/12/2026</strong></div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ═════════════════════════ SÓCIOS ═════════════════════════ -->
+    <section class="sec" id="socios">
+      <h2><em>Sócios</em> <span class="sh-meta">Cabral e Lima Design LTDA</span></h2>
+      <p style="font-size:12.5px;color:var(--ink-body);line-height:1.55;margin:0">Quadro societário único da entidade. Alterações precisam de alteração contratual na JUCESP e refletem no cartão CNPJ em ~7 dias úteis.</p>
+
+      <div class="socios">
+        <div class="socio">
+          <div class="av2">RC</div>
+          <div class="info">
+            <div class="nm">Rodrigo Cabral</div>
+            <div class="cpf soft">CPF · a cadastrar</div>
+            <div class="role">Sócio administrador · responsável técnico CAU A148704-5</div>
+          </div>
+          <div class="pct soft">%</div>
+        </div>
+        <div class="socio">
+          <div class="av2">T</div>
+          <div class="info">
+            <div class="nm">Thereza</div>
+            <div class="cpf soft">CPF · a cadastrar</div>
+            <div class="role">Sócia · gestão administrativa e financeira (contas Nubank)</div>
+          </div>
+          <div class="pct soft">%</div>
+        </div>
+      </div>
+
+      <div class="sub-hd" style="margin-top:6px">Capital &amp; procurações <span class="ico">Ver histórico</span></div>
+      <div class="kv-grid">
+        <div class="kv"><span class="k">Capital social</span><span class="v soft">—</span></div>
+        <div class="kv"><span class="k">Última alteração</span><span class="v soft">—</span></div>
+        <div class="kv"><span class="k">Registro JUCESP</span><span class="v soft">—</span></div>
+        <div class="kv"><span class="k">Administração</span><span class="v">Ambos sócios</span></div>
+      </div>
+    </section>
+
+    <!-- ═════════════════════════ BANCOS ═════════════════════════ -->
+    <section class="sec" id="bancos">
+      <h2><em>Contas</em> bancárias <span class="sh-meta">2 PJ sob CNPJ único · 2 PF pessoais</span></h2>
+
+      <div class="bk-grid">
+
+        <div class="bk-card default">
+          <span class="bk-def-badge">Padrão PJ</span>
+          <div class="bk-logo inter">INT</div>
+          <div class="bk-body">
+            <div class="title">Inter · <em>Zenon</em></div>
+            <div class="sub">Conta corrente PJ · banco 077</div>
+            <div class="detail">
+              <span>Agência<strong>—</strong></span>
+              <span>Conta<strong>—</strong></span>
+              <span>Titular CNPJ<strong>59.525.877/0001-49</strong></span>
+              <span>PIX<strong>CNPJ</strong></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="bk-card">
+          <div class="bk-logo btg">BTG</div>
+          <div class="bk-body">
+            <div class="title">BTG · <em>Zenon</em></div>
+            <div class="sub">Conta corrente PJ · banco 208</div>
+            <div class="detail">
+              <span>Agência<strong>—</strong></span>
+              <span>Conta<strong>—</strong></span>
+              <span>Titular CNPJ<strong>59.525.877/0001-49</strong></span>
+              <span>PIX<strong>CNPJ</strong></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="bk-card">
+          <div class="bk-logo inter">INT</div>
+          <div class="bk-body">
+            <div class="title">Inter · <em>Rodrigo</em></div>
+            <div class="sub">Conta PF · banco 077</div>
+            <div class="detail">
+              <span>Agência<strong>—</strong></span>
+              <span>Conta<strong>—</strong></span>
+              <span>Titular<strong>Rodrigo (PF)</strong></span>
+              <span>PIX<strong>e-mail</strong></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="bk-card">
+          <div class="bk-logo nubank">NU</div>
+          <div class="bk-body">
+            <div class="title">Nubank · <em>Thereza</em></div>
+            <div class="sub">Conta PF · banco 260 · sócia</div>
+            <div class="detail">
+              <span>Agência<strong>—</strong></span>
+              <span>Conta<strong>—</strong></span>
+              <span>Titular<strong>Thereza (PF)</strong></span>
+              <span>PIX<strong>CPF</strong></span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="info-box"><span class="ico">ⓘ</span><div>As duas contas PJ (Inter e BTG) são da <strong>mesma entidade</strong> — Cabral e Lima Design LTDA — e recebem receita de qualquer marca (Yvyra Arquitetura, Zenon Stay ou Zenon Vision). As contas PF do Rodrigo e da Thereza aparecem aqui porque concentram o fluxo pessoal (incluindo Cabana e Casa Blue) e precisam estar visíveis pra conciliação. Elas ficam fora dos KPIs da empresa.</div></div>
+    </section>
+
+    <!-- ═════════════════════════ DOCUMENTOS ═════════════════════════ -->
+    <section class="sec" id="documentos">
+      <h2><em>Biblioteca</em> de documentos <span class="sh-meta">12 arquivos · 26,1 MB</span></h2>
+      <p style="font-size:12.5px;color:var(--ink-body);line-height:1.55;margin:0">Contratos sociais, cartão CNPJ, alvarás, guias DAS, comprovantes e identidade visual. Cada documento é versionado — quando você substitui um arquivo o anterior vai pro histórico mas não é apagado. Agrupados por categoria, não por marca (tudo é da mesma PJ).</p>
+
+      <div class="upload-zone">
+        <div class="lg">Arrastar arquivos aqui</div>
+        <div class="dsc">Ou clique em <strong>adicionar</strong> pra escolher. Limite 25 MB por arquivo · aceita PDF, PNG, JPG, XLSX, DOCX. Nomear com prefixo da categoria facilita a busca (ex: <em>zenon_contrato-social_v3_2025.pdf</em>).</div>
+        <button class="btn">＋ Adicionar documento</button>
+      </div>
+
+      <!-- ATOS CONSTITUTIVOS -->
+      <div class="sub-hd" style="margin-top:6px">Atos constitutivos &amp; cadastro</div>
+      <div class="docs-grid">
+        <div class="doc-card">
+          <div class="dc-hd">
+            <div class="icn pdf">PDF</div>
+            <span class="badge ok">Vigente</span>
+          </div>
+          <div class="dc-meta">Ato constitutivo</div>
+          <div class="dc-name">Contrato social consolidado</div>
+          <div class="dc-sub">Contrato social consolidado · Cabral e Lima Design LTDA · JUCESP</div>
+          <div class="dc-foot"><span>2,1 MB · PDF</span><a href="#">Abrir ↗</a></div>
+        </div>
+
+        <div class="doc-card">
+          <div class="dc-hd">
+            <div class="icn pdf">PDF</div>
+            <span class="badge ok">Atual</span>
+          </div>
+          <div class="dc-meta">Cadastro Receita</div>
+          <div class="dc-name">Cartão CNPJ</div>
+          <div class="dc-sub">Comprovante de inscrição · gerado 02/04/2026</div>
+          <div class="dc-foot"><span>220 KB · PDF</span><a href="#">Abrir ↗</a></div>
+        </div>
+
+        <div class="doc-card">
+          <div class="dc-hd">
+            <div class="icn pdf">PDF</div>
+            <span class="badge info">Histórico</span>
+          </div>
+          <div class="dc-meta">Ato constitutivo</div>
+          <div class="dc-name">Contrato social original</div>
+          <div class="dc-sub">Versão 1 · constituição 08/03/2023</div>
+          <div class="dc-foot"><span>1,6 MB · PDF</span><a href="#">Abrir ↗</a></div>
+        </div>
+      </div>
+
+      <!-- LICENCIAMENTO -->
+      <div class="sub-hd" style="margin-top:10px">Licenciamento municipal</div>
+      <div class="docs-grid">
+        <div class="doc-card">
+          <div class="dc-hd">
+            <div class="icn pdf">PDF</div>
+            <span class="badge ok">Vigente</span>
+          </div>
+          <div class="dc-meta">PBH · alvará</div>
+          <div class="dc-name">Alvará de funcionamento</div>
+          <div class="dc-sub">Válido até 31/12/2026 · processo 01-034521/25</div>
+          <div class="dc-foot"><span>1,4 MB · PDF</span><a href="#">Abrir ↗</a></div>
+        </div>
+
+        <div class="doc-card">
+          <div class="dc-hd">
+            <div class="icn pdf">PDF</div>
+            <span class="badge ok">Atual</span>
+          </div>
+          <div class="dc-meta">Comprovantes</div>
+          <div class="dc-name">Comprovante de endereço</div>
+          <div class="dc-sub">Conta CEMIG · março/2026</div>
+          <div class="dc-foot"><span>340 KB · PDF</span><a href="#">Abrir ↗</a></div>
+        </div>
+
+        <div class="doc-card">
+          <div class="dc-hd">
+            <div class="icn pdf">PDF</div>
+            <span class="badge warn">A renovar</span>
+          </div>
+          <div class="dc-meta">Bombeiros · AVCB</div>
+          <div class="dc-name">Auto de vistoria (AVCB)</div>
+          <div class="dc-sub">Expira 15/07/2026 · abrir renovação em maio</div>
+          <div class="dc-foot"><span>620 KB · PDF</span><a href="#">Abrir ↗</a></div>
+        </div>
+      </div>
+
+      <!-- OBRIGAÇÕES TRIBUTÁRIAS -->
+      <div class="sub-hd" style="margin-top:10px">Obrigações tributárias</div>
+      <div class="docs-grid">
+        <div class="doc-card">
+          <div class="dc-hd">
+            <div class="icn xlsx">XLS</div>
+            <span class="badge info">Atual</span>
+          </div>
+          <div class="dc-meta">DAS histórico</div>
+          <div class="dc-name">DAS 2026 pago</div>
+          <div class="dc-sub">jan/fev/mar/abr compensados · débito BTG</div>
+          <div class="dc-foot"><span>68 KB · XLSX</span><a href="#">Abrir ↗</a></div>
+        </div>
+
+        <div class="doc-card">
+          <div class="dc-hd">
+            <div class="icn pdf">PDF</div>
+            <span class="badge ok">Entregue</span>
+          </div>
+          <div class="dc-meta">Declaração anual</div>
+          <div class="dc-name">DEFIS 2025</div>
+          <div class="dc-sub">Entregue 28/03/2026 · Receita Federal</div>
+          <div class="dc-foot"><span>140 KB · PDF</span><a href="#">Abrir ↗</a></div>
+        </div>
+
+        <div class="doc-card">
+          <div class="dc-hd">
+            <div class="icn pdf">PDF</div>
+            <span class="badge ok">Regular</span>
+          </div>
+          <div class="dc-meta">Certidão negativa</div>
+          <div class="dc-name">CND conjunta Receita/PGFN</div>
+          <div class="dc-sub">Emitida 15/04/2026 · vale 180 dias</div>
+          <div class="dc-foot"><span>210 KB · PDF</span><a href="#">Abrir ↗</a></div>
+        </div>
+      </div>
+
+      <!-- IDENTIDADE VISUAL -->
+      <div class="sub-hd" style="margin-top:10px">Identidade visual das marcas</div>
+      <div class="docs-grid">
+        <div class="doc-card">
+          <div class="dc-hd">
+            <div class="icn img">SVG</div>
+            <span class="badge ok">Vigente</span>
+          </div>
+          <div class="dc-meta">Marca · Zenon</div>
+          <div class="dc-name">zenon-marca.svg</div>
+          <div class="dc-sub">Logotipo vetorial · usado em NFS-e, topo do sistema e cabeçalho de propostas</div>
+          <div class="dc-foot"><span>14 KB · SVG</span><a href="#">Abrir ↗</a></div>
+        </div>
+
+        <div class="doc-card">
+          <div class="dc-hd">
+            <div class="icn img">SVG</div>
+            <span class="badge ok">Vigente</span>
+          </div>
+          <div class="dc-meta">Marca · Yvyra Arq</div>
+          <div class="dc-name">yvyra-arq.svg</div>
+          <div class="dc-sub">Logotipo da marca Yvyra Arquitetura · proposta de projeto</div>
+          <div class="dc-foot"><span>18 KB · SVG</span><a href="#">Abrir ↗</a></div>
+        </div>
+
+        <div class="doc-card">
+          <div class="dc-hd">
+            <div class="icn img">SVG</div>
+            <span class="badge ok">Vigente</span>
+          </div>
+          <div class="dc-meta">Marca · Zenon Stay</div>
+          <div class="dc-name">zenon-stay.svg</div>
+          <div class="dc-sub">Logotipo da marca Zenon Stay · proposta de hospedagem</div>
+          <div class="dc-foot"><span>16 KB · SVG</span><a href="#">Abrir ↗</a></div>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+</main>
+
+<footer style="max-width:1280px;margin:0 auto;padding:18px 36px 36px;display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--ink-mute);letter-spacing:.1em;text-transform:uppercase;font-weight:500">
+  <div>Cabral e Lima Design LTDA · CNPJ 59.525.877/0001-49 · CAU/BR A148704-5</div>
+  <div>sistema.zenonco.com.br · empresa</div>
+</footer>
+
+<script>
+  // Side nav: destaca o item conforme a seção visível
+  const sideLinks = document.querySelectorAll('.emp-side a[href^="#"]');
+  const sections = Array.from(sideLinks).map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+
+  function onScroll(){
+    const y = window.scrollY + 140;
+    let active = sections[0];
+    for(const s of sections){ if(s.offsetTop <= y) active = s; }
+    if(active){
+      sideLinks.forEach(a => {
+        a.classList.toggle('on', a.getAttribute('href') === '#' + active.id);
+      });
+    }
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  document.addEventListener('DOMContentLoaded', onScroll);
+</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script src="supabase-client.js"></script>
+  <script src="shell-user.js"></script>
+<script src="shell-fx.js"></script>
+</body>
+</html>
