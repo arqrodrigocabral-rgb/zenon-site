@@ -774,7 +774,60 @@
         { n: 2, desc: '2ª parcela', venc: '05/04/2026', valor: 10000.00, status: 'Recebido' },
         { n: 3, desc: '3ª parcela', venc: '06/05/2026', valor: 7920.00,  status: 'Pendente' }
       ]
-    }
+    },
+    'FIN-03': {
+      id: 'FIN-03',
+      titulo: 'Consultoria exterior',
+      clienteNome: 'Eliana',
+      cliente: 'CLI-6',
+      projetoId: 'P-06',
+      unidade: 'Yvyra Lab',
+      receita: 'Consultoria',
+      forma: 'PIX',
+      nf: 'Não necessário',
+      total: 2660.00,
+      recebido: 1596.00,
+      aReceber: 1330.00,
+      parcelas: [
+        { n: 1, desc: '1ª parcela', venc: '06/04/2026', valor: 1596.00, status: 'Recebido' },
+        { n: 2, desc: '2ª parcela', venc: '25/04/2026', valor: 1330.00, status: 'Pendente' }
+      ]
+    },
+    'FIN-04': {
+      id: 'FIN-04',
+      titulo: 'RT marcenaria',
+      clienteNome: 'Rafael Monici',
+      cliente: 'CLI-4',
+      projetoId: 'P-01',
+      unidade: 'Yvyra Lab',
+      receita: 'RT Responsabilidade Técnica',
+      forma: 'PIX',
+      nf: 'Não necessário',
+      total: 2650.00,
+      recebido: 1325.00,
+      aReceber: 1325.00,
+      parcelas: [
+        { n: 1, desc: '1ª parcela — Entrada', venc: '28/01/2026', valor: 1325.00, status: 'Recebido' },
+        { n: 2, desc: '2ª parcela',            venc: '01/05/2026', valor: 1325.00, status: 'Pendente' }
+      ]
+    },
+    'FIN-05': {
+      id: 'FIN-05',
+      titulo: 'RT marcenaria (complemento)',
+      clienteNome: 'Rafael Monici',
+      cliente: 'CLI-4',
+      projetoId: 'P-01',
+      unidade: 'Yvyra Lab',
+      receita: 'RT Responsabilidade Técnica',
+      forma: 'PIX',
+      nf: 'Não necessário',
+      total: 380.00,
+      recebido: 0,
+      aReceber: 380.00,
+      parcelas: [
+        { n: 1, desc: '1ª parcela', venc: '30/04/2026', valor: 190.00, status: 'Pendente' }
+      ]
+
   };
 
   /* ---------- 6. STORE: localStorage overrides ----------
