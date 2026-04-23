@@ -337,7 +337,7 @@ async function doLogin(e) {
     const found = DEMO_CLIENTS.find(c => c.user === user && c.pwd === pwd);
     if (found) {
       sessionStorage.setItem('zenon_cliente', JSON.stringify({ nome: found.nome, slug: found.slug }));
-      window.location.href = 'index.html#page-portal';
+      window.location.href = 'index.html#portal';
       return;
     }
     showLoading(false);
@@ -350,7 +350,7 @@ function redirectByRole(role, user) {
     window.location.href = 'sistema-painel.html';
   } else {
     sessionStorage.setItem('zenon_cliente', JSON.stringify({ email: user.email }));
-    window.location.href = 'index.html#page-portal';
+    window.location.href = 'index.html#portal';
   }
 }
 </script>
