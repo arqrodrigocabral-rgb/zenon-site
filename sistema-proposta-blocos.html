@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biblioteca de blocos — Zenon Sistema</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shell.css">
+<style>
+  main.bib{max-width:1280px;padding:24px 36px 56px;display:flex;flex-direction:column;gap:22px}
+
+  .crumbs{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-mute);font-weight:600;display:flex;gap:8px;align-items:center}
+  .crumbs a{color:var(--ink-soft);text-decoration:none}
+  .crumbs a:hover{color:var(--accent-ink)}
+  .crumbs .sep{color:var(--line-strong)}
+
+  /* HEAD */
+  .bib-head{background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:28px 32px;display:grid;grid-template-columns:1fr auto;gap:24px;align-items:end}
+  .bib-head h1{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:38px;font-weight:400;color:var(--ink);line-height:1.05}
+  .bib-head h1 em{font-style:italic;color:var(--accent-ink)}
+  .bib-head p{font-size:13px;color:var(--ink-body);margin-top:8px;max-width:640px;line-height:1.6}
+  .bib-head .actions{display:flex;gap:10px;flex-shrink:0}
+
+  .btn{font-family:'Inter',sans-serif;font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;padding:10px 18px;border-radius:3px;cursor:pointer;text-align:center;text-decoration:none;border:1px solid var(--line-strong);color:var(--ink-soft);background:var(--bg)}
+  .btn:hover{border-color:var(--accent);color:var(--accent-ink)}
+  .btn.primary{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .btn.primary:hover{background:var(--accent-ink);border-color:var(--accent-ink);color:#fff}
+
+  /* toolbar */
+  .toolbar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:14px 18px}
+  .toolbar .search{flex:1;min-width:260px;position:relative}
+  .toolbar .search input{width:100%;border:1px solid var(--line);background:var(--bg);padding:9px 13px 9px 36px;font-family:'Inter',sans-serif;font-size:13px;color:var(--ink);border-radius:3px}
+  .toolbar .search::before{content:'⌕';position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--ink-mute);font-size:14px}
+  .chips{display:flex;gap:6px;flex-wrap:wrap}
+  .chip{font-size:11px;letter-spacing:.1em;text-transform:uppercase;font-weight:600;padding:7px 14px;border:1px solid var(--line);border-radius:18px;cursor:pointer;color:var(--ink-soft);background:var(--bg)}
+  .chip.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .chip:hover:not(.on){border-color:var(--line-strong)}
+
+  /* grid */
+  .blocks-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  @media (max-width:1100px){.blocks-grid{grid-template-columns:repeat(2,1fr)}}
+  @media (max-width:720px){.blocks-grid{grid-template-columns:1fr}}
+
+  .block{background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:20px 22px;display:flex;flex-direction:column;gap:12px;transition:border-color .15s,box-shadow .15s;cursor:pointer}
+  .block:hover{border-color:var(--accent);box-shadow:0 4px 14px rgba(26,22,18,.06)}
+
+  .block-head{display:flex;justify-content:space-between;align-items:center;gap:10px}
+  .block-cat{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-mute);font-weight:700}
+  .block-cat.cat-escopo{color:#8e5a2b}
+  .block-cat.cat-pagto{color:#2d6a4f}
+  .block-cat.cat-servico{color:#3b4d8e}
+  .block-cat.cat-texto{color:#6b3b7a}
+
+  .block h3{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:22px;font-weight:500;color:var(--ink);line-height:1.15}
+  .block h3 em{font-style:italic;color:var(--accent-ink)}
+
+  .block .desc{font-size:12px;color:var(--ink-body);line-height:1.5;flex:1}
+
+  .block-meta{display:flex;justify-content:space-between;align-items:center;padding-top:10px;border-top:1px solid var(--line-soft);font-size:11px;color:var(--ink-mute)}
+  .block-meta .val{color:var(--ink);font-weight:600;font-variant-numeric:tabular-nums}
+  .block-meta .uses{letter-spacing:.08em}
+
+  .block-preview{background:var(--bg-alt);border:1px solid var(--line-soft);border-radius:3px;padding:10px 12px;font-size:11px;color:var(--ink-soft);line-height:1.5;font-style:italic;max-height:60px;overflow:hidden;position:relative}
+  .block-preview::after{content:'';position:absolute;bottom:0;left:0;right:0;height:18px;background:linear-gradient(to bottom,transparent,var(--bg-alt))}
+
+  .block-actions{display:flex;gap:8px;padding-top:6px}
+  .block-btn{flex:1;font-size:10px;letter-spacing:.12em;text-transform:uppercase;padding:7px 10px;border:1px solid var(--line);border-radius:2px;background:var(--bg);color:var(--ink-soft);font-weight:600;cursor:pointer;text-align:center;text-decoration:none}
+  .block-btn:hover{border-color:var(--accent);color:var(--accent-ink)}
+  .block-btn.primary{background:var(--accent-soft);border-color:var(--accent);color:var(--accent-ink)}
+
+  /* section heads */
+  .sec-head{display:flex;align-items:baseline;gap:12px;padding:8px 4px;border-bottom:1px solid var(--line-soft);margin-bottom:-6px}
+  .sec-head h2{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:24px;font-weight:500;color:var(--ink)}
+  .sec-head h2 em{font-style:italic;color:var(--accent-ink)}
+  .sec-head .ct{font-size:11px;letter-spacing:.14em;color:var(--ink-mute);font-weight:600}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-inner">
+    <div class="brand">Zen<span>o</span>n — Sistema</div>
+    <div class="search"><input type="search" placeholder="Buscar…"></div>
+    <div class="fx-chip" title="Cotação do dólar (USD/BRL)">
+      <span class="fx-code">USD</span>
+      <span class="fx-val"><span class="cur">R$</span>—</span>
+      <span class="fx-delta flat">…</span>
+      <div class="fx-tip"></div>
+    </div>
+
+    <div class="user-menu">
+      <button type="button" class="user-trigger" onclick="ZenonUser.toggleDropdown(event)" aria-haspopup="true" aria-expanded="false">
+        <span class="u-name" data-user-name>Rodrigo</span>
+        <span class="avatar" data-user="me">R</span>
+        <span class="u-caret">▾</span>
+      </button>
+      <div class="user-dropdown" role="menu">
+        <div class="ud-head">
+          <span class="avatar" data-user="me">R</span>
+          <div>
+            <div class="name" data-user-name>Rodrigo</div>
+            <div class="role" data-user-role>Sócio · Arquiteto responsável</div>
+          </div>
+        </div>
+        <a href="sistema-perfil.html"><span class="ic">◎</span>Ver perfil</a>
+        <a href="sistema-configuracoes.html"><span class="ic">⚙</span>Configurações</a>
+        <a href="sistema-empresa.html"><span class="ic">⌂</span>Dados da empresa</a>
+        <a href="https://www.notion.so/Zenon" target="_blank"><span class="ic">✱</span>Atividades · Notion ↗</a>
+        <div class="ud-sep"></div>
+        <a href="sistema-login.html" class="sign-out"><span class="ic">↪</span>Sair</a>
+      </div>
+    </div>
+  </div>
+  <nav class="tabs">
+    <a href="sistema-painel.html">Painel</a>
+    <a href="sistema-clientes.html">Clientes</a>
+    <a href="sistema-projetos.html">Projetos</a>
+    <a href="sistema-obra.html">Obra</a>
+    <a href="sistema-obra-financeiro.html">Obra financeiro</a>
+    <a href="sistema-propostas.html" class="active">Propostas</a>
+    <a href="sistema-financeiro.html">Financeiro</a>
+    <a href="sistema-empresa.html">Empresa</a>
+    <a href="sistema-log.html">Log da equipe</a>
+  </nav>
+</header>
+
+<main class="bib">
+
+  <div class="crumbs">
+    <a href="sistema-propostas.html">Propostas</a>
+    <span class="sep">›</span>
+    <span>Biblioteca de blocos</span>
+  </div>
+
+  <!-- HEAD -->
+  <section class="bib-head">
+    <div>
+      <h1>Biblioteca de <em>blocos</em></h1>
+      <p>Escopos, serviços, condições de pagamento e textos reutilizáveis. Arraste para qualquer proposta nova ou use o botão "aplicar" para inserir direto. Mantenha aqui o que você escreve mais de uma vez.</p>
+    </div>
+    <div class="actions">
+      <button type="button" class="btn" onclick="importarTemplate()">Importar template</button>
+      <button type="button" class="btn primary" onclick="novoBloco()">+ Novo bloco</button>
+    </div>
+  </section>
+
+  <!-- TOOLBAR -->
+  <div class="toolbar">
+    <div class="search"><input type="search" placeholder="Buscar por título, descrição ou tag..."></div>
+    <div class="chips">
+      <span class="chip on">Todos</span>
+      <span class="chip">Escopo</span>
+      <span class="chip">Pagamento</span>
+      <span class="chip">Serviços</span>
+      <span class="chip">Textos</span>
+      <span class="chip">Yvyra Arquitetura</span>
+      <span class="chip">Zenon Stay</span>
+      <span class="chip">Zenon Vision</span>
+    </div>
+  </div>
+
+  <!-- ESCOPO -->
+  <div class="sec-head">
+    <h2>Itens de <em>escopo</em></h2>
+    <span class="ct">6 blocos · usados em 47 propostas</span>
+  </div>
+
+  <div class="blocks-grid">
+
+    <div class="block">
+      <div class="block-head">
+        <span class="block-cat cat-escopo">Escopo · Residencial</span>
+        <span style="font-size:10px;color:var(--ok);font-weight:700;letter-spacing:.1em">EM USO</span>
+      </div>
+      <h3>Levantamento e <em>briefing</em></h3>
+      <div class="desc">Visita técnica, medição in loco, entrevistas com cliente e definição de partido conceitual.</div>
+      <div class="block-preview">"Etapa dedicada a compreender o terreno, o programa de necessidades e as aspirações do cliente. Inclui visita técnica, levantamento métrico arquitetônico, fotografias e documento de partido..."</div>
+      <div class="block-meta">
+        <span class="uses">Usado 23× · últ. 14/04</span>
+        <span class="val">R$ 8.000</span>
+      </div>
+      <div class="block-actions">
+        <a href="#" class="block-btn">Editar</a>
+        <a href="sistema-proposta-nova.html" class="block-btn primary">Aplicar</a>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-head">
+        <span class="block-cat cat-escopo">Escopo · Residencial</span>
+      </div>
+      <h3>Projeto de <em>arquitetura</em></h3>
+      <div class="desc">Estudo preliminar, anteprojeto e projeto legal (aprovação prefeitura). Para residências até 250 m².</div>
+      <div class="block-preview">"Desenvolvimento do projeto arquitetônico em três etapas sequenciais, desde a forma até a documentação legal necessária para aprovação na prefeitura. Entrega inclui plantas, cortes, fachadas..."</div>
+      <div class="block-meta">
+        <span class="uses">Usado 19× · últ. 14/04</span>
+        <span class="val">R$ 42.000</span>
+      </div>
+      <div class="block-actions">
+        <a href="#" class="block-btn">Editar</a>
+        <a href="sistema-proposta-nova.html" class="block-btn primary">Aplicar</a>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-head">
+        <span class="block-cat cat-escopo">Escopo · Residencial</span>
+      </div>
+      <h3>Projeto <em>executivo</em></h3>
+      <div class="desc">Detalhamento construtivo, especificações, compatibilização e memorial descritivo.</div>
+      <div class="block-preview">"Documentação técnica completa para execução da obra. Inclui detalhamento de paginação de pisos, marcenaria, iluminação, pontos hidráulicos, elétricos e de automação..."</div>
+      <div class="block-meta">
+        <span class="uses">Usado 17×</span>
+        <span class="val">R$ 38.000</span>
+      </div>
+      <div class="block-actions">
+        <a href="#" class="block-btn">Editar</a>
+        <a href="sistema-proposta-nova.html" class="block-btn primary">Aplicar</a>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-head">
+        <span class="block-cat cat-escopo">Escopo · Interiores</span>
+      </div>
+      <h3>Design de <em>interiores</em></h3>
+      <div class="desc">Ambientação, moodboard, marcenaria sob medida, especificação de mobiliário e iluminação decorativa.</div>
+      <div class="block-preview">"Concepção e detalhamento dos ambientes internos. Desenvolvimento de moodboard, paleta de cores, seleção de revestimentos, mobiliário sob medida e solto, iluminação decorativa..."</div>
+      <div class="block-meta">
+        <span class="uses">Usado 12×</span>
+        <span class="val">R$ 28.000</span>
+      </div>
+      <div class="block-actions">
+        <a href="#" class="block-btn">Editar</a>
+        <a href="sistema-proposta-nova.html" class="block-btn primary">Aplicar</a>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-head">
+        <span class="block-cat cat-escopo">Escopo · Obra</span>
+      </div>
+      <h3>Acompanhamento de <em>obra</em></h3>
+      <div class="desc">Visitas quinzenais ou semanais durante a execução. Relatório fotográfico, interface com mestre e fornecedores.</div>
+      <div class="block-preview">"Presença periódica no canteiro durante toda a execução. A cada visita produzimos relatório fotográfico com pontos de atenção, registro de avanço físico e orientações técnicas..."</div>
+      <div class="block-meta">
+        <span class="uses">Usado 14×</span>
+        <span class="val">R$ 1.500/mês</span>
+      </div>
+      <div class="block-actions">
+        <a href="#" class="block-btn">Editar</a>
+        <a href="sistema-proposta-nova.html" class="block-btn primary">Aplicar</a>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-head">
+        <span class="block-cat cat-escopo">Escopo · Regularização</span>
+      </div>
+      <h3>Regularização <em>edilícia</em></h3>
+      <div class="desc">Levantamento as-built, atualização cadastral, habite-se, laudos técnicos e protocolo na prefeitura.</div>
+      <div class="block-preview">"Processo completo de regularização da edificação existente junto ao órgão municipal. Inclui levantamento as-built, elaboração ou atualização do projeto arquitetônico e acompanhamento..."</div>
+      <div class="block-meta">
+        <span class="uses">Usado 5×</span>
+        <span class="val">R$ 14.000</span>
+      </div>
+      <div class="block-actions">
+        <a href="#" class="block-btn">Editar</a>
+        <a href="sistema-proposta-nova.html" class="block-btn primary">Aplicar</a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- PAGAMENTO -->
+  <div class="sec-head">
+    <h2>Condições de <em>pagamento</em></h2>
+    <span class="ct">4 blocos</span>
+  </div>
+
+  <div class="blocks-grid">
+
+    <div class="block">
+      <div class="block-head">
+        <span class="block-cat cat-pagto">Pagamento · Padrão</span>
+        <span style="font-size:10px;color:var(--accent-ink);font-weight:700;letter-spacing:.1em">★ FAVORITO</span>
+      </div>
+      <h3>30% + 6 parcelas <em>mensais</em></h3>
+      <div class="desc">Sinal de 30% na assinatura + saldo dividido em 6 parcelas mensais iguais após o início.</div>
+      <div class="block-preview">"Sinal: 30% no ato da assinatura do contrato. Saldo: 70% dividido em 6 parcelas mensais iguais, iniciando 30 dias após assinatura. Meios: PIX, transferência, cartão em até 12×..."</div>
+      <div class="block-meta">
+        <span class="uses">Usado 28×</span>
+        <span class="val">30 + 6×</span>
+      </div>
+      <div class="block-actions">
+        <a href="#" class="block-btn">Editar</a>
+        <a href="sistema-proposta-nova.html" class="block-btn primary">Aplicar</a>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-head">
+        <span class="block-cat cat-pagto">Pagamento · Por etapa</span>
+      </div>
+      <h3>Pagamento por <em>entrega</em></h3>
+      <div class="desc">20% sinal + 30% anteprojeto + 30% executivo + 20% entrega final. Alinhado a marcos de entrega.</div>
+      <div class="block-preview">"Parcelamento vinculado à entrega de cada etapa do projeto. Sinal de 20% na assinatura; 30% na entrega do anteprojeto; 30% na entrega do executivo; 20% na entrega final..."</div>
+      <div class="block-meta">
+        <span class="uses">Usado 9×</span>
+        <span class="val">4 marcos</span>
+      </div>
+      <div class="block-actions">
+        <a href="#" class="block-btn">Editar</a>
+        <a href="sistema-proposta-nova.html" class="block-btn primary">Aplicar</a>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-head">
+        <span class="block-cat cat-pagto">Pagamento · Recorrente</span>
+      </div>
+      <h3>Mensalidade <em>fixa</em></h3>
+      <div class="desc">Fee mensal fixo para consultoria contínua, acompanhamento ou contratos de gestão (Zenon Stay).</div>
+      <div class="block-preview">"Valor mensal fixo referente à prestação contínua de serviços de [consultoria / gestão / manutenção]. Pagamento todo dia 10. Reajuste anual pelo IPCA. Rescisão com aviso prévio..."</div>
+      <div class="block-meta">
+        <span class="uses">Usado 6×</span>
+        <span class="val">mensal</span>
+      </div>
+      <div class="block-actions">
+        <a href="#" class="block-btn">Editar</a>
+        <a href="sistema-proposta-nova.html" class="block-btn primary">Aplicar</a>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-head">
+        <span class="block-cat cat-pagto">Pagamento · À vista</span>
+      </div>
+      <h3>À vista com <em>desconto</em></h3>
+      <div class="desc">Pagamento integral à vista com desconto de 8%. Ideal para clientes que preferem encerrar logo.</div>
+      <div class="block-preview">"Pagamento integral do valor da proposta à vista, no ato da assinatura, com desconto de 8% sobre o valor total. Meios aceitos: PIX, transferência bancária TED..."</div>
+      <div class="block-meta">
+        <span class="uses">Usado 3×</span>
+        <span class="val">-8%</span>
+      </div>
+      <div class="block-actions">
+        <a href="#" class="block-btn">Editar</a>
+        <a href="sistema-proposta-nova.html" class="block-btn primary">Aplicar</a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- TEXTOS -->
+  <div class="sec-head">
+    <h2>Textos <em>institucionais</em></h2>
+    <span class="ct">5 blocos</span>
+  </div>
+
+  <div class="blocks-grid">
+
+    <div class="block">
+      <div class="block-head">
+        <span class="block-cat cat-texto">Texto · Sobre</span>
+      </div>
+      <h3>Sobre a <em>Zenon</em></h3>
+      <div class="desc">Apresentação institucional padrão — manifesto, trajetória, unidades de negócio e time.</div>
+      <div class="block-preview">"A Zenon é uma plataforma de arquitetura e cultura material. Operamos em seis unidades complementares, cada uma com foco em uma escala de atuação..."</div>
+      <div class="block-meta">
+        <span class="uses">Usado 34×</span>
+        <span class="val">2 páginas</span>
+      </div>
+      <div class="block-actions">
+        <a href="#" class="block-btn">Editar</a>
+        <a href="sistema-proposta-nova.html" class="block-btn primary">Aplicar</a>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-head">
+        <span class="block-cat cat-texto">Texto · Método</span>
+      </div>
+      <h3>Como <em>trabalhamos</em></h3>
+      <div class="desc">Explicação do método Zenon — escuta, partido, detalhamento e acompanhamento.</div>
+      <div class="block-preview">"Nosso método se desenvolve em quatro momentos: escuta profunda do cliente e do lugar; formulação do partido como hipótese projetual; detalhamento técnico rigoroso; e acompanhamento..."</div>
+      <div class="block-meta">
+        <span class="uses">Usado 29×</span>
+        <span class="val">1 página</span>
+      </div>
+      <div class="block-actions">
+        <a href="#" class="block-btn">Editar</a>
+        <a href="sistema-proposta-nova.html" class="block-btn primary">Aplicar</a>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-head">
+        <span class="block-cat cat-texto">Texto · Não incluso</span>
+      </div>
+      <h3>O que <em>não está incluso</em></h3>
+      <div class="desc">Lista padrão de itens fora do escopo — taxas, projetos complementares, licenças, mobiliário.</div>
+      <div class="block-preview">"Não estão contemplados nesta proposta: taxas e emolumentos municipais; projetos complementares (estrutural, hidráulico, elétrico, AVCB); licenças ambientais; mobiliário e decoração..."</div>
+      <div class="block-meta">
+        <span class="uses">Usado 31×</span>
+        <span class="val">lista 8 itens</span>
+      </div>
+      <div class="block-actions">
+        <a href="#" class="block-btn">Editar</a>
+        <a href="sistema-proposta-nova.html" class="block-btn primary">Aplicar</a>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-head">
+        <span class="block-cat cat-texto">Texto · Validade</span>
+      </div>
+      <h3>Termos de <em>validade</em></h3>
+      <div class="desc">Cláusula padrão de validade (30 dias), reajuste (IPCA) e condições de assinatura digital.</div>
+      <div class="block-preview">"Esta proposta tem validade de 30 dias a partir da data de emissão. Os valores serão reajustados anualmente pelo IPCA. A aceitação se dá por assinatura digital no portal do cliente..."</div>
+      <div class="block-meta">
+        <span class="uses">Usado 32×</span>
+        <span class="val">1 parágrafo</span>
+      </div>
+      <div class="block-actions">
+        <a href="#" class="block-btn">Editar</a>
+        <a href="sistema-proposta-nova.html" class="block-btn primary">Aplicar</a>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-head">
+        <span class="block-cat cat-texto">Texto · Aceite</span>
+      </div>
+      <h3>Declaração de <em>aceite</em></h3>
+      <div class="desc">Texto de aceite com campos de assinatura para cliente e Zenon, data e testemunhas.</div>
+      <div class="block-preview">"Declaro que li e aceito integralmente os termos desta proposta, incluindo escopo, valores, condições de pagamento e prazos. Este aceite tem valor contratual conforme Lei 14.063/2020..."</div>
+      <div class="block-meta">
+        <span class="uses">Usado 30×</span>
+        <span class="val">assinatura</span>
+      </div>
+      <div class="block-actions">
+        <a href="#" class="block-btn">Editar</a>
+        <a href="sistema-proposta-nova.html" class="block-btn primary">Aplicar</a>
+      </div>
+    </div>
+
+  </div>
+
+</main>
+
+<script>
+  function importarTemplate(){
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = '.json,.md,.txt';
+    input.onchange = (e)=>{
+      const f = e.target.files?.[0];
+      if(!f) return;
+      const t = document.createElement('div');
+      t.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#2a6040;color:#fff;padding:12px 22px;border-radius:4px;font-family:Inter,sans-serif;font-size:13px;z-index:9999;box-shadow:0 10px 28px rgba(0,0,0,.22)';
+      t.textContent = '✓ Template "' + f.name + '" importado';
+      document.body.appendChild(t);
+      setTimeout(()=> t.remove(), 2600);
+    };
+    input.click();
+  }
+  function novoBloco(){
+    const nome = prompt('Nome do novo bloco:');
+    if(!nome) return;
+    const list = document.querySelector('.cards-grid, .bib-grid, .block-list, main');
+    if(!list) return;
+    const t = document.createElement('div');
+    t.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#2a6040;color:#fff;padding:12px 22px;border-radius:4px;font-family:Inter,sans-serif;font-size:13px;z-index:9999';
+    t.textContent = '✓ Bloco "' + nome + '" criado · abra o editor pra preencher';
+    document.body.appendChild(t);
+    setTimeout(()=> t.remove(), 2600);
+  }
+</script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script src="supabase-client.js"></script>
+  <script src="shell-user.js"></script>
+<script src="shell-fx.js"></script>
+</body>
+</html>
