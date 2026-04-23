@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Projetos — Zenon Sistema</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shell.css">
+<style>
+  .filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+  .filters a{
+    padding:8px 14px;border:1px solid var(--line);border-radius:999px;
+    font-size:12px;letter-spacing:.12em;text-transform:uppercase;font-weight:500;color:var(--ink-soft);
+    background:var(--paper);transition:background .2s,color .2s,border-color .2s;
+  }
+  .filters a:hover{border-color:var(--accent);color:var(--ink)}
+  .filters a.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+
+  .proj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  @media (max-width:1100px){.proj-grid{grid-template-columns:repeat(2,1fr)}}
+  @media (max-width:700px){.proj-grid{grid-template-columns:1fr}}
+
+  .proj{
+    background:var(--paper);border:1px solid var(--line);border-radius:4px;
+    padding:22px;display:flex;flex-direction:column;gap:14px;
+    transition:transform .2s,box-shadow .2s,border-color .2s;
+  }
+  .proj:hover{transform:translateY(-2px);box-shadow:0 16px 32px -20px rgba(26,22,18,.18);border-color:var(--accent)}
+  .proj .id{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:14px;letter-spacing:.22em;color:var(--accent);font-weight:600}
+  .proj h3{font-size:22px;line-height:1.2;font-weight:500}
+  .proj .client{font-size:13px;color:var(--ink-soft)}
+  .proj .pct-big{
+    font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:48px;color:var(--ink);line-height:1;font-weight:500;
+  }
+  .proj .pct-big em{color:var(--accent-ink);font-style:normal}
+  .proj .meta-grid{
+    display:grid;grid-template-columns:1fr 1fr;gap:12px;
+    padding-top:14px;border-top:1px solid var(--line-soft);
+  }
+  .proj .meta-grid .m{display:flex;flex-direction:column;gap:3px}
+  .proj .meta-grid .m .l{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-mute);font-weight:600}
+  .proj .meta-grid .m .v{font-size:13px;color:var(--ink);font-weight:500}
+  .proj .tags{display:flex;gap:6px;flex-wrap:wrap}
+
+  /* ===== TRACKING BLOCK ===== */
+  .tracking-grid{display:grid;grid-template-columns:1.6fr 1fr;gap:18px}
+  @media (max-width:1000px){.tracking-grid{grid-template-columns:1fr}}
+
+  .tr-card{
+    background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:24px;
+  }
+  .tr-head{display:flex;justify-content:space-between;align-items:baseline;gap:14px;margin-bottom:14px}
+  .tr-head h3{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:22px;font-weight:500}
+  .tr-head h3 em{color:var(--accent-ink);font-style:italic}
+  .tr-head .tot{text-align:right}
+  .tr-head .tot .v{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:26px;color:var(--ink);font-weight:500;line-height:1}
+  .tr-head .tot .v em{color:var(--accent-ink);font-style:normal}
+  .tr-head .tot .l{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-mute);font-weight:600}
+
+  /* Horizontal bars · horas por projeto */
+  .hbar{display:flex;flex-direction:column;gap:12px;padding-top:6px}
+  .hbar-row{display:grid;grid-template-columns:150px 1fr 80px;gap:12px;align-items:center}
+  .hbar-row .hl{font-size:13px;color:var(--ink);font-weight:500}
+  .hbar-row .hl .sub{font-size:11px;color:var(--ink-mute);font-weight:500;letter-spacing:0;text-transform:none}
+  .hbar-row .track{background:var(--bg-alt);height:20px;border-radius:2px;overflow:hidden;position:relative}
+  .hbar-row .track span{
+    display:block;height:100%;background:var(--accent-ink);border-radius:2px;
+    transition:width .3s;
+  }
+  .hbar-row .track span.ok{background:var(--ok)}
+  .hbar-row .track span.warn{background:var(--warn)}
+  .hbar-row .track span.alert{background:var(--alert)}
+  .hbar-row .track span.info{background:var(--info)}
+  .hbar-row .hv{font-size:13px;color:var(--ink);font-weight:600;font-variant-numeric:tabular-nums;text-align:right}
+  .hbar-row .hv .sub{font-size:11px;color:var(--ink-mute);font-weight:500;display:block}
+
+  /* Produtividade da equipe */
+  .prod-list{display:flex;flex-direction:column;gap:14px;padding-top:4px}
+  .prod-row{display:grid;grid-template-columns:36px 1fr 60px;gap:12px;align-items:center;padding:8px 0;border-bottom:1px dashed var(--line-soft)}
+  .prod-row:last-child{border-bottom:none}
+  .prod-row .pav{
+    width:36px;height:36px;border-radius:50%;background:var(--accent-soft);color:var(--accent-ink);
+    display:flex;align-items:center;justify-content:center;font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:15px;font-weight:600;
+  }
+  .prod-row .pm .nm{font-size:13px;color:var(--ink);font-weight:600}
+  .prod-row .pm .pstats{font-size:11px;color:var(--ink-mute);font-weight:500;margin-top:3px}
+  .prod-row .pbar{background:var(--bg-alt);height:6px;border-radius:3px;overflow:hidden;margin-top:6px;width:100%}
+  .prod-row .pbar span{display:block;height:100%;background:var(--ok);border-radius:3px}
+  .prod-row .phrs{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:20px;color:var(--ink);font-weight:500;text-align:right;line-height:1}
+  .prod-row .phrs .sub{display:block;font-size:9px;font-family:'Inter',sans-serif;color:var(--ink-mute);letter-spacing:.14em;text-transform:uppercase;font-weight:600;margin-top:3px}
+
+  /* Pizzas de projeto */
+  .proj-pie-row{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+  @media (max-width:900px){.proj-pie-row{grid-template-columns:1fr}}
+  .pp-card{
+    background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:24px;
+    display:grid;grid-template-columns:160px 1fr;gap:22px;align-items:center;
+  }
+  @media (max-width:600px){.pp-card{grid-template-columns:1fr;justify-items:center;text-align:center}}
+  .pp-donut{width:160px;height:160px;position:relative}
+  .pp-donut svg{transform:rotate(-90deg)}
+  .pp-donut .cen{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center}
+  .pp-donut .cen .v{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:32px;color:var(--ink);font-weight:500;line-height:1}
+  .pp-donut .cen .l{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-mute);font-weight:600;margin-top:4px}
+  .pp-leg{display:flex;flex-direction:column;gap:6px}
+  .pp-leg h4{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:18px;font-weight:500;margin-bottom:4px}
+  .pp-leg h4 em{color:var(--accent-ink);font-style:italic}
+  .pp-leg .pr{display:grid;grid-template-columns:12px 1fr auto;gap:8px;align-items:center;font-size:12px;padding:5px 0;border-bottom:1px dashed var(--line-soft)}
+  .pp-leg .pr:last-child{border-bottom:none}
+  .pp-leg .pr i{width:10px;height:10px;border-radius:2px}
+  .pp-leg .pr .pp-n{color:var(--ink)}
+  .pp-leg .pr .pp-v{font-weight:600;font-variant-numeric:tabular-nums;color:var(--ink)}
+
+  /* Atividade da equipe · heatmap simples */
+  .activity-cal{display:grid;grid-template-columns:60px repeat(7,1fr);gap:6px;margin-top:6px}
+  .activity-cal .wd{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-mute);font-weight:600;text-align:center;padding:6px 0}
+  .activity-cal .nm{font-size:12px;color:var(--ink);font-weight:600;padding:8px 0;display:flex;align-items:center}
+  .activity-cal .dc{
+    aspect-ratio:1;border-radius:2px;background:var(--bg-alt);
+    display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--ink-mute);
+  }
+  .activity-cal .dc.l1{background:#e6d9c4;color:var(--ink-soft)}
+  .activity-cal .dc.l2{background:#d4b98c;color:var(--ink)}
+  .activity-cal .dc.l3{background:#b67a3b;color:#fff;font-weight:600}
+  .activity-cal .dc.l4{background:#6b4d1f;color:#fff;font-weight:700}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-inner">
+    <div class="brand">Zen<span>o</span>n — Sistema</div>
+    <div class="search"><input type="search" placeholder="Buscar projeto por nome, ID, cliente…"></div>
+    <div class="fx-chip" title="Cotação do dólar (USD/BRL)">
+      <span class="fx-code">USD</span>
+      <span class="fx-val"><span class="cur">R$</span>—</span>
+      <span class="fx-delta flat">…</span>
+      <div class="fx-tip"></div>
+    </div>
+
+    <div class="user-menu">
+      <button type="button" class="user-trigger" onclick="ZenonUser.toggleDropdown(event)" aria-haspopup="true" aria-expanded="false">
+        <span class="u-name" data-user-name>Rodrigo</span>
+        <span class="avatar" data-user="me">R</span>
+        <span class="u-caret">▾</span>
+      </button>
+      <div class="user-dropdown" role="menu">
+        <div class="ud-head">
+          <span class="avatar" data-user="me">R</span>
+          <div>
+            <div class="name" data-user-name>Rodrigo</div>
+            <div class="role" data-user-role>Sócio · Arquiteto responsável</div>
+          </div>
+        </div>
+        <a href="sistema-perfil.html"><span class="ic">◎</span>Ver perfil</a>
+        <a href="sistema-configuracoes.html"><span class="ic">⚙</span>Configurações</a>
+        <a href="sistema-empresa.html"><span class="ic">⌂</span>Dados da empresa</a>
+        <a href="https://www.notion.so/Zenon" target="_blank"><span class="ic">✱</span>Atividades · Notion ↗</a>
+        <div class="ud-sep"></div>
+        <a href="sistema-login.html" class="sign-out"><span class="ic">↪</span>Sair</a>
+      </div>
+    </div>
+  </div>
+  <nav class="tabs">
+    <a href="sistema-painel.html">Painel</a>
+    <a href="sistema-clientes.html">Clientes</a>
+    <a href="sistema-projetos.html" class="active">Projetos</a>
+    <a href="sistema-obra.html">Obra</a>
+    <a href="sistema-obra-financeiro.html">Obra financeiro</a>
+    <a href="sistema-propostas.html">Propostas</a>
+    <a href="sistema-financeiro.html">Financeiro</a>
+    <a href="sistema-empresa.html">Empresa</a>
+    <a href="sistema-log.html">Log da equipe</a>
+  </nav>
+</header>
+
+<main>
+  <div class="page-head">
+    <div>
+      <div class="eyebrow">Operação</div>
+      <h1><em>Projetos</em> em curso</h1>
+      <div class="sub">8 projetos · 6 ativos · 1 entregue · 1 aguardando · 1 em obra (Clínica ECCO)</div>
+    </div>
+    <div class="actions">
+      <a href="#" class="btn ghost small">Linha do tempo</a>
+      <a href="sistema-projeto-novo.html" class="btn small">+ Novo projeto</a>
+    </div>
+  </div>
+
+  <section>
+    <div class="kpis">
+      <div class="kpi"><div class="l">Total</div><div class="n">8</div><div class="delta">6 ativos · 1 entregue · 1 aguardando</div></div>
+      <div class="kpi"><div class="l">Em obra</div><div class="n">1</div><div class="delta">Clínica ECCO · 125 m²</div></div>
+      <div class="kpi"><div class="l">Em briefing</div><div class="n">2</div><div class="delta">Cleber · Juliana+Felipe</div></div>
+      <div class="kpi accent"><div class="l">Próxima entrega</div><div class="n" style="font-size:26px"><em>20 / 05</em></div><div class="delta" style="color:#e8a877">Clínica ECCO · 31 d</div></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="filters">
+      <a href="#" class="active">Todos</a>
+      <a href="#">Briefing</a>
+      <a href="#">Levantamento</a>
+      <a href="#">Executivo</a>
+      <a href="#">Legal / Regularização</a>
+      <a href="#">Obra</a>
+      <a href="#">Concluídos</a>
+    </div>
+
+    <div class="proj-grid">
+      <a href="sistema-projeto-detalhe.html?p=P-01" class="proj">
+        <div class="tags"><span class="badge ok">Obra</span><span class="badge neutral">Saúde · Clínica</span></div>
+        <div class="id">[02/2025] PROJETO</div>
+        <h3>Clínica ECCO</h3>
+        <div class="client">Rafael Monici · 125 m² · Brooklin Novo</div>
+        <div class="pct-big">90<em>%</em></div>
+        <div class="bar ok"><span style="width:90%"></span></div>
+        <div class="meta-grid">
+          <div class="m"><div class="l">Prazo obra</div><div class="v">20 / 05</div></div>
+          <div class="m"><div class="l">Restante</div><div class="v">31 d</div></div>
+          <div class="m"><div class="l">Etapas</div><div class="v">11 / 13</div></div>
+          <div class="m"><div class="l">Fase</div><div class="v">Finalização / Entrega</div></div>
+        </div>
+      </a>
+
+      <a href="sistema-projeto-detalhe.html?p=P-03" class="proj">
+        <div class="tags"><span class="badge alert">Legal / Condomínio</span><span class="badge neutral">Regularização</span></div>
+        <div class="id">[03/2026] PROJETO</div>
+        <h3>CT Darkhouse — Regularização</h3>
+        <div class="client">CT Darkhouse · XL (&gt; 500 m²) · Água Rasa-SP</div>
+        <div class="pct-big">55<em>%</em></div>
+        <div class="bar warn"><span style="width:55%"></span></div>
+        <div class="meta-grid">
+          <div class="m"><div class="l">Início</div><div class="v">28 / 04</div></div>
+          <div class="m"><div class="l">ALF prev.</div><div class="v">10 / 05</div></div>
+          <div class="m"><div class="l">Valor</div><div class="v">R$ 75.400</div></div>
+          <div class="m"><div class="l">Fase</div><div class="v">ALVARÁ + AS BUILT</div></div>
+        </div>
+      </a>
+
+      <a href="sistema-projeto-detalhe.html?p=P-02" class="proj">
+        <div class="tags"><span class="badge warn">Travado</span><span class="badge neutral">Residencial</span></div>
+        <div class="id">[04/2025] PROJETO</div>
+        <h3>APT Terrazzas</h3>
+        <div class="client">Tiago · M · Ponta da Praia, Santos</div>
+        <div class="pct-big">48<em>%</em></div>
+        <div class="bar warn"><span style="width:48%"></span></div>
+        <div class="meta-grid">
+          <div class="m"><div class="l">Status</div><div class="v">AGUARDANDO</div></div>
+          <div class="m"><div class="l">Restante</div><div class="v">—</div></div>
+          <div class="m"><div class="l">Tags</div><div class="v">URGENTE</div></div>
+          <div class="m"><div class="l">Fase</div><div class="v">Executivo / detalhamento</div></div>
+        </div>
+      </a>
+
+      <a href="sistema-projeto-detalhe.html?p=P-06" class="proj">
+        <div class="tags"><span class="badge info">Levantamento</span><span class="badge neutral">Rural</span></div>
+        <div class="id">[07/2026] PROJETO</div>
+        <h3>Consultoria Exterior Jaguari</h3>
+        <div class="client">Eliana · M · Represa do Jaguari, SJC</div>
+        <div class="pct-big">22<em>%</em></div>
+        <div class="bar info"><span style="width:22%"></span></div>
+        <div class="meta-grid">
+          <div class="m"><div class="l">Prazo</div><div class="v">—</div></div>
+          <div class="m"><div class="l">Restante</div><div class="v">—</div></div>
+          <div class="m"><div class="l">Etapas</div><div class="v">2 / 9</div></div>
+          <div class="m"><div class="l">Fase</div><div class="v">Levantamento / Criação</div></div>
+        </div>
+      </a>
+
+      <a href="sistema-projeto-detalhe.html?p=P-07" class="proj">
+        <div class="tags"><span class="badge neutral">Briefing</span><span class="badge info">VIP</span></div>
+        <div class="id">[08/2026] PROJETO</div>
+        <h3>APT Navegantes</h3>
+        <div class="client">Juliana e Felipe · L (150–500 m²) · Santos</div>
+        <div class="pct-big">12<em>%</em></div>
+        <div class="bar"><span style="width:12%"></span></div>
+        <div class="meta-grid">
+          <div class="m"><div class="l">Prazo</div><div class="v">—</div></div>
+          <div class="m"><div class="l">Complexidade</div><div class="v">ALTA</div></div>
+          <div class="m"><div class="l">Etapas</div><div class="v">1 / 12</div></div>
+          <div class="m"><div class="l">Fase</div><div class="v">Entrada / Briefing</div></div>
+        </div>
+      </a>
+
+      <a href="sistema-projeto-detalhe.html?p=P-05" class="proj">
+        <div class="tags"><span class="badge neutral">Briefing</span><span class="badge neutral">Residencial</span></div>
+        <div class="id">[06/2026] PROJETO</div>
+        <h3>APT Place Santana</h3>
+        <div class="client">Cleber e Tamara · M · São Paulo</div>
+        <div class="pct-big">10<em>%</em></div>
+        <div class="bar"><span style="width:10%"></span></div>
+        <div class="meta-grid">
+          <div class="m"><div class="l">Prazo</div><div class="v">—</div></div>
+          <div class="m"><div class="l">Restante</div><div class="v">—</div></div>
+          <div class="m"><div class="l">Etapas</div><div class="v">1 / 12</div></div>
+          <div class="m"><div class="l">Fase</div><div class="v">Entrada / Briefing</div></div>
+        </div>
+      </a>
+
+      <a href="sistema-projeto-detalhe.html?p=P-04" class="proj">
+        <div class="tags"><span class="badge warn">Aguardando cliente</span><span class="badge neutral">🎁 Gratuito</span></div>
+        <div class="id">[05/2026] PROJETO</div>
+        <h3>CREMILDA — Regularização</h3>
+        <div class="client">Cremilda · Rural · serviço cortesia</div>
+        <div class="pct-big">5<em>%</em></div>
+        <div class="bar warn"><span style="width:5%"></span></div>
+        <div class="meta-grid">
+          <div class="m"><div class="l">Status</div><div class="v">AGUARDANDO</div></div>
+          <div class="m"><div class="l">Valor</div><div class="v">R$ 0 (cortesia)</div></div>
+          <div class="m"><div class="l">Etapas</div><div class="v">—</div></div>
+          <div class="m"><div class="l">Fase</div><div class="v">Documentação pendente</div></div>
+        </div>
+      </a>
+
+      <a href="sistema-projeto-detalhe.html?p=P-08" class="proj">
+        <div class="tags"><span class="badge neutral">Concluído</span><span class="badge neutral">Residencial</span></div>
+        <div class="id">[12/2026] ARQUIVO</div>
+        <h3>APT Place Santana</h3>
+        <div class="client">Bruna e Thiago · L · entregue 14 / 04 / 26</div>
+        <div class="pct-big">100<em>%</em></div>
+        <div class="bar ok"><span style="width:100%"></span></div>
+        <div class="meta-grid">
+          <div class="m"><div class="l">Entregue</div><div class="v">14 / 04 / 26</div></div>
+          <div class="m"><div class="l">Pós-entrega</div><div class="v">Ativo</div></div>
+          <div class="m"><div class="l">Etapas</div><div class="v">12 / 12</div></div>
+          <div class="m"><div class="l">Fase</div><div class="v">Pós-entrega</div></div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <div><div class="eyebrow">Produtividade · últimos 30 dias</div><h2>Atividade <em>por projeto</em> e tracking da equipe</h2></div>
+      <div class="filters" style="margin-bottom:0">
+        <a href="#" class="active">30 d</a>
+        <a href="#">Semana</a>
+        <a href="#">Trimestre</a>
+      </div>
+    </div>
+
+    <div class="tracking-grid">
+      <!-- HORAS POR PROJETO -->
+      <div class="tr-card">
+        <div class="tr-head">
+          <div>
+            <h3>Horas por <em>projeto</em></h3>
+            <div class="sub" style="font-size:12px;color:var(--ink-soft);margin-top:4px">Alocação nos últimos 30 dias · 312 h totais</div>
+          </div>
+          <div class="tot">
+            <div class="v"><em>312</em> h</div>
+            <div class="l">Total do mês</div>
+          </div>
+        </div>
+        <div class="hbar">
+          <div class="hbar-row">
+            <div class="hl">Clínica ECCO<div class="sub">Obra · finalização (Rafael Monici)</div></div>
+            <div class="track"><span class="ok" style="width:88%"></span></div>
+            <div class="hv">118 h<div class="sub">38%</div></div>
+          </div>
+          <div class="hbar-row">
+            <div class="hl">CT Darkhouse<div class="sub">Regularização · ALF + AS BUILT</div></div>
+            <div class="track"><span class="info" style="width:62%"></span></div>
+            <div class="hv">82 h<div class="sub">26%</div></div>
+          </div>
+          <div class="hbar-row">
+            <div class="hl">APT Navegantes<div class="sub">Juliana + Felipe · briefing VIP</div></div>
+            <div class="track"><span style="width:32%"></span></div>
+            <div class="hv">42 h<div class="sub">14%</div></div>
+          </div>
+          <div class="hbar-row">
+            <div class="hl">Consultoria Jaguari<div class="sub">Eliana · levantamento</div></div>
+            <div class="track"><span class="info" style="width:24%"></span></div>
+            <div class="hv">30 h<div class="sub">10%</div></div>
+          </div>
+          <div class="hbar-row">
+            <div class="hl">APT Place Santana<div class="sub">Cleber + Tamara · briefing</div></div>
+            <div class="track"><span style="width:14%"></span></div>
+            <div class="hv">18 h<div class="sub">6%</div></div>
+          </div>
+          <div class="hbar-row">
+            <div class="hl">Outros · gestão<div class="sub">Administrativo, reunião, comercial</div></div>
+            <div class="track"><span class="alert" style="width:16%"></span></div>
+            <div class="hv">22 h<div class="sub">7%</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PRODUTIVIDADE DA EQUIPE -->
+      <div class="tr-card">
+        <div class="tr-head">
+          <div>
+            <h3>Tracking da <em>equipe</em></h3>
+            <div class="sub" style="font-size:12px;color:var(--ink-soft);margin-top:4px">Horas apontadas · utilização sobre meta</div>
+          </div>
+          <div class="tot">
+            <div class="v">4 / 4</div>
+            <div class="l">Pessoas ativas</div>
+          </div>
+        </div>
+        <div class="prod-list">
+          <div class="prod-row">
+            <div class="pav">R</div>
+            <div class="pm">
+              <div class="nm">Rodrigo <span style="color:var(--ink-mute);font-weight:500">· gestão</span></div>
+              <div class="pstats">96 h · 120% da meta · 4 projetos</div>
+              <div class="pbar"><span style="width:100%;background:var(--accent-ink)"></span></div>
+            </div>
+            <div class="phrs">96 h<span class="sub">Mês</span></div>
+          </div>
+          <div class="prod-row">
+            <div class="pav">B</div>
+            <div class="pm">
+              <div class="nm">Breno <span style="color:var(--ink-mute);font-weight:500">· CLT · complementares</span></div>
+              <div class="pstats">82 h · 103% da meta · 3 projetos</div>
+              <div class="pbar"><span style="width:86%"></span></div>
+            </div>
+            <div class="phrs">82 h<span class="sub">Mês</span></div>
+          </div>
+          <div class="prod-row">
+            <div class="pav">L</div>
+            <div class="pm">
+              <div class="nm">Luana <span style="color:var(--ink-mute);font-weight:500">· PJ · interiores</span></div>
+              <div class="pstats">78 h · 97% da meta · 4 projetos</div>
+              <div class="pbar"><span style="width:78%"></span></div>
+            </div>
+            <div class="phrs">78 h<span class="sub">Mês</span></div>
+          </div>
+          <div class="prod-row">
+            <div class="pav">A</div>
+            <div class="pm">
+              <div class="nm">Anderson <span style="color:var(--ink-mute);font-weight:500">· PJ · obra</span></div>
+              <div class="pstats">56 h · 70% da meta · 1 projeto</div>
+              <div class="pbar"><span style="width:56%;background:var(--warn)"></span></div>
+            </div>
+            <div class="phrs">56 h<span class="sub">Mês</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <div><div class="eyebrow">Distribuição do funil</div><h2>Projetos por <em>status</em> e por <em>tipo</em></h2></div>
+    </div>
+
+    <div class="proj-pie-row">
+      <!-- PROJETOS POR STATUS (8 reais) -->
+      <div class="pp-card">
+        <div class="pp-donut">
+          <svg width="160" height="160" viewBox="0 0 42 42">
+            <circle cx="21" cy="21" r="15.9" fill="none" stroke="var(--bg-alt)" stroke-width="7"></circle>
+            <!-- Obra 1/8 = 12.5% -->
+            <circle cx="21" cy="21" r="15.9" fill="none" stroke="#2f6f4f" stroke-width="7" stroke-dasharray="12.5 87.5" stroke-dashoffset="25"></circle>
+            <!-- Executivo 1/8 = 12.5% -->
+            <circle cx="21" cy="21" r="15.9" fill="none" stroke="#3a6db8" stroke-width="7" stroke-dasharray="12.5 87.5" stroke-dashoffset="12.5"></circle>
+            <!-- Legal / Regularização 2/8 = 25% -->
+            <circle cx="21" cy="21" r="15.9" fill="none" stroke="#a84545" stroke-width="7" stroke-dasharray="25 75" stroke-dashoffset="0"></circle>
+            <!-- Briefing 2/8 = 25% -->
+            <circle cx="21" cy="21" r="15.9" fill="none" stroke="#6a4f8a" stroke-width="7" stroke-dasharray="25 75" stroke-dashoffset="-25"></circle>
+            <!-- Levantamento 1/8 = 12.5% -->
+            <circle cx="21" cy="21" r="15.9" fill="none" stroke="#b67a3b" stroke-width="7" stroke-dasharray="12.5 87.5" stroke-dashoffset="-50"></circle>
+            <!-- Concluído 1/8 = 12.5% -->
+            <circle cx="21" cy="21" r="15.9" fill="none" stroke="#1a1612" stroke-width="7" stroke-dasharray="12.5 87.5" stroke-dashoffset="-62.5"></circle>
+          </svg>
+          <div class="cen">
+            <div class="v">8</div>
+            <div class="l">Projetos</div>
+          </div>
+        </div>
+        <div class="pp-leg">
+          <h4>Por <em>status</em></h4>
+          <div class="pr"><i style="background:#2f6f4f"></i><span class="pp-n">Obra · em execução</span><span class="pp-v">1</span></div>
+          <div class="pr"><i style="background:#3a6db8"></i><span class="pp-n">Executivo (travado)</span><span class="pp-v">1</span></div>
+          <div class="pr"><i style="background:#a84545"></i><span class="pp-n">Legal / Regularização</span><span class="pp-v">2</span></div>
+          <div class="pr"><i style="background:#6a4f8a"></i><span class="pp-n">Entrada / Briefing</span><span class="pp-v">2</span></div>
+          <div class="pr"><i style="background:#b67a3b"></i><span class="pp-n">Levantamento</span><span class="pp-v">1</span></div>
+          <div class="pr"><i style="background:#1a1612"></i><span class="pp-n">Entregue</span><span class="pp-v">1</span></div>
+        </div>
+      </div>
+
+      <!-- PROJETOS POR TIPO (8 reais) -->
+      <div class="pp-card">
+        <div class="pp-donut">
+          <svg width="160" height="160" viewBox="0 0 42 42">
+            <circle cx="21" cy="21" r="15.9" fill="none" stroke="var(--bg-alt)" stroke-width="7"></circle>
+            <!-- Residencial 5/8 = 62.5% -->
+            <circle cx="21" cy="21" r="15.9" fill="none" stroke="#2f6f4f" stroke-width="7" stroke-dasharray="62.5 37.5" stroke-dashoffset="25"></circle>
+            <!-- Regularização / Legal 2/8 = 25% -->
+            <circle cx="21" cy="21" r="15.9" fill="none" stroke="#a84545" stroke-width="7" stroke-dasharray="25 75" stroke-dashoffset="-37.5"></circle>
+            <!-- Saúde / Clínica 1/8 = 12.5% -->
+            <circle cx="21" cy="21" r="15.9" fill="none" stroke="#3a6db8" stroke-width="7" stroke-dasharray="12.5 87.5" stroke-dashoffset="-62.5"></circle>
+          </svg>
+          <div class="cen">
+            <div class="v">8</div>
+            <div class="l">Projetos</div>
+          </div>
+        </div>
+        <div class="pp-leg">
+          <h4>Por <em>tipo</em></h4>
+          <div class="pr"><i style="background:#2f6f4f"></i><span class="pp-n">Residencial · apto / casa</span><span class="pp-v">5</span></div>
+          <div class="pr"><i style="background:#a84545"></i><span class="pp-n">Regularização (CT + Cremilda)</span><span class="pp-v">2</span></div>
+          <div class="pr"><i style="background:#3a6db8"></i><span class="pp-n">Saúde · Clínica (ECCO)</span><span class="pp-v">1</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <div><div class="eyebrow">Calendário de atividade</div><h2>Onde a equipe <em>esteve</em> · últimas 5 semanas</h2></div>
+      <a href="sistema-log.html" class="link">Ver log completo →</a>
+    </div>
+    <div class="tr-card">
+      <div class="activity-cal">
+        <div class="wd"></div>
+        <div class="wd">Seg</div><div class="wd">Ter</div><div class="wd">Qua</div>
+        <div class="wd">Qui</div><div class="wd">Sex</div><div class="wd">Sáb</div><div class="wd">Dom</div>
+
+        <div class="nm">Rodrigo</div>
+        <div class="dc l3">8</div><div class="dc l3">7</div><div class="dc l2">5</div>
+        <div class="dc l3">8</div><div class="dc l4">9</div><div class="dc l1">2</div><div class="dc">·</div>
+
+        <div class="nm">Breno</div>
+        <div class="dc l3">8</div><div class="dc l3">8</div><div class="dc l3">7</div>
+        <div class="dc l2">5</div><div class="dc l3">7</div><div class="dc">·</div><div class="dc">·</div>
+
+        <div class="nm">Luana</div>
+        <div class="dc l2">5</div><div class="dc l3">7</div><div class="dc l3">8</div>
+        <div class="dc l3">7</div><div class="dc l2">5</div><div class="dc l1">2</div><div class="dc">·</div>
+
+        <div class="nm">Anderson</div>
+        <div class="dc l4">9</div><div class="dc l3">8</div><div class="dc l2">4</div>
+        <div class="dc l3">7</div><div class="dc l2">5</div><div class="dc l1">3</div><div class="dc">·</div>
+      </div>
+      <div style="display:flex;gap:16px;font-size:11px;color:var(--ink-mute);margin-top:16px;justify-content:flex-end;align-items:center">
+        <span style="letter-spacing:.12em;text-transform:uppercase;font-weight:600">Intensidade</span>
+        <span style="display:inline-flex;align-items:center;gap:5px"><i style="width:12px;height:12px;display:inline-block;background:var(--bg-alt);border-radius:2px"></i> 0 h</span>
+        <span style="display:inline-flex;align-items:center;gap:5px"><i style="width:12px;height:12px;display:inline-block;background:#e6d9c4;border-radius:2px"></i> ≤3 h</span>
+        <span style="display:inline-flex;align-items:center;gap:5px"><i style="width:12px;height:12px;display:inline-block;background:#d4b98c;border-radius:2px"></i> ≤5 h</span>
+        <span style="display:inline-flex;align-items:center;gap:5px"><i style="width:12px;height:12px;display:inline-block;background:#b67a3b;border-radius:2px"></i> ≤8 h</span>
+        <span style="display:inline-flex;align-items:center;gap:5px"><i style="width:12px;height:12px;display:inline-block;background:#6b4d1f;border-radius:2px"></i> 9 h+</span>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div>Cabral e Lima Design LTDA · CNPJ 59.525.877/0001-49 · CAU/BR A148704-5</div>
+  <div>sistema.zenonco.com.br · v2 — protótipo</div>
+</footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script src="supabase-client.js"></script>
+  <script src="shell-user.js"></script>
+<script src="shell-fx.js"></script>
+</body>
+</html>
