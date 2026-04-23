@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Acesso — Zenon</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,700;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fbf8f2;--bg-alt:#f3ede1;--paper:#ffffff;
+  --ink:#14110d;--ink-soft:#3d362d;--ink-mute:#5e564b;
+  --line:#cbc0ad;--line-strong:#b8a990;
+  --accent:#7a4a2b;--accent-soft:rgba(122,74,43,.08);
+  --forest:#3D5E33;
+  --radius:4px;
+  --font-display:"Fraunces","Times New Roman",serif;
+  --font-body:"Inter",-apple-system,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;font-family:var(--font-body);background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+
+/* Layout */
+.wrap{display:grid;grid-template-columns:1fr 1fr;min-height:100vh}
+@media(max-width:860px){.wrap{grid-template-columns:1fr}}
+
+/* Left panel — visual */
+.panel-left{
+  background:var(--bg-alt);border-right:1px solid var(--line);
+  display:flex;flex-direction:column;justify-content:space-between;
+  padding:48px 56px;
+  position:relative;overflow:hidden;
+}
+@media(max-width:860px){.panel-left{display:none}}
+.panel-left .logo{
+  font-family:var(--font-display);font-size:22px;letter-spacing:.18em;text-transform:uppercase;
+  font-weight:500;color:var(--ink);
+}
+.panel-left .logo span{color:var(--accent)}
+.panel-left .headline{
+  font-family:var(--font-display);font-size:clamp(36px,3.8vw,54px);line-height:1.08;
+  font-weight:500;color:var(--ink);margin-bottom:20px;
+}
+.panel-left .headline em{font-style:italic;color:var(--accent)}
+.panel-left .sub{font-size:15px;color:var(--ink-soft);line-height:1.65;max-width:380px}
+.panel-left .access-types{
+  display:flex;flex-direction:column;gap:12px;margin-top:40px;
+  padding-top:32px;border-top:1px solid var(--line);
+}
+.access-types .at{
+  display:flex;align-items:center;gap:14px;
+  padding:14px 16px;background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);
+}
+.at .icon{
+  width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-size:14px;flex-shrink:0;
+}
+.at.cliente .icon{background:#e8f5e0;color:var(--forest)}
+.at.equipe .icon{background:#fef3e8;color:var(--accent)}
+.at .info{}
+.at .info .label{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-mute);font-weight:600}
+.at .info .desc{font-size:13px;color:var(--ink-soft);margin-top:2px}
+
+/* Right panel — form */
+.panel-right{
+  display:flex;flex-direction:column;justify-content:center;align-items:flex-start;
+  padding:80px 64px;
+}
+@media(max-width:860px){.panel-right{padding:48px 28px}}
+
+.form-wrap{width:100%;max-width:400px}
+
+/* Mobile logo */
+.mobile-logo{
+  display:none;font-family:var(--font-display);font-size:20px;letter-spacing:.18em;
+  text-transform:uppercase;font-weight:500;margin-bottom:40px;
+}
+.mobile-logo span{color:var(--accent)}
+@media(max-width:860px){.mobile-logo{display:block}}
+
+.eyebrow{font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--ink-mute);font-weight:600;margin-bottom:12px}
+.form-title{font-family:var(--font-display);font-size:38px;font-weight:500;line-height:1.1;margin-bottom:32px}
+.form-title em{font-style:italic;color:var(--accent)}
+
+/* Tabs */
+.role-tabs{display:flex;gap:0;margin-bottom:32px;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+.role-tab{
+  flex:1;padding:10px 0;text-align:center;cursor:pointer;
+  font-size:12px;letter-spacing:.18em;text-transform:uppercase;font-weight:600;color:var(--ink-mute);
+  background:var(--bg);border:none;font-family:var(--font-body);
+  transition:background .18s,color .18s;
+}
+.role-tab.active{background:var(--ink);color:#fff}
+.role-tab:not(:last-child){border-right:1px solid var(--line)}
+
+/* Fields */
+.field{margin-bottom:20px}
+.field label{display:block;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink);font-weight:600;margin-bottom:7px}
+.field input{
+  width:100%;padding:12px 14px;background:var(--paper);
+  border:1.5px solid var(--line-strong);border-radius:var(--radius);
+  color:var(--ink);font-family:var(--font-body);font-size:15px;font-weight:500;
+  transition:border-color .2s,box-shadow .2s;
+}
+.field input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.field input::placeholder{color:var(--ink-mute)}
+
+/* Submit */
+.btn-submit{
+  width:100%;padding:14px;margin-top:8px;
+  background:var(--ink);color:#fff;border:none;border-radius:var(--radius);
+  font-family:var(--font-body);font-size:14px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;
+  cursor:pointer;transition:opacity .18s,background .18s;
+}
+.btn-submit:hover{opacity:.86}
+.btn-submit:disabled{opacity:.5;cursor:not-allowed}
+
+/* Error */
+.error-msg{
+  display:none;margin-top:14px;padding:10px 14px;background:#fef2f2;border:1px solid #fca5a5;
+  border-radius:var(--radius);font-size:13px;color:#b91c1c;line-height:1.5;
+}
+.error-msg.show{display:block;animation:fadeUp .2s ease}
+
+/* Hint */
+.hint{
+  margin-top:24px;padding:14px 16px;background:var(--bg-alt);border:1px solid var(--line);
+  border-radius:var(--radius);font-size:12px;color:var(--ink-soft);line-height:1.6;
+}
+.hint strong{color:var(--ink)}
+
+/* Footer */
+.form-foot{margin-top:28px;font-size:12px;color:var(--ink-mute);line-height:1.6;text-align:center}
+.form-foot a{color:var(--ink-soft);text-decoration:underline;text-underline-offset:3px}
+
+/* Loading overlay */
+.loading{
+  display:none;position:fixed;inset:0;background:rgba(251,248,242,.85);
+  backdrop-filter:blur(4px);z-index:99;
+  flex-direction:column;align-items:center;justify-content:center;gap:16px;
+}
+.loading.show{display:flex}
+.spinner{width:32px;height:32px;border:2.5px solid var(--line);border-top-color:var(--ink);border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+
+<div class="loading" id="loading">
+  <div class="spinner"></div>
+  <div style="font-size:13px;color:var(--ink-soft);letter-spacing:.1em">Entrando…</div>
+</div>
+
+<div class="wrap">
+
+  <!-- LEFT: Visual/Info panel -->
+  <aside class="panel-left">
+    <div class="logo">Zen<span>o</span>n</div>
+    <div>
+      <div class="headline">Área<br>de <em>acesso</em><br>restrito.</div>
+      <p class="sub">Clientes acompanham o andamento de seus projetos. A equipe Zenon acessa o sistema de gestão.</p>
+      <div class="access-types">
+        <div class="at cliente">
+          <div class="icon">👤</div>
+          <div class="info">
+            <div class="label">Portal do cliente</div>
+            <div class="desc">Acompanhe fotos, cronograma e financeiro da sua obra</div>
+          </div>
+        </div>
+        <div class="at equipe">
+          <div class="icon">🏛</div>
+          <div class="info">
+            <div class="label">Sistema Zenon</div>
+            <div class="desc">Gestão de projetos, propostas, obras e financeiro</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="font-size:11px;color:var(--ink-mute);letter-spacing:.1em">
+      zenonco.com.br &nbsp;·&nbsp; Zenon Arquitetura & Gestão
+    </div>
+  </aside>
+
+  <!-- RIGHT: Login form -->
+  <section class="panel-right">
+    <div class="form-wrap">
+
+      <div class="mobile-logo">Zen<span>o</span>n</div>
+
+      <div class="eyebrow">Área restrita</div>
+      <h1 class="form-title">Bem-<em>vindo</em><br>de volta.</h1>
+
+      <!-- Role selector -->
+      <div class="role-tabs">
+        <button class="role-tab active" id="tab-cliente" onclick="setRole('cliente')">Cliente</button>
+        <button class="role-tab" id="tab-equipe" onclick="setRole('equipe')">Equipe Zenon</button>
+      </div>
+
+      <form id="loginForm" onsubmit="doLogin(event)">
+        <div class="field">
+          <label for="user" id="user-label">E-mail cadastrado</label>
+          <input id="user" type="text" placeholder="seu@email.com" autocomplete="username" required>
+        </div>
+        <div class="field">
+          <label for="pwd">Senha</label>
+          <input id="pwd" type="password" placeholder="••••••••" autocomplete="current-password" required>
+        </div>
+        <button type="submit" class="btn-submit" id="btn-submit">Entrar →</button>
+        <div class="error-msg" id="error-msg"></div>
+      </form>
+
+      <div class="hint" id="hint-box">
+        <strong>Cliente novo?</strong> Você recebeu as credenciais de acesso por e-mail quando seu projeto foi iniciado. Se não encontrar, fale com a equipe Zenon.
+      </div>
+
+      <div class="form-foot">
+        <a href="index.html">← Voltar ao site</a>
+      </div>
+
+    </div>
+  </section>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+/* ----------------------------------------------------------------
+   Configuração Supabase
+---------------------------------------------------------------- */
+const SUPABASE_URL = 'https://luisoyzeytzrnosawgwo.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx1aXNveXpleXR6cm9vc2F3Z3dvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY4MDUwNzUsImV4cCI6MjA5MjM4MTA3NX0.U3ZbPAlnRyciKbINDR_PlBFiO_IHN0h3J0_BKuOd6uA';
+
+let sbClient = null;
+try {
+  sbClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+} catch(e) { /* supabase não carregou, usa demo */ }
+
+/* ----------------------------------------------------------------
+   Credenciais demo (modo protótipo — substitua por Supabase Auth)
+   Admin / Equipe:  rodrigo  /  zenon2026
+   Cliente demo:   cliente1  /  obra2026
+---------------------------------------------------------------- */
+const DEMO_ADMINS = [
+  { user: 'rodrigo',              pwd: 'zenon2026' },
+  { user: 'rodrigo@zenonco.com.br', pwd: 'zenon2026' },
+  { user: 'admin',                pwd: 'zenon2026' },
+  { user: 'equipe',               pwd: 'zenon2026' },
+];
+const DEMO_CLIENTS = [
+  { user: 'cliente1', pwd: 'obra2026', nome: 'Cleber e Tamara',   slug: 'cleber-e-tamara' },
+  { user: 'cliente2', pwd: 'obra2026', nome: 'Bruna e Rafael',    slug: 'bruna-e-rafael' },
+  { user: 'cliente3', pwd: 'obra2026', nome: 'Clínica Ecco',      slug: 'clinica-ecco' },
+  { user: 'juliana',  pwd: 'obra2026', nome: 'Juliana e Felipe',  slug: 'juliana-e-felipe' },
+  { user: 'cleber',   pwd: 'obra2026', nome: 'Cleber e Tamara',   slug: 'cleber-e-tamara' },
+];
+
+/* ----------------------------------------------------------------
+   Role state
+---------------------------------------------------------------- */
+let currentRole = 'cliente';
+
+function setRole(role) {
+  currentRole = role;
+  document.getElementById('tab-cliente').classList.toggle('active', role === 'cliente');
+  document.getElementById('tab-equipe').classList.toggle('active', role === 'equipe');
+  const lbl = document.getElementById('user-label');
+  const hint = document.getElementById('hint-box');
+  if (role === 'equipe') {
+    lbl.textContent = 'Usuário ou e-mail';
+    document.getElementById('user').placeholder = 'rodrigo ou rodrigo@zenonco.com.br';
+    hint.innerHTML = '<strong>Equipe Zenon:</strong> Use suas credenciais de acesso ao sistema. Apenas membros autorizados pelo administrador têm acesso.';
+  } else {
+    lbl.textContent = 'E-mail cadastrado';
+    document.getElementById('user').placeholder = 'seu@email.com';
+    hint.innerHTML = '<strong>Cliente novo?</strong> Você recebeu as credenciais de acesso por e-mail quando seu projeto foi iniciado. Se não encontrar, fale com a equipe Zenon.';
+  }
+  hideError();
+}
+
+function showError(msg) {
+  const el = document.getElementById('error-msg');
+  el.textContent = msg;
+  el.classList.add('show');
+}
+function hideError() {
+  document.getElementById('error-msg').classList.remove('show');
+}
+function showLoading(show) {
+  document.getElementById('loading').classList.toggle('show', show);
+  document.getElementById('btn-submit').disabled = show;
+}
+
+/* ----------------------------------------------------------------
+   Login
+---------------------------------------------------------------- */
+async function doLogin(e) {
+  e.preventDefault();
+  hideError();
+
+  const user = document.getElementById('user').value.trim();
+  const pwd  = document.getElementById('pwd').value;
+
+  if (!user || !pwd) { showError('Preencha o usuário e a senha.'); return; }
+
+  showLoading(true);
+
+  // --- Tenta Supabase Auth primeiro ---
+  if (sbClient) {
+    try {
+      const email = user.includes('@') ? user : null;
+      if (email) {
+        const { data, error } = await sbClient.auth.signInWithPassword({ email, password: pwd });
+        if (!error && data?.user) {
+          const role = data.user.user_metadata?.role || data.user.app_metadata?.role || 'cliente';
+          redirectByRole(role, data.user);
+          return;
+        }
+      }
+    } catch(err) { /* fallback para demo */ }
+  }
+
+  // --- Fallback demo mode ---
+  await new Promise(r => setTimeout(r, 600)); // simula latência
+
+  if (currentRole === 'equipe') {
+    const found = DEMO_ADMINS.find(a => a.user === user && a.pwd === pwd);
+    if (found) {
+      window.location.href = 'sistema-painel.html';
+      return;
+    }
+    showLoading(false);
+    showError('Credenciais inválidas. Verifique usuário e senha.');
+  } else {
+    const found = DEMO_CLIENTS.find(c => c.user === user && c.pwd === pwd);
+    if (found) {
+      sessionStorage.setItem('zenon_cliente', JSON.stringify({ nome: found.nome, slug: found.slug }));
+      window.location.href = 'yvyra-preview.html#portal-cliente';
+      return;
+    }
+    showLoading(false);
+    showError('Credenciais não encontradas. Verifique o e-mail e a senha ou entre em contato com a Zenon.');
+  }
+}
+
+function redirectByRole(role, user) {
+  if (role === 'admin' || role === 'equipe' || role === 'staff') {
+    window.location.href = 'sistema-painel.html';
+  } else {
+    sessionStorage.setItem('zenon_cliente', JSON.stringify({ email: user.email }));
+    window.location.href = 'yvyra-preview.html#portal-cliente';
+  }
+}
+</script>
+</body>
+</html>
