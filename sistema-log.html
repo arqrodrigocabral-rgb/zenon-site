@@ -386,5 +386,38 @@
   <script src="supabase-client.js"></script>
   <script src="shell-user.js"></script>
 <script src="shell-fx.js"></script>
+
+<script>
+(function(){
+if(typeof toast!=='function'){window.toast=function(m){var d=document.createElement('div');d.textContent=m;d.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1a1a1a;color:#fff;padding:10px 20px;border-radius:8px;z-index:9999;font-size:14px;opacity:0;transition:opacity .3s';document.body.appendChild(d);setTimeout(()=>d.style.opacity=1,10);setTimeout(()=>{d.style.opacity=0;setTimeout(()=>d.remove(),300)},3000)};}
+document.querySelectorAll('a[href="#"]').forEach(function(a){
+  var txt=a.textContent.trim();
+  if(txt==='Exportar semana'){
+    a.addEventListener('click',function(e){e.preventDefault();toast('Exportando log da semana… (em breve)');});
+  } else if(txt.indexOf('Novo check-in')>=0){
+    a.addEventListener('click',function(e){e.preventDefault();toast('Formulário de check-in · em breve');});
+  } else if(['Toda equipe','Rodrigo','Breno','Luana','Anderson'].indexOf(txt)>=0){
+    a.addEventListener('click',function(e){
+      e.preventDefault();
+      var grp=a.parentElement;
+      grp.querySelectorAll('a').forEach(function(x){x.classList.remove('active');});
+      a.classList.add('active');
+      var filter=txt==='Toda equipe'?null:txt;
+      document.querySelectorAll('.log-item,.log-entry').forEach(function(el){
+        el.style.display=(!filter||el.textContent.indexOf(filter)>=0)?'':'none';
+      });
+    });
+  } else if(['Hoje','Esta semana','Este mês'].indexOf(txt)>=0){
+    a.addEventListener('click',function(e){
+      e.preventDefault();
+      var grp=a.parentElement;
+      grp.querySelectorAll('a').forEach(function(x){x.classList.remove('active');});
+      a.classList.add('active');
+      toast('Filtro "'+txt+'" aplicado');
+    });
+  }
+});
+})();
+</script>
 </body>
 </html>
