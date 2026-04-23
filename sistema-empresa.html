@@ -795,5 +795,33 @@
   <script src="supabase-client.js"></script>
   <script src="shell-user.js"></script>
 <script src="shell-fx.js"></script>
+
+<script>
+(function(){
+if(typeof toast!=='function'){window.toast=function(m){var d=document.createElement('div');d.textContent=m;d.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1a1a1a;color:#fff;padding:10px 20px;border-radius:8px;z-index:9999;font-size:14px;opacity:0;transition:opacity .3s';document.body.appendChild(d);setTimeout(()=>d.style.opacity=1,10);setTimeout(()=>{d.style.opacity=0;setTimeout(()=>d.remove(),300)},3000)};}
+// Wire all href="#" buttons
+document.querySelectorAll('a[href="#"]').forEach(function(a){
+  var txt=a.textContent.trim();
+  if(txt==='Abrir ↗'){
+    // Find document name from card context
+    var card=a.closest('.dc,.doc-card,.doc-item')||a.closest('div');
+    var title=card?card.querySelector('h4,h3,strong,.dc-title,.dc-name'):null;
+    var docName=title?title.textContent.trim():'documento';
+    a.addEventListener('click',function(e){
+      e.preventDefault();
+      toast(docName+' · arquivo em breve no Drive');
+    });
+  } else if(txt==='Substituir'){
+    a.addEventListener('click',function(e){e.preventDefault();toast('Substituir documento · em breve');});
+  } else if(txt==='Testar assinatura'){
+    a.addEventListener('click',function(e){e.preventDefault();toast('Teste de assinatura · em breve');});
+  } else if(txt==='Histórico'){
+    a.addEventListener('click',function(e){e.preventDefault();toast('Histórico de assinaturas · em breve');});
+  } else if(txt==='Certidão de acervo'){
+    a.addEventListener('click',function(e){e.preventDefault();toast('Certidão de acervo · solicitar ao CAU');});
+  }
+});
+})();
+</script>
 </body>
 </html>
