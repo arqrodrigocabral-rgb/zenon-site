@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Projeto · Zenon Sistema</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shell.css">
+<style>
+  .breadc{display:flex;gap:6px;align-items:center;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-mute);font-weight:600;margin-bottom:16px}
+  .breadc a{color:var(--ink-soft)}
+  .breadc a:hover{color:var(--accent-ink)}
+  .breadc .sep{opacity:.5}
+
+  /* ===== HERO ===== */
+  .proj-hero{background:linear-gradient(135deg,var(--bg-alt),var(--accent-soft));border:1px solid var(--line);border-radius:4px;padding:28px 32px;margin-bottom:20px;position:relative}
+  .proj-hero .row-top{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;flex-wrap:wrap}
+  .proj-hero .code{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:13px;letter-spacing:.24em;color:var(--accent);font-weight:600;margin-bottom:10px}
+  .proj-hero h1{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:38px;line-height:1.08;font-weight:500;color:var(--ink);margin-bottom:8px}
+  .proj-hero h1 em{color:var(--accent-ink);font-style:italic}
+  .proj-hero .subline{font-size:14px;color:var(--ink-soft);line-height:1.6}
+  .proj-hero .subline a{color:var(--accent-ink);font-weight:600}
+  .proj-hero .tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+  .proj-hero .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+  .proj-hero .hero-right{display:flex;flex-direction:column;align-items:flex-end;gap:8px;min-width:220px}
+  .proj-hero .status-chip{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;background:var(--paper);border:1.5px solid var(--accent);border-radius:22px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--accent-ink)}
+  .proj-hero .status-chip .dot{width:8px;height:8px;border-radius:50%;background:var(--accent);animation:blink 2s infinite}
+  .proj-hero .status-chip.done{border-color:var(--ok);color:var(--ok)}
+  .proj-hero .status-chip.done .dot{background:var(--ok);animation:none}
+  .proj-hero .status-chip.warn{border-color:var(--warn);color:var(--warn)}
+  .proj-hero .status-chip.warn .dot{background:var(--warn)}
+  @keyframes blink{0%,100%{opacity:1}50%{opacity:.4}}
+  .proj-hero .prog-mini{text-align:right}
+  .proj-hero .prog-mini .pv{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:42px;line-height:1;font-weight:500;color:var(--accent-ink)}
+  .proj-hero .prog-mini .pl{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-mute);font-weight:700;margin-top:4px}
+  .proj-hero .prog-bar{width:220px;height:6px;background:var(--line);border-radius:3px;overflow:hidden;margin-top:6px}
+  .proj-hero .prog-bar span{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent-ink));border-radius:3px;transition:width .5s}
+
+  /* ===== NOTION-STYLE INFO CARD ===== */
+  .notion-card{background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:22px 26px;margin-bottom:20px}
+  .notion-card .nc-title{display:flex;align-items:center;gap:10px;font-family:'Inter',sans-serif;font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:var(--ink-mute);font-weight:700;margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--line-soft)}
+  .notion-card .nc-title .nc-hint{font-size:10px;letter-spacing:.08em;color:var(--ink-mute);font-weight:500;text-transform:none;margin-left:auto;font-style:italic}
+
+  .nc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:4px 28px}
+  .nc-row{display:grid;grid-template-columns:110px 1fr;gap:16px;align-items:baseline;padding:9px 0;border-bottom:1px dashed var(--line-soft);min-height:38px}
+  .nc-row:last-child{border-bottom:none}
+  .nc-row .nck{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-mute);font-weight:700;padding-top:2px}
+  .nc-row .ncv{font-size:13.5px;color:var(--ink);font-weight:500;line-height:1.5;word-break:break-word}
+  .nc-row .ncv.muted{color:var(--ink-mute);font-style:italic;font-weight:400}
+  .nc-row .ncv a{color:var(--accent-ink);font-weight:600}
+  .nc-row .ncv .badge{vertical-align:middle}
+
+  .nc-obs{background:var(--bg-alt);border:1px dashed var(--line);border-radius:3px;padding:12px 14px;margin-top:14px;font-size:13px;color:var(--ink-body);line-height:1.55;font-style:italic}
+  .nc-obs::before{content:'✎ ';color:var(--accent-ink);font-style:normal;font-weight:600;margin-right:4px}
+
+  /* ===== KPI STRIP ===== */
+  .kpi-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:20px}
+  .kpi-box{background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:18px 20px}
+  .kpi-box .l{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-mute);font-weight:700;margin-bottom:6px}
+  .kpi-box .v{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:26px;color:var(--ink);font-weight:500;line-height:1}
+  .kpi-box .v em{color:var(--accent-ink);font-style:normal}
+  .kpi-box .v.ok{color:var(--ok)}
+  .kpi-box .v.warn{color:var(--warn)}
+  .kpi-box .d{font-size:11px;color:var(--ink-soft);margin-top:4px;line-height:1.4}
+
+  /* ===== RELAÇÕES ===== */
+  .rel-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin-bottom:20px}
+  .rel-card{background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:16px 18px;display:flex;flex-direction:column;gap:6px;transition:border-color .15s,box-shadow .15s}
+  .rel-card:hover{border-color:var(--accent);box-shadow:0 2px 8px rgba(0,0,0,.04)}
+  .rel-card .rl-lbl{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-mute);font-weight:700}
+  .rel-card .rl-main{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:18px;color:var(--ink);font-weight:500;line-height:1.3}
+  .rel-card .rl-main a{color:var(--accent-ink)}
+  .rel-card .rl-sub{font-size:11px;color:var(--ink-soft)}
+  .rel-card.empty{background:var(--bg-alt);border-style:dashed}
+  .rel-card.empty .rl-main{color:var(--ink-mute);font-style:italic}
+
+  /* ===== TABS ===== */
+  .tab-sub{display:flex;gap:4px;border-bottom:1px solid var(--line);margin-bottom:22px;overflow-x:auto}
+  .tab-sub a{padding:12px 18px;border-bottom:2px solid transparent;font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;color:var(--ink-mute);white-space:nowrap}
+  .tab-sub a:hover{color:var(--ink)}
+  .tab-sub a.active{color:var(--ink);border-bottom-color:var(--accent-ink)}
+
+  .two-col{display:grid;grid-template-columns:1.4fr 1fr;gap:20px}
+  @media (max-width:1000px){.two-col{grid-template-columns:1fr}}
+
+  .card-p{background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:22px 24px}
+  .card-p h3{font-family:'Inter',sans-serif;font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:var(--ink-mute);font-weight:700;margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--line-soft)}
+
+  .phases{display:flex;flex-direction:column;gap:0}
+  .ph-row{display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:flex-start;padding:14px 0;border-bottom:1px solid var(--line-soft)}
+  .ph-row:last-child{border-bottom:none}
+  .ph-row .marker{width:24px;height:24px;border-radius:50%;border:1.5px solid var(--line-strong);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;flex-shrink:0;margin-top:2px;background:var(--paper)}
+  .ph-row.done .marker{background:var(--ok);border-color:var(--ok)}
+  .ph-row.done .marker::after{content:'✓'}
+  .ph-row.now .marker{background:var(--accent);border-color:var(--accent);color:#fff}
+  .ph-row.now .marker::after{content:'●';font-size:9px}
+  .ph-row h4{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:3px}
+  .ph-row p{font-size:12px;color:var(--ink-soft);line-height:1.5}
+  .ph-row .when{font-size:11px;color:var(--ink-mute);letter-spacing:.12em;text-transform:uppercase;font-weight:600;text-align:right;padding-top:3px;white-space:nowrap}
+  .ph-row.now h4{color:var(--accent-ink)}
+
+  .dec-list{display:flex;flex-direction:column;gap:10px}
+  .dec{background:var(--bg-alt);border:1px solid var(--line-soft);border-radius:3px;padding:14px;display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center}
+  .dec .ic{width:26px;height:26px;border-radius:50%;background:var(--accent-soft);color:var(--accent-ink);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px}
+  .dec h5{font-size:13px;font-weight:600;color:var(--ink);margin-bottom:2px}
+  .dec .sub{font-size:11px;color:var(--ink-mute)}
+  .dec .lnk{font-size:11px;color:var(--accent-ink);letter-spacing:.1em;text-transform:uppercase;font-weight:600}
+
+  .files-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+  .file-tile{background:var(--paper);border:1px solid var(--line);border-radius:3px;padding:14px;display:flex;flex-direction:column;gap:6px;cursor:pointer}
+  .file-tile:hover{border-color:var(--accent)}
+  .file-tile .ic{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:18px;color:var(--accent-ink);font-weight:600}
+  .file-tile .nm{font-size:12px;color:var(--ink);font-weight:600;line-height:1.3}
+  .file-tile .mt{font-size:10px;color:var(--ink-mute);letter-spacing:.08em;text-transform:uppercase;font-weight:600;margin-top:auto}
+
+  .team-mini{display:flex;flex-direction:column;gap:8px}
+  .tm-r{display:grid;grid-template-columns:32px 1fr auto;gap:10px;align-items:center;padding:8px 0;border-bottom:1px dashed var(--line-soft)}
+  .tm-r:last-child{border-bottom:none}
+  .tm-r .av{width:32px;height:32px;border-radius:50%;background:var(--accent-soft);color:var(--accent-ink);display:flex;align-items:center;justify-content:center;font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:14px;font-weight:600}
+  .tm-r .nm{font-size:13px;color:var(--ink);font-weight:600}
+  .tm-r .rl{font-size:11px;color:var(--ink-mute)}
+  .tm-r .hr{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:17px;color:var(--ink);font-weight:500;text-align:right}
+  .tm-r .hr .sub{display:block;font-size:9px;font-family:'Inter',sans-serif;color:var(--ink-mute);letter-spacing:.1em;text-transform:uppercase;font-weight:600}
+
+  .log-list{display:flex;flex-direction:column;gap:10px}
+  .log-r{display:grid;grid-template-columns:70px 1fr;gap:12px;padding:10px 0;border-bottom:1px dashed var(--line-soft)}
+  .log-r:last-child{border-bottom:none}
+  .log-r .wh{font-size:11px;color:var(--ink-mute);letter-spacing:.12em;text-transform:uppercase;font-weight:600}
+  .log-r p{font-size:13px;color:var(--ink-body);line-height:1.5}
+  .log-r p b{color:var(--ink);font-weight:600}
+
+  .empty-card{padding:30px;text-align:center;color:var(--ink-mute);font-size:13px;font-style:italic;background:var(--bg-alt);border:1px dashed var(--line);border-radius:4px}
+
+  /* inline-edit helper */
+  .inline-edit-input{font:inherit;color:inherit;background:var(--paper);border:1.5px solid var(--accent);border-radius:3px;padding:3px 6px;outline:none;min-width:80px;max-width:100%}
+  [data-edit]{cursor:pointer;padding:1px 4px;border-radius:3px;border:1px dashed transparent;transition:background .15s,border-color .15s}
+  [data-edit]:hover{background:var(--accent-soft);border-color:var(--accent)}
+  [data-edit].editing{background:var(--paper);border-color:var(--accent);border-style:solid}
+  [data-edit].just-saved{background:#e8f5e9;border-color:var(--ok)}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-inner">
+    <div class="brand">Zen<span>o</span>n — Sistema</div>
+    <div class="search"><input type="search" placeholder="Buscar…"></div>
+    <div class="fx-chip" title="Cotação do dólar (USD/BRL)">
+      <span class="fx-code">USD</span>
+      <span class="fx-val"><span class="cur">R$</span>—</span>
+      <span class="fx-delta flat">…</span>
+      <div class="fx-tip"></div>
+    </div>
+
+    <div class="user-menu">
+      <button type="button" class="user-trigger" onclick="ZenonUser.toggleDropdown(event)" aria-haspopup="true" aria-expanded="false">
+        <span class="u-name" data-user-name>Rodrigo</span>
+        <span class="avatar" data-user="me">R</span>
+        <span class="u-caret">▾</span>
+      </button>
+      <div class="user-dropdown" role="menu">
+        <div class="ud-head">
+          <span class="avatar" data-user="me">R</span>
+          <div>
+            <div class="name" data-user-name>Rodrigo</div>
+            <div class="role" data-user-role>Sócio · Arquiteto responsável</div>
+          </div>
+        </div>
+        <a href="sistema-perfil.html"><span class="ic">◎</span>Ver perfil</a>
+        <a href="sistema-configuracoes.html"><span class="ic">⚙</span>Configurações</a>
+        <a href="sistema-empresa.html"><span class="ic">⌂</span>Dados da empresa</a>
+        <a href="https://www.notion.so/Zenon" target="_blank"><span class="ic">✱</span>Atividades · Notion ↗</a>
+        <div class="ud-sep"></div>
+        <a href="sistema-login.html" class="sign-out"><span class="ic">↪</span>Sair</a>
+      </div>
+    </div>
+  </div>
+  <nav class="tabs">
+    <a href="sistema-painel.html">Painel</a>
+    <a href="sistema-clientes.html">Clientes</a>
+    <a href="sistema-projetos.html" class="active">Projetos</a>
+    <a href="sistema-obra.html">Obra</a>
+    <a href="sistema-obra-financeiro.html">Obra financeiro</a>
+    <a href="sistema-propostas.html">Propostas</a>
+    <a href="sistema-financeiro.html">Financeiro</a>
+    <a href="sistema-empresa.html">Empresa</a>
+    <a href="sistema-log.html">Log da equipe</a>
+  </nav>
+</header>
+
+<main>
+  <div class="breadc">
+    <a href="sistema-projetos.html">Projetos</a>
+    <span class="sep">›</span>
+    <span id="brc-titulo">…</span>
+  </div>
+
+  <div id="proj-root">
+    <div class="empty-card">Carregando dados do projeto…</div>
+  </div>
+</main>
+
+<footer>
+  <div>Cabral e Lima Design LTDA · CNPJ 59.525.877/0001-49 · CAU/BR A148704-5</div>
+  <div>sistema.zenonco.com.br · v2 — protótipo</div>
+</footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script src="supabase-client.js"></script>
+  <script src="shell-user.js"></script>
+<script src="shell-fx.js"></script>
+<script src="sistema-data.js"></script>
+<script src="sistema-edit.js"></script>
+<script>
+(function () {
+  const SD = window.SistemaData;
+  const id = SD.getParam('p', 'P-01');
+
+  function render() {
+    const proj = SD.getProjeto(id);
+    const root = document.getElementById('proj-root');
+    const brc  = document.getElementById('brc-titulo');
+
+    if (!proj) {
+      document.title = 'Projeto não encontrado · Zenon Sistema';
+      brc.textContent = 'Projeto não encontrado';
+      root.innerHTML = '<div class="empty-card">Projeto <b>' + id + '</b> não foi encontrado na base. <br><a href="sistema-projetos.html" class="link" style="margin-top:10px;display:inline-block">← Voltar para a lista de projetos</a></div>';
+      return;
+    }
+
+    document.title = proj.titulo + ' · Projeto · Zenon Sistema';
+    brc.textContent = '[' + proj.id + '] ' + proj.titulo;
+
+    // ---------- helpers ----------
+    function badgeClass(t) {
+      const k = (t || '').toLowerCase();
+      if (/(em obra|concluído|aprovada|sem atraso|recebido|pago|entregue)/.test(k)) return 'ok';
+      if (/(travado|aguardando|pendente|rascunho|atras|alerta|legal|condom|urgente)/.test(k)) return 'warn';
+      if (/(briefing|levantamento|info|vip|residencial|sem|consul|gratu|rural)/.test(k)) return 'info';
+      return 'neutral';
+    }
+    function statusChipClass(status) {
+      const k = (status || '').toLowerCase();
+      if (/(concluído|entregue|em obra)/.test(k)) return 'done';
+      if (/(travado|aguardando)/.test(k)) return 'warn';
+      return '';
+    }
+    function edit(path, type, fmt) {
+      let attrs = ' data-edit="projeto:' + proj.id + ':' + path + '" data-edit-type="' + (type || 'text') + '"';
+      if (fmt) attrs += ' data-edit-fmt="' + fmt + '"';
+      return attrs;
+    }
+    function editSel(path, opts) {
+      return ' data-edit="projeto:' + proj.id + ':' + path + '" data-edit-type="select" data-edit-options="' + opts.join(',') + '"';
+    }
+    function safeTxt(v, fallback) {
+      return (v == null || v === '' || v === '—') ? (fallback || '—') : v;
+    }
+
+    // ---------- HERO ----------
+    const tagsHTML = (proj.tags || []).map(t => '<span class="badge ' + badgeClass(t) + '">' + t + '</span>').join('');
+    const clienteLink = proj.cliente
+      ? '<a href="sistema-cliente-detalhe.html?id=' + proj.cliente + '">' + proj.clienteNome + '</a>'
+      : '<span style="color:var(--ink-mute)">' + (proj.clienteNome || '—') + ' (sem cadastro)</span>';
+    const statusCls = statusChipClass(proj.status);
+    const progresso = Number(proj.progresso) || 0;
+
+    const heroHTML = ''
+      + '<div class="proj-hero">'
+      +   '<div class="row-top">'
+      +     '<div style="flex:1;min-width:280px">'
+      +       '<div class="code">[' + proj.id + '] PROJETO · REF ' + safeTxt(proj.ref) + '</div>'
+      +       '<h1><span' + edit('titulo','text') + '>' + proj.titulo + '</span></h1>'
+      +       '<div class="subline">Cliente: <b>' + clienteLink + '</b> · ' + safeTxt(proj.bairro) + '</div>'
+      +       '<div class="tags">' + tagsHTML + '</div>'
+      +     '</div>'
+      +     '<div class="hero-right">'
+      +       '<div class="status-chip ' + statusCls + '"><span class="dot"></span>' + safeTxt(proj.status) + '</div>'
+      +       '<div class="prog-mini">'
+      +         '<div class="pv">' + progresso + '<span style="font-size:22px">%</span></div>'
+      +         '<div class="pl">Progresso · ' + safeTxt(proj.etapas) + '</div>'
+      +         '<div class="prog-bar"><span style="width:' + progresso + '%"></span></div>'
+      +       '</div>'
+      +     '</div>'
+      +   '</div>'
+      +   '<div class="actions">'
+      +     (proj.obraId ? '<a href="sistema-obra.html?p=' + proj.id + '" class="btn small">Abrir obra ' + proj.obraId + '</a>' : '')
+      +     (proj.propostaId ? '<a href="sistema-proposta-detalhe.html?id=' + proj.propostaId + '" class="btn ghost small">Proposta ' + proj.propostaId + '</a>' : '')
+      +     (proj.financeiroId ? '<a href="sistema-financeiro.html" class="btn ghost small">Financeiro ' + proj.financeiroId + '</a>' : '')
+      +     (proj.drive ? '<a href="https://drive.google.com/drive/folders/' + proj.drive + '" target="_blank" class="btn ghost small">Drive ↗</a>' : '')
+      +     '<a href="https://www.notion.so/Zenon" target="_blank" class="btn ghost small">Ver no Notion ↗</a>'
+      +   '</div>'
+      + '</div>';
+
+    // ---------- NOTION-STYLE INFO CARD ----------
+    const portesOpts = ['P (até 50 m²)','M (50–150 m²)','L (150–500 m²)','XL (>500 m²)','Rural','Outros'];
+    const complexOpts = ['Baixa','Média','Alta','Crítica'];
+    const statusOpts = ['Briefing','Levantamento','Em andamento','Em obra','Acompanhamento','Aguardando cliente','Travado','Concluído'];
+
+    const notionHTML = ''
+      + '<div class="notion-card">'
+      +   '<div class="nc-title">Informações do projeto <span class="nc-hint">(clique em qualquer campo para editar)</span></div>'
+      +   '<div class="nc-grid">'
+
+      +     '<div class="nc-row"><div class="nck">Status</div><div class="ncv"><span' + editSel('status',statusOpts) + '>' + safeTxt(proj.status) + '</span></div></div>'
+      +     '<div class="nc-row"><div class="nck">Fase atual</div><div class="ncv"><span' + edit('fase','text') + '>' + safeTxt(proj.fase) + '</span></div></div>'
+
+      +     '<div class="nc-row"><div class="nck">Tipo</div><div class="ncv"><span' + edit('tipo','text') + '>' + safeTxt(proj.tipo) + '</span></div></div>'
+      +     '<div class="nc-row"><div class="nck">Porte</div><div class="ncv"><span' + editSel('porte',portesOpts) + '>' + safeTxt(proj.porte) + '</span></div></div>'
+
+      +     '<div class="nc-row"><div class="nck">Metragem</div><div class="ncv"><span' + edit('metragem','text') + '>' + safeTxt(proj.metragem) + '</span></div></div>'
+      +     '<div class="nc-row"><div class="nck">Complexidade</div><div class="ncv"><span' + editSel('complexidade',complexOpts) + '>' + safeTxt(proj.complexidade) + '</span></div></div>'
+
+      +     '<div class="nc-row" style="grid-column:1 / -1"><div class="nck">Endereço</div><div class="ncv"><span' + edit('endereco','text') + '>' + safeTxt(proj.endereco) + '</span></div></div>'
+
+      +     '<div class="nc-row"><div class="nck">Prazo início</div><div class="ncv"><span' + edit('prazoInicio','text') + '>' + safeTxt(proj.prazoInicio) + '</span></div></div>'
+      +     '<div class="nc-row"><div class="nck">Prazo entrega</div><div class="ncv"><span' + edit('prazoFinal','text') + '>' + safeTxt(proj.prazoFinal) + '</span></div></div>'
+
+      +     '<div class="nc-row"><div class="nck">RRT · CAU</div><div class="ncv ' + (proj.rrt ? '' : 'muted') + '"><span' + edit('rrt','text') + '>' + safeTxt(proj.rrt, 'não emitido') + '</span></div></div>'
+      +     '<div class="nc-row"><div class="nck">Ref Notion</div><div class="ncv"><span' + edit('ref','text') + '>' + safeTxt(proj.ref) + '</span></div></div>'
+
+      +     '<div class="nc-row" style="grid-column:1 / -1"><div class="nck">Drive</div><div class="ncv">'
+      +       (proj.drive
+                ? '<a href="https://drive.google.com/drive/folders/' + proj.drive + '" target="_blank" style="font-family:monospace;font-size:12px">' + proj.drive + ' ↗</a>'
+                : '<span class="muted" style="color:var(--ink-mute);font-style:italic">sem pasta vinculada</span>')
+      +     '</div></div>'
+
+      +   '</div>'
+      +   (proj.obs ? '<div class="nc-obs"><span' + edit('obs','textarea') + ' data-rows="2">' + proj.obs + '</span></div>' : '')
+      + '</div>';
+
+    // ---------- KPI STRIP ----------
+    const prazoTxt = (proj.restanteDias != null && proj.restanteDias > 0)
+      ? proj.restanteDias + '<span style="font-size:14px;color:var(--ink-soft)"> d</span>'
+      : (proj.restanteDias === 0 ? '<em>Entregue</em>' : '—');
+    const prazoSub = (proj.restanteDias != null && proj.restanteDias > 0)
+      ? 'até ' + safeTxt(proj.prazoFinal)
+      : (proj.restanteDias === 0 ? proj.prazoFinal : 'sem prazo definido');
+
+    const honPct = proj.honorarios > 0 ? Math.round((proj.honorariosPagos / proj.honorarios) * 100) : 0;
+
+    const kpiHTML = ''
+      + '<div class="kpi-strip">'
+      +   '<div class="kpi-box"><div class="l">Progresso</div><div class="v"><em>' + progresso + '%</em></div><div class="d">' + safeTxt(proj.etapas) + ' etapas</div></div>'
+      +   '<div class="kpi-box"><div class="l">Prazo restante</div><div class="v">' + prazoTxt + '</div><div class="d">' + prazoSub + '</div></div>'
+      +   '<div class="kpi-box"><div class="l">Horas no mês</div><div class="v">' + safeTxt(proj.horasMes) + '</div><div class="d">' + safeTxt(proj.equipeResumo) + '</div></div>'
+      +   '<div class="kpi-box"><div class="l">Honorários</div><div class="v" style="color:var(--accent-ink)">' + (proj.honorarios > 0 ? SD.fmtBRLshort(proj.honorarios) : '—') + '</div><div class="d">' + (proj.honorarios > 0 ? honPct + '% pago · ' + SD.fmtBRLshort(proj.honorariosARecever) + ' a receber' : 'sem cobrança') + '</div></div>'
+      + '</div>';
+
+    // ---------- RELAÇÕES ----------
+    function relCard(lbl, href, main, sub, isEmpty) {
+      if (isEmpty) {
+        return '<div class="rel-card empty"><div class="rl-lbl">' + lbl + '</div><div class="rl-main">' + main + '</div><div class="rl-sub">' + (sub || '') + '</div></div>';
+      }
+      return '<a href="' + href + '" class="rel-card"><div class="rl-lbl">' + lbl + '</div><div class="rl-main">' + main + '</div><div class="rl-sub">' + (sub || '') + '</div></a>';
+    }
+    const relHTML = ''
+      + '<div class="rel-grid">'
+      +   (proj.cliente
+            ? relCard('Cliente', 'sistema-cliente-detalhe.html?id=' + proj.cliente, proj.clienteNome + ' →', 'Abrir perfil do cliente')
+            : relCard('Cliente', '#', proj.clienteNome || 'Sem cliente', 'cadastro não vinculado', true))
+      +   (proj.propostaId
+            ? relCard('Proposta', 'sistema-proposta-detalhe.html?id=' + proj.propostaId, proj.propostaId + ' →', 'Condições comerciais e parcelas')
+            : relCard('Proposta', '#', 'Sem proposta', 'nenhuma proposta vinculada', true))
+      +   (proj.obraId
+            ? relCard('Obra', 'sistema-obra.html?p=' + proj.id, proj.obraId + ' →', 'Abrir painel da obra')
+            : relCard('Obra', '#', 'Sem obra ativa', 'projeto ainda não em execução', true))
+      +   (proj.financeiroId
+            ? relCard('Financeiro', 'sistema-financeiro.html', proj.financeiroId + ' →', 'Lançamentos vinculados')
+            : relCard('Financeiro', '#', 'Sem lançamentos', 'nenhum registro financeiro', true))
+      + '</div>';
+
+    // ---------- tabs ----------
+    const decisoesCount = (proj.decisoes || []).length;
+    const tabs = ''
+      + '<div class="tab-sub">'
+      +   '<a href="#" class="active">Visão geral</a>'
+      +   '<a href="#fases">Fases</a>'
+      +   '<a href="#decisoes">Decisões pendentes (' + decisoesCount + ')</a>'
+      +   '<a href="#arquivos">Arquivos</a>'
+      +   '<a href="#equipe">Equipe</a>'
+      +   '<a href="#atividade">Atividade</a>'
+      + '</div>';
+
+    // ---------- fases ----------
+    const fasesHTML = (proj.fases || []).map(f => ''
+      + '<div class="ph-row ' + (f.st || '') + '">'
+      +   '<div class="marker"></div>'
+      +   '<div><h4>' + f.t + '</h4><p>' + (f.d || '') + '</p></div>'
+      +   '<div class="when">' + (f.q || '') + '</div>'
+      + '</div>').join('');
+
+    const fasesCard = '<div class="card-p" id="fases"><h3>Fases do projeto</h3><div class="phases">' + (fasesHTML || '<div class="empty-card">Sem fases registradas.</div>') + '</div></div>';
+
+    // ---------- decisões ----------
+    const decHTML = (proj.decisoes || []).length
+      ? '<div class="dec-list">' + proj.decisoes.map((d, i) => ''
+          + '<div class="dec">'
+          +   '<div class="ic">' + (i+1) + '</div>'
+          +   '<div><h5>' + d.t + '</h5><div class="sub">' + (d.d || '') + '</div></div>'
+          +   '<a href="#" class="lnk" onclick="alert(\'Lembrete agendado — protótipo.\');return false">Lembrar →</a>'
+          + '</div>').join('') + '</div>'
+      : '<div class="empty-card">Nenhuma decisão pendente registrada.</div>';
+    const decCard = '<div class="card-p" id="decisoes"><h3>Decisões pendentes com o cliente</h3>' + decHTML + '</div>';
+
+    // ---------- arquivos ----------
+    const arqHTML = (proj.arquivos || []).length
+      ? '<div class="files-grid">' + proj.arquivos.map(a => ''
+          + '<div class="file-tile" onclick="alert(\'' + a.nm + ' · abrindo…\')"><div class="ic">' + a.ic + '</div><div class="nm">' + a.nm + '</div><div class="mt">' + a.mt + '</div></div>').join('') + '</div>'
+      : '<div class="empty-card">Nenhum arquivo cadastrado ainda.</div>';
+    const arqDrive = proj.drive ? '<a href="https://drive.google.com/drive/folders/' + proj.drive + '" target="_blank" class="btn ghost small">Abrir Drive ↗</a>' : '';
+    const arqCard = '<div class="card-p" id="arquivos"><h3>Arquivos do projeto · Drive</h3>' + arqHTML + '<div style="margin-top:14px;display:flex;gap:8px"><a href="#" class="btn small" onclick="alert(\'Upload em construção — protótipo.\');return false">+ Upload</a>' + arqDrive + '</div></div>';
+
+    // ---------- equipe ----------
+    const eqHTML = (proj.equipe || []).map(p => ''
+      + '<div class="tm-r">'
+      +   '<div class="av">' + p.i + '</div>'
+      +   '<div><div class="nm">' + p.n + '</div><div class="rl">' + p.r + '</div></div>'
+      +   '<div class="hr">' + p.h + '<span class="sub">Mês</span></div>'
+      + '</div>').join('');
+    const eqCard = '<div class="card-p" id="equipe"><h3>Equipe do projeto</h3><div class="team-mini">' + eqHTML + '</div></div>';
+
+    // ---------- financeiro resumido ----------
+    let finRows = '';
+    if (proj.honorarios > 0) {
+      finRows += '<tr><td>Honorários projeto</td><td class="num">' + SD.fmtBRL(proj.honorarios) + '</td></tr>';
+      finRows += '<tr><td style="color:var(--ok)">Pago</td><td class="num" style="color:var(--ok)">' + SD.fmtBRL(proj.honorariosPagos) + '</td></tr>';
+      finRows += '<tr><td style="color:var(--warn)">A receber</td><td class="num" style="color:var(--warn)">' + SD.fmtBRL(proj.honorariosARecever) + '</td></tr>';
+      finRows += '<tr><td>Próxima parcela</td><td class="num">' + proj.proxParcela + '</td></tr>';
+    } else {
+      finRows += '<tr><td colspan="2" style="text-align:center;color:var(--ink-mute);font-style:italic">Sem cobrança formalizada</td></tr>';
+    }
+    if (proj.orcamentoObra > 0) {
+      finRows += '<tr><td>Obra · executado</td><td class="num">' + SD.fmtBRL(proj.gastoObra) + '</td></tr>';
+      finRows += '<tr><td>Obra · orçamento total</td><td class="num">' + SD.fmtBRL(proj.orcamentoObra) + '</td></tr>';
+    }
+    const finCard = '<div class="card-p"><h3>Financeiro resumido</h3><table class="tbl"><tbody>' + finRows + '</tbody></table>'
+      + (proj.financeiroId ? '<div style="margin-top:12px"><a href="sistema-financeiro.html" class="link">Ver no financeiro →</a></div>' : '') + '</div>';
+
+    // ---------- atividade ----------
+    const atHTML = (proj.atividade || []).length
+      ? '<div class="log-list">' + proj.atividade.map(a => '<div class="log-r"><div class="wh">' + a.q + '</div><p>' + a.p + '</p></div>').join('') + '</div>'
+      : '<div class="empty-card">Sem atividade registrada.</div>';
+    const atCard = '<div class="card-p" id="atividade"><h3>Atividade recente</h3>' + atHTML + '<div style="margin-top:12px"><a href="sistema-log.html" class="link">Ver log completo →</a></div></div>';
+
+    // ---------- monta tudo ----------
+    root.innerHTML = heroHTML + notionHTML + kpiHTML + relHTML + tabs
+      + '<div class="two-col">'
+      +   '<div style="display:flex;flex-direction:column;gap:20px">' + fasesCard + decCard + arqCard + '</div>'
+      +   '<div style="display:flex;flex-direction:column;gap:20px">' + eqCard + finCard + atCard + '</div>'
+      + '</div>';
+  }
+
+  // Re-render ao editar qualquer campo
+  document.addEventListener('sistema-edit-saved', (e) => {
+    if (e.detail && e.detail.tipo === 'projeto' && e.detail.id === id) {
+      // pequeno delay para preservar a animação de "just-saved"
+      setTimeout(render, 950);
+    }
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>
