@@ -3570,7 +3570,7 @@ var portalModal = (function(){
   var card = document.getElementById('pt-pagamentos');
   if(!card || typeof window.SistemaData === 'undefined') return;
   var SD = window.SistemaData;
-  var CLIENTE_ID = card.getAttribute('data-cliente') || 'CLI-4';
+  var CLIENTE_ID = new URLSearchParams(location.search).get('cliente') || card.getAttribute('data-cliente') || 'CLI-4';
 
   var kpisMount = document.getElementById('pag-resumo-mount');
   var listApagar = document.getElementById('pag-list-apagar');
@@ -3936,7 +3936,7 @@ var portalModal = (function(){
   var card = document.getElementById('pt-ultimos-pagamentos');
   if(!card || typeof window.SistemaData === 'undefined') return;
   var SD = window.SistemaData;
-  var CLIENTE_ID = card.getAttribute('data-cliente') || 'CLI-4';
+  var CLIENTE_ID = new URLSearchParams(location.search).get('cliente') || card.getAttribute('data-cliente') || 'CLI-4';
   var lista = document.getElementById('pt-ultimos-lista');
 
   function fmtBRL(v){ return 'R$ ' + Number(v||0).toLocaleString('pt-BR',{minimumFractionDigits:0,maximumFractionDigits:0}); }
