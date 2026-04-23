@@ -1082,7 +1082,8 @@
         <div style="display:flex;justify-content:space-between;align-items:baseline">
           <div>
             <div class="eyebrow">Saldo hoje</div>
-            <div style="font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:44px;line-height:1;font-weight:500;color:var(--ink)">R$ 33.343</div>
+            <div style="font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:44px;line-height:1;font-weight:500;color:var(--ink)">R$ 36.264</div>
+ont-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:44px;line-height:1;font-weight:500;color:var(--ink)">R$ 33.343</div>
           </div>
           <span class="badge ok">Caixa leve · operação enxuta</span>
         </div>
@@ -1090,43 +1091,55 @@
         <div class="caixa-row">
           <div class="caixa-cell pos">
             <div class="l">30 dias</div>
-            <div class="v">R$ 45.760</div>
-            <div class="sub">+R$ 12.417 · ECCO 4/7 + ALVARA CT 3/3</div>
+            <div class="v">R$ 56.023</div>
+            <div class="sub">+R$ 19.759 · ECCO 4+5/7 · Eliana 2/2 · RT Marc. · CT 3/3</div>
           </div>
           <div class="caixa-cell pos">
             <div class="l">60 dias</div>
-            <div class="v">R$ 50.257</div>
-            <div class="sub">+R$ 4.497 · ECCO parcela 5/7 (20/05)</div>
+            <div class="v">R$ 60.520</div>
+            <div class="sub">+R$ 4.497 · ECCO parcela 6/7 (20/06)</div>
           </div>
           <div class="caixa-cell pos">
             <div class="l">90 dias</div>
-            <div class="v">R$ 54.754</div>
-            <div class="sub">+R$ 4.497 · ECCO parcela 6/7 (20/06)</div>
+            <div class="v">R$ 65.019</div>
+            <div class="sub">+R$ 4.499 · ECCO parcela 7/7 (20/07)</div>
           </div>
         </div>
 
         <div style="margin-top:18px;padding-top:14px;border-top:1px solid var(--line-soft)">
           <div class="eyebrow" style="margin-bottom:8px">Composição · próximos 30 d</div>
-          <div class="bar ok" style="margin-bottom:6px"><span style="width:85%"></span></div>
+          <div class="bar ok" style="margin-bottom:6px"><span style="width:100%"></span></div>
+style="margin-bottom:6px"><span style="width:85%"></span></div>
           <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--ink-soft)">
-            <span>Entradas · R$ 12.417</span>
+            <span>Entradas · R$ 19.759</span>
+            <span>Saídas · R$ 0 cadastrado</span>
+tradas · R$ 12.417</span>
             <span>Saídas · R$ 2.100 · 17%</span>
           </div>
         </div>
       </div>
 
       <div class="alert-box">
-        <h4>⚠ Atenção · 3 alertas</h4>
+        <h4>⚠ Atenção · 4 alertas</h4>
+o · 3 alertas</h4>
         <div class="alert-item">
           <div>
             <div class="name">Rafael Monici · ECCO parcela 4/7</div>
-            <div class="sub">Vence 25 / 04 · 6 d</div>
+            <div class="sub">Vence 25 / 04 · 2 d</div>
           </div>
           <div class="value">R$ 4.497</div>
         </div>
         <div class="alert-item">
           <div>
-            <div class="name">CT Darkhouse · ALVARA parcela 3/3</div>
+            <div class="name">Eliana · Consultoria exterior 2/2</div>
+            <div class="sub">Vence 25 / 04 · 2 d</div>
+          </div>
+          <div class="value">R$ 1.330</div>
+        </div>
+        <div class="alert-item">
+          <div>
+            <div class="name">CT Darkhouse · ALVARÁ parcela 3/3</div>
+rkhouse · ALVARA parcela 3/3</div>
             <div class="sub">Vence na entrega do alvará · ~05 / 05</div>
           </div>
           <div class="value">R$ 7.920</div>
@@ -1160,15 +1173,16 @@
         <div class="pt-head">
           <div>
             <h3>A <em>receber</em></h3>
-            <div class="tot">5 parcelas · <strong>R$ 25.910</strong> · ECCO (4) + ALVARA CT (1)</div>
+            <div class="tot">8 parcelas · <strong>R$ 28.755</strong> · ECCO (4) + RT Marcenaria (2) + ALVARÁ CT (1) + Eliana (1)</div>
           </div>
           <div style="display:flex;gap:6px">
-            <span class="chk-box" onclick="toggleAll(this,'rec')" title="Selecionar todas"></span>
+            <a href="#" class="btn ghost small" style="font-size:10px;padding:5px 10px">+ Adicionar</a>
+ggleAll(this,'rec')" title="Selecionar todas"></span>
             <a href="#" class="btn ghost small" style="font-size:10px;padding:5px 10px">Cobrar todas</a>
           </div>
         </div>
 
-        <div class="bulk-bar hidden" id="bulk-rec">
+idden" id="bulk-rec">
           <span class="sel-count"><strong id="cnt-rec">0</strong> selecionada(s) · <span id="sum-rec">R$ 0</span></span>
           <div class="bulk-actions">
             <button class="primary">✓ Marcar recebidas</button>
@@ -1203,6 +1217,82 @@
                   <a href="sistema-cliente-detalhe.html?id=CLI-4">Abrir cliente →</a>
                   <a href="#" class="sep">Editar parcela</a>
                   <a href="#">Reemitir boleto</a>
+                  <a href="#" class="del">Cancelar parcela</a>
+                </div>
+              </span>
+            </div>
+          </div>
+
+          <div class="pay-row" data-row="rec" data-id="rec-eliana-2" data-parc="2/2" data-tipo="receber"
+               data-cat="Consultoria · exterior" data-conta="Inter PJ Zenon" data-unidade="Yvyra Lab"
+               data-projeto="Consultoria Exterior" data-contato="Eliana" data-contato-link="sistema-cliente-detalhe.html?id=CLI-6"
+               data-obs="FIN-03 · consultoria exterior · R$ 2.660 total · 1ª R$ 1.596 recebida 06/04">
+            <span class="chk-box" onclick="event.stopPropagation();toggleRow(this,'rec',1330)"></span>
+            <div class="pay-main">
+              <div class="pay-name"><a href="sistema-cliente-detalhe.html?id=CLI-6" onclick="event.stopPropagation()">Eliana</a> <span class="parc-tag">2/2</span></div>
+              <div class="pay-sub">Consultoria exterior · parcela final · PIX</div>
+            </div>
+            <div class="pay-when"><strong>25 / 04</strong>em 2 d</div>
+            <div class="pay-val in">+ R$ 1.330</div>
+            <div style="display:flex;gap:4px;align-items:center">
+              <span class="status-pill pendente" onclick="cycleStatus(this)">Pendente</span>
+              <span class="row-menu" onclick="toggleMenu(this)">⋮
+                <div class="menu-list">
+                  <a href="#">✓ Marcar como pago</a>
+                  <a href="#">✉ Reenviar lembrete</a>
+                  <a href="sistema-cliente-detalhe.html?id=CLI-6">Abrir cliente →</a>
+                  <a href="#" class="sep">Editar parcela</a>
+                  <a href="#" class="del">Cancelar parcela</a>
+                </div>
+              </span>
+            </div>
+          </div>
+
+          <div class="pay-row" data-row="rec" data-id="rec-rt-marc-complemento" data-parc="1/1" data-tipo="receber"
+               data-cat="RT · Responsabilidade Técnica" data-conta="Inter PJ Zenon" data-unidade="Yvyra Lab"
+               data-projeto="Clínica ECCO" data-contato="Rafael Monici" data-contato-link="sistema-cliente-detalhe.html?id=CLI-4"
+               data-obs="FIN-05 · RT marcenaria complemento · R$ 380 total · parcela única pendente">
+            <span class="chk-box" onclick="event.stopPropagation();toggleRow(this,'rec',190)"></span>
+            <div class="pay-main">
+              <div class="pay-name"><a href="sistema-cliente-detalhe.html?id=CLI-4" onclick="event.stopPropagation()">Rafael Monici</a> <span class="parc-tag">RT Marc.</span></div>
+              <div class="pay-sub">Clínica ECCO · RT marcenaria complemento · PIX</div>
+            </div>
+            <div class="pay-when"><strong>30 / 04</strong>em 7 d</div>
+            <div class="pay-val in">+ R$ 190</div>
+            <div style="display:flex;gap:4px;align-items:center">
+              <span class="status-pill pendente" onclick="cycleStatus(this)">Pendente</span>
+              <span class="row-menu" onclick="toggleMenu(this)">⋮
+                <div class="menu-list">
+                  <a href="#">✓ Marcar como pago</a>
+                  <a href="#">✉ Reenviar lembrete</a>
+                  <a href="sistema-cliente-detalhe.html?id=CLI-4">Abrir cliente →</a>
+                  <a href="#" class="sep">Editar parcela</a>
+                  <a href="#" class="del">Cancelar parcela</a>
+                </div>
+              </span>
+            </div>
+          </div>
+
+          <div class="pay-row" data-row="rec" data-id="rec-rt-marc-2" data-parc="2/2" data-tipo="receber"
+               data-cat="RT · Responsabilidade Técnica" data-conta="Inter PJ Zenon" data-unidade="Yvyra Lab"
+               data-projeto="Clínica ECCO" data-contato="Rafael Monici" data-contato-link="sistema-cliente-detalhe.html?id=CLI-4"
+               data-obs="FIN-04 · RT marcenaria · R$ 2.650 total · 1ª R$ 1.325 recebida 28/01">
+            <span class="chk-box" onclick="event.stopPropagation();toggleRow(this,'rec',1325)"></span>
+            <div class="pay-main">
+              <div class="pay-name"><a href="sistema-cliente-detalhe.html?id=CLI-4" onclick="event.stopPropagation()">Rafael Monici</a> <span class="parc-tag">RT Marc. 2/2</span></div>
+              <div class="pay-sub">Clínica ECCO · RT marcenaria · parcela final · PIX</div>
+            </div>
+            <div class="pay-when"><strong>01 / 05</strong>em 8 d</div>
+            <div class="pay-val in">+ R$ 1.325</div>
+            <div style="display:flex;gap:4px;align-items:center">
+              <span class="status-pill pendente" onclick="cycleStatus(this)">Pendente</span>
+              <span class="row-menu" onclick="toggleMenu(this)">⋮
+                <div class="menu-list">
+                  <a href="#">✓ Marcar como pago</a>
+                  <a href="#">✉ Reenviar lembrete</a>
+                  <a href="sistema-cliente-detalhe.html?id=CLI-4">Abrir cliente →</a>
+                  <a href="#" class="sep">Editar parcela</a>
+tir boleto</a>
                   <a href="#" class="del">Cancelar parcela</a>
                 </div>
               </span>
@@ -1320,7 +1410,7 @@
         <div class="pt-head">
           <div>
             <h3>A <em>pagar</em></h3>
-            <div class="tot">5 contas <span class="ex-tag">exemplo</span> · <strong>R$ 23.500</strong> · só despesas da empresa <span style="color:var(--ink-mute)">·</span> <a href="sistema-obra-financeiro.html" style="font-family:'Fraunces','Source Serif 4',Georgia,serif;font-style:italic;color:var(--accent,#b89455);text-decoration:none">obra → financeiro →</a></div>
+            <div class="tot">0 contas · <strong>R$ 0</strong> · despesas da empresa <span style="color:var(--ink-mute)">·</span> <a href="sistema-obra-financeiro.html" style="font-family:'Fraunces','Source Serif 4',Georgia,serif;font-style:italic;color:var(--accent,#b89455);text-decoration:none">obra → financeiro →</a></div>
           </div>
           <div style="display:flex;gap:6px">
             <span class="chk-box" onclick="toggleAll(this,'pag')" title="Selecionar todas"></span>
@@ -1328,13 +1418,10 @@
           </div>
         </div>
 
-        <!-- ⚠ banner: dados em construção — BD real sendo montado em paralelo -->
-        <div style="margin:0 14px 10px;padding:10px 14px;background:linear-gradient(90deg,#fff7e6,#fff);border:1px solid #e8c878;border-left:3px solid #b89455;border-radius:4px;font-family:'Inter',sans-serif;font-size:12.5px;line-height:1.55;color:#6b4a1f;display:flex;gap:10px;align-items:flex-start">
-          <span style="font-size:15px;line-height:1">⚠</span>
-          <div>
-            <strong style="font-family:'Fraunces','Source Serif 4',Georgia,serif;font-style:italic;font-weight:500;color:#3d2a08">Dados de exemplo</strong> — as 5 contas abaixo são placeholders, não refletem as contas reais do Zenon.
-            <br><span style="color:#8a6a2e">O BD real (Inter PJ Zenon, BTG PJ Zenon, Nubank Thereza, Inter Rodrigo) está sendo montado em paralelo. Assim que entrar, esta seção será substituída pelos débitos efetivos das 4 contas.</span>
-          </div>
+        <div style="margin:14px;padding:24px 20px;background:var(--surface,#faf9f7);border:1px dashed var(--border,#e0dbd2);border-radius:6px;text-align:center;font-family:'Inter',sans-serif;color:var(--ink-mute,#9c9489)">
+          <div style="font-size:22px;margin-bottom:8px;opacity:.5">—</div>
+          <div style="font-size:13px;font-style:italic">Nenhuma conta a pagar cadastrada</div>
+          <div style="font-size:12px;margin-top:4px">Use <strong style="color:var(--ink,#2a2520)">+ Adicionar</strong> para registrar despesas da empresa</div>
         </div>
 
         <div class="bulk-bar hidden" id="bulk-pag">
@@ -1507,6 +1594,34 @@
           <td class="num">R$ 11.880</td>
           <td class="num">R$ 7.920</td>
           <td>05 / 05<div class="sub">parcela 3/3 · final</div></td>
+          <td><span class="badge ok">Em dia</span></td>
+        </tr>
+        <tr data-cliente-link="sistema-cliente-detalhe.html?id=CLI-6">
+          <td><div class="name">Consultoria exterior · Eliana</div><div class="sub">Yvyra Lab · consultoria</div></td>
+          <td>R$ 2.660<div class="sub">PIX · 2 parcelas</div></td>
+          <td>1 / 2</td>
+          <td class="num">R$ 1.596</td>
+          <td class="num">R$ 1.330</td>
+          <td>25 / 04<div class="sub">parcela 2/2 · final</div></td>
+          <td><span class="badge ok">Em dia</span></td>
+        </tr>
+        <tr data-cliente-link="sistema-cliente-detalhe.html?id=CLI-4">
+          <td><div class="name">RT marcenaria · Clínica ECCO</div><div class="sub">Rafael Monici · responsabilidade técnica</div></td>
+          <td>R$ 2.650<div class="sub">PIX · 2 parcelas</div></td>
+          <td>1 / 2</td>
+          <td class="num">R$ 1.325</td>
+          <td class="num">R$ 1.325</td>
+          <td>01 / 05<div class="sub">parcela 2/2 · final</div></td>
+          <td><span class="badge ok">Em dia</span></td>
+        </tr>
+        <tr data-cliente-link="sistema-cliente-detalhe.html?id=CLI-4">
+          <td><div class="name">RT marcenaria complemento · ECCO</div><div class="sub">Rafael Monici · RT complemento</div></td>
+          <td>R$ 380<div class="sub">PIX · 1 parcela</div></td>
+          <td>0 / 1</td>
+          <td class="num">—</td>
+          <td class="num">R$ 190</td>
+          <td>30 / 04<div class="sub">parcela 1/1 · única</div></td>
+ class="sub">parcela 3/3 · final</div></td>
           <td><span class="badge ok">Em dia</span></td>
         </tr>
         <tr data-proposta-link="sistema-proposta-detalhe.html?p=PRO-5" style="opacity:.82">
@@ -3280,7 +3395,11 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="supabase-config.js"></script>
   <script src="supabase-client.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script src="supabase-client.js"></script>
   <script src="shell-user.js"></script>
+ser.js"></script>
 <script src="shell-fx.js"></script>
 <script>/* Dynamic month/year */
 (function(){var _m=['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];var now=new Date();var txt=_m[now.getMonth()]+' / '+now.getFullYear();var el=document.getElementById('fin-curr-month');if(el)el.textContent=txt;})();
