@@ -4170,11 +4170,13 @@ window.__SUPABASE_CONFIG__ = {
   /* ── carrega dados do Supabase ── */
   async function carregarDados(){
     try {
+      var _cliId=new URLSearchParams(location.search).get('cliente')||'CLI-4';
+      if(['CLI-3','CLI-5','CLI-6','CLI-7','CLI-8','CLI-9'].indexOf(_cliId)!==-1){renderPortalPayments([]);return;}
       /* 1. pega o financeiro do Rafael (CLI-4 / FIN-01) */
       var { data: fins, error: finErr } = await sb
         .from('financeiro')
         .select('id,codigo,descricao,valor_centavos')
-        .eq('codigo','FIN-01')
+        .eq('codigo',(function(){var _fm={'CLI-1':'FIN-02','CLI-4':'FIN-01'};return _fm[new URLSearchParams(location.search).get('cliente')||'CLI-4']||'FIN-01';})())
         .limit(1);
       if(finErr || !fins || !fins.length) throw new Error('financeiro não encontrado');
       var fin = fins[0];
@@ -4294,5 +4296,6 @@ window.__SUPABASE_CONFIG__ = {
   }
 })();
 </script>
+<script>/* Portal Header Updater */(function(){'use strict';var _PC={'CLI-1':{nome:'CT Darkhouse',projeto:'Regularização + Comercial',meta:'Água Rasa, São Paulo · +500 m²'},'CLI-3':{nome:'Bruna e Thiago',projeto:'Residencial',meta:'São Paulo'},'CLI-4':{nome:'Rafael',projeto:'Clínica ECCO · Endoscopia',meta:'Itaim Bibi, São Paulo · 125 m² · projeto iniciado em janeiro de 2026'},'CLI-5':{nome:'Tiago',projeto:'Residencial Terrazzas',meta:'Ponta da Praia, Santos'},'CLI-6':{nome:'Eliana',projeto:'Consultoria Rural · Jaguari',meta:'Represa do Jaguari, São José dos Campos'},'CLI-7':{nome:'Juliana e Felipe',projeto:'Residencial Alta Complexidade',meta:'São Paulo'},'CLI-8':{nome:'Cleber e Tamara',projeto:'Residencial Santana',meta:'Santana, São Paulo'},'CLI-9':{nome:'Juliana e Felipe Vasconcellos',projeto:'Residencial Alta Complexidade',meta:'São Paulo'}};function _upd(){var _id=new URLSearchParams(location.search).get('cliente');if(!_id||!_PC[_id])return;var _i=_PC[_id];var _h=document.querySelector('.portal-head h1');if(_h)_h.textContent=_i.nome+'.';var _p=document.querySelector('.ph-project');if(_p)_p.textContent=_i.projeto;var _m=document.querySelector('.ph-meta');if(_m)_m.textContent=_i.meta;}if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',_upd);}else{_upd();}})()</script>
 </body>
 </html>
