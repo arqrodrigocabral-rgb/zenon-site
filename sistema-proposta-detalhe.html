@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Proposta — Zenon Sistema</title>
+<title>Proposta â Zenon Sistema</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -148,12 +148,12 @@
 
 <header class="top">
   <div class="top-inner">
-    <div class="brand">Zen<span>o</span>n — Sistema</div>
-    <div class="search"><input type="search" placeholder="Buscar…"></div>
-    <div class="fx-chip" title="Cotação do dólar (USD/BRL)">
+    <div class="brand">Zen<span>o</span>n â Sistema</div>
+    <div class="search"><input type="search" placeholder="Buscarâ¦"></div>
+    <div class="fx-chip" title="CotaÃ§Ã£o do dÃ³lar (USD/BRL)">
       <span class="fx-code">USD</span>
-      <span class="fx-val"><span class="cur">R$</span>—</span>
-      <span class="fx-delta flat">…</span>
+      <span class="fx-val"><span class="cur">R$</span>â</span>
+      <span class="fx-delta flat">â¦</span>
       <div class="fx-tip"></div>
     </div>
 
@@ -161,22 +161,22 @@
       <button type="button" class="user-trigger" onclick="ZenonUser.toggleDropdown(event)" aria-haspopup="true" aria-expanded="false">
         <span class="u-name" data-user-name>Rodrigo</span>
         <span class="avatar" data-user="me">R</span>
-        <span class="u-caret">▾</span>
+        <span class="u-caret">â¾</span>
       </button>
       <div class="user-dropdown" role="menu">
         <div class="ud-head">
           <span class="avatar" data-user="me">R</span>
           <div>
             <div class="name" data-user-name>Rodrigo</div>
-            <div class="role" data-user-role>Sócio · Arquiteto responsável</div>
+            <div class="role" data-user-role>SÃ³cio Â· Arquiteto responsÃ¡vel</div>
           </div>
         </div>
-        <a href="sistema-perfil.html"><span class="ic">◎</span>Ver perfil</a>
-        <a href="sistema-configuracoes.html"><span class="ic">⚙</span>Configurações</a>
-        <a href="sistema-empresa.html"><span class="ic">⌂</span>Dados da empresa</a>
-        <a href="https://www.notion.so/Zenon" target="_blank"><span class="ic">✱</span>Atividades · Notion ↗</a>
+        <a href="sistema-perfil.html"><span class="ic">â</span>Ver perfil</a>
+        <a href="sistema-configuracoes.html"><span class="ic">â</span>ConfiguraÃ§Ãµes</a>
+        <a href="sistema-empresa.html"><span class="ic">â</span>Dados da empresa</a>
+        <a href="https://www.notion.so/Zenon" target="_blank"><span class="ic">â±</span>Atividades Â· Notion â</a>
         <div class="ud-sep"></div>
-        <a href="sistema-login.html" class="sign-out"><span class="ic">↪</span>Sair</a>
+        <a href="sistema-login.html" class="sign-out"><span class="ic">âª</span>Sair</a>
       </div>
     </div>
   </div>
@@ -194,7 +194,7 @@
 </header>
 
 <main class="det" id="det-main">
-  <!-- conteúdo injetado dinamicamente -->
+  <!-- conteÃºdo injetado dinamicamente -->
 </main>
 
 <script src="sistema-data.js"></script>
@@ -203,7 +203,7 @@
 (function () {
   const SD = window.SistemaData;
   if (!SD) {
-    document.getElementById('det-main').innerHTML = '<div class="err-box"><h1>Dados não carregados</h1><p>sistema-data.js não foi encontrado.</p><a href="sistema-propostas.html">← Voltar para propostas</a></div>';
+    document.getElementById('det-main').innerHTML = '<div class="err-box"><h1>Dados nÃ£o carregados</h1><p>sistema-data.js nÃ£o foi encontrado.</p><a href="sistema-propostas.html">â Voltar para propostas</a></div>';
     return;
   }
 
@@ -222,11 +222,11 @@
   function render() {
     const pp = SD.getProposta(id);
     if (!pp) {
-      root.innerHTML = '<div class="err-box"><h1>Proposta não encontrada</h1><p>O identificador <strong>'+id+'</strong> não existe na base de dados.</p><a href="sistema-propostas.html">← Voltar para propostas</a></div>';
-      document.title = 'Proposta não encontrada — Zenon Sistema';
+      root.innerHTML = '<div class="err-box"><h1>Proposta nÃ£o encontrada</h1><p>O identificador <strong>'+id+'</strong> nÃ£o existe na base de dados.</p><a href="sistema-propostas.html">â Voltar para propostas</a></div>';
+      document.title = 'Proposta nÃ£o encontrada â Zenon Sistema';
       return;
     }
-    document.title = pp.id + ' ' + pp.clienteNome + ' — Zenon Sistema';
+    document.title = pp.id + ' ' + pp.clienteNome + ' â Zenon Sistema';
 
     const cli  = SD.getCliente(pp.cliente);
     const proj = SD.getProjeto(pp.projetoId);
@@ -245,22 +245,22 @@
     /* ----- Breadcrumb com pill "editado" ----- */
     let crumbsHtml = '<div class="crumbs">'
       + '<a href="sistema-propostas.html">Propostas</a>'
-      + '<span class="sep">›</span>'
-      + '<span>'+pp.id+' · '+pp.clienteNome+'</span>'
+      + '<span class="sep">âº</span>'
+      + '<span>'+pp.id+' Â· '+pp.clienteNome+'</span>'
       + '<span class="grow"></span>'
       + '<span id="ovbar-mount"></span>'
       + '</div>';
 
     /* ----- Status banner ----- */
     const bannerHtml = isAprovada
-      ? '<div class="status-banner"><span class="ico">✓</span><div class="txt">'
+      ? '<div class="status-banner"><span class="ico">â</span><div class="txt">'
         + '<div class="tt">Proposta aprovada em '+pp.data+'</div>'
-        + '<div class="sub">Execução via projeto <a href="sistema-projeto-detalhe.html?p='+pp.projetoId+'">'+(proj ? proj.titulo : pp.projetoId)+'</a>'
-        + (fin ? ' · Financeiro ativo <a href="sistema-financeiro.html">'+fin.id+'</a>' : '')
+        + '<div class="sub">ExecuÃ§Ã£o via projeto <a href="sistema-projeto-detalhe.html?p='+pp.projetoId+'">'+(proj ? proj.titulo : pp.projetoId)+'</a>'
+        + (fin ? ' Â· Financeiro ativo <a href="sistema-financeiro.html">'+fin.id+'</a>' : '')
         + '.</div></div></div>'
-      : '<div class="status-banner rascunho"><span class="ico">✎</span><div class="txt">'
-        + '<div class="tt">Proposta em rascunho · aguardando assinatura</div>'
-        + '<div class="sub">Enviada em '+pp.data+' · validade '+pp.validade+'</div></div></div>';
+      : '<div class="status-banner rascunho"><span class="ico">â</span><div class="txt">'
+        + '<div class="tt">Proposta em rascunho Â· aguardando assinatura</div>'
+        + '<div class="sub">Enviada em '+pp.data+' Â· validade '+pp.validade+'</div></div></div>';
 
     /* ----- Tags ----- */
     const tags = [];
@@ -273,8 +273,8 @@
     const kpiHtml = isAprovada
       ? '<div class="pp-kpis">'
         + '<div class="pp-kpi"><span class="lb">Valor total</span><span class="vl"><em>'+brShort(pp.valorTotal)+'</em></span><span class="sub">'+fmt(pp.valorTotal)+'</span></div>'
-        + (pp.parcelas[0] ? '<div class="pp-kpi"><span class="lb">Entrada</span><span class="vl">'+brShort(pp.parcelas[0].valor)+'</span><span class="sub">'+(sinalPct ? sinalPct+'% · '+pp.parcelas[0].desc : pp.parcelas[0].desc)+'</span></div>' : '')
-        + '<div class="pp-kpi"><span class="lb">Parcelas</span><span class="vl">'+parcelasCount+'×</span><span class="sub">'+pp.parcelas.filter(p=>p.status==='Recebido').length+' recebida(s)</span></div>'
+        + (pp.parcelas[0] ? '<div class="pp-kpi"><span class="lb">Entrada</span><span class="vl">'+brShort(pp.parcelas[0].valor)+'</span><span class="sub">'+(sinalPct ? sinalPct+'% Â· '+pp.parcelas[0].desc : pp.parcelas[0].desc)+'</span></div>' : '')
+        + '<div class="pp-kpi"><span class="lb">Parcelas</span><span class="vl">'+parcelasCount+'Ã</span><span class="sub">'+pp.parcelas.filter(p=>p.status==='Recebido').length+' recebida(s)</span></div>'
         + '<div class="pp-kpi"><span class="lb">Recebido</span><span class="vl">'+brShort(totalRecebido)+'</span><span class="sub">'+(pp.valorTotal? Math.round(totalRecebido/pp.valorTotal*100):0)+'% do total</span></div>'
         + '<div class="pp-kpi"><span class="lb">Itens</span><span class="vl">'+itensCount+'</span><span class="sub">escopo detalhado</span></div>'
         + '</div>'
@@ -282,20 +282,20 @@
         + '<div class="pp-kpi"><span class="lb">Valor proposto</span><span class="vl"><em>'+brShort(pp.valorTotal)+'</em></span><span class="sub">'+fmt(pp.valorTotal)+'</span></div>'
         + '<div class="pp-kpi"><span class="lb">Validade</span><span class="vl" style="font-size:18px"><span'+buildEditAttr('validade','text')+'>'+pp.validade+'</span></span><span class="sub">prazo de assinatura</span></div>'
         + '<div class="pp-kpi"><span class="lb">Itens</span><span class="vl">'+itensCount+'</span><span class="sub">escopo em rascunho</span></div>'
-        + '<div class="pp-kpi"><span class="lb">Parcelas</span><span class="vl">'+(parcelasCount||'—')+'</span><span class="sub">'+(parcelasCount?'definidas':'a definir')+'</span></div>'
+        + '<div class="pp-kpi"><span class="lb">Parcelas</span><span class="vl">'+(parcelasCount||'â')+'</span><span class="sub">'+(parcelasCount?'definidas':'a definir')+'</span></div>'
         + '<div class="pp-kpi"><span class="lb">Meio</span><span class="vl" style="font-size:13px;line-height:1.3"><span'+buildEditAttr('meio','text')+'>'+pp.meio+'</span></span><span class="sub">forma de pagamento</span></div>'
         + '</div>';
 
     /* ----- Hero ----- */
     const heroHtml = '<section class="pp-head">'
       + '<div>'
-      + '<div class="pp-code">'+pp.id+' · Versão 1 · '+pp.status+'</div>'
+      + '<div class="pp-code">'+pp.id+' Â· VersÃ£o 1 Â· '+pp.status+'</div>'
       + '<h1><span'+buildEditAttr('titulo','text')+'>'+pp.titulo+'</span></h1>'
       + '<div class="pp-line">'
       + 'Cliente: '+(cli ? '<a href="sistema-cliente-detalhe.html?id='+cli.id+'">'+cli.nome+'</a>' : '<span>'+pp.clienteNome+'</span>')
-      + (proj ? ' · Projeto: <a href="sistema-projeto-detalhe.html?p='+proj.id+'">'+proj.titulo+'</a>' : '')
-      + ' · Unidade: <strong>Yvyra Lab</strong> · Emitida em <span'+buildEditAttr('data','text')+'>'+pp.data+'</span>'
-      + (isAprovada ? '' : ' · Validade <span'+buildEditAttr('validade','text')+'>'+pp.validade+'</span>')
+      + (proj ? ' Â· Projeto: <a href="sistema-projeto-detalhe.html?p='+proj.id+'">'+proj.titulo+'</a>' : '')
+      + ' Â· Unidade: <strong>Yvyra Lab</strong> Â· Emitida em <span'+buildEditAttr('data','text')+'>'+pp.data+'</span>'
+      + (isAprovada ? '' : ' Â· Validade <span'+buildEditAttr('validade','text')+'>'+pp.validade+'</span>')
       + '</div>'
       + '<div class="pp-tags">'+tags.join('')+'</div>'
       + kpiHtml
@@ -306,38 +306,38 @@
           ? '<button type="button" class="btn" onclick="reenviarProposta()">Reenviar ao cliente</button>'
           : '<button type="button" class="btn primary" onclick="enviarRascunho()" style="background:var(--accent-ink);border-color:var(--accent-ink)">Enviar ao cliente</button>')
       + '<button type="button" class="btn" onclick="duplicarProposta()">Duplicar como nova</button>'
-      + '<button type="button" class="btn" onclick="abrirPortal()">Ver no portal ↗</button>'
+      + '<button type="button" class="btn" onclick="abrirPortal()">Ver no portal â</button>'
       + '<button type="button" class="btn warn" onclick="arquivarProposta()">Arquivar</button>'
       + '</div>'
       + '</section>';
 
     /* ----- Sub-tabs ----- */
     const subTabs = '<nav class="sub-tabs">'
-      + '<a href="#visao-geral" class="on" data-sub="visao">Visão geral</a>'
+      + '<a href="#visao-geral" class="on" data-sub="visao">VisÃ£o geral</a>'
       + '<a href="#escopo" data-sub="escopo">Escopo <span class="ct">'+itensCount+'</span></a>'
-      + '<a href="#pagamento" data-sub="pag">Pagamento <span class="ct">'+(parcelasCount||0)+'×</span></a>'
+      + '<a href="#pagamento" data-sub="pag">Pagamento <span class="ct">'+(parcelasCount||0)+'Ã</span></a>'
       + '<a href="#cliente" data-sub="cli">Cliente</a>'
       + '<a href="#arquivos" data-sub="arq">Arquivos</a>'
       + '</nav>';
 
-    /* ----- Escopo (editável) ----- */
+    /* ----- Escopo (editÃ¡vel) ----- */
     const escopoRows = pp.itens.map((it, i) => {
       const isDesc = (Number(it.valor)||0) < 0;
       return '<tr'+(isDesc?' class="desc"':'')+'>'
-        + '<td class="cat"><span'+buildEditAttr('itens.'+i+'.categoria','text')+'>'+(it.categoria||'—')+'</span></td>'
-        + '<td class="name"><span'+buildEditAttr('itens.'+i+'.descricao','text')+'>'+(it.descricao||'—')+'</span></td>'
+        + '<td class="cat"><span'+buildEditAttr('itens.'+i+'.categoria','text')+'>'+(it.categoria||'â')+'</span></td>'
+        + '<td class="name"><span'+buildEditAttr('itens.'+i+'.descricao','text')+'>'+(it.descricao||'â')+'</span></td>'
         + '<td class="val"><span'+buildEditAttr('itens.'+i+'.valor','currency','brl')+' data-raw="'+it.valor+'">'+fmt(it.valor)+'</span></td>'
-        + '<td class="rm"><button type="button" class="row-rm-btn" title="Remover item" onclick="rmItem('+i+')">×</button></td>'
+        + '<td class="rm"><button type="button" class="row-rm-btn" title="Remover item" onclick="rmItem('+i+')">Ã</button></td>'
         + '</tr>';
     }).join('');
 
     const escopoHtml = '<div class="card" id="escopo">'
       + '<h3>Escopo e valores <span class="h3-actions">'
       + '<button type="button" class="row-add-btn" onclick="addItem(false)">+ Item</button>'
-      + '<button type="button" class="row-add-btn" onclick="addItem(true)" style="border-color:var(--warn);color:var(--warn)">− Desconto</button>'
+      + '<button type="button" class="row-add-btn" onclick="addItem(true)" style="border-color:var(--warn);color:var(--warn)">â Desconto</button>'
       + '</span></h3>'
       + '<table class="scope-tbl">'
-      + '<thead><tr><th style="width:120px">Categoria</th><th>Item / descrição</th><th style="text-align:right">Valor</th><th></th></tr></thead>'
+      + '<thead><tr><th style="width:120px">Categoria</th><th>Item / descriÃ§Ã£o</th><th style="text-align:right">Valor</th><th></th></tr></thead>'
       + '<tbody>'
       + escopoRows
       + '<tr class="total"><td colspan="2">Total da proposta</td><td class="val">'+fmt(pp.valorTotal)+'</td><td></td></tr>'
@@ -358,9 +358,9 @@
           + '<td><span'+buildEditAttr('parcelas.'+i+'.desc','text')+'>'+pa.desc+'</span></td>'
           + '<td style="text-align:right;font-weight:600;color:var(--ink-soft)"><span class="pct-inline-edit" data-pct-idx="'+i+'" data-pct-raw="'+pctNum.toFixed(2)+'" title="Clique para ajustar o % (o valor R$ recalcula pelo total da proposta)">'+pctFmt+'%</span></td>'
           + '<td class="val'+(pago?' ok':'')+'"><span'+buildEditAttr('parcelas.'+i+'.valor','currency','brl')+' data-raw="'+pa.valor+'" title="Clique para editar o valor (o % recalcula automaticamente)">'+fmt(pa.valor)+'</span></td>'
-          + '<td style="font-size:11.5px;color:'+(pago?'var(--ok)':'var(--warn)')+'"><span'+buildEditAttr('parcelas.'+i+'.venc','text')+'>'+pa.venc+'</span>'+(pago?' · pago':'')+'</td>'
+          + '<td style="font-size:11.5px;color:'+(pago?'var(--ok)':'var(--warn)')+'"><span'+buildEditAttr('parcelas.'+i+'.venc','text')+'>'+pa.venc+'</span>'+(pago?' Â· pago':'')+'</td>'
           + '<td style="text-align:center"><span class="stat '+(pago?'ok':'warn')+'"'+buildEditAttr('parcelas.'+i+'.status','select')+' data-edit-options="Recebido,Pendente,Aguardando ALF,Aguardando assinatura,Atrasado">'+pa.status+'</span></td>'
-          + '<td class="rm"><button type="button" class="row-rm-btn" title="Remover parcela" onclick="rmParcela('+i+')">×</button></td>'
+          + '<td class="rm"><button type="button" class="row-rm-btn" title="Remover parcela" onclick="rmParcela('+i+')">Ã</button></td>'
           + '</tr>';
       }).join('');
 
@@ -370,26 +370,26 @@
       const diffAbs = Math.abs(diff);
       let somaBadge = '';
       if (pp.valorTotal && diffAbs >= 1) {
-        const sinal = diff > 0 ? '+' : '−';
-        somaBadge = ' · <span style="color:'+(diffAbs > pp.valorTotal*0.005 ? 'var(--warn)':'var(--ink-soft)')+'">soma das parcelas: '+fmt(somaParc)+' ('+sinal+fmt(diffAbs)+')</span>';
+        const sinal = diff > 0 ? '+' : 'â';
+        somaBadge = ' Â· <span style="color:'+(diffAbs > pp.valorTotal*0.005 ? 'var(--warn)':'var(--ink-soft)')+'">soma das parcelas: '+fmt(somaParc)+' ('+sinal+fmt(diffAbs)+')</span>';
       }
       pagHtml = '<div class="card" id="pagamento">'
-        + '<h3>Condições de pagamento <span class="h3-actions">'
+        + '<h3>CondiÃ§Ãµes de pagamento <span class="h3-actions">'
         + '<button type="button" class="row-add-btn" onclick="addParcela()">+ Parcela</button>'
         + '</span></h3>'
-        + '<p style="font-size:12px;color:var(--ink-soft);margin-bottom:10px;line-height:1.5">Total <strong style="color:var(--ink)">'+fmt(pp.valorTotal)+'</strong>'+somaBadge+' · '+parcelasCount+' parcela(s) · via <strong style="color:var(--ink)"><span'+buildEditAttr('meio','text')+'>'+pp.meio+'</span></strong>.</p>'
+        + '<p style="font-size:12px;color:var(--ink-soft);margin-bottom:10px;line-height:1.5">Total <strong style="color:var(--ink)">'+fmt(pp.valorTotal)+'</strong>'+somaBadge+' Â· '+parcelasCount+' parcela(s) Â· via <strong style="color:var(--ink)"><span'+buildEditAttr('meio','text')+'>'+pp.meio+'</span></strong>.</p>'
         + '<table class="pay-tbl">'
         + '<thead><tr><th style="text-align:center;width:46px">#</th><th>Etapa / gatilho</th><th style="text-align:right;width:60px">%</th><th style="text-align:right">Valor</th><th>Vence</th><th style="text-align:center;width:120px">Status</th><th></th></tr></thead>'
         + '<tbody>'+rows+'</tbody>'
         + '</table>'
         + '<div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--line-soft);font-size:12px;color:var(--ink-soft);line-height:1.6">'
-        + '<strong style="color:var(--ink)">Observação:</strong> <span'+buildEditAttr('obs','textarea')+'>'+pp.obs+'</span>'
+        + '<strong style="color:var(--ink)">ObservaÃ§Ã£o:</strong> <span'+buildEditAttr('obs','textarea')+'>'+pp.obs+'</span>'
         + '</div>'
         + '</div>';
     } else {
       pagHtml = '<div class="card" id="pagamento">'
-        + '<h3>Condições de pagamento <span class="h3-actions"><button type="button" class="row-add-btn" onclick="addParcela()">+ Adicionar parcela</button></span></h3>'
-        + '<p style="font-size:13px;color:var(--ink-body);line-height:1.6">Parcelas a definir. Meio de pagamento pré-acordado: <strong style="color:var(--ink)"><span'+buildEditAttr('meio','text')+'>'+pp.meio+'</span></strong>.</p>'
+        + '<h3>CondiÃ§Ãµes de pagamento <span class="h3-actions"><button type="button" class="row-add-btn" onclick="addParcela()">+ Adicionar parcela</button></span></h3>'
+        + '<p style="font-size:13px;color:var(--ink-body);line-height:1.6">Parcelas a definir. Meio de pagamento prÃ©-acordado: <strong style="color:var(--ink)"><span'+buildEditAttr('meio','text')+'>'+pp.meio+'</span></strong>.</p>'
         + '<p style="font-size:12px;color:var(--ink-mute);margin-top:8px"><span'+buildEditAttr('obs','textarea')+'>'+pp.obs+'</span></p>'
         + '</div>';
     }
@@ -397,26 +397,26 @@
     /* ----- Cliente card ----- */
     const ini = pp.clienteNome.split(/\s+/).slice(0,2).map(s=>s[0]).join('').toUpperCase();
     const clienteCard = '<div class="card" id="cliente">'
-      + '<h3>Cliente'+(cli ? ' <a href="sistema-cliente-detalhe.html?id='+cli.id+'">Abrir ficha →</a>':'')+'</h3>'
+      + '<h3>Cliente'+(cli ? ' <a href="sistema-cliente-detalhe.html?id='+cli.id+'">Abrir ficha â</a>':'')+'</h3>'
       + '<div style="display:flex;gap:14px;align-items:center;margin-bottom:14px">'
       + '<div style="width:50px;height:50px;border-radius:50%;background:var(--accent-soft);color:var(--accent-ink);display:flex;align-items:center;justify-content:center;font-family:\'Fraunces\',serif;font-size:20px;font-weight:600">'+ini+'</div>'
       + '<div>'
       + '<div style="font-size:15px;font-weight:600;color:var(--ink);margin-bottom:3px">'+pp.clienteNome+'</div>'
-      + '<div style="font-size:12px;color:var(--ink-soft)">'+(cli ? (cli.tipo+' · '+(cli.doc||'—')) : '—')+'</div>'
+      + '<div style="font-size:12px;color:var(--ink-soft)">'+(cli ? (cli.tipo+' Â· '+(cli.doc||'â')) : 'â')+'</div>'
       + '</div>'
       + '</div>'
       + (cli ? '<div class="mini-grid">'
-        + '<div><span class="lbl">E-mail</span><span class="val">'+(cli.email||'—')+'</span></div>'
-        + '<div><span class="lbl">Telefone</span><span class="val">'+(cli.telefone||'—')+'</span></div>'
-        + '<div class="full"><span class="lbl">Endereço</span><span class="val">'+(cli.endereco||'—')+'</span></div>'
-        + (cli.obs ? '<div class="full"><div class="obs-box"><span class="lbl" style="margin-bottom:4px">Observação</span>'+cli.obs+'</div></div>':'')
+        + '<div><span class="lbl">E-mail</span><span class="val">'+(cli.email||'â')+'</span></div>'
+        + '<div><span class="lbl">Telefone</span><span class="val">'+(cli.telefone||'â')+'</span></div>'
+        + '<div class="full"><span class="lbl">EndereÃ§o</span><span class="val">'+(cli.endereco||'â')+'</span></div>'
+        + (cli.obs ? '<div class="full"><div class="obs-box"><span class="lbl" style="margin-bottom:4px">ObservaÃ§Ã£o</span>'+cli.obs+'</div></div>':'')
         + '</div>' : '')
       + '</div>';
 
     /* ----- Projeto vinculado ----- */
     const projetoCard = proj
       ? '<div class="card">'
-        + '<h3>Projeto vinculado <a href="sistema-projeto-detalhe.html?p='+proj.id+'">Abrir →</a></h3>'
+        + '<h3>Projeto vinculado <a href="sistema-projeto-detalhe.html?p='+proj.id+'">Abrir â</a></h3>'
         + '<div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0 12px;border-bottom:1px solid var(--line-soft);gap:10px">'
         + '<span style="font-size:13px;color:var(--ink);font-weight:600;line-height:1.3">'+proj.titulo+'</span>'
         + '<span style="font-size:10px;letter-spacing:.14em;text-transform:uppercase;padding:3px 8px;border-radius:10px;background:var(--accent-soft);color:var(--accent-ink);font-weight:700;white-space:nowrap">'+proj.status+'</span>'
@@ -433,9 +433,9 @@
     /* ----- Financeiro vinculado ----- */
     const finCard = fin
       ? '<div class="card">'
-        + '<h3>Financeiro vinculado <a href="sistema-financeiro.html">Abrir →</a></h3>'
+        + '<h3>Financeiro vinculado <a href="sistema-financeiro.html">Abrir â</a></h3>'
         + '<div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0 12px;border-bottom:1px solid var(--line-soft);gap:10px">'
-        + '<span style="font-size:13px;color:var(--ink);font-weight:600">'+fin.id+' · '+fin.titulo+'</span>'
+        + '<span style="font-size:13px;color:var(--ink);font-weight:600">'+fin.id+' Â· '+fin.titulo+'</span>'
         + '<span style="font-size:10px;letter-spacing:.14em;text-transform:uppercase;padding:3px 8px;border-radius:10px;background:var(--accent-soft);color:var(--accent-ink);font-weight:700">'+fin.unidade+'</span>'
         + '</div>'
         + '<div class="mini-grid" style="margin-top:12px">'
@@ -450,20 +450,20 @@
     /* ----- Timeline ----- */
     const tlEvents = [];
     if (isAprovada) {
-      tlEvents.push({kind:'ok', dt:pp.data, tt:'Proposta aprovada e assinada', dc:'Execução liberada via '+(proj?proj.titulo:'projeto vinculado')+'.'});
+      tlEvents.push({kind:'ok', dt:pp.data, tt:'Proposta aprovada e assinada', dc:'ExecuÃ§Ã£o liberada via '+(proj?proj.titulo:'projeto vinculado')+'.'});
       pp.parcelas.filter(p=>p.status==='Recebido').forEach(p => {
-        tlEvents.push({kind:'ok', dt:p.venc, tt:'Parcela '+p.n+' recebida — '+fmt(p.valor), dc:p.desc+'. Pagamento via '+(pp.meio||'').split(' ')[0]+'.'});
+        tlEvents.push({kind:'ok', dt:p.venc, tt:'Parcela '+p.n+' recebida â '+fmt(p.valor), dc:p.desc+'. Pagamento via '+(pp.meio||'').split(' ')[0]+'.'});
       });
       pp.parcelas.filter(p=>p.status!=='Recebido').forEach(p => {
-        tlEvents.push({kind:'info', dt:p.venc, tt:'Parcela '+p.n+' a receber — '+fmt(p.valor), dc:p.desc+'.'});
+        tlEvents.push({kind:'info', dt:p.venc, tt:'Parcela '+p.n+' a receber â '+fmt(p.valor), dc:p.desc+'.'});
       });
     } else {
       tlEvents.push({kind:'warn', dt:pp.data, tt:'Rascunho enviado ao cliente', dc:pp.obs});
-      tlEvents.push({kind:'info', dt:pp.validade, tt:'Validade da proposta', dc:'Até esta data para assinatura. Após, requer nova emissão.'});
+      tlEvents.push({kind:'info', dt:pp.validade, tt:'Validade da proposta', dc:'AtÃ© esta data para assinatura. ApÃ³s, requer nova emissÃ£o.'});
     }
 
     const interacoesHtml = '<div class="card">'
-      + '<h3>Interações e parcelas</h3>'
+      + '<h3>InteraÃ§Ãµes e parcelas</h3>'
       + '<div class="tl">'
       + tlEvents.map(ev => '<div class="tl-ev '+ev.kind+'">'
           + '<div class="dt">'+ev.dt+'</div>'
@@ -478,7 +478,7 @@
       + '<h3>Anexos da proposta <span class="h3-actions"><button type="button" class="row-add-btn" onclick="anexarArquivo()">+ Anexar</button></span></h3>'
       + '<div class="att-grid">'
       + '<a class="att" href="#" onclick="event.preventDefault();_toast(\'PDF da proposta gerado\',\'ok\')"><span class="ext pdf">PDF</span><span class="nm">Proposta_'+pp.id+'_v1.pdf</span></a>'
-      + '<a class="att" href="#" onclick="event.preventDefault();_toast(\'Portfólio aberto\',\'ok\')"><span class="ext pdf">PDF</span><span class="nm">Portfolio_Zenon.pdf</span></a>'
+      + '<a class="att" href="#" onclick="event.preventDefault();_toast(\'PortfÃ³lio aberto\',\'ok\')"><span class="ext pdf">PDF</span><span class="nm">Portfolio_Zenon.pdf</span></a>'
       + (isAprovada ? '<a class="att" href="#" onclick="event.preventDefault();_toast(\'Contrato baixado\',\'ok\')"><span class="ext pdf">PDF</span><span class="nm">Contrato_assinado_'+pp.data.replace(/\s/g,'').replace(/\//g,'-')+'.pdf</span></a>' : '')
       + (proj ? '<a class="att" href="sistema-projeto-detalhe.html?p='+proj.id+'"><span class="ext dwg">DWG</span><span class="nm">Pastas do projeto vinculado</span></a>' : '')
       + '</div>'
@@ -486,7 +486,7 @@
 
     /* ----- Notas ----- */
     const notasHtml = '<div class="card"><h3>Nota de contexto</h3>'
-      + '<div class="note"><div class="hd"><span class="au">Rodrigo · '+pp.data+'</span><span class="dt">emissão</span></div>'
+      + '<div class="note"><div class="hd"><span class="au">Rodrigo Â· '+pp.data+'</span><span class="dt">emissÃ£o</span></div>'
       + '<div class="tx"><span'+buildEditAttr('obs','textarea')+'>'+pp.obs+'</span></div></div>'
       + '</div>';
 
@@ -527,7 +527,7 @@
     reapplyTab();
   });
 
-  /* ----- Edição inline do % das parcelas (atualiza o valor R$) ----- */
+  /* ----- EdiÃ§Ã£o inline do % das parcelas (atualiza o valor R$) ----- */
   document.addEventListener('click', (e) => {
     const cell = e.target.closest('.pct-inline-edit');
     if (!cell) return;
@@ -568,10 +568,10 @@
       }
       const novoValor = Math.round(pp.valorTotal * newPct / 100 * 100) / 100;
       SD.update('proposta', id, 'parcelas.'+idx+'.valor', novoValor);
-      // sistema-edit-saved não dispara para update programático — chamamos render direto
+      // sistema-edit-saved nÃ£o dispara para update programÃ¡tico â chamamos render direto
       render();
       reapplyTab();
-      _toast('✓ Parcela ajustada para '+newPct.toFixed(1).replace('.',',')+'% ('+SD.fmtBRL(novoValor)+')', 'ok');
+      _toast('â Parcela ajustada para '+newPct.toFixed(1).replace('.',',')+'% ('+SD.fmtBRL(novoValor)+')', 'ok');
     }
     function cancel() {
       if (done) return; done = true;
@@ -607,10 +607,10 @@
   window.addItem = function (asDesconto) {
     const novo = asDesconto
       ? { categoria: 'Desconto', descricao: 'Novo desconto', valor: -0 }
-      : { categoria: 'Serviço',  descricao: 'Novo item',     valor: 0 };
+      : { categoria: 'ServiÃ§o',  descricao: 'Novo item',     valor: 0 };
     SD.pushArray('proposta', id, 'itens', novo);
     render(); reapplyTab();
-    _toast(asDesconto ? '✓ Desconto adicionado · clique para editar' : '✓ Item adicionado · clique para editar', 'ok');
+    _toast(asDesconto ? 'â Desconto adicionado Â· clique para editar' : 'â Item adicionado Â· clique para editar', 'ok');
   };
   window.rmItem = function (i) {
     if (!confirm('Remover este item da proposta?')) return;
@@ -620,10 +620,10 @@
   };
   window.addParcela = function () {
     const pp = SD.getProposta(id);
-    const n = (pp.parcelas.length + 1) + 'ª';
-    SD.pushArray('proposta', id, 'parcelas', { n: n, desc: 'Nova parcela', venc: '— / —', valor: 0, status: 'Pendente' });
+    const n = (pp.parcelas.length + 1) + 'Âª';
+    SD.pushArray('proposta', id, 'parcelas', { n: n, desc: 'Nova parcela', venc: 'â / â', valor: 0, status: 'Pendente' });
     render(); reapplyTab();
-    _toast('✓ Parcela adicionada', 'ok');
+    _toast('â Parcela adicionada', 'ok');
   };
   window.rmParcela = function (i) {
     if (!confirm('Remover esta parcela?')) return;
@@ -634,7 +634,7 @@
 })();
 
 /* ============================================================
-   Ações da barra (toasts + simulações)
+   AÃ§Ãµes da barra (toasts + simulaÃ§Ãµes)
    ============================================================ */
 function _toast(msg, kind){
   const t = document.createElement('div');
@@ -645,30 +645,30 @@ function _toast(msg, kind){
   setTimeout(()=> t.style.opacity='0', 2400);
   setTimeout(()=> t.remove(), 2900);
 }
-function baixarPdf(){ _toast('✓ PDF da proposta gerado · download iniciado', 'ok'); }
-function abrirPortal(){ window.open('index.html#portal', '_blank'); }
+function baixarPdf(){ _toast('â PDF da proposta gerado Â· download iniciado', 'ok'); }
+function abrirPortal(){var _id=new URLSearchParams(location.search).get('id')||'';var _pro=(window.SistemaData&&_id)?SistemaData.getProposta(_id):null;var _cid=_pro?(_pro.cliente_id||_pro.cliente||''):'';var _url=_cid?'index.html?cliente='+_cid+'#portal':'index.html#portal';window.open(_url,'_blank');}
 function duplicarProposta(){
-  if(!confirm('Criar uma cópia desta proposta como nova?')) return;
-  _toast('✓ Proposta duplicada — abrindo o rascunho…', 'ok');
+  if(!confirm('Criar uma cÃ³pia desta proposta como nova?')) return;
+  _toast('â Proposta duplicada â abrindo o rascunhoâ¦', 'ok');
   setTimeout(()=> location.href = 'sistema-proposta-nova.html', 900);
 }
 function reenviarProposta(){
   if(!confirm('Reenviar a proposta por e-mail ao cliente?')) return;
-  _toast('✓ Proposta reenviada ao cliente', 'ok');
+  _toast('â Proposta reenviada ao cliente', 'ok');
 }
 function enviarRascunho(){
   if(!confirm('Enviar este rascunho ao cliente para assinatura?')) return;
-  _toast('✓ Rascunho enviado ao cliente', 'ok');
+  _toast('â Rascunho enviado ao cliente', 'ok');
 }
 function arquivarProposta(){
-  if(!confirm('Arquivar esta proposta? Ela some da lista ativa e vai pro histórico.')) return;
-  _toast('✓ Proposta arquivada', 'warn');
+  if(!confirm('Arquivar esta proposta? Ela some da lista ativa e vai pro histÃ³rico.')) return;
+  _toast('â Proposta arquivada', 'warn');
   setTimeout(()=> location.href = 'sistema-propostas.html', 900);
 }
 function anexarArquivo(){
   const fi = document.createElement('input');
   fi.type = 'file'; fi.style.display = 'none';
-  fi.onchange = () => { if (fi.files && fi.files[0]) _toast('✓ '+fi.files[0].name+' anexado', 'ok'); };
+  fi.onchange = () => { if (fi.files && fi.files[0]) _toast('â '+fi.files[0].name+' anexado', 'ok'); };
   document.body.appendChild(fi); fi.click(); setTimeout(()=>fi.remove(),200);
 }
 </script>
