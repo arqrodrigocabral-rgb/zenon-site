@@ -1,0 +1,1120 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Configurações — Zenon Sistema</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shell.css">
+<style>
+  main.cfg{max-width:1280px;padding:24px 36px 56px;display:grid;grid-template-columns:240px 1fr;gap:28px;align-items:start}
+  @media (max-width:900px){main.cfg{grid-template-columns:1fr}}
+
+  /* side nav */
+  .cfg-side{position:sticky;top:104px;background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:18px 0;display:flex;flex-direction:column}
+  .cfg-side .sh{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:22px;font-weight:500;color:var(--ink);padding:0 20px 14px;border-bottom:1px solid var(--line-soft);margin-bottom:8px}
+  .cfg-side .sh em{font-style:italic;color:var(--accent-ink)}
+  .cfg-side a{display:flex;justify-content:space-between;align-items:center;font-family:'Inter',sans-serif;font-size:12px;letter-spacing:.08em;color:var(--ink-soft);text-decoration:none;padding:9px 20px;font-weight:500;border-left:2px solid transparent;transition:all .15s}
+  .cfg-side a:hover{color:var(--ink);background:var(--bg-alt)}
+  .cfg-side a.on{color:var(--ink);border-left-color:var(--accent);background:var(--bg-alt);font-weight:600}
+  .cfg-side a .ct{font-size:10px;background:var(--line-soft);color:var(--ink-mute);padding:1px 7px;border-radius:10px;font-weight:700}
+  .cfg-side a.on .ct{background:var(--accent-soft);color:var(--accent-ink)}
+
+  /* content */
+  .cfg-main{display:flex;flex-direction:column;gap:22px}
+
+  .cfg-head h1{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:40px;font-weight:400;color:var(--ink);line-height:1.05}
+  .cfg-head h1 em{font-style:italic;color:var(--accent-ink)}
+  .cfg-head p{font-size:13px;color:var(--ink-body);margin-top:6px;max-width:640px;line-height:1.6}
+
+  .section{background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:26px 30px}
+  .section > h2{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:26px;font-weight:500;color:var(--ink);padding-bottom:14px;border-bottom:1px solid var(--line-soft);margin-bottom:18px}
+  .section > h2 em{font-style:italic;color:var(--accent-ink)}
+
+  .cards-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+  .int-card{background:var(--bg-alt);border:1px solid var(--line-soft);border-radius:4px;padding:18px 20px;display:flex;flex-direction:column;gap:10px}
+  .int-card .hd{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+  .int-card h3{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:20px;font-weight:500;color:var(--ink);line-height:1.1}
+  .int-card h3 em{font-style:italic;color:var(--accent-ink)}
+  .int-card .desc{font-size:12px;color:var(--ink-body);line-height:1.5;flex:1}
+  .int-card .meta{display:flex;gap:12px;font-size:11px;color:var(--ink-mute);padding-top:10px;border-top:1px solid var(--line-soft)}
+  .int-card .meta strong{color:var(--ink)}
+  .int-card .actions{display:flex;gap:8px;margin-top:6px}
+
+  .btn{font-family:'Inter',sans-serif;font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;padding:9px 18px;border-radius:3px;cursor:pointer;text-align:center;text-decoration:none;border:1px solid var(--line-strong);color:var(--ink-soft);background:var(--bg)}
+  .btn:hover{border-color:var(--accent);color:var(--accent-ink)}
+  .btn.primary{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .btn.primary:hover{background:var(--accent-ink);border-color:var(--accent-ink);color:#fff}
+  .btn.warn{color:var(--warn);border-color:var(--line-strong)}
+  .btn.small{font-size:10px;padding:7px 14px}
+
+  /* badges status */
+  .badge{display:inline-block;font-size:10px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;padding:4px 10px;border-radius:12px}
+  .badge.ok{background:#e8f3ea;color:#2d6a4f;border:1px solid #b7d7c0}
+  .badge.warn{background:#fff4e2;color:#8e5a2b;border:1px solid #e2c79a}
+  .badge.off{background:var(--line-soft);color:var(--ink-mute);border:1px solid var(--line)}
+
+  /* form */
+  .form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+  .form-grid.three{grid-template-columns:repeat(3,1fr)}
+  .span-2{grid-column:span 2}
+  .field{display:flex;flex-direction:column;gap:6px}
+  .field label{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft);font-weight:600}
+  .field input,.field select,.field textarea{border:1px solid var(--line);background:var(--bg);padding:10px 13px;font-family:'Inter',sans-serif;font-size:13px;color:var(--ink);border-radius:3px}
+  .field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--accent)}
+  .field textarea{resize:vertical;min-height:70px;line-height:1.5}
+
+  /* team table */
+  .team-tbl{width:100%;border-collapse:collapse;font-size:13px}
+  .team-tbl th{text-align:left;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-mute);font-weight:600;padding:10px 12px;border-bottom:1px solid var(--line-soft)}
+  .team-tbl td{padding:14px 12px;border-bottom:1px solid var(--line-soft);vertical-align:middle}
+  .team-tbl tr:last-child td{border-bottom:none}
+  .tt-user{display:flex;align-items:center;gap:10px}
+  .tt-user .av{width:34px;height:34px;border-radius:50%;background:var(--accent-soft);color:var(--accent-ink);display:flex;align-items:center;justify-content:center;font-weight:600;font-size:12px}
+  .tt-user .nm{font-weight:500;color:var(--ink)}
+  .tt-user .em{font-size:11px;color:var(--ink-soft);margin-top:2px}
+  .role-pill{display:inline-block;font-size:11px;padding:3px 10px;border-radius:10px;background:var(--bg-alt);color:var(--ink-body);border:1px solid var(--line-soft);font-weight:500}
+  .role-pill.adm{background:#fff4e2;color:#8e5a2b;border-color:#e2c79a}
+
+  /* cadastros (tabelas de CRUD) */
+  .cad-hd{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;margin-bottom:14px}
+  .cad-hd p{font-size:12px;color:var(--ink-body);line-height:1.55;max-width:540px;margin:0}
+  .cad-tbl{width:100%;border-collapse:collapse;font-size:13px}
+  .cad-tbl th{text-align:left;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-mute);font-weight:600;padding:9px 12px;border-bottom:1px solid var(--line-soft);background:var(--bg-alt)}
+  .cad-tbl td{padding:11px 12px;border-bottom:1px solid var(--line-soft);vertical-align:middle;color:var(--ink)}
+  .cad-tbl tr:last-child td{border-bottom:none}
+  .cad-tbl tr:hover td{background:#fafaf6}
+  .cad-tbl .nm{font-weight:500}
+  .cad-tbl .row-act{display:flex;gap:6px;justify-content:flex-end}
+  .cad-tbl .row-act .ic{width:26px;height:26px;border-radius:3px;border:1px solid var(--line);background:var(--bg);display:inline-flex;align-items:center;justify-content:center;color:var(--ink-soft);cursor:pointer;font-size:12px;text-decoration:none}
+  .cad-tbl .row-act .ic:hover{border-color:var(--accent);color:var(--accent-ink)}
+  .cad-tbl .row-act .ic.rm:hover{border-color:#c4614e;color:#c4614e}
+  .cad-tbl .usecount{font-size:11px;color:var(--ink-mute);font-variant-numeric:tabular-nums}
+  .cad-tbl .empty td{text-align:center;color:var(--ink-mute);padding:22px 0;font-style:italic}
+  .cad-chip{display:inline-block;font-size:10px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;padding:3px 9px;border-radius:10px;border:1px solid var(--line)}
+  .cad-chip.rec{background:#e8f3ea;color:#2d6a4f;border-color:#b7d7c0}
+  .cad-chip.desp{background:#fbeee6;color:#8e4a2b;border-color:#e4c2a8}
+  .cad-chip.pes{background:#efe5d6;color:#8b5a3c;border-color:#dcc8a8}
+  .cad-chip.eqp{background:#e7edf6;color:#335077;border-color:#b8c7df}
+  .cad-chip.imp{background:#f4e6ec;color:#7a2f50;border-color:#e2c0ce}
+  .cad-chip.fix{background:var(--bg-alt);color:var(--ink-body);border-color:var(--line)}
+  .cad-chip.off{background:var(--line-soft);color:var(--ink-mute)}
+  .cad-dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:8px;vertical-align:middle;border:1px solid rgba(0,0,0,.08)}
+  .cad-inline{display:none;background:#fdfbf5;border:1px dashed var(--accent);border-radius:3px;padding:16px 18px;margin-top:-1px}
+  .cad-inline.open{display:block}
+  .cad-inline .row{display:grid;grid-template-columns:1.3fr 1fr 1fr auto auto;gap:10px;align-items:end}
+  .cad-inline label{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-mute);font-weight:600;display:block;margin-bottom:4px}
+  .cad-inline input,.cad-inline select{width:100%;border:1px solid var(--line);background:var(--bg);padding:8px 11px;font-family:'Inter',sans-serif;font-size:12px;border-radius:3px;color:var(--ink)}
+  .cad-inline input:focus,.cad-inline select:focus{outline:none;border-color:var(--accent)}
+  .cad-inline .swatches{display:flex;gap:5px;flex-wrap:wrap;padding-top:4px}
+  .cad-inline .sw{width:20px;height:20px;border-radius:50%;border:1px solid rgba(0,0,0,.1);cursor:pointer}
+  .cad-inline .sw.on{outline:2px solid var(--ink);outline-offset:1px}
+  .cad-foot{display:flex;justify-content:space-between;align-items:center;margin-top:14px;gap:10px;flex-wrap:wrap}
+  .cad-foot .info{font-size:11px;color:var(--ink-mute)}
+
+  /* bank-card variant in config */
+  .bk-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+  .bk-card{background:var(--bg-alt);border:1px solid var(--line-soft);border-radius:4px;padding:16px 18px;display:flex;flex-direction:column;gap:8px;position:relative}
+  .bk-card.default{border-left:3px solid var(--accent)}
+  .bk-card .bk-hd{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+  .bk-card .bk-logo{width:40px;height:40px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'Inter',sans-serif;font-weight:700;font-size:13px;color:#fff;letter-spacing:.02em;flex-shrink:0}
+  .bk-card .bk-logo.inter{background:#ff7a00}
+  .bk-card .bk-logo.itau{background:#ec7000}
+  .bk-card .bk-logo.nubank{background:#820ad1}
+  .bk-card .bk-logo.bb{background:#fac800;color:#00468c}
+  .bk-card .bk-logo.poup{background:#cc0033}
+  .bk-card .bk-logo.san{background:#ec0000}
+  .bk-card .bk-title{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:20px;font-weight:500;color:var(--ink);line-height:1.1}
+  .bk-card .bk-title em{font-style:italic;color:var(--accent-ink)}
+  .bk-card .bk-sub{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-mute);font-weight:600;margin-top:2px}
+  .bk-card .bk-meta{display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:11px;color:var(--ink-soft);padding-top:10px;border-top:1px solid var(--line-soft)}
+  .bk-card .bk-meta strong{color:var(--ink);font-weight:600;display:block;font-size:12px;margin-top:1px}
+  .bk-card .bk-act{display:flex;gap:6px;margin-top:2px}
+  .bk-badge-def{position:absolute;top:14px;right:14px;font-size:9px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;background:var(--accent-soft);color:var(--accent-ink);padding:3px 8px;border-radius:10px;border:1px solid #dcc8a8}
+
+  /* unidades */
+  .unid-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+  .unid-card{background:var(--bg-alt);border:1px solid var(--line-soft);border-radius:3px;padding:16px 18px;display:flex;flex-direction:column;gap:8px}
+  .unid-card .nm{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:22px;font-weight:500;color:var(--ink)}
+  .unid-card .nm em{font-style:italic;color:var(--accent-ink)}
+  .unid-card .sub{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-mute);font-weight:600}
+  .unid-card .desc{font-size:12px;color:var(--ink-body);line-height:1.5}
+  .unid-card .meta{display:flex;gap:14px;font-size:11px;color:var(--ink-soft);padding-top:8px;border-top:1px solid var(--line-soft);margin-top:auto}
+  .unid-card .meta strong{color:var(--ink);font-weight:600}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-inner">
+    <div class="brand">Zen<span>o</span>n — Sistema</div>
+    <div class="search"><input type="search" placeholder="Buscar…"></div>
+    <div class="fx-chip" title="Cotação do dólar (USD/BRL)">
+      <span class="fx-code">USD</span>
+      <span class="fx-val"><span class="cur">R$</span>—</span>
+      <span class="fx-delta flat">…</span>
+      <div class="fx-tip"></div>
+    </div>
+
+    <div class="user-menu">
+      <button type="button" class="user-trigger" onclick="ZenonUser.toggleDropdown(event)" aria-haspopup="true" aria-expanded="false">
+        <span class="u-name" data-user-name>Rodrigo</span>
+        <span class="avatar" data-user="me">R</span>
+        <span class="u-caret">▾</span>
+      </button>
+      <div class="user-dropdown" role="menu">
+        <div class="ud-head">
+          <span class="avatar" data-user="me">R</span>
+          <div>
+            <div class="name" data-user-name>Rodrigo</div>
+            <div class="role" data-user-role>Sócio · Arquiteto responsável</div>
+          </div>
+        </div>
+        <a href="sistema-perfil.html"><span class="ic">◎</span>Ver perfil</a>
+        <a href="sistema-configuracoes.html"><span class="ic">⚙</span>Configurações</a>
+        <a href="sistema-empresa.html"><span class="ic">⌂</span>Dados da empresa</a>
+        <a href="https://www.notion.so/Zenon" target="_blank"><span class="ic">✱</span>Atividades · Notion ↗</a>
+        <div class="ud-sep"></div>
+        <a href="sistema-login.html" class="sign-out"><span class="ic">↪</span>Sair</a>
+      </div>
+    </div>
+  </div>
+  <nav class="tabs">
+    <a href="sistema-painel.html">Painel</a>
+    <a href="sistema-clientes.html">Clientes</a>
+    <a href="sistema-projetos.html">Projetos</a>
+    <a href="sistema-obra.html">Obra</a>
+    <a href="sistema-obra-financeiro.html">Obra financeiro</a>
+    <a href="sistema-propostas.html">Propostas</a>
+    <a href="sistema-financeiro.html">Financeiro</a>
+    <a href="sistema-empresa.html">Empresa</a>
+    <a href="sistema-log.html">Log da equipe</a>
+  </nav>
+</header>
+
+<main class="cfg">
+
+  <!-- SIDE NAV -->
+  <aside class="cfg-side">
+    <div class="sh"><em>Configurações</em></div>
+    <a href="#conta" class="on">Conta</a>
+    <a href="#empresa">Empresa</a>
+    <a href="#unidades">Unidades <span class="ct">4</span></a>
+    <a href="#pessoais">Fontes pessoais <span class="ct">2</span></a>
+    <div style="font-family:'Inter',sans-serif;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-mute);font-weight:700;padding:14px 20px 4px">Cadastros financeiros</div>
+    <a href="#categorias">Categorias <span class="ct">13</span></a>
+    <a href="#pagamento">Formas de pagamento <span class="ct">5</span></a>
+    <a href="#bancos">Bancos &amp; contas <span class="ct">4</span></a>
+    <a href="#etiquetas">Tags &amp; etiquetas <span class="ct">9</span></a>
+    <div style="font-family:'Inter',sans-serif;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-mute);font-weight:700;padding:14px 20px 4px">Sistema</div>
+    <a href="#integracoes">Integrações <span class="ct">5</span></a>
+    <a href="#equipe">Equipe <span class="ct">4</span></a>
+    <a href="#portal">Portal do cliente</a>
+    <a href="#notificacoes">Notificações</a>
+    <a href="#seguranca">Segurança</a>
+    <a href="#billing">Plano &amp; billing</a>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="cfg-main">
+
+    <div class="cfg-head">
+      <h1><em>Configurações</em> do sistema</h1>
+      <p>Ajustes gerais do Zenon Sistema — integrações, unidades de negócio, equipe e preferências do portal do cliente. Nem tudo nesta tela é reversível; leia as observações antes de aplicar mudanças estruturais.</p>
+    </div>
+
+    <!-- CONTA -->
+    <section class="section" id="conta">
+      <h2><em>Conta</em></h2>
+      <div class="form-grid">
+        <div class="field">
+          <label>Nome completo</label>
+          <input type="text" value="Rodrigo Cabral">
+        </div>
+        <div class="field">
+          <label>E-mail</label>
+          <input type="email" value="zenon.gestao@gmail.com">
+        </div>
+        <div class="field">
+          <label>Telefone</label>
+          <input type="tel" value="(11) 94030-0048" placeholder="(11) 00000-0000">
+        </div>
+        <div class="field">
+          <label>Fuso horário</label>
+          <select><option>America/Sao_Paulo (GMT-3)</option></select>
+        </div>
+        <div class="field span-2">
+          <label>Bio curta (aparece em propostas)</label>
+          <textarea>Arquiteto e sócio-fundador da Cabral e Lima Design LTDA. CAU/BR A148704-5. Conduz projetos nas unidades Zenon Co. (guarda-chuva), Yvyra Arquitetura, Zenon Stay e Zenon Vision, unindo arquitetura, hospitalidade e cultura material.</textarea>
+        </div>
+      </div>
+      <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:18px">
+        <button type="button" class="btn" onclick="history.back();return false">Cancelar</button>
+        <button type="button" class="btn primary" onclick="salvarConfig('conta')">Salvar alterações</button>
+      </div>
+    </section>
+
+    <!-- EMPRESA -->
+    <section class="section" id="empresa">
+      <h2><em>Empresa</em> — dados fiscais e identidade</h2>
+      <p style="font-size:12.5px;color:var(--ink-body);line-height:1.6;margin-bottom:22px;max-width:760px">
+        Dados usados para emissão de NFS-e, propostas comerciais, contratos e portal do cliente. O grupo opera sob uma única razão social — <strong>Cabral e Lima Design LTDA</strong> — que fatura por todas as unidades de negócio (Zenon Co., Yvyra Arquitetura, Zenon Stay, Zenon Vision). Alterar razão social, CNPJ ou endereço <strong>não afeta documentos já emitidos</strong> — apenas os próximos.
+      </p>
+
+      <!-- CARD DA PJ ÚNICA -->
+      <div style="display:flex;flex-direction:column;gap:14px">
+
+        <!-- CABRAL E LIMA DESIGN LTDA — razão social única -->
+        <div class="int-card" style="border-left:3px solid var(--accent-ink)">
+          <div class="hd">
+            <div style="display:flex;gap:14px;align-items:flex-start">
+              <div style="width:52px;height:52px;border-radius:4px;background:var(--ink);color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Fraunces','Source Serif 4',Georgia,serif;font-style:italic;font-size:22px;flex-shrink:0">C</div>
+              <div>
+                <h3>Cabral e Lima <em>Design LTDA</em> <span style="font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ok);font-weight:700;background:#e8f3ea;padding:3px 8px;border-radius:10px;margin-left:6px;vertical-align:middle">PJ ativa</span></h3>
+                <div style="font-size:12px;color:var(--ink-soft);margin-top:3px">Razão social única — fatura por todas as unidades de negócio (Zenon Co., Yvyra Arquitetura, Zenon Stay, Zenon Vision)</div>
+              </div>
+            </div>
+            <button type="button" class="btn" style="font-size:10px;padding:6px 10px" onclick="editarEmpresa()">Editar</button>
+          </div>
+          <div class="form-grid three" style="margin-top:8px">
+            <div class="field">
+              <label>Razão social</label>
+              <input type="text" value="Cabral e Lima Design LTDA">
+            </div>
+            <div class="field">
+              <label>Nomes fantasia</label>
+              <input type="text" value="Yvyra · Shamballa Co. · Zenon">
+            </div>
+            <div class="field">
+              <label>CNPJ</label>
+              <input type="text" value="59.525.877/0001-49">
+            </div>
+            <div class="field">
+              <label>Registro CAU/BR</label>
+              <input type="text" value="A148704-5">
+            </div>
+            <div class="field">
+              <label>Inscrição estadual</label>
+              <input type="text" value="Isento">
+            </div>
+            <div class="field">
+              <label>Regime tributário</label>
+              <select>
+                <option>Simples Nacional — Anexo IV</option>
+                <option selected>Simples Nacional — Anexo III</option>
+                <option>Lucro Presumido</option>
+                <option>Lucro Real</option>
+                <option>MEI</option>
+              </select>
+            </div>
+            <div class="field" style="grid-column:span 3">
+              <label>Endereço fiscal</label>
+              <input type="text" value="Estrada de Santa Barbara, 7000 — 7ª travessa, 412 casa 2, São Francisco Xavier, São José dos Campos-SP, 12249-000">
+            </div>
+          </div>
+          <div style="display:flex;gap:10px;margin-top:14px;padding-top:14px;border-top:1px solid var(--line-soft);flex-wrap:wrap">
+            <div style="font-size:11px;color:var(--ink-soft);display:flex;align-items:center;gap:6px"><span style="width:6px;height:6px;background:var(--ok);border-radius:50%"></span>CAU/BR <strong style="color:var(--ink)">A148704-5</strong> ativo · RRT habilitado</div>
+            <div style="font-size:11px;color:var(--ink-soft);display:flex;align-items:center;gap:6px"><span style="width:6px;height:6px;background:var(--warn);border-radius:50%"></span>Certificado digital A1 <strong style="color:var(--warn)">a carregar</strong></div>
+            <div style="font-size:11px;color:var(--ink-soft);display:flex;align-items:center;gap:6px"><span style="width:6px;height:6px;background:var(--warn);border-radius:50%"></span>NFS-e <strong style="color:var(--warn)">a habilitar</strong></div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- CERTIFICADO DIGITAL -->
+      <div style="margin-top:28px;padding:18px 20px;background:var(--bg-alt);border:1px solid var(--line-soft);border-radius:4px">
+        <h3 style="font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:20px;font-weight:500;color:var(--ink);margin-bottom:6px"><em>Certificado</em> digital A1</h3>
+        <p style="font-size:12px;color:var(--ink-body);line-height:1.5;margin-bottom:14px">Usado para assinar NFS-e, e-CAC e comunicação com a Receita. Arquivo .pfx ou .p12 com senha — guardado cifrado, nunca em texto. Como o grupo opera sob razão social única, basta um certificado.</p>
+        <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px">
+          <div style="background:#fff;border:1px dashed var(--warn);border-radius:4px;padding:14px 16px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:8px;color:var(--warn)">
+            <div style="font-size:12px;font-weight:600">Cabral e Lima Design LTDA — sem certificado</div>
+            <div style="font-size:11px;color:var(--ink-soft);text-align:center">CNPJ 59.525.877/0001-49 · certificado A1 necessário para NFS-e</div>
+            <button type="button" class="btn primary" style="font-size:10px;padding:5px 12px" onclick="uploadArquivo('.pfx,.p12','certificado A1')">Carregar certificado A1</button>
+          </div>
+          <div style="background:#fff;border:1px solid var(--line);border-radius:4px;padding:14px 16px">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px">
+              <div>
+                <div style="font-family:'Inter',sans-serif;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-mute);font-weight:700;margin-bottom:4px">CAU/BR</div>
+                <div style="font-size:13px;color:var(--ink);font-weight:500">Rodrigo Cabral · A148704-5</div>
+                <div style="font-size:11px;color:var(--ink-soft);margin-top:4px">RRT emitido em 17/04/2026 · nº <strong>20260104</strong></div>
+              </div>
+              <span style="font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--ok);font-weight:700;background:#e8f3ea;padding:3px 8px;border-radius:10px">Ativo</span>
+            </div>
+            <div style="display:flex;gap:8px;margin-top:12px">
+              <button type="button" class="btn" style="font-size:10px;padding:5px 10px" onclick="_toast('Abrindo histórico de RRTs…','info')">Ver RRTs</button>
+              <button type="button" class="btn" style="font-size:10px;padding:5px 10px" onclick="_toast('Emissão de novo RRT iniciada','ok')">Emitir novo</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- INTEGRAÇÕES -->
+    <section class="section" id="integracoes">
+      <h2><em>Integrações</em></h2>
+      <div class="cards-grid">
+
+        <div class="int-card">
+          <div class="hd">
+            <h3>Notion <em>API</em></h3>
+            <span class="badge ok">Conectado</span>
+          </div>
+          <div class="desc">5 bases sincronizando — Clientes, Projetos, Obra, Propostas, Log. Dados usados em painéis e detalhes.</div>
+          <div class="meta">
+            <span><strong>Workspace:</strong> Zenon</span>
+            <span><strong>Últ. sync:</strong> há 4 min</span>
+          </div>
+          <div class="actions">
+            <button type="button" class="btn small" onclick="_toast('Abrindo lista de bases Notion…','info')">Ver bases</button>
+            <button type="button" class="btn small" onclick="sincronizarAgora(this, 'Notion')">Sincronizar agora</button>
+            <button type="button" class="btn small warn" onclick="toggleConexao(this, 'Notion')">Desconectar</button>
+          </div>
+        </div>
+
+        <div class="int-card">
+          <div class="hd">
+            <h3>Google <em>Sheets</em></h3>
+            <span class="badge ok">Conectado</span>
+          </div>
+          <div class="desc">Cronograma mestre e Fluxo de pagamento puxados de planilhas CSV via Cloudflare Worker.</div>
+          <div class="meta">
+            <span><strong>Planilhas:</strong> 2</span>
+            <span><strong>Últ. sync:</strong> há 12 min</span>
+          </div>
+          <div class="actions">
+            <button type="button" class="btn small" onclick="_toast('Abrindo configuração do Google Sheets…','info')">Configurar</button>
+            <button type="button" class="btn small" onclick="_toast('✓ Conexão Google Sheets OK','ok')">Testar conexão</button>
+          </div>
+        </div>
+
+        <div class="int-card">
+          <div class="hd">
+            <h3>Google <em>Drive</em></h3>
+            <span class="badge ok">Conectado</span>
+          </div>
+          <div class="desc">Arquivos de cada projeto (plantas, DWGs, relatórios) listados automaticamente em Projetos › Arquivos.</div>
+          <div class="meta">
+            <span><strong>Pastas monitoradas:</strong> 12</span>
+            <span><strong>Últ. sync:</strong> há 1h</span>
+          </div>
+          <div class="actions">
+            <button type="button" class="btn small" onclick="_toast('Abrindo gerenciador de pastas Drive…','info')">Gerenciar pastas</button>
+          </div>
+        </div>
+
+        <div class="int-card">
+          <div class="hd">
+            <h3>WhatsApp <em>Business</em></h3>
+            <span class="badge warn">Configuração pendente</span>
+          </div>
+          <div class="desc">Envio de propostas e alertas de projeto via WhatsApp. Requer número aprovado e template validado.</div>
+          <div class="meta">
+            <span><strong>Conta:</strong> não configurada</span>
+          </div>
+          <div class="actions">
+            <button type="button" class="btn small primary" onclick="toggleConexao(this, 'WhatsApp Business')">Conectar</button>
+          </div>
+        </div>
+
+        <div class="int-card">
+          <div class="hd">
+            <h3>E-mail <em>transacional</em></h3>
+            <span class="badge ok">Conectado</span>
+          </div>
+          <div class="desc">Envio automático de propostas, avisos e compartilhamentos pelo domínio contato@zenonco.com.br.</div>
+          <div class="meta">
+            <span><strong>Provedor:</strong> Resend</span>
+            <span><strong>Enviados/mês:</strong> 184</span>
+          </div>
+          <div class="actions">
+            <button type="button" class="btn small" onclick="_toast('Abrindo editor de templates…','info')">Ajustar templates</button>
+            <button type="button" class="btn small" onclick="_toast('Abrindo log de envios…','info')">Ver envios</button>
+          </div>
+        </div>
+
+        <div class="int-card">
+          <div class="hd">
+            <h3>Asaas <em>ou similar</em></h3>
+            <span class="badge off">Não conectado</span>
+          </div>
+          <div class="desc">Emissão automática de boletos, PIX cobrável e conciliação bancária. Opcional — útil quando ultrapassar 10 clientes ativos.</div>
+          <div class="meta">
+            <span><strong>Status:</strong> avaliando</span>
+          </div>
+          <div class="actions">
+            <button type="button" class="btn small primary" onclick="_toast('Abrindo comparativo de gateways…','info')">Explorar</button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- UNIDADES -->
+    <section class="section" id="unidades">
+      <h2><em>Unidades</em> de negócio</h2>
+      <p class="sub" style="margin-top:-8px;margin-bottom:18px;max-width:640px">Marcas que operam sob a razão social <strong>Cabral e Lima Design LTDA</strong> (CNPJ 59.525.877/0001-49). Cada unidade emite proposta, gera receita e tem cliente externo — entram nos KPIs de margem operacional.</p>
+
+      <div class="unid-grid">
+
+        <div class="unid-card">
+          <div style="display:flex;justify-content:space-between;align-items:baseline"><span class="sub">Gestão · núcleo operacional</span><span class="badge ok">Ativa · nativa</span></div>
+          <div class="nm">Zenon <em>Co.</em></div>
+          <div class="desc">Unidade-sede de gestão. Centraliza operação, financeiro e governança das demais marcas. Fonte da verdade financeira — dados nativos do sistema.</div>
+          <div class="meta"><span>Slug: <strong>zenon-co</strong></span><span>Função: <strong>gestão</strong></span></div>
+        </div>
+
+        <div class="unid-card">
+          <div style="display:flex;justify-content:space-between;align-items:baseline"><span class="sub">Arquitetura · projetos e obras</span><span class="badge ok">Ativa</span></div>
+          <div class="nm">Yvyra <em>Arquitetura</em></div>
+          <div class="desc">Projetos autorais de arquitetura residencial, comercial e cultural. Abriga obras ativas como Clínica ECCO (Rafael Monici) e propostas como CT Darkhouse (Jakson Nantes).</div>
+          <div class="meta"><span>Slug: <strong>yvyra-arq</strong></span><span>Obras ativas: <strong>1</strong></span></div>
+        </div>
+
+        <div class="unid-card">
+          <div style="display:flex;justify-content:space-between;align-items:baseline"><span class="sub">Hospitalidade · short stay</span><span class="badge warn">Em estruturação</span></div>
+          <div class="nm">Zenon <em>Stay</em></div>
+          <div class="desc">Hospedagem e curadoria de estadias de alto padrão. APT 344 em vias de ser a primeira unidade — aguardando endereço, metragem e fotos para briefing.</div>
+          <div class="meta"><span>Slug: <strong>zenon-stay</strong></span><span>Unidades: <strong>1 pendente</strong></span></div>
+        </div>
+
+        <div class="unid-card">
+          <div style="display:flex;justify-content:space-between;align-items:baseline"><span class="sub">Gestão interna · patrimônio próprio</span><span class="badge">Interno</span></div>
+          <div class="nm">Zenon <em>Vision</em></div>
+          <div class="desc">Braço interno da Zenon Co. para gestão de ativos próprios (patrimônio, portfolio interno). Não vende pra cliente externo, não emite NFS-e.</div>
+          <div class="meta"><span>Slug: <strong>zenon-vision</strong></span><span>Função: <strong>gestão interna</strong></span></div>
+        </div>
+
+      </div>
+      <div style="display:flex;justify-content:flex-end;margin-top:16px">
+        <button type="button" class="btn" onclick="adicionarItem('unidade de negócio')">+ Nova unidade</button>
+      </div>
+    </section>
+
+    <section class="section" id="pessoais">
+      <h2><em>Fontes</em> pessoais centralizadas</h2>
+      <p class="sub" style="margin-top:-8px;margin-bottom:18px;max-width:640px">Patrimônios pessoais do Zenon que geram fluxo financeiro em <strong>dois sentidos</strong> — entrada (aluguéis, recebimentos) e saída (energia, manutenção, condomínio, IPTU). <strong>Não são negócios</strong>: ficam fora dos KPIs de receita, margem e propostas. Aparecem no Financeiro e no fluxo de caixa consolidado porque é dinheiro real.</p>
+
+      <div class="unid-grid">
+
+        <div class="unid-card" style="background:#fbf8f3;border-color:#dcc8a8">
+          <div style="display:flex;justify-content:space-between;align-items:baseline">
+            <span class="sub" style="color:#8b5a3c">Refúgio pessoal · temporada</span>
+            <span class="badge" style="background:#efe5d6;color:#8b5a3c;border-color:#dcc8a8">Fonte pessoal · entrada + saída</span>
+          </div>
+          <div class="nm"><em>Cabana</em></div>
+          <div class="desc">Cabana operada como aluguel de temporada. <strong>Entradas</strong>: reservas, pagamentos de hóspedes. <strong>Saídas</strong>: energia, água, manutenção, IPTU, faxina. Não gera proposta, não tem cliente corporativo, não entra em margem da empresa — mas conta no fluxo de caixa pessoal.</div>
+          <div class="meta"><span>Entradas/mês: <strong>~R$ 2.800</strong></span><span>Saídas/mês: <strong>~R$ 820</strong></span></div>
+        </div>
+
+        <div class="unid-card" style="background:#fbf8f3;border-color:#dcc8a8">
+          <div style="display:flex;justify-content:space-between;align-items:baseline">
+            <span class="sub" style="color:#8b5a3c">Moradia · predominante saída</span>
+            <span class="badge" style="background:#efe5d6;color:#8b5a3c;border-color:#dcc8a8">Fonte pessoal · entrada + saída</span>
+          </div>
+          <div class="nm">Casa <em>Blue</em></div>
+          <div class="desc">Residência pessoal. <strong>Saídas</strong>: condomínio, IPTU, utilities, manutenção (principal). <strong>Entradas eventuais</strong>: rateio, sublocação, reembolsos. Centralizado no sistema para o fluxo pessoal bater com o bancário.</div>
+          <div class="meta"><span>Saídas/mês: <strong>~R$ 1.620</strong></span><span>Entradas: <strong>eventuais</strong></span></div>
+        </div>
+
+      </div>
+      <div style="display:flex;justify-content:flex-end;margin-top:16px">
+        <button type="button" class="btn ghost" onclick="adicionarItem('fonte pessoal')">+ Nova fonte pessoal</button>
+      </div>
+    </section>
+
+    <!-- CATEGORIAS -->
+    <section class="section" id="categorias">
+      <div class="cad-hd">
+        <div>
+          <h2 style="border:none;padding:0;margin:0"><em>Categorias</em> financeiras</h2>
+          <p style="margin-top:8px">Classificação de cada lançamento — vai para os selects do Financeiro, relatórios e DRE. <strong>Receita</strong> soma entradas, <strong>Despesa</strong> soma saídas do negócio, <strong>Pessoal</strong> fica fora dos KPIs de empresa.</p>
+        </div>
+        <a href="#" class="btn primary" onclick="document.getElementById('cat-form').classList.toggle('open');return false">+ Nova categoria</a>
+      </div>
+
+      <!-- inline form (edit/create) -->
+      <div class="cad-inline" id="cat-form">
+        <div class="row">
+          <div>
+            <label>Nome</label>
+            <input type="text" placeholder="Ex.: Receita · consultoria">
+          </div>
+          <div>
+            <label>Grupo</label>
+            <select>
+              <option>Receita</option>
+              <option>Despesa · fornecedor</option>
+              <option>Despesa · equipe</option>
+              <option>Despesa · operacional</option>
+              <option>Despesa · impostos</option>
+              <option>Despesa · marketing</option>
+              <option>Despesa · software</option>
+              <option>Pessoal</option>
+            </select>
+          </div>
+          <div>
+            <label>Cor</label>
+            <div class="swatches">
+              <span class="sw on" style="background:#8c6a3c"></span>
+              <span class="sw" style="background:#2d6a4f"></span>
+              <span class="sw" style="background:#8e4a2b"></span>
+              <span class="sw" style="background:#335077"></span>
+              <span class="sw" style="background:#7a2f50"></span>
+              <span class="sw" style="background:#8b5a3c"></span>
+              <span class="sw" style="background:#5e5e5e"></span>
+            </div>
+          </div>
+          <div><button type="button" class="btn small" onclick="document.getElementById('cat-form').classList.remove('open');return false">Cancelar</button></div>
+          <div><button type="button" class="btn small primary" onclick="salvarConfig('categoria');document.getElementById('cat-form').classList.remove('open')">Salvar</button></div>
+        </div>
+      </div>
+
+      <table class="cad-tbl">
+        <thead>
+          <tr>
+            <th style="width:32%">Categoria</th>
+            <th>Grupo</th>
+            <th>Cor</th>
+            <th style="width:12%">Lançamentos</th>
+            <th style="width:12%">Últ. uso</th>
+            <th style="width:10%;text-align:right">Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="nm">Receita · projeto</td><td><span class="cad-chip rec">Receita</span></td><td><span class="cad-dot" style="background:#2d6a4f"></span><span class="usecount">#2d6a4f</span></td><td class="usecount">42</td><td class="usecount">há 2 dias</td><td><div class="row-act"><button type="button" class="ic" title="Editar" onclick="editarLinha(this)">✎</button><button type="button" class="ic rm" title="Remover" onclick="confirmarRemover(this, 'item')">✕</button></div></td></tr>
+          <tr><td class="nm">Receita · recorrente</td><td><span class="cad-chip rec">Receita</span></td><td><span class="cad-dot" style="background:#3a8a66"></span><span class="usecount">#3a8a66</span></td><td class="usecount">18</td><td class="usecount">há 5 dias</td><td><div class="row-act"><button type="button" class="ic" title="Editar" onclick="editarLinha(this)">✎</button><button type="button" class="ic rm" title="Remover" onclick="confirmarRemover(this, 'item')">✕</button></div></td></tr>
+          <tr><td class="nm">Receita · aluguel Cabana</td><td><span class="cad-chip rec">Receita</span></td><td><span class="cad-dot" style="background:#6ba07a"></span><span class="usecount">#6ba07a</span></td><td class="usecount">9</td><td class="usecount">há 3 dias</td><td><div class="row-act"><button type="button" class="ic" title="Editar" onclick="editarLinha(this)">✎</button><button type="button" class="ic rm" title="Remover" onclick="confirmarRemover(this, 'item')">✕</button></div></td></tr>
+          <tr><td class="nm">Fornecedor · obra</td><td><span class="cad-chip desp">Despesa · fornecedor</span></td><td><span class="cad-dot" style="background:#8e4a2b"></span><span class="usecount">#8e4a2b</span></td><td class="usecount">61</td><td class="usecount">ontem</td><td><div class="row-act"><button type="button" class="ic" title="Editar" onclick="editarLinha(this)">✎</button><button type="button" class="ic rm" title="Remover" onclick="confirmarRemover(this, 'item')">✕</button></div></td></tr>
+          <tr><td class="nm">Fornecedor · material</td><td><span class="cad-chip desp">Despesa · fornecedor</span></td><td><span class="cad-dot" style="background:#a26040"></span><span class="usecount">#a26040</span></td><td class="usecount">37</td><td class="usecount">hoje</td><td><div class="row-act"><button type="button" class="ic" title="Editar" onclick="editarLinha(this)">✎</button><button type="button" class="ic rm" title="Remover" onclick="confirmarRemover(this, 'item')">✕</button></div></td></tr>
+          <tr><td class="nm">Equipe · salário</td><td><span class="cad-chip eqp">Despesa · equipe</span></td><td><span class="cad-dot" style="background:#335077"></span><span class="usecount">#335077</span></td><td class="usecount">24</td><td class="usecount">há 15 dias</td><td><div class="row-act"><button type="button" class="ic" title="Editar" onclick="editarLinha(this)">✎</button><button type="button" class="ic rm" title="Remover" onclick="confirmarRemover(this, 'item')">✕</button></div></td></tr>
+          <tr><td class="nm">Equipe · PJ</td><td><span class="cad-chip eqp">Despesa · equipe</span></td><td><span class="cad-dot" style="background:#4c6999"></span><span class="usecount">#4c6999</span></td><td class="usecount">15</td><td class="usecount">há 8 dias</td><td><div class="row-act"><button type="button" class="ic" title="Editar" onclick="editarLinha(this)">✎</button><button type="button" class="ic rm" title="Remover" onclick="confirmarRemover(this, 'item')">✕</button></div></td></tr>
+          <tr><td class="nm">Operacional · locação</td><td><span class="cad-chip fix">Despesa · operacional</span></td><td><span class="cad-dot" style="background:#5e5e5e"></span><span class="usecount">#5e5e5e</span></td><td class="usecount">12</td><td class="usecount">há 1 mês</td><td><div class="row-act"><button type="button" class="ic" title="Editar" onclick="editarLinha(this)">✎</button><button type="button" class="ic rm" title="Remover" onclick="confirmarRemover(this, 'item')">✕</button></div></td></tr>
+          <tr><td class="nm">Impostos</td><td><span class="cad-chip imp">Despesa · impostos</span></td><td><span class="cad-dot" style="background:#7a2f50"></span><span class="usecount">#7a2f50</span></td><td class="usecount">8</td><td class="usecount">há 20 dias</td><td><div class="row-act"><button type="button" class="ic" title="Editar" onclick="editarLinha(this)">✎</button><button type="button" class="ic rm" title="Remover" onclick="confirmarRemover(this, 'item')">✕</button></div></td></tr>
+          <tr><td class="nm">Marketing · ads</td><td><span class="cad-chip fix">Despesa · marketing</span></td><td><span class="cad-dot" style="background:#c4614e"></span><span class="usecount">#c4614e</span></td><td class="usecount">5</td><td class="usecount">há 6 dias</td><td><div class="row-act"><button type="button" class="ic" title="Editar" onclick="editarLinha(this)">✎</button><button type="button" class="ic rm" title="Remover" onclick="confirmarRemover(this, 'item')">✕</button></div></td></tr>
+          <tr><td class="nm">Software · SaaS</td><td><span class="cad-chip fix">Despesa · software</span></td><td><span class="cad-dot" style="background:#4a7a7a"></span><span class="usecount">#4a7a7a</span></td><td class="usecount">11</td><td class="usecount">há 2 dias</td><td><div class="row-act"><button type="button" class="ic" title="Editar" onclick="editarLinha(this)">✎</button><button type="button" class="ic rm" title="Remover" onclick="confirmarRemover(this, 'item')">✕</button></div></td></tr>
+          <tr><td class="nm">Pessoal · aluguel Cabana</td><td><span class="cad-chip pes">Pessoal</span></td><td><span class="cad-dot" style="background:#8b5a3c"></span><span class="usecount">#8b5a3c</span></td><td class="usecount">6</td><td class="usecount">há 7 dias</td><td><div class="row-act"><button type="button" class="ic" title="Editar" onclick="editarLinha(this)">✎</button><button type="button" class="ic rm" title="Remover" onclick="confirmarRemover(this, 'item')">✕</button></div></td></tr>
+          <tr><td class="nm">Pessoal · Casa Blue</td><td><span class="cad-chip pes">Pessoal</span></td><td><span class="cad-dot" style="background:#a37450"></span><span class="usecount">#a37450</span></td><td class="usecount">4</td><td class="usecount">ontem</td><td><div class="row-act"><button type="button" class="ic" title="Editar" onclick="editarLinha(this)">✎</button><button type="button" class="ic rm" title="Remover" onclick="confirmarRemover(this, 'item')">✕</button></div></td></tr>
+        </tbody>
+      </table>
+      <div class="cad-foot">
+        <span class="info">13 categorias ativas · conectadas ao Financeiro, DRE e selects de lançamento.</span>
+        <button type="button" class="btn small" onclick="exportarCSV('categorias')">Exportar CSV</button>
+      </div>
+    </section>
+
+    <!-- FORMAS DE PAGAMENTO -->
+    <section class="section" id="pagamento">
+      <div class="cad-hd">
+        <div>
+          <h2 style="border:none;padding:0;margin:0"><em>Formas</em> de pagamento</h2>
+          <p style="margin-top:8px">Meios aceitos para recebimento e usados em despesas. Entram como opção no lançamento do Financeiro e no portal do cliente. PIX é o padrão para novas propostas.</p>
+        </div>
+        <a href="#" class="btn primary" onclick="document.getElementById('pay-form').classList.toggle('open');return false">+ Nova forma</a>
+      </div>
+
+      <div class="cad-inline" id="pay-form">
+        <div class="row">
+          <div>
+            <label>Nome</label>
+            <input type="text" placeholder="Ex.: TED, Cheque, Débito">
+          </div>
+          <div>
+            <label>Ícone</label>
+            <select>
+              <option>◉ PIX</option><option>→ Transferência</option><option>▭ Boleto</option><option>▢ Cartão</option><option>$ Dinheiro</option><option>⟳ Outro</option>
+            </select>
+          </div>
+          <div>
+            <label>Prazo médio (dias)</label>
+            <input type="number" value="0" min="0">
+          </div>
+          <div><button type="button" class="btn small" onclick="document.getElementById('pay-form').classList.remove('open');return false">Cancelar</button></div>
+          <div><button type="button" class="btn small primary" onclick="salvarConfig('forma de pagamento');document.getElementById('pay-form').classList.remove('open')">Salvar</button></div>
+        </div>
+      </div>
+
+      <table class="cad-tbl">
+        <thead>
+          <tr>
+            <th style="width:38%">Forma</th>
+            <th>Tipo</th>
+            <th style="width:14%">Prazo</th>
+            <th style="width:14%">Lançamentos</th>
+            <th style="width:12%">Padrão</th>
+            <th style="width:10%;text-align:right">Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="nm"><span style="display:inline-block;width:22px;color:var(--accent-ink);font-weight:700">◉</span> PIX</td><td><span class="cad-chip rec">Instantâneo</span></td><td class="usecount">0 dias</td><td class="usecount">67</td><td><span class="cad-chip" style="background:var(--accent-soft);color:var(--accent-ink);border-color:#dcc8a8">Padrão</span></td><td><div class="row-act"><button type="button" class="ic" title="Editar" onclick="editarLinha(this)">✎</button><button type="button" class="ic rm" title="Remover" onclick="confirmarRemover(this, 'item')">✕</button></div></td></tr>
+          <tr><td class="nm"><span style="display:inline-block;width:22px;color:var(--ink-soft);font-weight:700">→</span> Transferência (TED)</td><td><span class="cad-chip fix">Bancária</span></td><td class="usecount">1 dia útil</td><td class="usecount">24</td><td class="usecount">—</td><td><div class="row-act"><button type="button" class="ic" title="Editar" onclick="editarLinha(this)">✎</button><button type="button" class="ic rm" title="Remover" onclick="confirmarRemover(this, 'item')">✕</button></div></td></tr>
+          <tr><td class="nm"><span style="display:inline-block;width:22px;color:var(--ink-soft);font-weight:700">▭</span> Boleto</td><td><span class="cad-chip fix">Bancária</span></td><td class="usecount">2 dias úteis</td><td class="usecount">18</td><td class="usecount">—</td><td><div class="row-act"><button type="button" class="ic" title="Editar" onclick="editarLinha(this)">✎</button><button type="button" class="ic rm" title="Remover" onclick="confirmarRemover(this, 'item')">✕</button></div></td></tr>
+          <tr><td class="nm"><span style="display:inline-block;width:22px;color:var(--ink-soft);font-weight:700">▢</span> Cartão de crédito</td><td><span class="cad-chip fix">Parcelável</span></td><td class="usecount">30 dias</td><td class="usecount">31</td><td class="usecount">—</td><td><div class="row-act"><button type="button" class="ic" title="Editar" onclick="editarLinha(this)">✎</button><button type="button" class="ic rm" title="Remover" onclick="confirmarRemover(this, 'item')">✕</button></div></td></tr>
+          <tr><td class="nm"><span style="display:inline-block;width:22px;color:var(--ink-soft);font-weight:700">$</span> Dinheiro</td><td><span class="cad-chip fix">Espécie</span></td><td class="usecount">0 dias</td><td class="usecount">5</td><td class="usecount">—</td><td><div class="row-act"><button type="button" class="ic" title="Editar" onclick="editarLinha(this)">✎</button><button type="button" class="ic rm" title="Remover" onclick="confirmarRemover(this, 'item')">✕</button></div></td></tr>
+        </tbody>
+      </table>
+      <div class="cad-foot">
+        <span class="info">5 formas ativas · prazo usado em previsão de fluxo de caixa.</span>
+      </div>
+    </section>
+
+    <!-- BANCOS -->
+    <section class="section" id="bancos">
+      <div class="cad-hd">
+        <div>
+          <h2 style="border:none;padding:0;margin:0"><em>Bancos</em> &amp; contas</h2>
+          <p style="margin-top:8px">Contas bancárias cadastradas. Saldos aparecem no card <strong>Extrato bancário</strong> do Financeiro. A conta marcada como padrão é pré-selecionada em novos lançamentos. Integração futura com Open Finance para puxar saldo automaticamente.</p>
+        </div>
+        <a href="#" class="btn primary" onclick="document.getElementById('bk-form').classList.toggle('open');return false">+ Nova conta</a>
+      </div>
+
+      <div class="cad-inline" id="bk-form">
+        <div class="row" style="grid-template-columns:1fr 1fr 1fr 1fr auto auto">
+          <div>
+            <label>Apelido</label>
+            <input type="text" placeholder="Ex.: Inter PJ Zenon">
+          </div>
+          <div>
+            <label>Banco</label>
+            <select><option>Inter</option><option>Itaú</option><option>Banco do Brasil</option><option>Nubank</option><option>Bradesco</option><option>Santander</option><option>Caixa</option><option>C6</option><option>Outro</option></select>
+          </div>
+          <div>
+            <label>Tipo</label>
+            <select><option>Conta corrente PJ</option><option>Conta corrente PF</option><option>Poupança</option><option>Conta digital</option><option>Reserva / investimento</option></select>
+          </div>
+          <div>
+            <label>Unidade / escopo</label>
+            <select><option>Cabral e Lima Design LTDA (empresa)</option><option>Zenon Co.</option><option>Yvyra Arquitetura</option><option>Zenon Stay</option><option>Zenon Vision</option><option>Pessoal · Rodrigo</option><option>Pessoal · Thereza</option></select>
+          </div>
+          <div><button type="button" class="btn small" onclick="document.getElementById('bk-form').classList.remove('open');return false">Cancelar</button></div>
+          <div><button type="button" class="btn small primary" onclick="salvarConfig('conta bancária');document.getElementById('bk-form').classList.remove('open')">Salvar</button></div>
+        </div>
+      </div>
+
+      <div class="bk-grid">
+        <div class="bk-card default">
+          <span class="bk-badge-def">Padrão</span>
+          <div class="bk-hd">
+            <div class="bk-logo inter">Int</div>
+            <div style="flex:1">
+              <div class="bk-title">Inter <em>Empresa</em></div>
+              <div class="bk-sub">Cabral e Lima Design LTDA · conta PJ principal</div>
+            </div>
+          </div>
+          <div class="bk-meta">
+            <div><span>Escopo</span><strong>Empresa · Zenon</strong></div>
+            <div><span>Uso</span><strong>Entrada de recebíveis + pagamentos de obra</strong></div>
+          </div>
+          <div class="bk-act">
+            <button type="button" class="btn small" onclick="editarConta(this, 'Inter Empresa')">Editar</button>
+            <button type="button" class="btn small" onclick="_toast('Iniciando conciliação bancária…','info')">Conciliar</button>
+            <button type="button" class="btn small warn" onclick="confirmarDesativar(this, 'Inter Empresa')">Desativar</button>
+          </div>
+        </div>
+
+        <div class="bk-card">
+          <div class="bk-hd">
+            <div class="bk-logo" style="background:#003d5b;color:#fff">BTG</div>
+            <div style="flex:1">
+              <div class="bk-title">BTG <em>Empresa</em></div>
+              <div class="bk-sub">Cabral e Lima Design LTDA · conta PJ secundária</div>
+            </div>
+          </div>
+          <div class="bk-meta">
+            <div><span>Escopo</span><strong>Empresa · Zenon</strong></div>
+            <div><span>Uso</span><strong>Reserva e investimento da operação</strong></div>
+          </div>
+          <div class="bk-act">
+            <button type="button" class="btn small" onclick="editarConta(this, 'BTG Empresa')">Editar</button>
+            <button type="button" class="btn small" onclick="_toast('Iniciando conciliação bancária…','info')">Conciliar</button>
+            <button type="button" class="btn small warn" onclick="confirmarDesativar(this, 'BTG Empresa')">Desativar</button>
+          </div>
+        </div>
+
+        <div class="bk-card">
+          <div class="bk-hd">
+            <div class="bk-logo inter">Int</div>
+            <div style="flex:1">
+              <div class="bk-title">Inter <em>Rodrigo</em></div>
+              <div class="bk-sub">Pessoa física · Rodrigo Cabral</div>
+            </div>
+          </div>
+          <div class="bk-meta">
+            <div><span>Escopo</span><strong>Pessoal · Rodrigo</strong></div>
+            <div><span>Uso</span><strong>Fluxo pessoal + fontes Cabana / Casa Blue</strong></div>
+          </div>
+          <div class="bk-act">
+            <button type="button" class="btn small" onclick="editarConta(this, 'Inter Rodrigo')">Editar</button>
+            <button type="button" class="btn small" onclick="_toast('Iniciando conciliação bancária…','info')">Conciliar</button>
+            <button type="button" class="btn small warn" onclick="confirmarDesativar(this, 'Inter Rodrigo')">Desativar</button>
+          </div>
+        </div>
+
+        <div class="bk-card">
+          <div class="bk-hd">
+            <div class="bk-logo nubank">Nu</div>
+            <div style="flex:1">
+              <div class="bk-title">Nubank <em>Thereza</em></div>
+              <div class="bk-sub">Pessoa física · Thereza</div>
+            </div>
+          </div>
+          <div class="bk-meta">
+            <div><span>Escopo</span><strong>Pessoal · Thereza</strong></div>
+            <div><span>Uso</span><strong>Fluxo pessoal doméstico</strong></div>
+          </div>
+          <div class="bk-act">
+            <button type="button" class="btn small" onclick="editarConta(this, 'Nubank Thereza')">Editar</button>
+            <button type="button" class="btn small" onclick="_toast('Iniciando conciliação bancária…','info')">Conciliar</button>
+            <button type="button" class="btn small warn" onclick="confirmarDesativar(this, 'Nubank Thereza')">Desativar</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="cad-foot">
+        <span class="info">4 contas · 2 empresa (Inter + BTG) · 2 pessoais (Inter Rodrigo + Nubank Thereza). Saldos são lidos via conciliação — sem mock.</span>
+        <button type="button" class="btn small" onclick="_toast('Modo reordenação ativado — arraste as contas','info')">Reordenar</button>
+      </div>
+    </section>
+
+    <!-- TAGS / ETIQUETAS -->
+    <section class="section" id="etiquetas">
+      <div class="cad-hd">
+        <div>
+          <h2 style="border:none;padding:0;margin:0"><em>Tags</em> &amp; etiquetas</h2>
+          <p style="margin-top:8px">Rótulos livres para classificar clientes, projetos, obras e lançamentos. Usadas em filtros rápidos e no painel de saúde. Edite devagar — tags muito parecidas viram ruído.</p>
+        </div>
+        <a href="#" class="btn primary" onclick="document.getElementById('tag-form').classList.toggle('open');return false">+ Nova tag</a>
+      </div>
+
+      <div class="cad-inline" id="tag-form">
+        <div class="row">
+          <div>
+            <label>Nome</label>
+            <input type="text" placeholder="Ex.: Residencial alto padrão">
+          </div>
+          <div>
+            <label>Escopo</label>
+            <select><option>Cliente</option><option>Projeto</option><option>Obra</option><option>Lançamento</option></select>
+          </div>
+          <div>
+            <label>Cor</label>
+            <div class="swatches">
+              <span class="sw on" style="background:#8c6a3c"></span>
+              <span class="sw" style="background:#2d6a4f"></span>
+              <span class="sw" style="background:#335077"></span>
+              <span class="sw" style="background:#7a2f50"></span>
+              <span class="sw" style="background:#8e4a2b"></span>
+            </div>
+          </div>
+          <div><button type="button" class="btn small" onclick="document.getElementById('tag-form').classList.remove('open');return false">Cancelar</button></div>
+          <div><button type="button" class="btn small primary" onclick="salvarConfig('tag');document.getElementById('tag-form').classList.remove('open')">Salvar</button></div>
+        </div>
+      </div>
+
+      <table class="cad-tbl">
+        <thead>
+          <tr>
+            <th style="width:38%">Tag</th>
+            <th>Escopo</th>
+            <th style="width:14%">Em uso</th>
+            <th style="width:16%">Últ. aplicação</th>
+            <th style="width:10%;text-align:right">Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="nm"><span class="cad-dot" style="background:#8c6a3c"></span>Residencial</td><td><span class="cad-chip fix">Projeto</span></td><td class="usecount">5 projetos</td><td class="usecount">—</td><td><div class="row-act"><button type="button" class="ic" title="Editar" onclick="editarLinha(this)">✎</button><button type="button" class="ic rm" title="Remover" onclick="confirmarRemover(this, 'item')">✕</button></div></td></tr>
+          <tr><td class="nm"><span class="cad-dot" style="background:#2d6a4f"></span>Comercial</td><td><span class="cad-chip fix">Projeto</span></td><td class="usecount">1 projeto</td><td class="usecount">—</td><td><div class="row-act"><button type="button" class="ic" title="Editar" onclick="editarLinha(this)">✎</button><button type="button" class="ic rm" title="Remover" onclick="confirmarRemover(this, 'item')">✕</button></div></td></tr>
+          <tr><td class="nm"><span class="cad-dot" style="background:#335077"></span>Saúde / Clínica</td><td><span class="cad-chip fix">Projeto</span></td><td class="usecount">1 projeto</td><td class="usecount">—</td><td><div class="row-act"><button type="button" class="ic" title="Editar" onclick="editarLinha(this)">✎</button><button type="button" class="ic rm" title="Remover" onclick="confirmarRemover(this, 'item')">✕</button></div></td></tr>
+          <tr><td class="nm"><span class="cad-dot" style="background:#7a2f50"></span>VIP</td><td><span class="cad-chip fix">Cliente</span></td><td class="usecount">1 cliente</td><td class="usecount">—</td><td><div class="row-act"><button type="button" class="ic" title="Editar" onclick="editarLinha(this)">✎</button><button type="button" class="ic rm" title="Remover" onclick="confirmarRemover(this, 'item')">✕</button></div></td></tr>
+          <tr><td class="nm"><span class="cad-dot" style="background:#8e4a2b"></span>Indicação</td><td><span class="cad-chip fix">Cliente</span></td><td class="usecount">2 clientes</td><td class="usecount">—</td><td><div class="row-act"><button type="button" class="ic" title="Editar" onclick="editarLinha(this)">✎</button><button type="button" class="ic rm" title="Remover" onclick="confirmarRemover(this, 'item')">✕</button></div></td></tr>
+          <tr><td class="nm"><span class="cad-dot" style="background:#c4614e"></span>Atenção</td><td><span class="cad-chip fix">Obra</span></td><td class="usecount">1 obra</td><td class="usecount">—</td><td><div class="row-act"><button type="button" class="ic" title="Editar" onclick="editarLinha(this)">✎</button><button type="button" class="ic rm" title="Remover" onclick="confirmarRemover(this, 'item')">✕</button></div></td></tr>
+          <tr><td class="nm"><span class="cad-dot" style="background:#4a7a7a"></span>Regularização</td><td><span class="cad-chip fix">Projeto</span></td><td class="usecount">2 projetos</td><td class="usecount">—</td><td><div class="row-act"><button type="button" class="ic" title="Editar" onclick="editarLinha(this)">✎</button><button type="button" class="ic rm" title="Remover" onclick="confirmarRemover(this, 'item')">✕</button></div></td></tr>
+          <tr><td class="nm"><span class="cad-dot" style="background:#8b5a3c"></span>Consultoria</td><td><span class="cad-chip fix">Projeto</span></td><td class="usecount">1 projeto</td><td class="usecount">—</td><td><div class="row-act"><button type="button" class="ic" title="Editar" onclick="editarLinha(this)">✎</button><button type="button" class="ic rm" title="Remover" onclick="confirmarRemover(this, 'item')">✕</button></div></td></tr>
+          <tr><td class="nm"><span class="cad-dot" style="background:#a37450"></span>Reembolso</td><td><span class="cad-chip fix">Lançamento</span></td><td class="usecount">0 · ECCO paga direto</td><td class="usecount">—</td><td><div class="row-act"><button type="button" class="ic" title="Editar" onclick="editarLinha(this)">✎</button><button type="button" class="ic rm" title="Remover" onclick="confirmarRemover(this, 'item')">✕</button></div></td></tr>
+        </tbody>
+      </table>
+      <div class="cad-foot">
+        <span class="info">9 tags · você pode mesclar tags parecidas em "Gerenciar duplicadas".</span>
+        <button type="button" class="btn small" onclick="_toast('Abrindo gerenciador de duplicadas…','info')">Gerenciar duplicadas</button>
+      </div>
+    </section>
+
+    <!-- EQUIPE -->
+    <section class="section" id="equipe">
+      <h2><em>Equipe</em></h2>
+      <table class="team-tbl">
+        <thead>
+          <tr>
+            <th>Membro</th>
+            <th>Cargo</th>
+            <th>Papel no sistema</th>
+            <th>Unidades</th>
+            <th>Status</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <div class="tt-user">
+                <div class="av">RC</div>
+                <div>
+                  <div class="nm">Rodrigo Cabral</div>
+                  <div class="em">zenon.gestao@gmail.com</div>
+                </div>
+              </div>
+            </td>
+            <td>Sócio · Arquiteto · CAU A148704-5</td>
+            <td><span class="role-pill adm">Admin</span></td>
+            <td>Todas</td>
+            <td><span class="badge ok">Ativo</span></td>
+            <td><button type="button" class="btn small" onclick="editarMembro(this, 'Rodrigo Cabral')">Editar</button></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="tt-user">
+                <div class="av">LU</div>
+                <div>
+                  <div class="nm">Luana</div>
+                  <div class="em">—</div>
+                </div>
+              </div>
+            </td>
+            <td>Financeiro · contas a pagar</td>
+            <td><span class="role-pill">Editor</span></td>
+            <td>Cabral e Lima · Financeiro</td>
+            <td><span class="badge ok">Ativa</span></td>
+            <td><button type="button" class="btn small" onclick="editarMembro(this, 'Luana')">Editar</button></td>
+          </tr>
+          <tr>
+            <td>
+              <div class="tt-user">
+                <div class="av">AN</div>
+                <div>
+                  <div class="nm">Anderson</div>
+                  <div class="em">—</div>
+                </div>
+              </div>
+            </td>
+            <td>Acompanhamento de obra</td>
+            <td><span class="role-pill">Colaborador</span></td>
+            <td>Yvyra Arquitetura · obras</td>
+            <td><span class="badge ok">Ativo</span></td>
+            <td><button type="button" class="btn small" onclick="editarMembro(this, 'Anderson')">Editar</button></td>
+          </tr>
+        </tbody>
+      </table>
+      <div style="display:flex;justify-content:flex-end;margin-top:16px">
+        <button type="button" class="btn primary" onclick="convidarMembro()">+ Convidar membro</button>
+      </div>
+    </section>
+
+    <!-- PORTAL -->
+    <section class="section" id="portal">
+      <h2>Portal do <em>cliente</em></h2>
+      <div class="form-grid">
+        <div class="field">
+          <label>Domínio do portal</label>
+          <input type="text" value="portal.zenonco.com.br">
+        </div>
+        <div class="field">
+          <label>Formato do slug</label>
+          <select><option>nome-sobrenome</option><option>primeiro-nome</option><option>código do projeto</option></select>
+        </div>
+        <div class="field span-2">
+          <label>Mensagem de boas-vindas</label>
+          <textarea>Bem-vindo ao portal Zenon. Aqui você acompanha seu projeto — evolução, decisões pendentes, arquivos e histórico financeiro. Qualquer dúvida, nosso time responde em até 24h úteis.</textarea>
+        </div>
+        <div class="field">
+          <label>Liberar portal automaticamente em novo cliente</label>
+          <select><option>Sim, enviar convite</option><option>Sim, sem enviar</option><option>Apenas quando eu liberar</option></select>
+        </div>
+        <div class="field">
+          <label>Autenticação</label>
+          <select><option>Link mágico por e-mail</option><option>Senha</option><option>Google OAuth</option></select>
+        </div>
+      </div>
+      <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:18px">
+        <button type="button" class="btn" onclick="restaurarPadrao('portal')">Restaurar padrão</button>
+        <button type="button" class="btn primary" onclick="salvarConfig('portal do cliente')">Salvar preferências</button>
+      </div>
+    </section>
+
+    <!-- PLANO & BILLING -->
+    <section class="section" id="billing">
+      <h2>Plano &amp; <em>billing</em></h2>
+      <div style="display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center">
+        <div>
+          <div style="font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-mute);font-weight:700;margin-bottom:8px">Plano atual</div>
+          <div style="font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:32px;font-weight:500;color:var(--ink)">Zenon <em style="color:var(--accent-ink);font-style:italic">Studio</em></div>
+          <div style="font-size:13px;color:var(--ink-body);margin-top:6px;max-width:520px;line-height:1.5">Até 5 membros de equipe, 25 clientes ativos, 50 projetos, integrações completas.</div>
+          <div style="display:flex;gap:14px;font-size:12px;color:var(--ink-soft);margin-top:14px">
+            <span>Membros: <strong style="color:var(--ink)">3 / 5</strong></span>
+            <span>Clientes ativos: <strong style="color:var(--ink)">2 / 25</strong></span>
+            <span>Projetos: <strong style="color:var(--ink)">8 / 50</strong></span>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <button type="button" class="btn primary" onclick="_toast('Abrindo upgrade de plano…','info')">Atualizar plano</button>
+          <button type="button" class="btn" onclick="_toast('Abrindo histórico de faturas…','info')">Ver faturas</button>
+          <button type="button" class="btn warn" onclick="cancelarAssinatura()">Cancelar assinatura</button>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+</main>
+
+<script>
+/* ---- Toast helper (bottom-center) ---- */
+(function(){
+  if (window._toast) return;
+  var host = document.createElement('div');
+  host.id = '_toast_host';
+  host.style.cssText = 'position:fixed;left:50%;bottom:28px;transform:translateX(-50%);z-index:9999;display:flex;flex-direction:column;gap:8px;align-items:center;pointer-events:none';
+  document.body.appendChild(host);
+  window._toast = function(msg, kind){
+    var t = document.createElement('div');
+    var bg = '#1f1f1d', fg = '#fff', br = '#1f1f1d';
+    if (kind === 'ok')   { bg = '#e8f3ea'; fg = '#2d6a4f'; br = '#b7d7c0'; }
+    if (kind === 'warn') { bg = '#fff4e2'; fg = '#8e5a2b'; br = '#e2c79a'; }
+    if (kind === 'err')  { bg = '#fbeee6'; fg = '#8e4a2b'; br = '#e4c2a8'; }
+    if (kind === 'info') { bg = '#fdfbf5'; fg = '#5a4a2d'; br = '#e2d4b5'; }
+    t.style.cssText = 'font-family:Inter,sans-serif;font-size:12.5px;letter-spacing:.02em;font-weight:500;padding:10px 18px;border-radius:3px;background:' + bg + ';color:' + fg + ';border:1px solid ' + br + ';box-shadow:0 6px 20px rgba(0,0,0,.12);pointer-events:auto;opacity:0;transition:opacity .18s,transform .18s;transform:translateY(6px)';
+    t.textContent = msg;
+    host.appendChild(t);
+    requestAnimationFrame(function(){ t.style.opacity = '1'; t.style.transform = 'translateY(0)'; });
+    setTimeout(function(){
+      t.style.opacity = '0';
+      t.style.transform = 'translateY(6px)';
+      setTimeout(function(){ if (t.parentNode) t.parentNode.removeChild(t); }, 220);
+    }, 2400);
+  };
+})();
+
+/* ---- Generic config helpers ---- */
+function salvarConfig(secao){
+  _toast('\u2713 Configurações salvas' + (secao ? ' \u00b7 ' + secao : ''), 'ok');
+}
+
+function toggleConexao(el, nome){
+  var card = el.closest('.int-card');
+  var badge = card ? card.querySelector('.badge') : null;
+  var isConnected = /desconectar/i.test(el.textContent);
+  if (isConnected) {
+    if (!confirm('Desconectar ' + nome + '? As sincronizações serão interrompidas.')) return;
+    el.textContent = 'Conectar';
+    el.classList.remove('warn');
+    el.classList.add('primary');
+    if (badge) { badge.className = 'badge off'; badge.textContent = 'Não conectado'; }
+    _toast(nome + ' desconectado', 'warn');
+  } else {
+    el.textContent = 'Desconectar';
+    el.classList.remove('primary');
+    el.classList.add('warn');
+    if (badge) { badge.className = 'badge ok'; badge.textContent = 'Conectado'; }
+    _toast('\u2713 ' + nome + ' conectado', 'ok');
+  }
+}
+
+function sincronizarAgora(el, nome){
+  var original = el.textContent;
+  el.textContent = 'Sincronizando…';
+  el.disabled = true;
+  setTimeout(function(){
+    el.textContent = original;
+    el.disabled = false;
+    _toast('\u2713 ' + nome + ' sincronizado', 'ok');
+  }, 900);
+}
+
+function confirmarRemover(el, tipo){
+  var row = el.closest('tr');
+  var nome = row ? (row.querySelector('.nm') ? row.querySelector('.nm').textContent.trim() : tipo) : tipo;
+  if (!confirm('Remover ' + nome + '? Esta ação não pode ser desfeita.')) return;
+  if (row && row.parentNode) {
+    row.style.transition = 'opacity .18s';
+    row.style.opacity = '0';
+    setTimeout(function(){ if (row.parentNode) row.parentNode.removeChild(row); }, 200);
+  }
+  _toast(nome + ' removido', 'warn');
+}
+
+function confirmarDesativar(el, nome){
+  if (!confirm('Desativar a conta ' + nome + '? Ela sai dos novos lançamentos, mas o histórico permanece.')) return;
+  var card = el.closest('.bk-card');
+  if (card) card.style.opacity = '0.55';
+  _toast('Conta ' + nome + ' desativada', 'warn');
+}
+
+function uploadArquivo(accept, rotulo){
+  var input = document.createElement('input');
+  input.type = 'file';
+  if (accept) input.accept = accept;
+  input.style.display = 'none';
+  input.addEventListener('change', function(){
+    if (input.files && input.files[0]) {
+      _toast('\u2713 ' + (rotulo || 'Arquivo') + ' carregado: ' + input.files[0].name, 'ok');
+    }
+    if (input.parentNode) input.parentNode.removeChild(input);
+  });
+  document.body.appendChild(input);
+  input.click();
+}
+
+function adicionarItem(tipo){
+  var nome = prompt('Nome da nova ' + tipo + ':');
+  if (nome && nome.trim()) {
+    _toast('\u2713 ' + tipo.charAt(0).toUpperCase() + tipo.slice(1) + ' "' + nome.trim() + '" adicionada', 'ok');
+  }
+}
+
+function editarLinha(el){
+  var row = el.closest('tr');
+  var nome = row && row.querySelector('.nm') ? row.querySelector('.nm').textContent.trim() : 'item';
+  _toast('Editando: ' + nome, 'info');
+}
+
+function editarConta(el, nome){
+  _toast('Editando conta: ' + nome, 'info');
+}
+
+function editarMembro(el, nome){
+  _toast('Editando membro: ' + nome, 'info');
+}
+
+function editarEmpresa(){
+  _toast('Modo edição ativado — campos liberados', 'info');
+  document.querySelectorAll('#empresa input, #empresa select').forEach(function(f){ f.removeAttribute('readonly'); f.focus(); });
+}
+
+function convidarMembro(){
+  var email = prompt('E-mail do novo membro:');
+  if (email && email.trim()) {
+    _toast('\u2713 Convite enviado para ' + email.trim(), 'ok');
+  }
+}
+
+function restaurarPadrao(secao){
+  if (!confirm('Restaurar ' + secao + ' para os valores padrão?')) return;
+  _toast('\u2713 ' + secao.charAt(0).toUpperCase() + secao.slice(1) + ' restaurado ao padrão', 'ok');
+}
+
+function exportarCSV(nome){
+  _toast('\u2713 Exportando ' + nome + '.csv…', 'ok');
+}
+
+function cancelarAssinatura(){
+  if (!confirm('Cancelar a assinatura do Zenon Studio? Você manterá acesso até o fim do período já pago.')) return;
+  _toast('Solicitação de cancelamento registrada', 'warn');
+}
+</script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script src="supabase-client.js"></script>
+  <script src="shell-user.js"></script>
+<script src="shell-fx.js"></script>
+</body>
+</html>
