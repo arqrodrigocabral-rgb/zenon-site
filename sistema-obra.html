@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Obra — Zenon Sistema</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shell.css">
+<style>
+  .obra-head{display:grid;grid-template-columns:2fr 1fr;gap:24px;margin-bottom:32px}
+  @media (max-width:900px){.obra-head{grid-template-columns:1fr}}
+  .obra-head .cover{
+    background:linear-gradient(135deg,var(--bg-alt),var(--accent-soft));
+    border:1px solid var(--line);border-radius:4px;padding:32px;
+    display:flex;flex-direction:column;justify-content:space-between;min-height:220px;
+  }
+  .obra-head .cover h1{font-size:44px;font-weight:500;line-height:1.1;margin-bottom:10px}
+  .obra-head .cover .client{font-size:15px;color:var(--ink-soft)}
+  .obra-head .cover .tags{display:flex;gap:8px;margin-top:16px;flex-wrap:wrap}
+
+  .progress-box{
+    background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:28px;
+    display:flex;flex-direction:column;gap:14px;
+  }
+  .progress-box .pct-huge{
+    font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:84px;color:var(--ink);line-height:.9;font-weight:500;
+  }
+  .progress-box .pct-huge em{color:var(--accent-ink);font-style:normal}
+
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+  @media (max-width:900px){.cols{grid-template-columns:1fr}}
+
+  .stage-list{display:flex;flex-direction:column}
+  .stage-row{
+    display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;
+    padding:14px 0;border-bottom:1px solid var(--line-soft);
+  }
+  .stage-row:last-child{border-bottom:none}
+  .stage-row .checkmark{
+    width:22px;height:22px;border-radius:50%;
+    border:1.5px solid var(--line-strong);
+    display:flex;align-items:center;justify-content:center;
+    font-size:12px;font-weight:700;color:#fff;background:transparent;
+  }
+  .stage-row.done .checkmark{background:var(--ok);border-color:var(--ok)}
+  .stage-row.done .checkmark::after{content:'✓'}
+  .stage-row.current .checkmark{border-color:var(--accent);background:var(--accent);color:#fff}
+  .stage-row.current .checkmark::after{content:'●';font-size:10px}
+  .stage-row .label-stage{font-size:14px;color:var(--ink)}
+  .stage-row.done .label-stage{color:var(--ink-soft);text-decoration:line-through;text-decoration-color:var(--line)}
+  .stage-row .date{font-size:11px;color:var(--ink-mute);letter-spacing:.1em;text-transform:uppercase;font-weight:500}
+
+  .diary{display:flex;flex-direction:column;gap:12px}
+  .diary .entry{
+    background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:20px;
+    border-left:3px solid var(--accent);
+  }
+  .diary .entry .h{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px}
+  .diary .entry .h strong{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:17px;color:var(--ink);font-weight:600}
+  .diary .entry p{font-size:14px;color:var(--ink-body);line-height:1.55;margin-bottom:6px}
+  .diary .entry p strong{color:var(--ink);font-weight:600}
+
+  .gallery{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  @media (max-width:700px){.gallery{grid-template-columns:repeat(2,1fr)}}
+  .photo{
+    aspect-ratio:1;
+    background:var(--bg-alt);border:1px solid var(--line);border-radius:4px;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    font-family:'Fraunces','Source Serif 4',Georgia,serif;color:var(--ink-mute);
+    background-image:linear-gradient(135deg,var(--bg-alt) 25%,var(--accent-soft) 50%,var(--bg-alt) 75%);
+    background-size:200% 200%;
+  }
+  .photo .ph-date{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-mute);font-family:'Inter',sans-serif;font-weight:600;margin-top:4px}
+  .photo .ph-icon{font-size:28px;color:var(--accent)}
+
+  .forn-status{
+    display:inline-flex;align-items:center;gap:5px;font-size:11px;letter-spacing:.08em;
+    text-transform:uppercase;font-weight:700;padding:3px 8px;border-radius:3px;
+  }
+  .forn-status.ok{background:#e6f0e8;color:var(--ok)}
+  .forn-status.and{background:#f5ead6;color:var(--warn)}
+  .forn-status.pen{background:#f0e8dd;color:var(--ink-soft)}
+
+  .rel-sem{display:flex;flex-direction:column;gap:14px}
+  .rel-week{
+    background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:22px;
+  }
+  .rel-week .rh{
+    display:flex;justify-content:space-between;align-items:baseline;
+    padding-bottom:12px;margin-bottom:14px;border-bottom:1px solid var(--line-soft);
+  }
+  .rel-week .rh .w-num{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:26px;color:var(--ink);font-weight:600}
+  .rel-week .rh .w-date{font-size:11px;color:var(--ink-mute);letter-spacing:.14em;text-transform:uppercase;font-weight:600}
+  .rel-week .rg{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:18px;
+  }
+  @media (max-width:800px){.rel-week .rg{grid-template-columns:1fr}}
+  .rel-week .rg > div .lbl{
+    font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-mute);
+    font-weight:700;margin-bottom:6px;
+  }
+  .rel-week .rg > div p{font-size:13px;color:var(--ink-body);line-height:1.55}
+  .rel-week .rg > div.pend .lbl{color:var(--warn)}
+
+  .check-doc{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  @media (max-width:800px){.check-doc{grid-template-columns:1fr}}
+  .check-item{
+    background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:20px;
+    display:flex;flex-direction:column;gap:10px;position:relative;min-height:130px;
+  }
+  .check-item.done{border-left:3px solid var(--ok)}
+  .check-item.pend{border-left:3px solid var(--warn)}
+  .check-item .ck{
+    width:28px;height:28px;border-radius:50%;border:1.5px solid var(--line-strong);
+    display:flex;align-items:center;justify-content:center;font-size:15px;color:#fff;
+  }
+  .check-item.done .ck{background:var(--ok);border-color:var(--ok)}
+  .check-item.pend .ck{background:var(--paper);color:var(--warn);border-color:var(--warn)}
+  .check-item h4{font-size:15px;font-weight:600;color:var(--ink)}
+  .check-item p{font-size:12px;color:var(--ink-soft);line-height:1.5}
+  .check-item .meta{
+    margin-top:auto;font-size:10px;color:var(--ink-mute);
+    letter-spacing:.14em;text-transform:uppercase;font-weight:600;
+  }
+
+  .cat-row{
+    display:grid;grid-template-columns:1fr auto auto 100px;gap:14px;align-items:center;
+    padding:12px 0;border-bottom:1px solid var(--line-soft);
+  }
+  .cat-row:last-child{border-bottom:none}
+  .cat-row.total{border-top:2px solid var(--ink);padding-top:14px;margin-top:4px}
+  .cat-row .cat{font-size:14px;color:var(--ink)}
+  .cat-row.total .cat{font-weight:700}
+  .cat-row .v{font-size:14px;font-weight:600;text-align:right;color:var(--ink)}
+  .cat-row .p{font-size:12px;color:var(--ink-mute);text-align:right}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-inner">
+    <div class="brand">Zen<span>o</span>n — Sistema</div>
+    <div class="search"><input type="search" placeholder="Buscar obra, fornecedor, parcela…"></div>
+    <div class="fx-chip" title="Cotação do dólar (USD/BRL)">
+      <span class="fx-code">USD</span>
+      <span class="fx-val"><span class="cur">R$</span>—</span>
+      <span class="fx-delta flat">…</span>
+      <div class="fx-tip"></div>
+    </div>
+
+    <div class="user-menu">
+      <button type="button" class="user-trigger" onclick="ZenonUser.toggleDropdown(event)" aria-haspopup="true" aria-expanded="false">
+        <span class="u-name" data-user-name>Rodrigo</span>
+        <span class="avatar" data-user="me">R</span>
+        <span class="u-caret">▾</span>
+      </button>
+      <div class="user-dropdown" role="menu">
+        <div class="ud-head">
+          <span class="avatar" data-user="me">R</span>
+          <div>
+            <div class="name" data-user-name>Rodrigo</div>
+            <div class="role" data-user-role>Sócio · Arquiteto responsável</div>
+          </div>
+        </div>
+        <a href="sistema-perfil.html"><span class="ic">◎</span>Ver perfil</a>
+        <a href="sistema-configuracoes.html"><span class="ic">⚙</span>Configurações</a>
+        <a href="sistema-empresa.html"><span class="ic">⌂</span>Dados da empresa</a>
+        <a href="https://www.notion.so/Zenon" target="_blank"><span class="ic">✱</span>Atividades · Notion ↗</a>
+        <div class="ud-sep"></div>
+        <a href="sistema-login.html" class="sign-out"><span class="ic">↪</span>Sair</a>
+      </div>
+    </div>
+  </div>
+  <nav class="tabs">
+    <a href="sistema-painel.html">Painel</a>
+    <a href="sistema-clientes.html">Clientes</a>
+    <a href="sistema-projetos.html">Projetos</a>
+    <a href="sistema-obra.html" class="active">Obra</a>
+    <a href="sistema-obra-financeiro.html">Obra financeiro</a>
+    <a href="sistema-propostas.html">Propostas</a>
+    <a href="sistema-financeiro.html">Financeiro</a>
+    <a href="sistema-empresa.html">Empresa</a>
+    <a href="sistema-log.html">Log da equipe</a>
+  </nav>
+</header>
+
+<main>
+  <div class="page-head">
+    <div>
+      <div class="eyebrow">Acompanhamento</div>
+      <h1><em>Obra</em> em andamento</h1>
+      <div class="sub">1 obra ativa · Clínica ECCO · Rafael Monici · entrega 20 / 05 / 2026</div>
+    </div>
+    <div class="actions">
+      <a href="#cronograma" class="btn ghost small">Cronograma</a>
+      <a href="#fornecedores" class="btn ghost small">Fornecedores</a>
+      <a href="#relatorio" class="btn ghost small">Relatório</a>
+      <a href="sistema-projeto-novo.html" class="btn small">+ Registro de obra</a>
+    </div>
+  </div>
+
+  <!-- SUBNAV DA OBRA -->
+  <style>
+    .obra-subnav{display:flex;gap:0;margin:-8px 0 28px;padding:0;border-bottom:1px solid var(--line);flex-wrap:wrap}
+    .obra-subnav a{font-family:'Inter',sans-serif;text-transform:uppercase;letter-spacing:.16em;font-size:10.5px;font-weight:700;color:var(--ink-mute);text-decoration:none;padding:12px 18px 14px;border-bottom:2px solid transparent;margin-bottom:-1px;display:inline-flex;align-items:center;gap:8px;transition:color .15s, border-color .15s}
+    .obra-subnav a:hover{color:var(--ink)}
+    .obra-subnav a.active{color:var(--ink);border-bottom-color:var(--accent,#b89455)}
+    .obra-subnav a .sn-sub{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-style:italic;font-weight:500;text-transform:none;letter-spacing:0;font-size:13px;color:var(--ink-mute);margin-left:2px}
+    .obra-subnav a.active .sn-sub{color:var(--accent,#b89455)}
+    .obra-subnav .sn-spacer{flex:1}
+    .obra-subnav .sn-hint{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-style:italic;font-size:13px;color:var(--ink-mute);padding:12px 0 14px}
+  </style>
+  <nav class="obra-subnav" aria-label="Obra — recortes">
+    <a href="sistema-obra.html" class="active">Em andamento <span class="sn-sub">obras ativas</span></a>
+    <a href="#cronograma">Cronograma <span class="sn-sub">etapas · datas</span></a>
+    <a href="#fornecedores">Fornecedores <span class="sn-sub">equipe em campo</span></a>
+    <a href="#relatorio">Relatório <span class="sn-sub">semanal</span></a>
+    <a href="#checklist">Checklist <span class="sn-sub">compliance</span></a>
+    <div class="sn-spacer"></div>
+    <span class="sn-hint">Aqui só <em>andamento</em> · dinheiro fica em <a href="sistema-obra-financeiro.html" style="color:var(--accent-ink,#8a643d);text-decoration:none;border-bottom:1px dotted var(--accent,#b89455)">Obra financeiro ↗</a></span>
+  </nav>
+
+  <div class="obra-head">
+    <div class="cover">
+      <div>
+        <div class="label" style="margin-bottom:10px">Obra em curso</div>
+        <h1>Clínica <em>ECCO</em></h1>
+        <div class="client">Rafael Monici · 125 m² · Brooklin Novo · SP · endoscopia</div>
+        <div class="tags">
+          <span class="badge ok">Ativa</span>
+          <span class="badge info">Acabamentos</span>
+          <span class="badge neutral">Sem atraso</span>
+        </div>
+      </div>
+      <div class="row-b" style="margin-top:20px">
+        <div><div class="label">Início</div><div class="strong" style="font-size:15px">31 / 01 / 2026</div></div>
+        <div><div class="label">Entrega prevista</div><div class="strong" style="font-size:15px">12 / 05 / 2026</div></div>
+        <div><div class="label">Dias restantes</div><div class="strong" style="font-size:15px;color:var(--accent-ink)">22</div></div>
+      </div>
+    </div>
+
+    <div class="progress-box">
+      <div class="label">Conclusão da obra</div>
+      <div class="pct-huge">72<em>%</em></div>
+      <div class="bar ok"><span style="width:72%"></span></div>
+      <div class="row-b">
+        <span class="label">Etapa atual</span>
+        <span class="strong">Finalização e entrega · 7 de 7</span>
+      </div>
+      <div class="row-b">
+        <span class="label">Contratado fornecedores</span>
+        <span class="strong">R$ 243.180</span>
+      </div>
+      <div class="row-b">
+        <span class="label">Pago (parcela 1)</span>
+        <span class="strong">R$ 130.555 · 54%</span>
+      </div>
+      <div style="margin-top:8px;padding-top:10px;border-top:1px dashed var(--line);font-family:'Fraunces','Source Serif 4',Georgia,serif;font-style:italic;font-size:11.5px;color:var(--ink-mute)">
+        Fonte: <strong style="font-family:'Inter',sans-serif;font-style:normal;color:var(--ink);font-weight:600;letter-spacing:.04em">xlsx BASE DE CUSTOS</strong> · aba CRONOGRAMA (80 dias) + FLUXO PAGAMENTO.
+      </div>
+    </div>
+  </div>
+
+  <section>
+    <div class="cols">
+      <div class="card">
+        <div class="section-head" style="margin-bottom:14px">
+          <div><div class="eyebrow">Etapas</div><h2 style="font-size:22px">Fases <em>da obra</em></h2></div>
+        </div>
+        <div class="stage-list">
+          <div class="stage-row done"><div class="checkmark"></div><div class="label-stage">Etapa 1 · Demolições e ajustes iniciais</div><div class="date">31/01 → 10/02 · 5d</div></div>
+          <div class="stage-row done"><div class="checkmark"></div><div class="label-stage">Etapa 2 · Infraestrutura (elétrica / hidráulica)</div><div class="date">11/02 → 20/02 · 9d</div></div>
+          <div class="stage-row done"><div class="checkmark"></div><div class="label-stage" style="color:var(--ink-mute);font-style:italic">Carnaval · obra parada</div><div class="date">16/02 → 19/02 · 3d</div></div>
+          <div class="stage-row done"><div class="checkmark"></div><div class="label-stage">Etapa 3 · Fechamentos / Drywall</div><div class="date">20/02 → 17/03 · 7d</div></div>
+          <div class="stage-row done"><div class="checkmark"></div><div class="label-stage">Etapa 5 · Fechamentos / Drywall (fase 2)</div><div class="date">17/03 → 28/03 · 11d</div></div>
+          <div class="stage-row done"><div class="checkmark"></div><div class="label-stage">Etapa 6 · Acabamentos (início)</div><div class="date">28/03 → 30/03 · 2d</div></div>
+          <div class="stage-row done"><div class="checkmark"></div><div class="label-stage">Etapa 7 · Acabamentos</div><div class="date">30/03 → 17/04 · 18d</div></div>
+          <div class="stage-row current"><div class="checkmark"></div><div class="label-stage"><strong>Etapa 8 · Finalização e entrega + instalações</strong></div><div class="date">17/04 → 12/05 · 25d (em curso)</div></div>
+        </div>
+        <div style="margin-top:14px;padding-top:12px;border-top:1px dashed var(--line);font-family:'Fraunces','Source Serif 4',Georgia,serif;font-style:italic;color:var(--ink-mute);font-size:12.5px">
+          Fonte: <strong style="font-family:'Inter',sans-serif;font-style:normal;color:var(--ink);font-weight:600;letter-spacing:.04em">xlsx BASE DE CUSTOS · aba CRONOGRAMA</strong> · 7 etapas · 80 dias corridos (51 iniciais + 29 de ajuste). Hoje 20/04 · etapa final em curso.
+        </div>
+      </div>
+
+      <div class="stack" style="gap:20px">
+        <div class="card">
+          <div class="section-head" style="margin-bottom:14px">
+            <div><div class="eyebrow">Diário</div><h2 style="font-size:22px">Relatório <em>semanal</em></h2></div>
+          </div>
+          <div class="diary">
+            <div class="entry" style="border-left-color:var(--line-strong);background:var(--bg-alt)">
+              <div class="h"><strong>Diário de obra</strong><span class="badge neutral">a sincronizar</span></div>
+              <p>O Notion OBRA-01 registra <strong>fase atual: Acabamentos</strong>, <strong>11 etapas concluídas</strong> e <strong>marcenaria em curso</strong>, mas não há narrativa semanal estruturada registrada ali.</p>
+              <p style="color:var(--ink-soft)">O diário detalhado fica no caderno físico em obra. Quando vocês digitalizarem no Notion (base <em>Obra Yvyra</em>), os relatórios aparecem aqui automaticamente.</p>
+              <p><a href="https://www.notion.so/Zenon" target="_blank" class="link" style="font-size:13px">Abrir base no Notion ↗</a></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" id="galeria">
+          <div class="section-head" style="margin-bottom:14px">
+            <div><div class="eyebrow">Galeria</div><h2 style="font-size:22px">Fotos <em>da obra</em></h2></div>
+            <a href="#" onclick="event.preventDefault();adicionarFoto(this)" class="link">+ Adicionar</a>
+          </div>
+          <div class="gallery" id="galeria-grid"></div>
+          <div id="galeria-empty" style="padding:32px 24px;text-align:center;background:var(--bg-alt);border:1px dashed var(--line);border-radius:4px">
+            <div style="font-family:'Fraunces',Georgia,serif;font-style:italic;color:var(--ink-mute);font-size:15px;margin-bottom:6px">Sem fotos registradas</div>
+            <div style="font-size:12.5px;color:var(--ink-soft);margin-bottom:14px">As fotos da obra estão no Drive compartilhado<br>(pasta da obra Clínica ECCO). A galeria vai popular conforme o upload.</div>
+            <a href="#" onclick="event.preventDefault();adicionarFoto(this)" class="btn small ghost">+ Adicionar foto</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SEÇÃO DE ANDAMENTO (substitui financeiro) ============ -->
+  <style>
+    .andamento-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:22px}
+    @media (max-width:900px){.andamento-kpis{grid-template-columns:repeat(2,1fr)}}
+    @media (max-width:500px){.andamento-kpis{grid-template-columns:1fr}}
+    .ak-card{background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:18px 20px;display:flex;flex-direction:column;gap:6px}
+    .ak-card.accent{background:linear-gradient(140deg,#f5efe2 0%, #ece3cf 100%);border-color:#e5d5b4}
+    .ak-card .l{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-mute);font-weight:600}
+    .ak-card .n{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:34px;color:var(--ink);line-height:1;font-weight:500}
+    .ak-card .n em{color:var(--accent-ink,#8a643d);font-style:italic}
+    .ak-card .d{font-size:11px;color:var(--ink-soft);letter-spacing:.04em}
+    .ak-card .d.up{color:var(--ok,#4a7752)}
+    .ak-card .d.warn{color:var(--warn,#a88630)}
+
+    .timeline-card{background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:22px 24px;margin-bottom:22px}
+    .timeline-gantt{margin-top:14px}
+    .gantt-scale{display:grid;grid-template-columns:210px repeat(10,1fr);font-family:'Inter',sans-serif;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-mute);font-weight:600;padding-bottom:6px;border-bottom:1px solid var(--line-soft);margin-bottom:8px}
+    .gantt-scale span:first-child{color:transparent}
+    .gantt-scale span{text-align:center}
+    .gantt-row{display:grid;grid-template-columns:210px 1fr;gap:10px;align-items:center;padding:8px 0;border-bottom:1px dashed var(--line-soft)}
+    .gantt-row:last-child{border-bottom:none}
+    .gantt-lbl{display:flex;align-items:center;gap:8px;font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:14.5px;color:var(--ink)}
+    .gantt-lbl .ico{width:10px;height:10px;border-radius:50%;background:var(--line-strong);flex-shrink:0}
+    .gantt-row.done .gantt-lbl .ico{background:var(--ok,#4a7752)}
+    .gantt-row.curr .gantt-lbl{color:var(--accent-ink,#8a643d);font-weight:500;font-style:italic}
+    .gantt-row.curr .gantt-lbl .ico{background:var(--accent,#b89455);box-shadow:0 0 0 3px rgba(184,148,85,0.18)}
+    .gantt-row.pend .gantt-lbl{color:var(--ink-mute)}
+    .gantt-bar-track{position:relative;height:20px;background:transparent}
+    .gantt-bar{position:absolute;top:2px;height:16px;border-radius:3px;background:var(--line-soft);display:flex;align-items:center;padding:0 6px;font-family:'Inter',sans-serif;font-size:9.5px;font-weight:700;letter-spacing:.08em;color:var(--ink-mute);white-space:nowrap;overflow:hidden}
+    .gantt-row.done .gantt-bar{background:linear-gradient(90deg,#c8d8b8 0%, #8faa7a 100%);color:#2e4a30}
+    .gantt-row.curr .gantt-bar{background:linear-gradient(90deg,#d5c2a0 0%, #b89455 100%);color:#4a3620;box-shadow:0 2px 6px rgba(184,148,85,0.35)}
+    .gantt-row.pend .gantt-bar{background:repeating-linear-gradient(45deg,#f0ece0,#f0ece0 4px,#e8e2d1 4px,#e8e2d1 8px);color:var(--ink-mute)}
+    .gantt-today{position:absolute;top:-4px;bottom:-4px;width:2px;background:var(--alert,#b44);pointer-events:none}
+    .gantt-today::before{content:'HOJE';position:absolute;top:-16px;left:-16px;font-family:'Inter',sans-serif;font-size:8.5px;letter-spacing:.18em;font-weight:700;color:var(--alert,#b44);background:#fff;padding:2px 5px;border:1px solid var(--alert,#b44);border-radius:2px}
+
+    .charts-obra{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:26px}
+    @media (max-width:900px){.charts-obra{grid-template-columns:1fr}}
+    .obr-chart{background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:22px 24px}
+    .obr-chart h3{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:22px;font-weight:500;color:var(--ink);margin:4px 0 14px}
+    .obr-chart h3 em{font-style:italic;color:var(--accent-ink,#8a643d)}
+    .obr-chart .eyebrow{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-mute);font-weight:600}
+    .donut2-wrap{position:relative;width:180px;height:180px;margin:10px auto 18px}
+    .donut2{width:100%;height:100%;transform:rotate(-90deg)}
+    .donut2-c{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
+    .donut2-c .val{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:40px;color:var(--ink);font-weight:500;line-height:1}
+    .donut2-c .val em{font-style:italic;color:var(--accent-ink,#8a643d);font-size:22px}
+    .donut2-c .lbl{font-family:'Inter',sans-serif;font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-mute);font-weight:600}
+    .d2-legend{display:flex;flex-direction:column;gap:6px;font-family:'Inter',sans-serif;font-size:11.5px;color:var(--ink-soft)}
+    .d2-legend > div{display:flex;align-items:center;gap:8px}
+    .d2-legend em{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-style:italic;color:var(--accent-ink,#8a643d);font-weight:500;margin-left:auto}
+    .sw{display:inline-block;width:10px;height:10px;border-radius:2px}
+
+    .aderencia-list{display:flex;flex-direction:column;gap:12px}
+    .ader-row{display:grid;grid-template-columns:160px 1fr 54px;gap:10px;align-items:center}
+    .ader-row .nm{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:14px;color:var(--ink);font-style:italic}
+    .ader-row .tr{height:12px;background:#f2eee1;border-radius:2px;position:relative;overflow:hidden}
+    .ader-row .tr .fill{height:100%;position:absolute;top:0;left:0}
+    .ader-row .tr .fill.pos{background:linear-gradient(90deg,#8faa7a 0%,#4a7752 100%)}
+    .ader-row .tr .fill.neg{background:linear-gradient(90deg,#c89455 0%,#b47044 100%)}
+    .ader-row .dd{font-family:'Inter',sans-serif;font-size:10.5px;font-weight:700;letter-spacing:.06em;text-align:right;color:var(--ink)}
+    .ader-row .dd.pos{color:var(--ok,#4a7752)}
+    .ader-row .dd.neg{color:var(--alert,#b44)}
+  </style>
+
+  <section id="cronograma">
+    <div class="section-head">
+      <div><div class="eyebrow">Andamento da obra</div><h2>Cronograma <em>executivo</em></h2></div>
+      <span style="font-family:'Fraunces','Source Serif 4',Georgia,serif;font-style:italic;color:var(--ink-mute);font-size:14px">dinheiro → <a href="sistema-obra-financeiro.html" style="color:var(--accent-ink,#8a643d);text-decoration:none;border-bottom:1px dotted var(--accent,#b89455)">aba Obra financeiro ↗</a></span>
+    </div>
+
+    <!-- KPIs OPERACIONAIS · dados reais xlsx CRONOGRAMA + FLUXO PAGAMENTO -->
+    <div class="andamento-kpis">
+      <div class="ak-card"><div class="l">Conclusão</div><div class="n">78<em>%</em></div><div class="d">7 etapas + finalização em curso</div></div>
+      <div class="ak-card"><div class="l">Dias restantes</div><div class="n">22</div><div class="d">entrega prevista 12 / 05 / 2026</div></div>
+      <div class="ak-card"><div class="l">Etapa em curso</div><div class="n">8<em>/7</em></div><div class="d">Finalização · entrega + instalações</div></div>
+      <div class="ak-card accent"><div class="l">Custo realizado</div><div class="n">54<em>%</em></div><div class="d">R$ 130.555 de R$ 243.180 contratados</div></div>
+    </div>
+
+    <!-- GANTT / TIMELINE · 7 etapas reais da aba CRONOGRAMA xlsx · 101 dias corridos (31/01 → 12/05) -->
+    <div class="timeline-card">
+      <div class="section-head" style="margin-bottom:6px">
+        <div><div class="eyebrow">Linha do tempo</div><h3 style="font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:20px;margin:4px 0 0;font-weight:500">Fases <em style="font-style:italic;color:var(--accent-ink,#8a643d)">do cronograma real</em></h3></div>
+        <span style="font-family:'Fraunces','Source Serif 4',Georgia,serif;font-style:italic;color:var(--ink-mute);font-size:13px">31 / 01 → 12 / 05 · 80 dias úteis</span>
+      </div>
+      <div class="timeline-gantt">
+        <div class="gantt-scale">
+          <span></span><span>31/01</span><span>Fev</span><span>Fev</span><span>Mar</span><span>Mar</span><span>Mar</span><span>Abr</span><span>Abr</span><span>Abr</span><span>12/05</span>
+        </div>
+        <div class="gantt-row done">
+          <div class="gantt-lbl"><span class="ico"></span>Etapa 1 · Demolições</div>
+          <div class="gantt-bar-track"><div class="gantt-bar" style="left:0%;width:9.9%">✓ 31/01 → 10/02</div></div>
+        </div>
+        <div class="gantt-row done">
+          <div class="gantt-lbl"><span class="ico"></span>Etapa 2 · Infraestrutura</div>
+          <div class="gantt-bar-track"><div class="gantt-bar" style="left:10.9%;width:8.9%">✓ 11/02 → 20/02</div></div>
+        </div>
+        <div class="gantt-row done" style="opacity:0.55">
+          <div class="gantt-lbl" style="font-style:italic"><span class="ico" style="background:#c7b898 !important"></span>Carnaval · obra parada</div>
+          <div class="gantt-bar-track"><div class="gantt-bar" style="left:15.8%;width:3%;background:repeating-linear-gradient(45deg,#e8dcc0,#e8dcc0 4px,#d9cba5 4px,#d9cba5 8px);color:#8a7650">16 → 19/02</div></div>
+        </div>
+        <div class="gantt-row done">
+          <div class="gantt-lbl"><span class="ico"></span>Etapa 3 · Drywall</div>
+          <div class="gantt-bar-track"><div class="gantt-bar" style="left:19.8%;width:24.8%">✓ 20/02 → 17/03</div></div>
+        </div>
+        <div class="gantt-row done">
+          <div class="gantt-lbl"><span class="ico"></span>Etapa 5 · Drywall (fase 2)</div>
+          <div class="gantt-bar-track"><div class="gantt-bar" style="left:44.5%;width:10.9%">✓ 17/03 → 28/03</div></div>
+        </div>
+        <div class="gantt-row done">
+          <div class="gantt-lbl"><span class="ico"></span>Etapa 6 · Acabamentos início</div>
+          <div class="gantt-bar-track"><div class="gantt-bar" style="left:55.4%;width:2%">✓ 28 → 30/03</div></div>
+        </div>
+        <div class="gantt-row done">
+          <div class="gantt-lbl"><span class="ico"></span>Etapa 7 · Acabamentos</div>
+          <div class="gantt-bar-track"><div class="gantt-bar" style="left:57.4%;width:17.8%">✓ 30/03 → 17/04</div></div>
+        </div>
+        <div class="gantt-row curr">
+          <div class="gantt-lbl"><span class="ico"></span>Etapa 8 · Finalização + instalações</div>
+          <div class="gantt-bar-track"><div class="gantt-bar" style="left:75.2%;width:24.8%">◐ 17/04 → 12/05 · em curso</div><div class="gantt-today" style="left:78.2%"></div></div>
+        </div>
+      </div>
+      <div style="margin-top:12px;padding-top:10px;border-top:1px dashed var(--line-soft);font-family:'Fraunces','Source Serif 4',Georgia,serif;font-style:italic;color:var(--ink-mute);font-size:11.5px">
+        Fonte: <strong style="font-family:'Inter',sans-serif;font-style:normal;color:var(--ink);font-weight:600;letter-spacing:.04em">xlsx BASE DE CUSTOS · aba CRONOGRAMA</strong> · 7 etapas oficiais + Carnaval · hoje 20/04 (dia 79 de 101, finalização em curso)
+      </div>
+    </div>
+
+    <!-- GRÁFICOS DE ANDAMENTO -->
+    <div class="charts-obra">
+      <!-- Donut: progresso geral das etapas -->
+      <div class="obr-chart">
+        <div class="eyebrow">Progresso geral</div>
+        <h3>Etapas <em>concluídas</em></h3>
+        <div class="donut2-wrap">
+          <svg viewBox="0 0 42 42" class="donut2">
+            <circle cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#eeeae0" stroke-width="5"/>
+            <circle cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#4a7752" stroke-width="5"
+              stroke-dasharray="78 22" stroke-dashoffset="25"/>
+            <circle cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#b89455" stroke-width="5"
+              stroke-dasharray="7 93" stroke-dashoffset="-53"/>
+          </svg>
+          <div class="donut2-c">
+            <div class="val">11<em>/14</em></div>
+            <div class="lbl">Etapas</div>
+          </div>
+        </div>
+        <div class="d2-legend">
+          <div><span class="sw" style="background:#4a7752"></span>Concluídas <em>78%</em></div>
+          <div><span class="sw" style="background:#b89455"></span>Em curso <em>7%</em></div>
+          <div><span class="sw" style="background:#eeeae0"></span>Pendentes <em>15%</em></div>
+        </div>
+      </div>
+
+      <!-- Fornecedores — custo realizado vs. orçado (TOP 7 por valor contratado) -->
+      <div class="obr-chart">
+        <div class="eyebrow">Fornecedores · obra ECCO</div>
+        <h3>Contratado <em>vs. pago</em></h3>
+        <div class="aderencia-list">
+          <div class="ader-row"><div class="nm">Oxigênio · IDL (Anderson)</div><div class="tr"><div class="fill neg" style="width:39%"></div></div><div class="dd neg">39%</div></div>
+          <div class="ader-row"><div class="nm">Civil · Casa Nova (Tião)</div><div class="tr"><div class="fill neg" style="width:44%"></div></div><div class="dd neg">44%</div></div>
+          <div class="ader-row"><div class="nm">Ar-cond · ARI</div><div class="tr"><div class="fill neg" style="width:34%"></div></div><div class="dd neg">34%</div></div>
+          <div class="ader-row"><div class="nm">Marcenaria · Leandro Xavier</div><div class="tr"><div class="fill neg" style="width:50%"></div></div><div class="dd neg">50%</div></div>
+          <div class="ader-row"><div class="nm">Elétrica · Josué</div><div class="tr"><div class="fill neg" style="width:50%"></div></div><div class="dd neg">50%</div></div>
+          <div class="ader-row"><div class="nm">Pintura · Naldo</div><div class="tr"><div class="fill neg" style="width:38%"></div></div><div class="dd neg">38%</div></div>
+          <div class="ader-row"><div class="nm">Vinílico · Brasfortti (Andrea)</div><div class="tr"><div class="fill pos" style="width:78%"></div></div><div class="dd pos">78%</div></div>
+        </div>
+        <div style="margin-top:14px;padding-top:12px;border-top:1px dashed var(--line);font-family:'Fraunces','Source Serif 4',Georgia,serif;font-style:italic;color:var(--ink-soft);font-size:13px">
+          Total: <strong style="font-family:'Inter',sans-serif;font-style:normal;color:var(--ink);letter-spacing:.04em">R$ 130.555 pago de R$ 243.180 contratado</strong> (54%) em 16 fornecedores. Saldo: <strong style="font-family:'Inter',sans-serif;font-style:normal;color:var(--accent-ink,#8a643d);letter-spacing:.04em">R$ 112.626</strong> em parcelas 2 e 3. Fonte: <strong style="font-family:'Inter',sans-serif;font-style:normal;color:var(--ink);letter-spacing:.04em">xlsx FLUXO PAGAMENTO</strong>.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="fornecedores">
+    <div class="section-head">
+      <div><div class="eyebrow">Equipe em campo</div><h2>Fornecedores <em>da obra</em></h2></div>
+      <a href="#" onclick="event.preventDefault();abrirNovoForn()" class="link">+ Novo fornecedor</a>
+    </div>
+    <table class="tbl">
+      <thead>
+        <tr>
+          <th>Fornecedor</th>
+          <th>Serviço</th>
+          <th>Contato</th>
+          <th>Última entrega</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><div class="name">IDL Instalações</div><div class="sub">Oxigênio clínico · CNPJ 62.513.527/0001-76</div></td>
+          <td>Rede O₂ · sala endoscopia + recuperação</td>
+          <td>Anderson · (10) 96607-5908 · PIX</td>
+          <td>R$ 12.900 pagos de R$ 32.900 contratado</td>
+          <td><span class="forn-status and">◐ Em execução</span></td>
+        </tr>
+        <tr>
+          <td><div class="name">Casa Nova Reformas</div><div class="sub">Obra civil · CNPJ 24.835.328/0001-96</div></td>
+          <td>Alvenaria + drywall + reparos · obra inteira</td>
+          <td>Sebastião "Tião" · (11) 97208-4518 · PIX</td>
+          <td>R$ 14.235 pagos de R$ 32.527 contratado (3 lançamentos)</td>
+          <td><span class="forn-status and">◐ Em execução</span></td>
+        </tr>
+        <tr>
+          <td><div class="name">ARI</div><div class="sub">Ar-cond / exaustão · CNPJ 03.247.672/0001-94</div></td>
+          <td>Dutos + central de ar · clínica toda</td>
+          <td>Ari · (11) 95956-2158 · PIX</td>
+          <td>R$ 11.000 pagos de R$ 32.000 contratado</td>
+          <td><span class="forn-status and">◐ Em execução</span></td>
+        </tr>
+        <tr>
+          <td><div class="name">Leandro Xavier Marcenaria</div><div class="sub">Marcenaria comercial</div></td>
+          <td>Armários consultórios + recepção</td>
+          <td>Leandro · (35) 9864-7337 · leandroxavier2112@gmail.com</td>
+          <td>R$ 13.250 pagos de R$ 26.500 contratado (50%)</td>
+          <td><span class="forn-status and">◐ Em execução</span></td>
+        </tr>
+        <tr>
+          <td><div class="name">Josué Elétrica</div><div class="sub">Elétrica e rede · CNPJ 53.636.539/0001-06</div></td>
+          <td>Rede elétrica + pontos + automação (4 contratos)</td>
+          <td>Josué · (11) 98184-3167 · PIX</td>
+          <td>R$ 11.500 pagos de R$ 23.000 contratado</td>
+          <td><span class="forn-status and">◐ Em execução</span></td>
+        </tr>
+        <tr>
+          <td><div class="name">Naldo Pintura</div><div class="sub">Pintura geral · CPF 301.839.588-37</div></td>
+          <td>Emassamento + 3 demãos · piso técnico epoxi</td>
+          <td>Naldo · (11) 96629-1002 · PIX</td>
+          <td>R$ 8.470 pagos de R$ 22.440 contratado</td>
+          <td><span class="forn-status and">◐ Em execução</span></td>
+        </tr>
+        <tr>
+          <td><div class="name">Brasfortti</div><div class="sub">Piso vinílico · CNPJ 26.473.526/0001-82</div></td>
+          <td>Piso vinílico técnico · clínica toda</td>
+          <td>Andrea · (11) 91336-2215 · PIX</td>
+          <td>R$ 16.207 pagos de R$ 20.691 contratado (78%)</td>
+          <td><span class="forn-status and">◐ Em execução</span></td>
+        </tr>
+        <tr>
+          <td><div class="name">Eltrinox</div><div class="sub">Bancada inox</div></td>
+          <td>Bancadas cirúrgicas · salas técnicas</td>
+          <td>Leonardo · (19) 97410-9707 · LINK 3x cartão</td>
+          <td>R$ 11.482 quitado (à vista parcelado)</td>
+          <td><span class="forn-status ok">● Quitado</span></td>
+        </tr>
+        <tr>
+          <td><div class="name">Gean Hidráulica</div><div class="sub">Hidráulica · CPF 757.213.503-00</div></td>
+          <td>Pontos de água + esgoto (3 contratos)</td>
+          <td>Gean · (11/12) 95151-7127 · PIX</td>
+          <td>R$ 6.700 pagos de R$ 10.400 contratado</td>
+          <td><span class="forn-status and">◐ Em execução</span></td>
+        </tr>
+        <tr>
+          <td><div class="name">Tintas MC</div><div class="sub">Tintas · Chácara Santo Antônio</div></td>
+          <td>Tintas epoxi + acabamento (5 compras)</td>
+          <td>Alessandro · (11) 91312-3850 · PIX</td>
+          <td>R$ 7.897 quitado</td>
+          <td><span class="forn-status ok">● Quitado</span></td>
+        </tr>
+        <tr>
+          <td><div class="name">Overall Decor</div><div class="sub">Envelopamento · CNPJ 48.786.835/0001-45</div></td>
+          <td>Adesivação portas + sinalização visual</td>
+          <td>Xileno · (11) 96606-0617 · PIX</td>
+          <td>R$ 3.120 pagos de R$ 7.800 contratado (40%)</td>
+          <td><span class="forn-status and">◐ Em execução</span></td>
+        </tr>
+        <tr>
+          <td><div class="name">Service Duto</div><div class="sub">Exaustores · CNPJ 49.624.095/0001-03</div></td>
+          <td>Instalação exaustores · centro cirúrgico</td>
+          <td>Junior · (11) 99574-6844 · PIX</td>
+          <td>R$ 5.200 quitado</td>
+          <td><span class="forn-status ok">● Quitado</span></td>
+        </tr>
+        <tr>
+          <td><div class="name">Chico engenheiro</div><div class="sub">Projeto AR + UTA · CPF 048.599.988-98</div></td>
+          <td>Projeto HVAC ANVISA Classe III</td>
+          <td>Chico · (11) 96368-3304 · PIX</td>
+          <td>R$ 1.750 pagos de R$ 3.500 contratado (50%)</td>
+          <td><span class="forn-status and">◐ Em execução</span></td>
+        </tr>
+        <tr>
+          <td><div class="name">Milena · Limpeza</div><div class="sub">Limpeza pós-obra · CNPJ 52.853.672/0001-43</div></td>
+          <td>Limpeza grossa entre etapas (4 visitas)</td>
+          <td>Milena · (51) 8349-0675 · PIX</td>
+          <td>R$ 3.300 quitado</td>
+          <td><span class="forn-status ok">● Quitado</span></td>
+        </tr>
+        <tr>
+          <td><div class="name">Solid Plus</div><div class="sub">Seguro obra</div></td>
+          <td>Seguro vigente para o período da obra</td>
+          <td>Cipriano · (11) 97622-5885 · boleto</td>
+          <td>R$ 710,33 quitado</td>
+          <td><span class="forn-status ok">● Quitado</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section id="relatorio">
+    <div class="section-head">
+      <div><div class="eyebrow">Relatório semanal detalhado</div><h2>Obra em <em>movimento</em></h2></div>
+      <a href="#" onclick="event.preventDefault();abrirNovoRel()" class="link">+ Novo relatório</a>
+    </div>
+    <div class="rel-sem">
+      <div class="rel-week" style="background:var(--bg-alt);border-style:dashed">
+        <div class="rh">
+          <div class="w-num">Relatórios semanais <em>não sincronizados</em></div>
+          <div class="w-date">Notion · base Obra Yvyra</div>
+        </div>
+        <div class="rg">
+          <div>
+            <div class="lbl">O que o Notion registra</div>
+            <p>OBRA-01 · Clínica ECCO · status <strong>EM ANDAMENTO (CANTEIRO)</strong> · fase <strong>Acabamentos</strong>. Metragem 125 m², orçado R$ 260.000, executado R$ 95.000.</p>
+          </div>
+          <div>
+            <div class="lbl">O que não está registrado</div>
+            <p>Narrativa detalhada por semana (executado / próximos passos / pendências) ainda não foi migrada do diário físico de obra para o Notion.</p>
+          </div>
+          <div class="pend">
+            <div class="lbl">Ação sugerida</div>
+            <p>Digitalizar diário semanal no Notion ou no Drive compartilhado para que esta aba popule automaticamente. <a href="https://www.notion.so/Zenon" target="_blank" style="color:var(--accent-ink,#8a643d)">Abrir Notion ↗</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="checklist">
+    <div class="section-head">
+      <div><div class="eyebrow">Compliance e documentação</div><h2>Checklist <em>da obra</em></h2></div>
+      <a href="#" onclick="event.preventDefault();abrirDrive()" class="link">Ver pasta Drive →</a>
+    </div>
+    <div class="check-doc">
+      <div class="check-item done">
+        <div class="ck">✓</div>
+        <h4>RRT Execução · CAU</h4>
+        <p>Registro de Responsabilidade Técnica emitido junto ao CAU/BR para a obra Clínica ECCO. Responsável técnico: Rodrigo Cabral · CAU A148704-5.</p>
+        <div class="meta">Nº CAU 20260104 · registrado no Notion P-01</div>
+      </div>
+      <div class="check-item pend">
+        <div class="ck">?</div>
+        <h4>Alvará clínico · VISA</h4>
+        <p>Clínica de endoscopia → fase crítica com Vigilância Sanitária. Número do alvará e data de validade <strong>ainda não registrados</strong> no sistema.</p>
+        <div class="meta">Registrar Nº + data no Notion</div>
+      </div>
+      <div class="check-item pend">
+        <div class="ck">?</div>
+        <h4>Laudo ANVISA · rede O₂</h4>
+        <p>Rede de oxigênio clínico em execução por <strong>IDL Instalações (Anderson)</strong>. Contratado R$ 32.900 · 39% pago. Status do laudo técnico ANVISA <strong>a confirmar com Rafael</strong>.</p>
+        <div class="meta">Confirmar e registrar</div>
+      </div>
+      <div class="check-item pend">
+        <div class="ck">?</div>
+        <h4>ART acabamentos</h4>
+        <p>ART complementar para fase de acabamento (marcenaria + equipamentos clínicos). <strong>Não confirmado se já foi emitida.</strong></p>
+        <div class="meta">Verificar no CAU</div>
+      </div>
+      <div class="check-item pend">
+        <div class="ck">?</div>
+        <h4>Projetos executivos</h4>
+        <p>Versão entregue em obra (plantas · executivo marcenaria · instalações). <strong>Versão e data de entrega</strong> a registrar.</p>
+        <div class="meta">Confirmar com arquivo Drive</div>
+      </div>
+      <div class="check-item pend">
+        <div class="ck">?</div>
+        <h4>Diário de obra</h4>
+        <p>Caderno físico mantido em obra. <strong>Ainda não digitalizado no Notion</strong> (base Obra Yvyra).</p>
+        <div class="meta">Migrar para Notion</div>
+      </div>
+    </div>
+    <div style="margin-top:16px;padding:14px 18px;background:var(--bg-alt);border-radius:4px;border-left:3px solid var(--accent,#b89455);font-family:'Fraunces',Georgia,serif;font-style:italic;color:var(--ink-soft);font-size:13px">
+      <strong style="font-family:'Inter',sans-serif;font-style:normal;color:var(--ink);font-weight:600;letter-spacing:.04em">Nota · honestidade de dados</strong><br>
+      Dos 6 itens do checklist, só o <strong>RRT CAU 20260104</strong> está oficialmente registrado no Notion. Os demais são compliance obrigatórios para clínica de endoscopia (VISA, ANVISA, ART) mas <strong>não estão registrados no sistema</strong> — cadastrar no Notion ou no Drive para aparecerem aqui automaticamente.
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div>Cabral e Lima Design LTDA · CNPJ 59.525.877/0001-49 · CAU/BR A148704-5</div>
+  <div>sistema.zenonco.com.br · v2 — protótipo</div>
+</footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script src="supabase-client.js"></script>
+  <script src="shell-user.js"></script>
+<script src="shell-fx.js"></script>
+
+<script>
+  /* ===== Subnav obra: rolagem suave + highlight dinâmico ===== */
+  (function(){
+    document.documentElement.style.scrollBehavior = 'smooth';
+    const alvos = document.querySelectorAll('#fornecedores,#relatorio,#checklist,#financeiro-custos,#galeria');
+    alvos.forEach(el => el.style.scrollMarginTop = '84px');
+    const links = document.querySelectorAll('.obra-subnav a[href^="#"], .obra-subnav a[href^="sistema-obra.html#"]');
+    links.forEach(a => {
+      a.addEventListener('click', e => {
+        const hash = a.getAttribute('href').split('#')[1];
+        if(!hash) return;
+        const tgt = document.getElementById(hash);
+        if(tgt){
+          e.preventDefault();
+          tgt.scrollIntoView({behavior:'smooth',block:'start'});
+          history.replaceState(null,'','#'+hash);
+          document.querySelectorAll('.obra-subnav a').forEach(x => x.classList.remove('active'));
+          a.classList.add('active');
+          // flash highlight
+          tgt.style.transition='background .8s';
+          const old = tgt.style.background;
+          tgt.style.background = 'rgba(184,148,85,0.06)';
+          setTimeout(()=>{tgt.style.background = old;}, 900);
+        }
+      });
+    });
+  })();
+
+  /* ===== Botões de ação rápida ===== */
+  function toast(msg){
+    let t = document.createElement('div');
+    t.textContent = msg;
+    t.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1a1a1a;color:#fff;padding:10px 18px;border-radius:3px;font:500 13px Inter,sans-serif;z-index:9999;box-shadow:0 4px 16px rgba(0,0,0,.25);letter-spacing:.04em';
+    document.body.appendChild(t);
+    setTimeout(()=>t.style.opacity='0', 2200);
+    setTimeout(()=>t.remove(), 2800);
+  }
+  function abrirNovoForn(){
+    const nome = prompt('Nome do fornecedor:');
+    if(!nome) return;
+    const servico = prompt('Serviço:') || '—';
+    const contato = prompt('Contato (nome + telefone):') || '—';
+    const tbody = document.querySelector('#fornecedores tbody');
+    if(!tbody){toast('Seção fornecedores não encontrada'); return;}
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td><div class="name">${nome}</div><div class="sub">—</div></td>
+      <td>${servico}</td><td>${contato}</td>
+      <td><span class="strong">R$ —</span></td>
+      <td>Recém cadastrado</td>
+      <td><span class="forn-status pen">○ Novo</span></td>`;
+    tbody.appendChild(tr);
+    tr.style.background = 'rgba(184,148,85,0.1)';
+    setTimeout(()=>{tr.style.transition='background .8s';tr.style.background='';}, 100);
+    toast('Fornecedor cadastrado · ' + nome);
+  }
+  function abrirNovoRel(){
+    toast('Abrindo editor de relatório semanal...');
+    setTimeout(()=>{window.location='sistema-projeto-novo.html#relatorio';}, 600);
+  }
+  function abrirDrive(){
+    toast('Abra o Drive compartilhado · em breve integrado');
+  }
+  function adicionarFoto(link){
+    const inp = document.createElement('input');
+    inp.type = 'file';
+    inp.accept = 'image/*';
+    inp.multiple = true;
+    inp.onchange = e => {
+      const galeria = document.querySelector('#galeria-grid');
+      const empty = document.querySelector('#galeria-empty');
+      const files = Array.from(e.target.files);
+      if(files.length && empty) empty.style.display = 'none';
+      files.forEach(file => {
+        const fr = new FileReader();
+        fr.onload = () => {
+          const div = document.createElement('div');
+          div.className = 'photo';
+          div.style.cssText = `background-image:url(${fr.result});background-size:cover;background-position:center`;
+          const hoje = new Date().toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'});
+          div.innerHTML = `<div class="ph-date">${hoje}</div>`;
+          galeria.insertBefore(div, galeria.firstChild);
+        };
+        fr.readAsDataURL(file);
+      });
+      toast(files.length + ' foto(s) adicionada(s)');
+    };
+    inp.click();
+  }
+
+  /* ===== Fornecedores: click na linha abre detalhe (placeholder) ===== */
+  document.querySelectorAll('#fornecedores tbody tr').forEach(tr => {
+    tr.style.cursor = 'pointer';
+    tr.addEventListener('click', () => {
+      const nome = tr.querySelector('.name')?.textContent || 'Fornecedor';
+      toast('Detalhe de ' + nome + ' · em breve');
+    });
+  });
+
+  /* ===== Stage rows: click toggle done/current/pending ===== */
+  document.querySelectorAll('.stage-row').forEach(row => {
+    row.style.cursor = 'pointer';
+    row.addEventListener('click', () => {
+      if(row.classList.contains('done')){
+        row.classList.remove('done');
+      } else if(row.classList.contains('current')){
+        row.classList.remove('current');
+        row.classList.add('done');
+      } else {
+        row.classList.add('current');
+      }
+    });
+  });
+</script>
+</body>
+</html>
