@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Entrar — Zenon Sistema</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shell.css">
+<style>
+  body{display:flex;flex-direction:column;min-height:100vh}
+  .top-thin{
+    padding:20px 32px;
+    display:flex;justify-content:space-between;align-items:baseline;
+    border-bottom:1px solid var(--line);
+  }
+  .top-thin .tag{
+    font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--ink-mute);font-weight:500;
+  }
+  main.login{
+    flex:1;display:grid;grid-template-columns:1fr 1fr;max-width:none;padding:0;margin:0;
+  }
+  @media (max-width:900px){main.login{grid-template-columns:1fr}}
+  .left{
+    padding:80px 60px;
+    background:var(--bg-alt);
+    border-right:1px solid var(--line);
+    display:flex;flex-direction:column;justify-content:center;
+  }
+  @media (max-width:900px){.left{padding:56px 32px;border-right:none;border-bottom:1px solid var(--line)}}
+  .left .eyebrow{
+    font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--accent);margin-bottom:22px;font-weight:600;
+  }
+  .left h1{font-size:clamp(40px,4.5vw,64px);line-height:1.05;margin-bottom:24px;font-weight:500}
+  .left p{font-size:16px;color:var(--ink-soft);max-width:440px;margin-bottom:36px}
+  .left .meta{
+    display:flex;flex-direction:column;gap:14px;margin-top:24px;
+    border-top:1px solid var(--line);padding-top:24px;max-width:440px;
+  }
+  .left .meta div{
+    display:flex;justify-content:space-between;align-items:baseline;
+    font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-mute);font-weight:500;
+  }
+  .left .meta div strong{color:var(--ink);font-weight:600;font-size:15px;letter-spacing:.05em}
+
+  .right{padding:80px 60px;display:flex;flex-direction:column;justify-content:center}
+  @media (max-width:900px){.right{padding:56px 32px}}
+  form{max-width:420px;width:100%}
+  form .eyebrow{
+    font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:14px;font-weight:600;
+  }
+  form h2{font-size:40px;margin-bottom:36px;font-weight:500}
+  .field{margin-bottom:22px}
+  .field label{
+    display:block;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink);margin-bottom:8px;font-weight:600;
+  }
+  .field input{
+    width:100%;padding:12px 14px;
+    background:var(--paper);
+    border:1px solid var(--line-strong);border-radius:3px;
+    color:var(--ink);font-family:inherit;font-size:15px;font-weight:500;
+    transition:border-color .2s,box-shadow .2s;
+  }
+  .field input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+  .row{display:flex;justify-content:space-between;align-items:center;margin-top:32px;gap:16px}
+  .forgot{
+    font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);font-weight:500;
+    border-bottom:1px solid var(--line);padding-bottom:2px;transition:border-color .2s,color .2s;
+  }
+  .forgot:hover{color:var(--ink);border-color:var(--accent)}
+  .demo-tag{
+    display:inline-block;margin-bottom:16px;font-size:10px;letter-spacing:.22em;text-transform:uppercase;
+    color:#8e6a36;background:#fff8e8;border:1px solid #e0d1a6;border-radius:2px;padding:3px 8px;font-weight:700;
+  }
+  .login-foot{
+    margin-top:32px;padding-top:20px;border-top:1px solid var(--line);
+    font-size:12px;color:var(--ink-soft);line-height:1.6;
+  }
+  .login-foot a{color:var(--ink);text-decoration:underline;text-underline-offset:2px}
+  .login-foot a:hover{color:var(--accent)}
+  .login-hint{
+    margin-top:16px;padding:10px 14px;background:var(--bg-alt);border:1px dashed var(--line);border-radius:3px;
+    font-size:12px;color:var(--ink-soft);line-height:1.5;display:none;
+  }
+  .login-hint.show{display:block;animation:fadeIn .25s ease}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+
+<div class="top-thin">
+  <div class="brand">Zen<span>o</span>n — Sistema</div>
+  <div class="tag">sistema.zenonco.com.br</div>
+</div>
+
+<main class="login">
+  <aside class="left">
+    <div class="eyebrow">Acesso Interno</div>
+    <h1>Um sistema <em>para quem cuida</em> do que a Zenon entrega.</h1>
+    <p>Projetos, obras, propostas, clientes e finanças em um só lugar — sem planilha solta, sem link perdido.</p>
+    <div class="meta">
+      <div><span>Projetos ativos</span><strong>6</strong></div>
+      <div><span>Obras em andamento</span><strong>1</strong></div>
+      <div><span>Última sincronização</span><strong>há 2 min</strong></div>
+    </div>
+  </aside>
+
+  <section class="right">
+    <form id="loginForm" onsubmit="return doLogin(event)" autocomplete="on">
+      <span class="demo-tag">Modo demo</span>
+      <div class="eyebrow">Entrar</div>
+      <h2>Bem-<em>vindo</em>.</h2>
+      <div class="field">
+        <label for="user">Usuário ou e-mail</label>
+        <input id="user" name="user" type="text" placeholder="rodrigo" autocomplete="username" value="rodrigo" required>
+      </div>
+      <div class="field">
+        <label for="pwd">Senha</label>
+        <input id="pwd" name="pwd" type="password" placeholder="••••••••" autocomplete="current-password" value="demo" required>
+      </div>
+      <div class="row">
+        <a href="#" class="forgot" onclick="showForgot();return false;">Esqueci a senha</a>
+        <button type="submit" class="btn">Entrar →</button>
+      </div>
+      <div id="forgot-hint" class="login-hint">
+        <strong style="color:var(--ink)">Recuperação de senha</strong><br>
+        Fale com o administrador da conta (Rodrigo) pra gerar um novo acesso.
+        Em produção, isso vai ser um link pro seu e-mail cadastrado.
+      </div>
+      <div class="login-foot">
+        Sócio/time novo? <a href="sistema-empresa.html#equipe">Solicitar acesso →</a><br>
+        <span style="color:var(--ink-mute)">Só o administrador da Zenon Co. pode criar novos usuários do sistema.</span>
+      </div>
+    </form>
+  </section>
+</main>
+<script>
+  function doLogin(e){
+    e.preventDefault();
+    // protótipo: qualquer credencial entra no painel
+    window.location.href = 'sistema-painel.html';
+    return false;
+  }
+  function showForgot(){
+    var h = document.getElementById('forgot-hint');
+    if(h) h.classList.toggle('show');
+  }
+</script>
+
+<footer>
+  <div>Cabral e Lima Design LTDA · CNPJ 59.525.877/0001-49 · CAU/BR A148704-5</div>
+  <div>Protótipo v2 · 2026-04-19</div>
+</footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script src="supabase-client.js"></script>
+</body>
+</html>
