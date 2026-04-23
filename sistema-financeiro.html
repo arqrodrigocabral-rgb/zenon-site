@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Financeiro — Zenon Sistema</title>
+<title>Financeiro â Zenon Sistema</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -75,7 +75,7 @@
   .amt-block li .day{font-size:11px;color:var(--ink-mute)}
   .amt-block li .v{font-family:'Inter',sans-serif;font-weight:600;color:var(--ink)}
 
-  /* ===== GRÁFICOS ===== */
+  /* ===== GRÃFICOS ===== */
   .chart-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:18px}
   @media (max-width:960px){.chart-grid{grid-template-columns:1fr}}
 
@@ -96,7 +96,7 @@
   .legend span{display:inline-flex;align-items:center;gap:6px}
   .legend i{width:10px;height:10px;border-radius:2px;display:inline-block}
 
-  /* Bar chart (Histórico mensal) */
+  /* Bar chart (HistÃ³rico mensal) */
   .bar-chart{
     display:grid;grid-template-columns:repeat(12,1fr);gap:10px;align-items:end;
     height:220px;padding:10px 0;border-bottom:1px solid var(--line-soft);position:relative;
@@ -181,7 +181,7 @@
   }
   .tbl.ext .in{color:var(--ok);font-weight:600}
   .tbl.ext .out{color:var(--alert);font-weight:600}
-  /* overrides para tornar células interativas */
+  /* overrides para tornar cÃ©lulas interativas */
   .tbl.ext td{overflow:visible;vertical-align:middle}
   .tbl.ext td .pay-val{display:inline;min-width:0;font-family:'Inter',sans-serif;font-size:13px;font-weight:600}
   .tbl.ext td .status-pill{min-width:80px;font-size:9px;padding:4px 18px 4px 8px}
@@ -202,11 +202,11 @@
   }
   .export-menu a:hover{background:var(--bg-alt);color:var(--accent-ink)}
 
-  /* Scroll suave + offset do topbar em âncoras */
+  /* Scroll suave + offset do topbar em Ã¢ncoras */
   html{scroll-behavior:smooth}
   section[id]{scroll-margin-top:96px}
 
-  /* Lançamento form */
+  /* LanÃ§amento form */
   .lanc-form{
     background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:26px;
   }
@@ -235,7 +235,7 @@
   }
   .lanc-foot .hint{font-size:11px;color:var(--ink-mute);font-style:italic}
 
-  /* ============ BANNER migração Notion ============ */
+  /* ============ BANNER migraÃ§Ã£o Notion ============ */
   .migra-banner{
     background:linear-gradient(135deg,#f4ede0 0%,#ece4d4 100%);border:1px solid #d9cfba;border-left:3px solid var(--accent);
     border-radius:4px;padding:16px 20px;display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:center;margin-bottom:22px;
@@ -249,7 +249,7 @@
   .migra-banner p{font-size:12px;color:var(--ink-body);line-height:1.5;margin-top:3px}
   .migra-banner .actions{display:flex;gap:8px}
 
-  /* ============ contas a pagar/receber tabelas avançadas ============ */
+  /* ============ contas a pagar/receber tabelas avanÃ§adas ============ */
   .pay-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
   @media (max-width:1100px){.pay-grid-2{grid-template-columns:1fr}}
 
@@ -293,7 +293,7 @@
 
   .chk-box{width:16px;height:16px;border:1.5px solid var(--line-strong);border-radius:2px;cursor:pointer;background:#fff;position:relative;flex-shrink:0}
   .chk-box.on{background:var(--accent-ink);border-color:var(--accent-ink)}
-  .chk-box.on::after{content:'✓';position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700}
+  .chk-box.on::after{content:'â';position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700}
 
   .pay-main{display:flex;flex-direction:column;gap:2px;min-width:0}
   .pay-name{font-size:13px;color:var(--ink);font-weight:500;line-height:1.3}
@@ -309,12 +309,12 @@
   .pay-val.in{color:var(--ok)}
   .pay-val.out{color:var(--alert)}
 
-  /* Status dropdown (clicável) */
+  /* Status dropdown (clicÃ¡vel) */
   .status-pill{
     position:relative;display:inline-block;font-size:10px;letter-spacing:.12em;text-transform:uppercase;
     font-weight:700;padding:5px 22px 5px 10px;border-radius:14px;cursor:pointer;border:1px solid transparent;min-width:96px;text-align:center;
   }
-  .status-pill::after{content:'▾';position:absolute;right:8px;top:50%;transform:translateY(-50%);font-size:9px;opacity:.7}
+  .status-pill::after{content:'â¾';position:absolute;right:8px;top:50%;transform:translateY(-50%);font-size:9px;opacity:.7}
   .status-pill.pago{background:#e8f3ea;color:#2d6a4f;border-color:#b7d7c0}
   .status-pill.pendente{background:#fff4e2;color:#8e5a2b;border-color:#e2c79a}
   .status-pill.atrasado{background:#fce5e0;color:#b53939;border-color:#f0bfb4}
@@ -336,7 +336,7 @@
   .menu-list a.del{color:var(--alert)}
   .menu-list .k{font-size:10px;color:var(--ink-mute);letter-spacing:.08em;font-family:monospace}
 
-  /* conciliação bancária */
+  /* conciliaÃ§Ã£o bancÃ¡ria */
   .conc-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:18px}
   @media (max-width:1000px){.conc-grid{grid-template-columns:1fr}}
   .conc-card{background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:24px}
@@ -360,7 +360,7 @@
   .conc-row .act:hover{border-color:var(--accent);background:var(--accent-soft)}
   .conc-row .act.done{background:var(--ok);color:#fff;border-color:var(--ok);cursor:default}
 
-  /* Extrato bancário - contas */
+  /* Extrato bancÃ¡rio - contas */
   .bank-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
   .bank-card{
     background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:18px 20px;
@@ -399,7 +399,7 @@
   .bank-card .b-foot a{font-size:10px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;color:var(--accent-ink);text-decoration:none}
   .bank-card .b-foot a:hover{color:var(--ink)}
   .bank-card .b-foot .sync{color:var(--ok);display:flex;align-items:center;gap:4px;font-size:10px}
-  .bank-card .b-foot .sync::before{content:'●';font-size:8px;animation:pulse 2s infinite}
+  .bank-card .b-foot .sync::before{content:'â';font-size:8px;animation:pulse 2s infinite}
   .bank-card .b-foot .sync.warn{color:#8e5a2b}
   @keyframes pulse{50%{opacity:.4}}
 
@@ -522,7 +522,7 @@
   .nf-preview-head h3 em{font-style:italic;color:var(--accent-ink)}
   .nf-preview-head .file-tag{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-mute);font-weight:700;background:var(--bg-alt);padding:5px 10px;border-radius:10px;border:1px solid var(--line)}
   .nf-preview-head .proc-badge{font-size:10px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;padding:4px 10px;border-radius:10px;background:#e8f3ea;color:#2d6a4f;border:1px solid #b7d7c0}
-  .nf-preview-head .proc-badge::before{content:'●';margin-right:4px}
+  .nf-preview-head .proc-badge::before{content:'â';margin-right:4px}
 
   .nf-fields{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
   .nf-field{display:flex;flex-direction:column;gap:3px}
@@ -536,7 +536,7 @@
   .nf-classif-head{display:flex;justify-content:space-between;align-items:center}
   .nf-classif-head .ttl{font-family:'Inter',sans-serif;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-mute);font-weight:700}
   .nf-classif-head .ai-hint{font-size:10px;color:var(--accent-ink);font-style:italic;display:flex;align-items:center;gap:4px}
-  .nf-classif-head .ai-hint::before{content:'✦';font-style:normal}
+  .nf-classif-head .ai-hint::before{content:'â¦';font-style:normal}
 
   .nf-tipo{display:flex;gap:0;border:1px solid var(--line);border-radius:3px;overflow:hidden;width:fit-content}
   .nf-tipo button{font-family:'Inter',sans-serif;font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;padding:8px 18px;border:none;background:var(--bg);color:var(--ink-soft);cursor:pointer;border-right:1px solid var(--line)}
@@ -602,7 +602,7 @@
   .nf-rules .tx strong{color:var(--ink);font-weight:600}
   .nf-rules .tx a{color:var(--accent-ink);text-decoration:none;border-bottom:1px dotted var(--accent);font-weight:500}
 
-  /* ============ recorrência + parcela: badges inline ============ */
+  /* ============ recorrÃªncia + parcela: badges inline ============ */
   .pay-row{cursor:pointer}
   .pay-row .chk-box,.pay-row .status-pill,.pay-row .row-menu,.pay-row .pay-name a{cursor:pointer}
   .rec-tag,.parc-tag{
@@ -611,10 +611,10 @@
     padding:2px 7px;border-radius:10px;margin-left:6px;vertical-align:middle;
   }
   .rec-tag{background:#e8f3ea;color:#2d6a4f;border:1px solid #b7d7c0}
-  .rec-tag::before{content:'↻';font-size:10px;margin-right:2px}
+  .rec-tag::before{content:'â»';font-size:10px;margin-right:2px}
   .parc-tag{background:#e7edf6;color:#3b4d8e;border:1px solid #b8c7df;font-family:monospace;font-weight:600;letter-spacing:.04em}
   .ex-tag{background:#fff4df;color:#8a5a14;border:1px solid #e8c878;font-style:italic;font-family:'Fraunces','Source Serif 4',Georgia,serif;text-transform:none;letter-spacing:.02em;font-weight:500;font-size:10px;padding:1px 7px}
-  .ex-tag::before{content:'⚠';font-size:9px;margin-right:3px}
+  .ex-tag::before{content:'â ';font-size:9px;margin-right:3px}
   .pay-row[data-ex="1"]{background:repeating-linear-gradient(45deg,transparent 0,transparent 8px,rgba(184,148,85,.03) 8px,rgba(184,148,85,.03) 16px),#fffdf8}
   .cur-tag{
     display:inline-flex;align-items:center;
@@ -720,7 +720,7 @@
     .pd-hero .pd-when,.pd-hero .pd-badges{text-align:left;align-items:flex-start}
   }
 
-  /* ===== Modo edição ===== */
+  /* ===== Modo ediÃ§Ã£o ===== */
   .pd-edit-form{display:flex;flex-direction:column;gap:16px}
   .pd-edit-form .ef-hero{
     background:var(--bg-alt);border:1px solid var(--line-soft);border-radius:4px;padding:16px 18px;
@@ -762,12 +762,12 @@
 
 <header class="top">
   <div class="top-inner">
-    <div class="brand">Zen<span>o</span>n — Sistema</div>
-    <div class="search"><input type="search" placeholder="Buscar lançamento, cliente, parcela…"></div>
-    <div class="fx-chip" title="Cotação do dólar (USD/BRL)">
+    <div class="brand">Zen<span>o</span>n â Sistema</div>
+    <div class="search"><input type="search" placeholder="Buscar lanÃ§amento, cliente, parcelaâ¦"></div>
+    <div class="fx-chip" title="CotaÃ§Ã£o do dÃ³lar (USD/BRL)">
       <span class="fx-code">USD</span>
-      <span class="fx-val"><span class="cur">R$</span>—</span>
-      <span class="fx-delta flat">…</span>
+      <span class="fx-val"><span class="cur">R$</span>â</span>
+      <span class="fx-delta flat">â¦</span>
       <div class="fx-tip"></div>
     </div>
 
@@ -775,22 +775,22 @@
       <button type="button" class="user-trigger" onclick="ZenonUser.toggleDropdown(event)" aria-haspopup="true" aria-expanded="false">
         <span class="u-name" data-user-name>Rodrigo</span>
         <span class="avatar" data-user="me">R</span>
-        <span class="u-caret">▾</span>
+        <span class="u-caret">â¾</span>
       </button>
       <div class="user-dropdown" role="menu">
         <div class="ud-head">
           <span class="avatar" data-user="me">R</span>
           <div>
             <div class="name" data-user-name>Rodrigo</div>
-            <div class="role" data-user-role>Sócio · Arquiteto responsável</div>
+            <div class="role" data-user-role>SÃ³cio Â· Arquiteto responsÃ¡vel</div>
           </div>
         </div>
-        <a href="sistema-perfil.html"><span class="ic">◎</span>Ver perfil</a>
-        <a href="sistema-configuracoes.html"><span class="ic">⚙</span>Configurações</a>
-        <a href="sistema-empresa.html"><span class="ic">⌂</span>Dados da empresa</a>
-        <a href="https://www.notion.so/Zenon" target="_blank"><span class="ic">✱</span>Atividades · Notion ↗</a>
+        <a href="sistema-perfil.html"><span class="ic">â</span>Ver perfil</a>
+        <a href="sistema-configuracoes.html"><span class="ic">â</span>ConfiguraÃ§Ãµes</a>
+        <a href="sistema-empresa.html"><span class="ic">â</span>Dados da empresa</a>
+        <a href="https://www.notion.so/Zenon" target="_blank"><span class="ic">â±</span>Atividades Â· Notion â</a>
         <div class="ud-sep"></div>
-        <a href="sistema-login.html" class="sign-out"><span class="ic">↪</span>Sair</a>
+        <a href="sistema-login.html" class="sign-out"><span class="ic">âª</span>Sair</a>
       </div>
     </div>
   </div>
@@ -810,14 +810,14 @@
 <main>
   <div class="page-head">
     <div>
-      <div class="eyebrow">Caixa · fluxo</div>
+      <div class="eyebrow">Caixa Â· fluxo</div>
       <h1><em>Financeiro</em> da empresa</h1>
-      <div class="sub">Só Zenon Co. + pessoais (Cabana / Casa Blue) · <a href="sistema-obra-financeiro.html" style="color:var(--accent-ink,#8a643d);text-decoration:none">fornecedores e despesas de obra ficam em Obra → Financeiro ↗</a> · Abril / 2026 · <strong>R$ 25.910</strong> em aberto · 2 clientes reais (ECCO + CT Darkhouse)</div>
+      <div class="sub">SÃ³ Zenon Co. + pessoais (Cabana / Casa Blue) Â· <a href="sistema-obra-financeiro.html" style="color:var(--accent-ink,#8a643d);text-decoration:none">fornecedores e despesas de obra ficam em Obra â Financeiro â</a> Â· <span id="fin-curr-month">Abril / 2026</span> Â· <strong>R$ 25.910</strong> em aberto Â· 2 clientes reais (ECCO + CT Darkhouse)</div>
     </div>
     <div class="actions">
       <a href="#conciliacao" class="btn ghost small">Conciliar banco</a>
       <div class="export-wrap">
-        <button class="btn ghost small" onclick="toggleExport(this)" type="button">Exportar fluxo ▾</button>
+        <button class="btn ghost small" onclick="toggleExport(this)" type="button">Exportar fluxo â¾</button>
         <div class="export-menu">
           <a href="#" onclick="exportarFluxo('csv');return false">Como CSV (.csv)</a>
           <a href="#" onclick="exportarFluxo('xlsx');return false">Como Excel (.xlsx)</a>
@@ -825,7 +825,7 @@
           <a href="#" onclick="exportarFluxo('ofx');return false">Como OFX (bancos)</a>
         </div>
       </div>
-      <a href="#novo-lancamento" class="btn small">+ Lançamento</a>
+      <a href="#novo-lancamento" class="btn small">+ LanÃ§amento</a>
     </div>
   </div>
 
@@ -841,21 +841,21 @@
     .fin-subnav .sn-hint{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-style:italic;font-size:13px;color:var(--ink-mute);padding:12px 0 14px}
   </style>
   <nav class="fin-subnav" aria-label="Recorte do financeiro">
-    <a href="sistema-financeiro.html" class="active">Empresa <span class="sn-sub">Zenon · Yvyra</span></a>
-    <a href="sistema-financeiro.html#pessoal">Pessoal <span class="sn-sub">Cabana · Casa Blue</span></a>
+    <a href="sistema-financeiro.html" class="active">Empresa <span class="sn-sub">Zenon Â· Yvyra</span></a>
+    <a href="sistema-financeiro.html#pessoal">Pessoal <span class="sn-sub">Cabana Â· Casa Blue</span></a>
     <div class="sn-spacer"></div>
-    <span class="sn-hint">Só <em>Zenon e pessoais</em> · fornecedores e despesas de obra ficam em <a href="sistema-obra-financeiro.html" style="color:var(--accent-ink,#8a643d);text-decoration:none;border-bottom:1px dotted var(--accent,#b89455)">Obra → Financeiro ↗</a></span>
+    <span class="sn-hint">SÃ³ <em>Zenon e pessoais</em> Â· fornecedores e despesas de obra ficam em <a href="sistema-obra-financeiro.html" style="color:var(--accent-ink,#8a643d);text-decoration:none;border-bottom:1px dotted var(--accent,#b89455)">Obra â Financeiro â</a></span>
   </nav>
 
-  <!-- BANNER MIGRAÇÃO -->
+  <!-- BANNER MIGRAÃÃO -->
   <div class="migra-banner">
-    <div class="ico">↳</div>
+    <div class="ico">â³</div>
     <div>
       <h4>Financeiro agora <em>nativo no sistema</em></h4>
-      <p>Importamos <strong>apenas Zenon Co.</strong> do Notion para cá — todas as 246 movimentações dos últimos 12 meses foram espelhadas, <strong>sem mexer no arquivo original</strong> (o Notion continua intacto, só paramos de escrever lá). <strong>Yvyra Lab segue no Notion</strong> por enquanto e migra aos poucos. Obra e Projeto permanecem no Notion como fonte da verdade. <strong>Cabana</strong> e <strong>Casa Blue</strong> entram no sistema como <strong>despesas pessoais centralizadas</strong> (não são unidades de negócio — ficam separadas dos KPIs da empresa).</p>
+      <p>Importamos <strong>apenas Zenon Co.</strong> do Notion para cÃ¡ â todas as 246 movimentaÃ§Ãµes dos Ãºltimos 12 meses foram espelhadas, <strong>sem mexer no arquivo original</strong> (o Notion continua intacto, sÃ³ paramos de escrever lÃ¡). <strong>Yvyra Lab segue no Notion</strong> por enquanto e migra aos poucos. Obra e Projeto permanecem no Notion como fonte da verdade. <strong>Cabana</strong> e <strong>Casa Blue</strong> entram no sistema como <strong>despesas pessoais centralizadas</strong> (nÃ£o sÃ£o unidades de negÃ³cio â ficam separadas dos KPIs da empresa).</p>
     </div>
     <div class="actions">
-      <a href="sistema-configuracoes.html#integracoes" class="btn ghost small">Ver integração</a>
+      <a href="sistema-configuracoes.html#integracoes" class="btn ghost small">Ver integraÃ§Ã£o</a>
       <a href="#" class="btn small" onclick="dismissBanner(this);return false;">Ok, entendi</a>
     </div>
   </div>
@@ -863,35 +863,35 @@
   <section>
     <div class="kpis">
       <div class="kpi"><div class="l">Saldo atual</div><div class="n">R$ 33.343</div><div class="delta">Inter PJ Zenon + BTG</div></div>
-      <div class="kpi"><div class="l">A receber · 30 d</div><div class="n">R$ 25.910</div><div class="delta up">4 parcelas · ECCO + ALVARA</div></div>
+      <div class="kpi"><div class="l">A receber Â· 30 d</div><div class="n">R$ 25.910</div><div class="delta up">4 parcelas Â· ECCO + ALVARA</div></div>
       <div class="kpi"><div class="l">Recebido 2026</div><div class="n">R$ 33.343</div><div class="delta up">10 parcelas compensadas</div></div>
-      <div class="kpi accent"><div class="l">Total contratado</div><div class="n"><em>R$ 59.253</em></div><div class="delta" style="color:#e8a877">ECCO R$ 39.453 · ALVARA R$ 19.800</div></div>
+      <div class="kpi accent"><div class="l">Total contratado</div><div class="n"><em>R$ 59.253</em></div><div class="delta" style="color:#e8a877">ECCO R$ 39.453 Â· ALVARA R$ 19.800</div></div>
     </div>
 
-    <!-- === STRIP EM DÓLAR · contratos internacionais === -->
+    <!-- === STRIP EM DÃLAR Â· contratos internacionais === -->
     <div class="kpi-usd-wrap">
       <div class="kpi-usd-head">
-        <span class="eyb">Em dólar · quando aplicável</span>
-        <span class="fx-note">Cotação de hoje · <strong>1&nbsp;USD&nbsp;=&nbsp;R$&nbsp;5,13</strong> · atualizado há 4 min · hoje sem contratos USD ativos</span>
+        <span class="eyb">Em dÃ³lar Â· quando aplicÃ¡vel</span>
+        <span class="fx-note">CotaÃ§Ã£o de hoje Â· <strong>1&nbsp;USD&nbsp;=&nbsp;R$&nbsp;5,13</strong> Â· atualizado hÃ¡ 4 min Â· hoje sem contratos USD ativos</span>
       </div>
       <div class="kpi-usd">
         <div>
-          <div class="l">Saldo em dólar</div>
+          <div class="l">Saldo em dÃ³lar</div>
           <div class="n"><span class="cur">US$</span>0</div>
-          <div class="sub">BTG PJ · conta USD reservada</div>
+          <div class="sub">BTG PJ Â· conta USD reservada</div>
         </div>
         <div>
-          <div class="l">A receber · 30 d</div>
+          <div class="l">A receber Â· 30 d</div>
           <div class="n"><span class="cur">US$</span>0</div>
           <div class="sub">nenhum contrato USD ativo</div>
         </div>
         <div>
-          <div class="l">A pagar · 30 d</div>
+          <div class="l">A pagar Â· 30 d</div>
           <div class="n"><span class="cur">US$</span>240</div>
-          <div class="sub alert">Figma + Notion · SaaS mensal</div>
+          <div class="sub alert">Figma + Notion Â· SaaS mensal</div>
         </div>
         <div class="accent">
-          <div class="l">Histórico 2025</div>
+          <div class="l">HistÃ³rico 2025</div>
           <div class="n"><span class="cur">US$</span>0</div>
           <div class="sub">ambos os contratos reais (ECCO + ALVARA) em BRL</div>
         </div>
@@ -901,7 +901,7 @@
 
   <section id="extrato-bancario">
     <div class="section-head">
-      <div><div class="eyebrow">Extrato bancário</div><h2>Saldo por <em>conta</em></h2></div>
+      <div><div class="eyebrow">Extrato bancÃ¡rio</div><h2>Saldo por <em>conta</em></h2></div>
       <div style="display:flex;gap:8px">
         <a href="#conciliacao" class="btn ghost small">Conciliar banco</a>
         <a href="sistema-configuracoes.html#integracoes" class="btn ghost small">Adicionar conta</a>
@@ -912,39 +912,39 @@
       <div>
         <div class="l">Saldo consolidado PJ</div>
         <div class="v">R$ 33.343</div>
-        <div class="sub">2 contas Zenon · Inter PJ + BTG PJ</div>
+        <div class="sub">2 contas Zenon Â· Inter PJ + BTG PJ</div>
       </div>
       <div>
-        <div class="l">Entradas · Abr</div>
+        <div class="l">Entradas Â· Abr</div>
         <div class="v ok">+ R$ 4.497</div>
-        <div class="sub">1 lançamento · ECCO parcela 4/7 programada</div>
+        <div class="sub">1 lanÃ§amento Â· ECCO parcela 4/7 programada</div>
       </div>
       <div>
-        <div class="l">Saídas · Abr</div>
-        <div class="v alert">− R$ 2.100</div>
+        <div class="l">SaÃ­das Â· Abr</div>
+        <div class="v alert">â R$ 2.100</div>
         <div class="sub">SaaS + contabilidade mensal</div>
       </div>
       <div>
-        <div class="l">Resultado do mês</div>
+        <div class="l">Resultado do mÃªs</div>
         <div class="v ok">+ R$ 2.397</div>
         <div class="sub">margem operacional projetada</div>
       </div>
     </div>
 
-    <!-- === LINHA EM DÓLAR · só operacional (SaaS) === -->
+    <!-- === LINHA EM DÃLAR Â· sÃ³ operacional (SaaS) === -->
     <div class="bank-summary-usd">
       <div>
         <span class="tag">USD</span>
         <div>
-          <div class="l">Saldo em dólar</div>
+          <div class="l">Saldo em dÃ³lar</div>
           <div class="v">US$ 0</div>
-          <div class="sub">BTG PJ · conta USD · reserva</div>
+          <div class="sub">BTG PJ Â· conta USD Â· reserva</div>
         </div>
       </div>
       <div>
         <span class="tag">USD</span>
         <div>
-          <div class="l">Entradas · Abr</div>
+          <div class="l">Entradas Â· Abr</div>
           <div class="v">+ US$ 0</div>
           <div class="sub">sem contratos USD ativos</div>
         </div>
@@ -952,17 +952,17 @@
       <div>
         <span class="tag">USD</span>
         <div>
-          <div class="l">Saídas · Abr</div>
-          <div class="v alert">− US$ 240</div>
-          <div class="sub">Figma + Notion · SaaS mensal</div>
+          <div class="l">SaÃ­das Â· Abr</div>
+          <div class="v alert">â US$ 240</div>
+          <div class="sub">Figma + Notion Â· SaaS mensal</div>
         </div>
       </div>
       <div>
         <span class="tag">USD</span>
         <div>
-          <div class="l">Resultado · Abr</div>
-          <div class="v alert">− US$ 240</div>
-          <div class="sub">≈ R$ 1.231 convertidos via BTG</div>
+          <div class="l">Resultado Â· Abr</div>
+          <div class="v alert">â US$ 240</div>
+          <div class="sub">â R$ 1.231 convertidos via BTG</div>
         </div>
       </div>
     </div>
@@ -971,109 +971,109 @@
       <div class="bank-card inter">
         <div class="b-head">
           <div>
-            <div class="b-name">Banco Inter — PJ</div>
-            <div class="b-num">Ag. 0001 · Zenon Co. (Cabral e Lima Design LTDA)</div>
+            <div class="b-name">Banco Inter â PJ</div>
+            <div class="b-num">Ag. 0001 Â· Zenon Co. (Cabral e Lima Design LTDA)</div>
           </div>
           <span class="b-type">Principal</span>
         </div>
         <div class="b-sal"><span class="cur">R$</span>28.846</div>
         <div class="b-flow">
-          <div class="f"><div class="l">Entradas · 2026</div><div class="v in">+ 33.343</div></div>
-          <div class="f"><div class="l">Saídas · 2026</div><div class="v out">− 4.497</div></div>
+          <div class="f"><div class="l">Entradas Â· 2026</div><div class="v in">+ 33.343</div></div>
+          <div class="f"><div class="l">SaÃ­das Â· 2026</div><div class="v out">â 4.497</div></div>
         </div>
         <div class="b-mini">
-          <div class="row"><span class="d">02/04</span><span class="n">PIX Rafael Monici · ECCO parcela 3/7</span><span class="v in">+4.497</span></div>
-          <div class="row"><span class="d">26/03</span><span class="n">PIX Rafael Monici · ECCO parcela 2/7</span><span class="v in">+7.884</span></div>
-          <div class="row"><span class="d">27/02</span><span class="n">PIX CT Darkhouse · ALVARA sinal + parcela 2/3</span><span class="v in">+11.880</span></div>
+          <div class="row"><span class="d">02/04</span><span class="n">PIX Rafael Monici Â· ECCO parcela 3/7</span><span class="v in">+4.497</span></div>
+          <div class="row"><span class="d">26/03</span><span class="n">PIX Rafael Monici Â· ECCO parcela 2/7</span><span class="v in">+7.884</span></div>
+          <div class="row"><span class="d">27/02</span><span class="n">PIX CT Darkhouse Â· ALVARA sinal + parcela 2/3</span><span class="v in">+11.880</span></div>
         </div>
         <div class="b-foot">
-          <a href="sistema-financeiro.html#extrato">Ver extrato completo →</a>
-          <span class="sync">Sincronizado há 4 min</span>
+          <a href="sistema-financeiro.html#extrato">Ver extrato completo â</a>
+          <span class="sync">Sincronizado hÃ¡ 4 min</span>
         </div>
       </div>
 
       <div class="bank-card btg">
         <div class="b-head">
           <div>
-            <div class="b-name">BTG — PJ <span class="cur-mini">empresa</span></div>
-            <div class="b-num">Zenon Co. · conta digital · USD reserva</div>
+            <div class="b-name">BTG â PJ <span class="cur-mini">empresa</span></div>
+            <div class="b-num">Zenon Co. Â· conta digital Â· USD reserva</div>
           </div>
-          <span class="b-type" style="background:#fff8e8;color:#7a5720;border-color:#d8c89a">Secundária</span>
+          <span class="b-type" style="background:#fff8e8;color:#7a5720;border-color:#d8c89a">SecundÃ¡ria</span>
         </div>
         <div class="b-sal"><span class="cur">R$</span>4.497<span class="cur-mini">+ US$ 0 reserva</span></div>
         <div class="b-flow">
-          <div class="f"><div class="l">Entradas · Abr</div><div class="v in">+ 4.497</div></div>
-          <div class="f"><div class="l">Saídas · Abr</div><div class="v out">− 0</div></div>
+          <div class="f"><div class="l">Entradas Â· Abr</div><div class="v in">+ 4.497</div></div>
+          <div class="f"><div class="l">SaÃ­das Â· Abr</div><div class="v out">â 0</div></div>
         </div>
         <div class="b-mini">
-          <div class="row"><span class="d">10/04</span><span class="n">Transferência Inter → BTG (reserva caixa)</span><span class="v in">+4.497</span></div>
-          <div class="row"><span class="d">—</span><span class="n">Conta USD zerada · disponível para contratos internacionais</span><span class="v" style="color:var(--ink-mute)">US$ 0</span></div>
+          <div class="row"><span class="d">10/04</span><span class="n">TransferÃªncia Inter â BTG (reserva caixa)</span><span class="v in">+4.497</span></div>
+          <div class="row"><span class="d">â</span><span class="n">Conta USD zerada Â· disponÃ­vel para contratos internacionais</span><span class="v" style="color:var(--ink-mute)">US$ 0</span></div>
         </div>
         <div class="b-foot">
-          <a href="sistema-financeiro.html#extrato">Ver extrato completo →</a>
-          <span class="sync">Sincronizado há 6 min</span>
+          <a href="sistema-financeiro.html#extrato">Ver extrato completo â</a>
+          <span class="sync">Sincronizado hÃ¡ 6 min</span>
         </div>
       </div>
 
       <div class="bank-card pessoal">
         <div class="b-head">
           <div>
-            <div class="b-name">Nubank — Thereza</div>
-            <div class="b-num">Conta PF Thereza · Cabana + Casa Blue</div>
+            <div class="b-name">Nubank â Thereza</div>
+            <div class="b-num">Conta PF Thereza Â· Cabana + Casa Blue</div>
           </div>
           <span class="b-type pess">Despesas pessoais</span>
         </div>
-        <div class="b-sal"><span class="cur">R$</span>—</div>
+        <div class="b-sal"><span class="cur">R$</span>â</div>
         <div class="b-flow">
-          <div class="f"><div class="l">Entradas · Abr</div><div class="v" style="color:var(--ink-mute)">— sem sync</div></div>
-          <div class="f"><div class="l">Saídas · Abr</div><div class="v" style="color:var(--ink-mute)">— sem sync</div></div>
+          <div class="f"><div class="l">Entradas Â· Abr</div><div class="v" style="color:var(--ink-mute)">â sem sync</div></div>
+          <div class="f"><div class="l">SaÃ­das Â· Abr</div><div class="v" style="color:var(--ink-mute)">â sem sync</div></div>
         </div>
         <div class="b-mini">
-          <div class="row"><span class="d">—</span><span class="n">Importação manual · OFX mensal</span><span class="v" style="color:var(--ink-mute)">—</span></div>
-          <div class="row"><span class="d">—</span><span class="n">Cabana e Casa Blue = <strong>fontes pessoais</strong>, fora dos KPIs de empresa</span><span class="v" style="color:var(--ink-mute)">info</span></div>
+          <div class="row"><span class="d">â</span><span class="n">ImportaÃ§Ã£o manual Â· OFX mensal</span><span class="v" style="color:var(--ink-mute)">â</span></div>
+          <div class="row"><span class="d">â</span><span class="n">Cabana e Casa Blue = <strong>fontes pessoais</strong>, fora dos KPIs de empresa</span><span class="v" style="color:var(--ink-mute)">info</span></div>
         </div>
         <div class="b-foot">
-          <a href="sistema-financeiro.html#extrato">Ver extrato pessoal →</a>
-          <span class="sync warn">Importação manual</span>
+          <a href="sistema-financeiro.html#extrato">Ver extrato pessoal â</a>
+          <span class="sync warn">ImportaÃ§Ã£o manual</span>
         </div>
       </div>
 
       <div class="bank-card pessoal">
         <div class="b-head">
           <div>
-            <div class="b-name">Inter — Rodrigo</div>
-            <div class="b-num">Conta PF Rodrigo · sócio · despesas pessoais</div>
+            <div class="b-name">Inter â Rodrigo</div>
+            <div class="b-num">Conta PF Rodrigo Â· sÃ³cio Â· despesas pessoais</div>
           </div>
-          <span class="b-type pess">Sócio PF</span>
+          <span class="b-type pess">SÃ³cio PF</span>
         </div>
-        <div class="b-sal"><span class="cur">R$</span>—</div>
+        <div class="b-sal"><span class="cur">R$</span>â</div>
         <div class="b-flow">
-          <div class="f"><div class="l">Entradas · Abr</div><div class="v" style="color:var(--ink-mute)">— sem sync</div></div>
-          <div class="f"><div class="l">Saídas · Abr</div><div class="v" style="color:var(--ink-mute)">— sem sync</div></div>
+          <div class="f"><div class="l">Entradas Â· Abr</div><div class="v" style="color:var(--ink-mute)">â sem sync</div></div>
+          <div class="f"><div class="l">SaÃ­das Â· Abr</div><div class="v" style="color:var(--ink-mute)">â sem sync</div></div>
         </div>
         <div class="b-mini">
-          <div class="row"><span class="d">—</span><span class="n">Conta do sócio · pró-labore Zenon Co. chega aqui mensalmente</span><span class="v" style="color:var(--ink-mute)">—</span></div>
-          <div class="row"><span class="d">—</span><span class="n">Sem integração · visão só para conciliar distribuição de lucros</span><span class="v" style="color:var(--ink-mute)">info</span></div>
+          <div class="row"><span class="d">â</span><span class="n">Conta do sÃ³cio Â· prÃ³-labore Zenon Co. chega aqui mensalmente</span><span class="v" style="color:var(--ink-mute)">â</span></div>
+          <div class="row"><span class="d">â</span><span class="n">Sem integraÃ§Ã£o Â· visÃ£o sÃ³ para conciliar distribuiÃ§Ã£o de lucros</span><span class="v" style="color:var(--ink-mute)">info</span></div>
         </div>
         <div class="b-foot">
-          <a href="sistema-financeiro.html#extrato">Ver extrato PF →</a>
-          <span class="sync warn">Importação manual</span>
+          <a href="sistema-financeiro.html#extrato">Ver extrato PF â</a>
+          <span class="sync warn">ImportaÃ§Ã£o manual</span>
         </div>
       </div>
     </div>
 
     <div style="margin-top:12px;padding:10px 14px;background:var(--bg-alt);border:1px dashed var(--line);border-radius:3px;font-size:11px;color:var(--ink-body);display:flex;align-items:center;gap:8px">
-      <strong style="color:var(--ink);font-size:12px">ℹ</strong>
-      <span>A conta Nubank pessoal é exibida aqui apenas para controle — <strong>não entra</strong> nos KPIs de receita, margem ou projeção de negócio. Cabana e Casa Blue são despesas pessoais centralizadas no sistema por conveniência.</span>
+      <strong style="color:var(--ink);font-size:12px">â¹</strong>
+      <span>A conta Nubank pessoal Ã© exibida aqui apenas para controle â <strong>nÃ£o entra</strong> nos KPIs de receita, margem ou projeÃ§Ã£o de negÃ³cio. Cabana e Casa Blue sÃ£o despesas pessoais centralizadas no sistema por conveniÃªncia.</span>
     </div>
   </section>
 
   <section>
     <div class="section-head">
-      <div><div class="eyebrow">Projeção</div><h2>Caixa <em>projetado</em> · 30 / 60 / 90</h2></div>
+      <div><div class="eyebrow">ProjeÃ§Ã£o</div><h2>Caixa <em>projetado</em> Â· 30 / 60 / 90</h2></div>
       <div class="filters" style="margin-bottom:0">
         <a href="#" class="active">Tudo</a>
-        <a href="#">Só confirmado</a>
+        <a href="#">SÃ³ confirmado</a>
       </div>
     </div>
 
@@ -1084,57 +1084,57 @@
             <div class="eyebrow">Saldo hoje</div>
             <div style="font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:44px;line-height:1;font-weight:500;color:var(--ink)">R$ 33.343</div>
           </div>
-          <span class="badge ok">Caixa leve · operação enxuta</span>
+          <span class="badge ok">Caixa leve Â· operaÃ§Ã£o enxuta</span>
         </div>
 
         <div class="caixa-row">
           <div class="caixa-cell pos">
             <div class="l">30 dias</div>
             <div class="v">R$ 45.760</div>
-            <div class="sub">+R$ 12.417 · ECCO 4/7 + ALVARA CT 3/3</div>
+            <div class="sub">+R$ 12.417 Â· ECCO 4/7 + ALVARA CT 3/3</div>
           </div>
           <div class="caixa-cell pos">
             <div class="l">60 dias</div>
             <div class="v">R$ 50.257</div>
-            <div class="sub">+R$ 4.497 · ECCO parcela 5/7 (20/05)</div>
+            <div class="sub">+R$ 4.497 Â· ECCO parcela 5/7 (20/05)</div>
           </div>
           <div class="caixa-cell pos">
             <div class="l">90 dias</div>
             <div class="v">R$ 54.754</div>
-            <div class="sub">+R$ 4.497 · ECCO parcela 6/7 (20/06)</div>
+            <div class="sub">+R$ 4.497 Â· ECCO parcela 6/7 (20/06)</div>
           </div>
         </div>
 
         <div style="margin-top:18px;padding-top:14px;border-top:1px solid var(--line-soft)">
-          <div class="eyebrow" style="margin-bottom:8px">Composição · próximos 30 d</div>
+          <div class="eyebrow" style="margin-bottom:8px">ComposiÃ§Ã£o Â· prÃ³ximos 30 d</div>
           <div class="bar ok" style="margin-bottom:6px"><span style="width:85%"></span></div>
           <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--ink-soft)">
-            <span>Entradas · R$ 12.417</span>
-            <span>Saídas · R$ 2.100 · 17%</span>
+            <span>Entradas Â· R$ 12.417</span>
+            <span>SaÃ­das Â· R$ 2.100 Â· 17%</span>
           </div>
         </div>
       </div>
 
       <div class="alert-box">
-        <h4>⚠ Atenção · 3 alertas</h4>
+        <h4>â  AtenÃ§Ã£o Â· 3 alertas</h4>
         <div class="alert-item">
           <div>
-            <div class="name">Rafael Monici · ECCO parcela 4/7</div>
-            <div class="sub">Vence 25 / 04 · 6 d</div>
+            <div class="name">Rafael Monici Â· ECCO parcela 4/7</div>
+            <div class="sub">Vence 25 / 04 Â· 6 d</div>
           </div>
           <div class="value">R$ 4.497</div>
         </div>
         <div class="alert-item">
           <div>
-            <div class="name">CT Darkhouse · ALVARA parcela 3/3</div>
-            <div class="sub">Vence na entrega do alvará · ~05 / 05</div>
+            <div class="name">CT Darkhouse Â· ALVARA parcela 3/3</div>
+            <div class="sub">Vence na entrega do alvarÃ¡ Â· ~05 / 05</div>
           </div>
           <div class="value">R$ 7.920</div>
         </div>
         <div class="alert-item">
           <div>
-            <div class="name">Proposta Juliana Vasconcellos · PRO-5</div>
-            <div class="sub">Rascunho 13/2026 · sem retorno após 17/04</div>
+            <div class="name">Proposta Juliana Vasconcellos Â· PRO-5</div>
+            <div class="sub">Rascunho 13/2026 Â· sem retorno apÃ³s 17/04</div>
           </div>
           <div class="value" style="color:var(--ink-soft);font-size:16px">R$ 32.800</div>
         </div>
@@ -1144,7 +1144,7 @@
 
   <section>
     <div class="section-head">
-      <div><div class="eyebrow">Operar · próximos 30 d</div><h2>Contas a <em>receber</em> & a <em>pagar</em></h2></div>
+      <div><div class="eyebrow">Operar Â· prÃ³ximos 30 d</div><h2>Contas a <em>receber</em> & a <em>pagar</em></h2></div>
       <div class="filters" style="margin-bottom:0">
         <a href="#" class="active">30 d</a>
         <a href="#">60 d</a>
@@ -1160,7 +1160,7 @@
         <div class="pt-head">
           <div>
             <h3>A <em>receber</em></h3>
-            <div class="tot">5 parcelas · <strong>R$ 25.910</strong> · ECCO (4) + ALVARA CT (1)</div>
+            <div class="tot">5 parcelas Â· <strong>R$ 25.910</strong> Â· ECCO (4) + ALVARA CT (1)</div>
           </div>
           <div style="display:flex;gap:6px">
             <span class="chk-box" onclick="toggleAll(this,'rec')" title="Selecionar todas"></span>
@@ -1169,9 +1169,9 @@
         </div>
 
         <div class="bulk-bar hidden" id="bulk-rec">
-          <span class="sel-count"><strong id="cnt-rec">0</strong> selecionada(s) · <span id="sum-rec">R$ 0</span></span>
+          <span class="sel-count"><strong id="cnt-rec">0</strong> selecionada(s) Â· <span id="sum-rec">R$ 0</span></span>
           <div class="bulk-actions">
-            <button class="primary">✓ Marcar recebidas</button>
+            <button class="primary">â Marcar recebidas</button>
             <button>Enviar lembrete</button>
             <button>Negociar</button>
             <button>Cancelar</button>
@@ -1181,26 +1181,26 @@
         <div class="pay-rows" id="rows-rec">
 
           <div class="pay-row" data-row="rec" data-id="rec-ecco-4" data-parc="4/7" data-tipo="receber"
-               data-cat="Honorários · obra clínica" data-conta="Inter PJ Zenon" data-unidade="Zenon Co."
-               data-projeto="Clínica ECCO" data-projeto-link="sistema-projeto-detalhe.html?p=P-01"
+               data-cat="HonorÃ¡rios Â· obra clÃ­nica" data-conta="Inter PJ Zenon" data-unidade="Zenon Co."
+               data-projeto="ClÃ­nica ECCO" data-projeto-link="sistema-projeto-detalhe.html?p=P-01"
                data-contato="Rafael Monici" data-contato-link="sistema-cliente-detalhe.html?id=CLI-4"
-               data-obs="FIN-01 · contrato 7x · R$ 39.453 total · 3 parcelas pagas">
+               data-obs="FIN-01 Â· contrato 7x Â· R$ 39.453 total Â· 3 parcelas pagas">
             <span class="chk-box" onclick="event.stopPropagation();toggleRow(this,'rec',4497)"></span>
             <div class="pay-main">
               <div class="pay-name"><a href="sistema-cliente-detalhe.html?id=CLI-4" onclick="event.stopPropagation()">Rafael Monici</a> <span class="parc-tag">4/7</span></div>
-              <div class="pay-sub">Clínica ECCO · obra em andamento · boleto PIX enviado 18/04</div>
+              <div class="pay-sub">ClÃ­nica ECCO Â· obra em andamento Â· boleto PIX enviado 18/04</div>
             </div>
             <div class="pay-when"><strong>25 / 04</strong>em 6 d</div>
             <div class="pay-val in">+ R$ 4.497</div>
             <div style="display:flex;gap:4px;align-items:center">
               <span class="status-pill pendente" onclick="cycleStatus(this)">Pendente</span>
-              <span class="row-menu" onclick="toggleMenu(this)">⋮
+              <span class="row-menu" onclick="toggleMenu(this)">â®
                 <div class="menu-list">
-                  <a href="#">✓ Marcar como pago</a>
-                  <a href="#">✉ Reenviar lembrete <span class="k">R</span></a>
-                  <a href="#">🤝 Marcar negociado</a>
-                  <a href="#">📎 Anexar comprovante</a>
-                  <a href="sistema-cliente-detalhe.html?id=CLI-4">Abrir cliente →</a>
+                  <a href="#">â Marcar como pago</a>
+                  <a href="#">â Reenviar lembrete <span class="k">R</span></a>
+                  <a href="#">ð¤ Marcar negociado</a>
+                  <a href="#">ð Anexar comprovante</a>
+                  <a href="sistema-cliente-detalhe.html?id=CLI-4">Abrir cliente â</a>
                   <a href="#" class="sep">Editar parcela</a>
                   <a href="#">Reemitir boleto</a>
                   <a href="#" class="del">Cancelar parcela</a>
@@ -1210,26 +1210,26 @@
           </div>
 
           <div class="pay-row" data-row="rec" data-id="rec-alvara-ct-3" data-parc="3/3" data-tipo="receber"
-               data-cat="Consultoria técnica · Alvará" data-conta="Inter PJ Zenon" data-unidade="Zenon Co."
-               data-projeto="CT Darkhouse · Regularização" data-projeto-link="sistema-projeto-detalhe.html?p=P-03"
+               data-cat="Consultoria tÃ©cnica Â· AlvarÃ¡" data-conta="Inter PJ Zenon" data-unidade="Zenon Co."
+               data-projeto="CT Darkhouse Â· RegularizaÃ§Ã£o" data-projeto-link="sistema-projeto-detalhe.html?p=P-03"
                data-contato="CT Darkhouse" data-contato-link="sistema-cliente-detalhe.html?id=CLI-1"
                data-proposta="PRO-1" data-proposta-link="sistema-proposta-detalhe.html?p=PRO-1"
-               data-obs="FIN-02 · contrato 3x · R$ 19.800 total · parcela final na entrega do alvará">
+               data-obs="FIN-02 Â· contrato 3x Â· R$ 19.800 total Â· parcela final na entrega do alvarÃ¡">
             <span class="chk-box" onclick="event.stopPropagation();toggleRow(this,'rec',7920)"></span>
             <div class="pay-main">
               <div class="pay-name"><a href="sistema-cliente-detalhe.html?id=CLI-1" onclick="event.stopPropagation()">CT Darkhouse</a> <span class="parc-tag">3/3</span></div>
-              <div class="pay-sub">ALVARA · consultoria técnica · parcela final na entrega</div>
+              <div class="pay-sub">ALVARA Â· consultoria tÃ©cnica Â· parcela final na entrega</div>
             </div>
             <div class="pay-when"><strong>05 / 05</strong>em 16 d</div>
             <div class="pay-val in">+ R$ 7.920</div>
             <div style="display:flex;gap:4px;align-items:center">
               <span class="status-pill pendente" onclick="cycleStatus(this)">Pendente</span>
-              <span class="row-menu" onclick="toggleMenu(this)">⋮
+              <span class="row-menu" onclick="toggleMenu(this)">â®
                 <div class="menu-list">
-                  <a href="#">✓ Marcar como pago</a>
-                  <a href="#">✉ Reenviar lembrete</a>
-                  <a href="#">🤝 Marcar negociado</a>
-                  <a href="sistema-proposta-detalhe.html?p=PRO-1">Abrir proposta →</a>
+                  <a href="#">â Marcar como pago</a>
+                  <a href="#">â Reenviar lembrete</a>
+                  <a href="#">ð¤ Marcar negociado</a>
+                  <a href="sistema-proposta-detalhe.html?p=PRO-1">Abrir proposta â</a>
                   <a href="#" class="sep">Editar parcela</a>
                   <a href="#" class="del">Cancelar parcela</a>
                 </div>
@@ -1238,23 +1238,23 @@
           </div>
 
           <div class="pay-row" data-row="rec" data-id="rec-ecco-5" data-parc="5/7" data-tipo="receber"
-               data-cat="Honorários · obra clínica" data-conta="Inter PJ Zenon" data-unidade="Zenon Co."
-               data-projeto="Clínica ECCO" data-contato="Rafael Monici" data-contato-link="sistema-cliente-detalhe.html?id=CLI-4"
-               data-obs="Parcela 5/7 na entrega técnica da obra">
+               data-cat="HonorÃ¡rios Â· obra clÃ­nica" data-conta="Inter PJ Zenon" data-unidade="Zenon Co."
+               data-projeto="ClÃ­nica ECCO" data-contato="Rafael Monici" data-contato-link="sistema-cliente-detalhe.html?id=CLI-4"
+               data-obs="Parcela 5/7 na entrega tÃ©cnica da obra">
             <span class="chk-box" onclick="event.stopPropagation();toggleRow(this,'rec',4497)"></span>
             <div class="pay-main">
               <div class="pay-name"><a href="sistema-cliente-detalhe.html?id=CLI-4" onclick="event.stopPropagation()">Rafael Monici</a> <span class="parc-tag">5/7</span></div>
-              <div class="pay-sub">Clínica ECCO · na entrega técnica da obra</div>
+              <div class="pay-sub">ClÃ­nica ECCO Â· na entrega tÃ©cnica da obra</div>
             </div>
             <div class="pay-when"><strong>20 / 05</strong>em 31 d</div>
             <div class="pay-val in">+ R$ 4.497</div>
             <div style="display:flex;gap:4px;align-items:center">
               <span class="status-pill pendente" onclick="cycleStatus(this)">Pendente</span>
-              <span class="row-menu" onclick="toggleMenu(this)">⋮
+              <span class="row-menu" onclick="toggleMenu(this)">â®
                 <div class="menu-list">
-                  <a href="#">✓ Marcar como pago</a>
-                  <a href="#">✉ Reenviar lembrete</a>
-                  <a href="sistema-cliente-detalhe.html?id=CLI-4">Abrir cliente →</a>
+                  <a href="#">â Marcar como pago</a>
+                  <a href="#">â Reenviar lembrete</a>
+                  <a href="sistema-cliente-detalhe.html?id=CLI-4">Abrir cliente â</a>
                   <a href="#" class="sep">Editar</a>
                   <a href="#" class="del">Cancelar</a>
                 </div>
@@ -1263,23 +1263,23 @@
           </div>
 
           <div class="pay-row" data-row="rec" data-id="rec-ecco-6" data-parc="6/7" data-tipo="receber"
-               data-cat="Honorários · obra clínica" data-conta="Inter PJ Zenon" data-unidade="Zenon Co."
-               data-projeto="Clínica ECCO" data-contato="Rafael Monici" data-contato-link="sistema-cliente-detalhe.html?id=CLI-4"
-               data-obs="Parcela 6/7 · 30 dias após entrega">
+               data-cat="HonorÃ¡rios Â· obra clÃ­nica" data-conta="Inter PJ Zenon" data-unidade="Zenon Co."
+               data-projeto="ClÃ­nica ECCO" data-contato="Rafael Monici" data-contato-link="sistema-cliente-detalhe.html?id=CLI-4"
+               data-obs="Parcela 6/7 Â· 30 dias apÃ³s entrega">
             <span class="chk-box" onclick="event.stopPropagation();toggleRow(this,'rec',4497)"></span>
             <div class="pay-main">
               <div class="pay-name"><a href="sistema-cliente-detalhe.html?id=CLI-4" onclick="event.stopPropagation()">Rafael Monici</a> <span class="parc-tag">6/7</span></div>
-              <div class="pay-sub">Clínica ECCO · 30 d após entrega</div>
+              <div class="pay-sub">ClÃ­nica ECCO Â· 30 d apÃ³s entrega</div>
             </div>
             <div class="pay-when"><strong>20 / 06</strong>em 62 d</div>
             <div class="pay-val in">+ R$ 4.497</div>
             <div style="display:flex;gap:4px;align-items:center">
               <span class="status-pill pendente" onclick="cycleStatus(this)">Pendente</span>
-              <span class="row-menu" onclick="toggleMenu(this)">⋮
+              <span class="row-menu" onclick="toggleMenu(this)">â®
                 <div class="menu-list">
-                  <a href="#">✓ Marcar como pago</a>
-                  <a href="#">✉ Reenviar lembrete</a>
-                  <a href="sistema-cliente-detalhe.html?id=CLI-4">Abrir cliente →</a>
+                  <a href="#">â Marcar como pago</a>
+                  <a href="#">â Reenviar lembrete</a>
+                  <a href="sistema-cliente-detalhe.html?id=CLI-4">Abrir cliente â</a>
                   <a href="#" class="sep">Editar</a>
                   <a href="#" class="del">Cancelar</a>
                 </div>
@@ -1288,23 +1288,23 @@
           </div>
 
           <div class="pay-row" data-row="rec" data-id="rec-ecco-7" data-parc="7/7" data-tipo="receber"
-               data-cat="Honorários · obra clínica" data-conta="Inter PJ Zenon" data-unidade="Zenon Co."
-               data-projeto="Clínica ECCO" data-contato="Rafael Monici" data-contato-link="sistema-cliente-detalhe.html?id=CLI-4"
-               data-obs="Parcela 7/7 final · retenção pós-entrega liberada">
+               data-cat="HonorÃ¡rios Â· obra clÃ­nica" data-conta="Inter PJ Zenon" data-unidade="Zenon Co."
+               data-projeto="ClÃ­nica ECCO" data-contato="Rafael Monici" data-contato-link="sistema-cliente-detalhe.html?id=CLI-4"
+               data-obs="Parcela 7/7 final Â· retenÃ§Ã£o pÃ³s-entrega liberada">
             <span class="chk-box" onclick="event.stopPropagation();toggleRow(this,'rec',4499)"></span>
             <div class="pay-main">
               <div class="pay-name"><a href="sistema-cliente-detalhe.html?id=CLI-4" onclick="event.stopPropagation()">Rafael Monici</a> <span class="parc-tag">7/7</span></div>
-              <div class="pay-sub">Clínica ECCO · parcela final · retenção pós-entrega</div>
+              <div class="pay-sub">ClÃ­nica ECCO Â· parcela final Â· retenÃ§Ã£o pÃ³s-entrega</div>
             </div>
             <div class="pay-when"><strong>20 / 07</strong>em 92 d</div>
             <div class="pay-val in">+ R$ 4.499</div>
             <div style="display:flex;gap:4px;align-items:center">
               <span class="status-pill pendente" onclick="cycleStatus(this)">Pendente</span>
-              <span class="row-menu" onclick="toggleMenu(this)">⋮
+              <span class="row-menu" onclick="toggleMenu(this)">â®
                 <div class="menu-list">
-                  <a href="#">✓ Marcar como pago</a>
-                  <a href="#">✉ Reenviar lembrete</a>
-                  <a href="sistema-cliente-detalhe.html?id=CLI-4">Abrir cliente →</a>
+                  <a href="#">â Marcar como pago</a>
+                  <a href="#">â Reenviar lembrete</a>
+                  <a href="sistema-cliente-detalhe.html?id=CLI-4">Abrir cliente â</a>
                   <a href="#" class="sep">Editar</a>
                   <a href="#" class="del">Cancelar</a>
                 </div>
@@ -1320,7 +1320,7 @@
         <div class="pt-head">
           <div>
             <h3>A <em>pagar</em></h3>
-            <div class="tot">5 contas <span class="ex-tag">exemplo</span> · <strong>R$ 23.500</strong> · só despesas da empresa <span style="color:var(--ink-mute)">·</span> <a href="sistema-obra-financeiro.html" style="font-family:'Fraunces','Source Serif 4',Georgia,serif;font-style:italic;color:var(--accent,#b89455);text-decoration:none">obra → financeiro →</a></div>
+            <div class="tot">5 contas <span class="ex-tag">exemplo</span> Â· <strong>R$ 23.500</strong> Â· sÃ³ despesas da empresa <span style="color:var(--ink-mute)">Â·</span> <a href="sistema-obra-financeiro.html" style="font-family:'Fraunces','Source Serif 4',Georgia,serif;font-style:italic;color:var(--accent,#b89455);text-decoration:none">obra â financeiro â</a></div>
           </div>
           <div style="display:flex;gap:6px">
             <span class="chk-box" onclick="toggleAll(this,'pag')" title="Selecionar todas"></span>
@@ -1328,19 +1328,19 @@
           </div>
         </div>
 
-        <!-- ⚠ banner: dados em construção — BD real sendo montado em paralelo -->
+        <!-- â  banner: dados em construÃ§Ã£o â BD real sendo montado em paralelo -->
         <div style="margin:0 14px 10px;padding:10px 14px;background:linear-gradient(90deg,#fff7e6,#fff);border:1px solid #e8c878;border-left:3px solid #b89455;border-radius:4px;font-family:'Inter',sans-serif;font-size:12.5px;line-height:1.55;color:#6b4a1f;display:flex;gap:10px;align-items:flex-start">
-          <span style="font-size:15px;line-height:1">⚠</span>
+          <span style="font-size:15px;line-height:1">â </span>
           <div>
-            <strong style="font-family:'Fraunces','Source Serif 4',Georgia,serif;font-style:italic;font-weight:500;color:#3d2a08">Dados de exemplo</strong> — as 5 contas abaixo são placeholders, não refletem as contas reais do Zenon.
-            <br><span style="color:#8a6a2e">O BD real (Inter PJ Zenon, BTG PJ Zenon, Nubank Thereza, Inter Rodrigo) está sendo montado em paralelo. Assim que entrar, esta seção será substituída pelos débitos efetivos das 4 contas.</span>
+            <strong style="font-family:'Fraunces','Source Serif 4',Georgia,serif;font-style:italic;font-weight:500;color:#3d2a08">Dados de exemplo</strong> â as 5 contas abaixo sÃ£o placeholders, nÃ£o refletem as contas reais do Zenon.
+            <br><span style="color:#8a6a2e">O BD real (Inter PJ Zenon, BTG PJ Zenon, Nubank Thereza, Inter Rodrigo) estÃ¡ sendo montado em paralelo. Assim que entrar, esta seÃ§Ã£o serÃ¡ substituÃ­da pelos dÃ©bitos efetivos das 4 contas.</span>
           </div>
         </div>
 
         <div class="bulk-bar hidden" id="bulk-pag">
-          <span class="sel-count"><strong id="cnt-pag">0</strong> selecionada(s) · <span id="sum-pag">R$ 0</span></span>
+          <span class="sel-count"><strong id="cnt-pag">0</strong> selecionada(s) Â· <span id="sum-pag">R$ 0</span></span>
           <div class="bulk-actions">
-            <button class="primary">✓ Pagar selecionadas</button>
+            <button class="primary">â Pagar selecionadas</button>
             <button>Agendar pagamento</button>
             <button>Negociar</button>
             <button>Cancelar</button>
@@ -1350,24 +1350,24 @@
         <div class="pay-rows" id="rows-pag">
 
           <div class="pay-row" data-row="pag" data-id="pag-breno-clt" data-rec="1" data-tipo="pagar" data-ex="1"
-               data-cat="Folha · CLT" data-conta="Inter PJ Zenon" data-unidade="Zenon Co."
+               data-cat="Folha Â· CLT" data-conta="Inter PJ Zenon" data-unidade="Zenon Co."
                data-contato="Breno Lima" data-contato-link="sistema-configuracoes.html#equipe"
-               data-obs="[EXEMPLO — a confirmar no BD real] Recorrência mensal · PIX dia 20 · chave: CPF">
+               data-obs="[EXEMPLO â a confirmar no BD real] RecorrÃªncia mensal Â· PIX dia 20 Â· chave: CPF">
             <span class="chk-box" onclick="event.stopPropagation();toggleRow(this,'pag',6800)"></span>
             <div class="pay-main">
-              <div class="pay-name">Equipe · Breno Lima <span class="rec-tag">mensal</span> <span class="ex-tag">exemplo</span></div>
-              <div class="pay-sub">Folha CLT abril · PIX na conta cadastrada</div>
+              <div class="pay-name">Equipe Â· Breno Lima <span class="rec-tag">mensal</span> <span class="ex-tag">exemplo</span></div>
+              <div class="pay-sub">Folha CLT abril Â· PIX na conta cadastrada</div>
             </div>
-            <div class="pay-when"><strong>20 / 04</strong>amanhã</div>
-            <div class="pay-val out">− R$ 6.800</div>
+            <div class="pay-when"><strong>20 / 04</strong>amanhÃ£</div>
+            <div class="pay-val out">â R$ 6.800</div>
             <div style="display:flex;gap:4px;align-items:center">
               <span class="status-pill pendente" onclick="cycleStatus(this)">Pendente</span>
-              <span class="row-menu" onclick="toggleMenu(this)">⋮
+              <span class="row-menu" onclick="toggleMenu(this)">â®
                 <div class="menu-list">
-                  <a href="#">✓ Marcar como pago</a>
-                  <a href="#">📅 Agendar PIX</a>
-                  <a href="#">📎 Anexar holerite</a>
-                  <a href="sistema-configuracoes.html#equipe">Abrir membro →</a>
+                  <a href="#">â Marcar como pago</a>
+                  <a href="#">ð Agendar PIX</a>
+                  <a href="#">ð Anexar holerite</a>
+                  <a href="sistema-configuracoes.html#equipe">Abrir membro â</a>
                   <a href="#" class="sep">Editar</a>
                 </div>
               </span>
@@ -1375,23 +1375,23 @@
           </div>
 
           <div class="pay-row" data-row="pag" data-id="pag-aluguel-sala" data-rec="1" data-tipo="pagar" data-ex="1"
-               data-cat="Estrutura · aluguel" data-conta="Inter PJ Zenon" data-unidade="Zenon Co."
+               data-cat="Estrutura Â· aluguel" data-conta="Inter PJ Zenon" data-unidade="Zenon Co."
                data-contato="Imob. Perdizes"
-               data-obs="[EXEMPLO — a confirmar no BD real] Recorrência mensal · vencimento dia 25 · contrato 30 meses · reajuste IGP-M anual">
+               data-obs="[EXEMPLO â a confirmar no BD real] RecorrÃªncia mensal Â· vencimento dia 25 Â· contrato 30 meses Â· reajuste IGP-M anual">
             <span class="chk-box" onclick="event.stopPropagation();toggleRow(this,'pag',3200)"></span>
             <div class="pay-main">
-              <div class="pay-name">Aluguel sala · Pinheiros <span class="rec-tag">mensal</span> <span class="ex-tag">exemplo</span></div>
-              <div class="pay-sub">Imob. Perdizes · contrato mensal</div>
+              <div class="pay-name">Aluguel sala Â· Pinheiros <span class="rec-tag">mensal</span> <span class="ex-tag">exemplo</span></div>
+              <div class="pay-sub">Imob. Perdizes Â· contrato mensal</div>
             </div>
             <div class="pay-when"><strong>25 / 04</strong>em 6 d</div>
-            <div class="pay-val out">− R$ 3.200</div>
+            <div class="pay-val out">â R$ 3.200</div>
             <div style="display:flex;gap:4px;align-items:center">
               <span class="status-pill pendente" onclick="cycleStatus(this)">Pendente</span>
-              <span class="row-menu" onclick="toggleMenu(this)">⋮
+              <span class="row-menu" onclick="toggleMenu(this)">â®
                 <div class="menu-list">
-                  <a href="#">✓ Marcar como pago</a>
-                  <a href="#">📅 Agendar pagamento</a>
-                  <a href="#">📎 Anexar boleto</a>
+                  <a href="#">â Marcar como pago</a>
+                  <a href="#">ð Agendar pagamento</a>
+                  <a href="#">ð Anexar boleto</a>
                   <a href="#" class="sep">Editar</a>
                 </div>
               </span>
@@ -1399,21 +1399,21 @@
           </div>
 
           <div class="pay-row" data-row="pag" data-id="pag-saas" data-rec="1" data-tipo="pagar" data-ex="1"
-               data-cat="Ferramentas · SaaS" data-conta="Cartão Stripe (BTG)" data-unidade="Zenon Co."
+               data-cat="Ferramentas Â· SaaS" data-conta="CartÃ£o Stripe (BTG)" data-unidade="Zenon Co."
                data-contato="Notion + Figma + Dropbox"
-               data-obs="[EXEMPLO — a confirmar valores reais no BD] Recorrência mensal · débito automático no cartão · 3 assinaturas consolidadas">
+               data-obs="[EXEMPLO â a confirmar valores reais no BD] RecorrÃªncia mensal Â· dÃ©bito automÃ¡tico no cartÃ£o Â· 3 assinaturas consolidadas">
             <span class="chk-box" onclick="event.stopPropagation();toggleRow(this,'pag',1480)"></span>
             <div class="pay-main">
-              <div class="pay-name">SaaS · Notion, Figma, Dropbox <span class="rec-tag">mensal</span> <span class="ex-tag">exemplo</span></div>
-              <div class="pay-sub">Cartão Stripe · 3 assinaturas</div>
+              <div class="pay-name">SaaS Â· Notion, Figma, Dropbox <span class="rec-tag">mensal</span> <span class="ex-tag">exemplo</span></div>
+              <div class="pay-sub">CartÃ£o Stripe Â· 3 assinaturas</div>
             </div>
             <div class="pay-when"><strong>28 / 04</strong>em 9 d</div>
-            <div class="pay-val out">− R$ 1.480</div>
+            <div class="pay-val out">â R$ 1.480</div>
             <div style="display:flex;gap:4px;align-items:center">
               <span class="status-pill pendente" onclick="cycleStatus(this)">Pendente</span>
-              <span class="row-menu" onclick="toggleMenu(this)">⋮
+              <span class="row-menu" onclick="toggleMenu(this)">â®
                 <div class="menu-list">
-                  <a href="#">✓ Marcar como pago</a>
+                  <a href="#">â Marcar como pago</a>
                   <a href="#">Gerenciar assinaturas</a>
                   <a href="#" class="sep">Editar</a>
                 </div>
@@ -1422,23 +1422,23 @@
           </div>
 
           <div class="pay-row" data-row="pag" data-id="pag-luana-019" data-tipo="pagar" data-ex="1"
-               data-cat="Equipe · PJ" data-conta="Inter PJ Zenon" data-unidade="Yvyra Arq"
+               data-cat="Equipe Â· PJ" data-conta="Inter PJ Zenon" data-unidade="Yvyra Arq"
                data-projeto="Casa Blue + Yvyra" data-contato="Luana Costa" data-contato-link="sistema-configuracoes.html#equipe"
-               data-obs="[EXEMPLO — a confirmar no BD real] NF 019 · 104h no mês · rateio 60/40 (Casa Blue / Yvyra geral)">
+               data-obs="[EXEMPLO â a confirmar no BD real] NF 019 Â· 104h no mÃªs Â· rateio 60/40 (Casa Blue / Yvyra geral)">
             <span class="chk-box" onclick="event.stopPropagation();toggleRow(this,'pag',7200)"></span>
             <div class="pay-main">
-              <div class="pay-name">Luana Costa · PJ hora-arquiteto <span class="ex-tag">exemplo</span></div>
-              <div class="pay-sub">NF 019 · Casa Blue + Yvyra (104h)</div>
+              <div class="pay-name">Luana Costa Â· PJ hora-arquiteto <span class="ex-tag">exemplo</span></div>
+              <div class="pay-sub">NF 019 Â· Casa Blue + Yvyra (104h)</div>
             </div>
             <div class="pay-when"><strong>30 / 04</strong>em 11 d</div>
-            <div class="pay-val out">− R$ 7.200</div>
+            <div class="pay-val out">â R$ 7.200</div>
             <div style="display:flex;gap:4px;align-items:center">
               <span class="status-pill pendente" onclick="cycleStatus(this)">Pendente</span>
-              <span class="row-menu" onclick="toggleMenu(this)">⋮
+              <span class="row-menu" onclick="toggleMenu(this)">â®
                 <div class="menu-list">
-                  <a href="#">✓ Marcar como pago</a>
-                  <a href="#">📎 Anexar NF</a>
-                  <a href="sistema-configuracoes.html#equipe">Abrir PJ →</a>
+                  <a href="#">â Marcar como pago</a>
+                  <a href="#">ð Anexar NF</a>
+                  <a href="sistema-configuracoes.html#equipe">Abrir PJ â</a>
                   <a href="#" class="sep">Editar</a>
                 </div>
               </span>
@@ -1446,22 +1446,22 @@
           </div>
 
           <div class="pay-row" data-row="pag" data-id="pag-impostos" data-rec="1" data-tipo="pagar" data-ex="1"
-               data-cat="Impostos · DAS + ISS" data-conta="Inter PJ Zenon" data-unidade="Zenon Co."
+               data-cat="Impostos Â· DAS + ISS" data-conta="Inter PJ Zenon" data-unidade="Zenon Co."
                data-contato="Receita Federal + Prefeitura SP"
-               data-obs="[EXEMPLO — a confirmar valores reais no BD] Recorrência mensal · DAS vence dia 20 · ISS SP vence dia 05 — gerar guias no dia 01">
+               data-obs="[EXEMPLO â a confirmar valores reais no BD] RecorrÃªncia mensal Â· DAS vence dia 20 Â· ISS SP vence dia 05 â gerar guias no dia 01">
             <span class="chk-box" onclick="event.stopPropagation();toggleRow(this,'pag',4820)"></span>
             <div class="pay-main">
-              <div class="pay-name">Impostos · DAS + ISS <span class="rec-tag">mensal</span> <span class="ex-tag">exemplo</span></div>
+              <div class="pay-name">Impostos Â· DAS + ISS <span class="rec-tag">mensal</span> <span class="ex-tag">exemplo</span></div>
               <div class="pay-sub">Receita Federal + Prefeitura SP</div>
             </div>
             <div class="pay-when"><strong>05 / 05</strong>em 16 d</div>
-            <div class="pay-val out">− R$ 4.820</div>
+            <div class="pay-val out">â R$ 4.820</div>
             <div style="display:flex;gap:4px;align-items:center">
               <span class="status-pill pendente" onclick="cycleStatus(this)">Pendente</span>
-              <span class="row-menu" onclick="toggleMenu(this)">⋮
+              <span class="row-menu" onclick="toggleMenu(this)">â®
                 <div class="menu-list">
-                  <a href="#">✓ Marcar como pago</a>
-                  <a href="#">📎 Anexar DARF</a>
+                  <a href="#">â Marcar como pago</a>
+                  <a href="#">ð Anexar DARF</a>
                   <a href="#" class="sep">Editar</a>
                 </div>
               </span>
@@ -1481,19 +1481,19 @@
     <table class="tbl">
       <thead>
         <tr>
-          <th>Projeto · cliente</th>
+          <th>Projeto Â· cliente</th>
           <th>Contrato</th>
           <th>Parcelas</th>
           <th class="num">Pago</th>
           <th class="num">A receber</th>
-          <th>Próximo vencimento</th>
+          <th>PrÃ³ximo vencimento</th>
           <th>Status</th>
         </tr>
       </thead>
       <tbody>
         <tr data-projeto-link="sistema-projeto-detalhe.html?p=P-01">
-          <td><div class="name">Clínica ECCO</div><div class="sub">Rafael Monici · endoscopia</div></td>
-          <td>R$ 39.453<div class="sub">honorários · 7 parcelas</div></td>
+          <td><div class="name">ClÃ­nica ECCO</div><div class="sub">Rafael Monici Â· endoscopia</div></td>
+          <td>R$ 39.453<div class="sub">honorÃ¡rios Â· 7 parcelas</div></td>
           <td>3 / 7</td>
           <td class="num">R$ 21.463</td>
           <td class="num">R$ 17.990</td>
@@ -1501,21 +1501,21 @@
           <td><span class="badge ok">Em dia</span></td>
         </tr>
         <tr data-projeto-link="sistema-projeto-detalhe.html?p=P-03">
-          <td><div class="name">CT Darkhouse</div><div class="sub">Jakson Nantes · regularização</div></td>
-          <td>R$ 19.800<div class="sub">alvará + CT · 3 parcelas</div></td>
+          <td><div class="name">CT Darkhouse</div><div class="sub">Jakson Nantes Â· regularizaÃ§Ã£o</div></td>
+          <td>R$ 19.800<div class="sub">alvarÃ¡ + CT Â· 3 parcelas</div></td>
           <td>2 / 3</td>
           <td class="num">R$ 11.880</td>
           <td class="num">R$ 7.920</td>
-          <td>05 / 05<div class="sub">parcela 3/3 · final</div></td>
+          <td>05 / 05<div class="sub">parcela 3/3 Â· final</div></td>
           <td><span class="badge ok">Em dia</span></td>
         </tr>
         <tr data-proposta-link="sistema-proposta-detalhe.html?p=PRO-5" style="opacity:.82">
-          <td><div class="name">Juliana e Felipe Vasconcellos</div><div class="sub">Projeto Arquitetura · Navegantes, Santos</div></td>
-          <td>R$ 32.800<div class="sub">proposta 13/2026 · rascunho v1</div></td>
-          <td>—</td>
-          <td class="num">—</td>
+          <td><div class="name">Juliana e Felipe Vasconcellos</div><div class="sub">Projeto Arquitetura Â· Navegantes, Santos</div></td>
+          <td>R$ 32.800<div class="sub">proposta 13/2026 Â· rascunho v1</div></td>
+          <td>â</td>
+          <td class="num">â</td>
           <td class="num" style="color:var(--ink-mute)">R$ 32.800</td>
-          <td>—<div class="sub">aguardando aceite</div></td>
+          <td>â<div class="sub">aguardando aceite</div></td>
           <td><span class="badge neutral">Proposta</span></td>
         </tr>
       </tbody>
@@ -1524,7 +1524,7 @@
 
   <section>
     <div class="section-head">
-      <div><div class="eyebrow">12 meses · visão macro</div><h2>Histórico <em>mensal</em> e saldo acumulado</h2></div>
+      <div><div class="eyebrow">12 meses Â· visÃ£o macro</div><h2>HistÃ³rico <em>mensal</em> e saldo acumulado</h2></div>
       <div class="filters" style="margin-bottom:0">
         <a href="#" class="active">12 m</a>
         <a href="#">6 m</a>
@@ -1536,15 +1536,15 @@
       <div class="chart-card">
         <div class="chd">
           <div>
-            <h3>Entradas × <em>Saídas</em> · mensal</h3>
+            <h3>Entradas Ã <em>SaÃ­das</em> Â· mensal</h3>
             <div class="legend" style="margin-top:6px">
               <span><i style="background:var(--ok)"></i> Entradas</span>
-              <span><i style="background:var(--alert)"></i> Saídas</span>
+              <span><i style="background:var(--alert)"></i> SaÃ­das</span>
             </div>
           </div>
           <div class="tot">
             <div class="v pos">R$ 8.336</div>
-            <div class="l">Média mensal · ano corrente</div>
+            <div class="l">MÃ©dia mensal Â· ano corrente</div>
           </div>
         </div>
         <div class="bar-chart">
@@ -1573,12 +1573,12 @@
           <div>
             <h3>Saldo <em>acumulado</em></h3>
             <div class="legend" style="margin-top:6px">
-              <span><i style="background:var(--accent-ink)"></i> Caixa consolidado · Inter PJ + BTG PJ</span>
+              <span><i style="background:var(--accent-ink)"></i> Caixa consolidado Â· Inter PJ + BTG PJ</span>
             </div>
           </div>
           <div class="tot">
             <div class="v">R$ 33.343</div>
-            <div class="l">Saldo atual · hoje</div>
+            <div class="l">Saldo atual Â· hoje</div>
           </div>
         </div>
         <div class="line-chart">
@@ -1620,7 +1620,7 @@
 
   <section>
     <div class="section-head">
-      <div><div class="eyebrow">Distribuição por unidade de negócio</div><h2>Receita e <em>gastos</em> por unidade</h2></div>
+      <div><div class="eyebrow">DistribuiÃ§Ã£o por unidade de negÃ³cio</div><h2>Receita e <em>gastos</em> por unidade</h2></div>
     </div>
 
     <div class="pie-row">
@@ -1639,10 +1639,10 @@
         <div class="pie-legend">
           <h4>Receita <em>por unidade</em></h4>
           <div class="pl-row"><i style="background:#6a4f8a"></i><span class="pn">Yvyra Arquitetura</span><span class="pv">R$ 33.343</span><span class="pp">100%</span></div>
-          <div class="pl-row" style="opacity:.55"><i style="background:#b67a3b"></i><span class="pn">Zenon Stay</span><span class="pv">R$ 0</span><span class="pp">—</span></div>
-          <div class="pl-row" style="opacity:.55"><i style="background:#3a6db8"></i><span class="pn">Zenon Vision <span style="font-size:10px;color:var(--ink-mute)">· interno</span></span><span class="pv">R$ 0</span><span class="pp">—</span></div>
+          <div class="pl-row" style="opacity:.55"><i style="background:#b67a3b"></i><span class="pn">Zenon Stay</span><span class="pv">R$ 0</span><span class="pp">â</span></div>
+          <div class="pl-row" style="opacity:.55"><i style="background:#3a6db8"></i><span class="pn">Zenon Vision <span style="font-size:10px;color:var(--ink-mute)">Â· interno</span></span><span class="pv">R$ 0</span><span class="pp">â</span></div>
           <div class="pl-row" style="font-size:11px;color:var(--ink-mute);border-top:1px dashed var(--line-soft);margin-top:4px;padding-top:6px">
-            <span>Cabana + Casa Blue são fontes pessoais — não entram no KPI empresa.</span>
+            <span>Cabana + Casa Blue sÃ£o fontes pessoais â nÃ£o entram no KPI empresa.</span>
           </div>
         </div>
       </div>
@@ -1667,10 +1667,10 @@
         </div>
         <div class="pie-legend">
           <h4>Gastos <em>por categoria</em></h4>
-          <div class="pl-row"><i style="background:#1a1612"></i><span class="pn">Operacional · contador, conta PJ</span><span class="pv">R$ 7.900</span><span class="pp">55%</span></div>
-          <div class="pl-row"><i style="background:#6b5b3b"></i><span class="pn">Impostos · DAS Simples</span><span class="pv">R$ 2.880</span><span class="pp">20%</span></div>
-          <div class="pl-row"><i style="background:#a84545"></i><span class="pn">RRTs · CAU BR</span><span class="pv">R$ 2.160</span><span class="pp">15%</span></div>
-          <div class="pl-row"><i style="background:#888"></i><span class="pn">Software · Notion + Figma</span><span class="pv">R$ 1.440</span><span class="pp">10%</span></div>
+          <div class="pl-row"><i style="background:#1a1612"></i><span class="pn">Operacional Â· contador, conta PJ</span><span class="pv">R$ 7.900</span><span class="pp">55%</span></div>
+          <div class="pl-row"><i style="background:#6b5b3b"></i><span class="pn">Impostos Â· DAS Simples</span><span class="pv">R$ 2.880</span><span class="pp">20%</span></div>
+          <div class="pl-row"><i style="background:#a84545"></i><span class="pn">RRTs Â· CAU BR</span><span class="pv">R$ 2.160</span><span class="pp">15%</span></div>
+          <div class="pl-row"><i style="background:#888"></i><span class="pn">Software Â· Notion + Figma</span><span class="pv">R$ 1.440</span><span class="pp">10%</span></div>
         </div>
       </div>
     </div>
@@ -1678,15 +1678,15 @@
 
   <section>
     <div class="section-head">
-      <div><div class="eyebrow">Extrato detalhado</div><h2>Todos os <em>lançamentos</em></h2></div>
-      <a href="#extrato" class="link">Exportar CSV →</a>
+      <div><div class="eyebrow">Extrato detalhado</div><h2>Todos os <em>lanÃ§amentos</em></h2></div>
+      <a href="#extrato" class="link">Exportar CSV â</a>
     </div>
 
     <div class="ext-toolbar">
       <div class="grp">
         <span class="chip on">Todos</span>
         <span class="chip in on">Entradas</span>
-        <span class="chip out">Saídas</span>
+        <span class="chip out">SaÃ­das</span>
       </div>
       <div class="grp">
         <span class="chip on">Abr / 2026</span>
@@ -1697,7 +1697,7 @@
       </div>
       <div class="grp">
         <span class="chip on">Tudo</span>
-        <span class="chip">Negócios</span>
+        <span class="chip">NegÃ³cios</span>
         <span class="chip">Pessoal</span>
       </div>
       <div class="grp">
@@ -1723,7 +1723,7 @@
         <tr>
           <th style="width:28px"><span class="chk-box" onclick="toggleAll(this,'ext')" title="Selecionar todas"></span></th>
           <th>Data</th>
-          <th>Descrição</th>
+          <th>DescriÃ§Ã£o</th>
           <th>Categoria</th>
           <th>Unidade</th>
           <th>Cliente / fornecedor</th>
@@ -1736,18 +1736,18 @@
         <tr data-row="ext">
           <td><span class="chk-box" onclick="toggleRow(this,'ext',4497)"></span></td>
           <td>20 / 04</td>
-          <td><div class="name"><a href="sistema-projeto-detalhe.html?p=P-01" style="color:var(--ink);text-decoration:none">Parcela 3/7 · Clínica ECCO</a></div><div class="sub">PIX · Rafael Monici</div></td>
-          <td>Receita · honorários obra</td>
+          <td><div class="name"><a href="sistema-projeto-detalhe.html?p=P-01" style="color:var(--ink);text-decoration:none">Parcela 3/7 Â· ClÃ­nica ECCO</a></div><div class="sub">PIX Â· Rafael Monici</div></td>
+          <td>Receita Â· honorÃ¡rios obra</td>
           <td><span class="tag-un">Zenon Co.</span></td>
           <td><a href="sistema-cliente-detalhe.html?id=CLI-4" style="color:var(--ink-body);text-decoration:none;border-bottom:1px dotted var(--line-strong)">Rafael Monici</a></td>
           <td class="pay-val in">+ R$ 4.497</td>
           <td><span class="status-pill pago" onclick="cycleStatus(this)">Pago</span></td>
-          <td><span class="row-menu" onclick="toggleMenu(this)">⋮
+          <td><span class="row-menu" onclick="toggleMenu(this)">â®
             <div class="menu-list">
-              <a href="sistema-projeto-detalhe.html?p=P-01">Abrir projeto <span class="k">↗</span></a>
-              <a href="sistema-cliente-detalhe.html?id=CLI-4">Abrir cliente <span class="k">↗</span></a>
-              <a href="#conciliacao" class="sep">Ver no extrato bancário</a>
-              <a href="#extrato">Editar lançamento</a>
+              <a href="sistema-projeto-detalhe.html?p=P-01">Abrir projeto <span class="k">â</span></a>
+              <a href="sistema-cliente-detalhe.html?id=CLI-4">Abrir cliente <span class="k">â</span></a>
+              <a href="#conciliacao" class="sep">Ver no extrato bancÃ¡rio</a>
+              <a href="#extrato">Editar lanÃ§amento</a>
               <a href="#extrato">Anexar comprovante</a>
               <a href="#extrato" class="sep del">Estornar</a>
             </div>
@@ -1756,16 +1756,16 @@
         <tr data-row="ext">
           <td><span class="chk-box" onclick="toggleRow(this,'ext',5600)"></span></td>
           <td>12 / 04</td>
-          <td><div class="name">Cabana · 4 diárias hóspede</div><div class="sub">PIX · fim de semana longo</div></td>
-          <td>Pessoal · aluguel temporada</td>
-          <td><span class="tag-un pess">Pessoal · Cabana</span></td>
+          <td><div class="name">Cabana Â· 4 diÃ¡rias hÃ³spede</div><div class="sub">PIX Â· fim de semana longo</div></td>
+          <td>Pessoal Â· aluguel temporada</td>
+          <td><span class="tag-un pess">Pessoal Â· Cabana</span></td>
           <td>Laura Menezes</td>
           <td class="pay-val in">+ R$ 5.600</td>
           <td><span class="status-pill pago" onclick="cycleStatus(this)">Pago</span></td>
-          <td><span class="row-menu" onclick="toggleMenu(this)">⋮
+          <td><span class="row-menu" onclick="toggleMenu(this)">â®
             <div class="menu-list">
               <a href="#extrato">Emitir recibo</a>
-              <a href="#extrato">Ver histórico Cabana</a>
+              <a href="#extrato">Ver histÃ³rico Cabana</a>
               <a href="#extrato" class="sep del">Estornar</a>
             </div>
           </span></td>
@@ -1773,17 +1773,17 @@
         <tr data-row="ext">
           <td><span class="chk-box" onclick="toggleRow(this,'ext',1840)"></span></td>
           <td>10 / 04</td>
-          <td><div class="name">Casa Blue · condomínio</div><div class="sub">Boleto mensal abr/26</div></td>
-          <td>Pessoal · moradia</td>
-          <td><span class="tag-un pess">Pessoal · Casa Blue</span></td>
+          <td><div class="name">Casa Blue Â· condomÃ­nio</div><div class="sub">Boleto mensal abr/26</div></td>
+          <td>Pessoal Â· moradia</td>
+          <td><span class="tag-un pess">Pessoal Â· Casa Blue</span></td>
           <td>Cond. Residencial Vila</td>
-          <td class="pay-val out">− R$ 1.840</td>
+          <td class="pay-val out">â R$ 1.840</td>
           <td><span class="status-pill pago" onclick="cycleStatus(this)">Pago</span></td>
-          <td><span class="row-menu" onclick="toggleMenu(this)">⋮
+          <td><span class="row-menu" onclick="toggleMenu(this)">â®
             <div class="menu-list">
               <a href="#extrato">Baixar boleto</a>
-              <a href="#extrato">Ver histórico Casa Blue</a>
-              <a href="#extrato">Programar próximo mês</a>
+              <a href="#extrato">Ver histÃ³rico Casa Blue</a>
+              <a href="#extrato">Programar prÃ³ximo mÃªs</a>
               <a href="#extrato" class="sep del">Estornar</a>
             </div>
           </span></td>
@@ -1791,16 +1791,16 @@
         <tr data-row="ext">
           <td><span class="chk-box" onclick="toggleRow(this,'ext',620)"></span></td>
           <td>05 / 04</td>
-          <td><div class="name">Cabana · energia + água</div><div class="sub">Enel + Sabesp · mar/26</div></td>
-          <td>Pessoal · utilities</td>
-          <td><span class="tag-un pess">Pessoal · Cabana</span></td>
-          <td>Enel · Sabesp</td>
-          <td class="pay-val out">− R$ 620</td>
+          <td><div class="name">Cabana Â· energia + Ã¡gua</div><div class="sub">Enel + Sabesp Â· mar/26</div></td>
+          <td>Pessoal Â· utilities</td>
+          <td><span class="tag-un pess">Pessoal Â· Cabana</span></td>
+          <td>Enel Â· Sabesp</td>
+          <td class="pay-val out">â R$ 620</td>
           <td><span class="status-pill pago" onclick="cycleStatus(this)">Pago</span></td>
-          <td><span class="row-menu" onclick="toggleMenu(this)">⋮
+          <td><span class="row-menu" onclick="toggleMenu(this)">â®
             <div class="menu-list">
               <a href="#extrato">Baixar boleto</a>
-              <a href="#extrato">Ver histórico</a>
+              <a href="#extrato">Ver histÃ³rico</a>
               <a href="#extrato" class="sep del">Estornar</a>
             </div>
           </span></td>
@@ -1808,16 +1808,16 @@
         <tr data-row="ext">
           <td><span class="chk-box" onclick="toggleRow(this,'ext',450)"></span></td>
           <td>05 / 04</td>
-          <td><div class="name">Contador · mensalidade abril</div><div class="sub">Contabilidade Cabral e Lima</div></td>
-          <td>Operacional · contador</td>
+          <td><div class="name">Contador Â· mensalidade abril</div><div class="sub">Contabilidade Cabral e Lima</div></td>
+          <td>Operacional Â· contador</td>
           <td><span class="tag-un">Zenon Co.</span></td>
           <td>Contabilidade CL</td>
-          <td class="pay-val out">− R$ 450</td>
+          <td class="pay-val out">â R$ 450</td>
           <td><span class="status-pill pago" onclick="cycleStatus(this)">Pago</span></td>
-          <td><span class="row-menu" onclick="toggleMenu(this)">⋮
+          <td><span class="row-menu" onclick="toggleMenu(this)">â®
             <div class="menu-list">
               <a href="#extrato">Baixar NF</a>
-              <a href="#extrato">Clonar próximo mês</a>
+              <a href="#extrato">Clonar prÃ³ximo mÃªs</a>
               <a href="#extrato" class="sep del">Estornar</a>
             </div>
           </span></td>
@@ -1825,13 +1825,13 @@
         <tr data-row="ext">
           <td><span class="chk-box" onclick="toggleRow(this,'ext',720)"></span></td>
           <td>05 / 04</td>
-          <td><div class="name">Impostos · DAS março</div><div class="sub">Simples Nacional · anexo IV</div></td>
+          <td><div class="name">Impostos Â· DAS marÃ§o</div><div class="sub">Simples Nacional Â· anexo IV</div></td>
           <td>Impostos</td>
           <td><span class="tag-un">Zenon Co.</span></td>
           <td>Receita Federal</td>
-          <td class="pay-val out">− R$ 720</td>
+          <td class="pay-val out">â R$ 720</td>
           <td><span class="status-pill pago" onclick="cycleStatus(this)">Pago</span></td>
-          <td><span class="row-menu" onclick="toggleMenu(this)">⋮
+          <td><span class="row-menu" onclick="toggleMenu(this)">â®
             <div class="menu-list">
               <a href="#extrato">Baixar DARF</a>
               <a href="#extrato">Ver guia original</a>
@@ -1842,16 +1842,16 @@
         <tr data-row="ext">
           <td><span class="chk-box" onclick="toggleRow(this,'ext',4497)"></span></td>
           <td>20 / 03</td>
-          <td><div class="name"><a href="sistema-projeto-detalhe.html?p=P-01" style="color:var(--ink);text-decoration:none">Parcela 2/7 · Clínica ECCO</a></div><div class="sub">PIX · Rafael Monici</div></td>
-          <td>Receita · honorários obra</td>
+          <td><div class="name"><a href="sistema-projeto-detalhe.html?p=P-01" style="color:var(--ink);text-decoration:none">Parcela 2/7 Â· ClÃ­nica ECCO</a></div><div class="sub">PIX Â· Rafael Monici</div></td>
+          <td>Receita Â· honorÃ¡rios obra</td>
           <td><span class="tag-un">Zenon Co.</span></td>
           <td><a href="sistema-cliente-detalhe.html?id=CLI-4" style="color:var(--ink-body);text-decoration:none;border-bottom:1px dotted var(--line-strong)">Rafael Monici</a></td>
           <td class="pay-val in">+ R$ 4.497</td>
           <td><span class="status-pill pago" onclick="cycleStatus(this)">Pago</span></td>
-          <td><span class="row-menu" onclick="toggleMenu(this)">⋮
+          <td><span class="row-menu" onclick="toggleMenu(this)">â®
             <div class="menu-list">
-              <a href="sistema-cliente-detalhe.html?id=CLI-4">Abrir cliente <span class="k">↗</span></a>
-              <a href="sistema-projeto-detalhe.html?p=P-01">Abrir projeto <span class="k">↗</span></a>
+              <a href="sistema-cliente-detalhe.html?id=CLI-4">Abrir cliente <span class="k">â</span></a>
+              <a href="sistema-projeto-detalhe.html?p=P-01">Abrir projeto <span class="k">â</span></a>
               <a href="#extrato">Ver cronograma</a>
               <a href="#extrato" class="sep del">Estornar</a>
             </div>
@@ -1860,16 +1860,16 @@
         <tr data-row="ext">
           <td><span class="chk-box" onclick="toggleRow(this,'ext',240)"></span></td>
           <td>02 / 03</td>
-          <td><div class="name">Software · Notion + Figma</div><div class="sub">Assinaturas recorrentes</div></td>
-          <td>Software · SaaS</td>
+          <td><div class="name">Software Â· Notion + Figma</div><div class="sub">Assinaturas recorrentes</div></td>
+          <td>Software Â· SaaS</td>
           <td><span class="tag-un">Zenon Co.</span></td>
-          <td>Stripe · 2 assinaturas</td>
-          <td class="pay-val out">− R$ 240</td>
+          <td>Stripe Â· 2 assinaturas</td>
+          <td class="pay-val out">â R$ 240</td>
           <td><span class="status-pill pago" onclick="cycleStatus(this)">Pago</span></td>
-          <td><span class="row-menu" onclick="toggleMenu(this)">⋮
+          <td><span class="row-menu" onclick="toggleMenu(this)">â®
             <div class="menu-list">
-              <a href="sistema-configuracoes.html">Ver integrações <span class="k">↗</span></a>
-              <a href="#extrato">Separar em 2 lançamentos</a>
+              <a href="sistema-configuracoes.html">Ver integraÃ§Ãµes <span class="k">â</span></a>
+              <a href="#extrato">Separar em 2 lanÃ§amentos</a>
               <a href="#extrato" class="sep del">Estornar</a>
             </div>
           </span></td>
@@ -1877,16 +1877,16 @@
         <tr data-row="ext">
           <td><span class="chk-box" onclick="toggleRow(this,'ext',5940)"></span></td>
           <td>27 / 02</td>
-          <td><div class="name"><a href="sistema-projeto-detalhe.html?p=P-03" style="color:var(--ink);text-decoration:none">Parcela 2/3 · CT Darkhouse</a></div><div class="sub">PIX · aprovação alvará</div></td>
-          <td>Receita · consultoria técnica</td>
+          <td><div class="name"><a href="sistema-projeto-detalhe.html?p=P-03" style="color:var(--ink);text-decoration:none">Parcela 2/3 Â· CT Darkhouse</a></div><div class="sub">PIX Â· aprovaÃ§Ã£o alvarÃ¡</div></td>
+          <td>Receita Â· consultoria tÃ©cnica</td>
           <td><span class="tag-un">Zenon Co.</span></td>
           <td><a href="sistema-cliente-detalhe.html?id=CLI-1" style="color:var(--ink-body);text-decoration:none;border-bottom:1px dotted var(--line-strong)">Jakson Nantes</a></td>
           <td class="pay-val in">+ R$ 5.940</td>
           <td><span class="status-pill pago" onclick="cycleStatus(this)">Pago</span></td>
-          <td><span class="row-menu" onclick="toggleMenu(this)">⋮
+          <td><span class="row-menu" onclick="toggleMenu(this)">â®
             <div class="menu-list">
-              <a href="sistema-cliente-detalhe.html?id=CLI-1">Abrir cliente <span class="k">↗</span></a>
-              <a href="sistema-projeto-detalhe.html?p=P-03">Abrir projeto <span class="k">↗</span></a>
+              <a href="sistema-cliente-detalhe.html?id=CLI-1">Abrir cliente <span class="k">â</span></a>
+              <a href="sistema-projeto-detalhe.html?p=P-03">Abrir projeto <span class="k">â</span></a>
               <a href="#extrato">Ver cronograma</a>
               <a href="#extrato" class="sep del">Estornar</a>
             </div>
@@ -1895,16 +1895,16 @@
         <tr data-row="ext">
           <td><span class="chk-box" onclick="toggleRow(this,'ext',5940)"></span></td>
           <td>25 / 02</td>
-          <td><div class="name"><a href="sistema-projeto-detalhe.html?p=P-03" style="color:var(--ink);text-decoration:none">Parcela 1/3 · CT Darkhouse</a></div><div class="sub">PIX · sinal regularização</div></td>
-          <td>Receita · consultoria técnica</td>
+          <td><div class="name"><a href="sistema-projeto-detalhe.html?p=P-03" style="color:var(--ink);text-decoration:none">Parcela 1/3 Â· CT Darkhouse</a></div><div class="sub">PIX Â· sinal regularizaÃ§Ã£o</div></td>
+          <td>Receita Â· consultoria tÃ©cnica</td>
           <td><span class="tag-un">Zenon Co.</span></td>
           <td><a href="sistema-cliente-detalhe.html?id=CLI-1" style="color:var(--ink-body);text-decoration:none;border-bottom:1px dotted var(--line-strong)">Jakson Nantes</a></td>
           <td class="pay-val in">+ R$ 5.940</td>
           <td><span class="status-pill pago" onclick="cycleStatus(this)">Pago</span></td>
-          <td><span class="row-menu" onclick="toggleMenu(this)">⋮
+          <td><span class="row-menu" onclick="toggleMenu(this)">â®
             <div class="menu-list">
-              <a href="sistema-cliente-detalhe.html?id=CLI-1">Abrir cliente <span class="k">↗</span></a>
-              <a href="sistema-projeto-detalhe.html?p=P-03">Abrir projeto <span class="k">↗</span></a>
+              <a href="sistema-cliente-detalhe.html?id=CLI-1">Abrir cliente <span class="k">â</span></a>
+              <a href="sistema-projeto-detalhe.html?p=P-03">Abrir projeto <span class="k">â</span></a>
               <a href="#extrato">Ver cronograma</a>
               <a href="#extrato" class="sep del">Estornar</a>
             </div>
@@ -1913,16 +1913,16 @@
         <tr data-row="ext">
           <td><span class="chk-box" onclick="toggleRow(this,'ext',12469)"></span></td>
           <td>20 / 02</td>
-          <td><div class="name"><a href="sistema-projeto-detalhe.html?p=P-01" style="color:var(--ink);text-decoration:none">Parcela 1/7 · Clínica ECCO</a></div><div class="sub">PIX · sinal contrato</div></td>
-          <td>Receita · honorários obra</td>
+          <td><div class="name"><a href="sistema-projeto-detalhe.html?p=P-01" style="color:var(--ink);text-decoration:none">Parcela 1/7 Â· ClÃ­nica ECCO</a></div><div class="sub">PIX Â· sinal contrato</div></td>
+          <td>Receita Â· honorÃ¡rios obra</td>
           <td><span class="tag-un">Zenon Co.</span></td>
           <td><a href="sistema-cliente-detalhe.html?id=CLI-4" style="color:var(--ink-body);text-decoration:none;border-bottom:1px dotted var(--line-strong)">Rafael Monici</a></td>
           <td class="pay-val in">+ R$ 12.469</td>
           <td><span class="status-pill pago" onclick="cycleStatus(this)">Pago</span></td>
-          <td><span class="row-menu" onclick="toggleMenu(this)">⋮
+          <td><span class="row-menu" onclick="toggleMenu(this)">â®
             <div class="menu-list">
-              <a href="sistema-cliente-detalhe.html?id=CLI-4">Abrir cliente <span class="k">↗</span></a>
-              <a href="sistema-projeto-detalhe.html?p=P-01">Abrir projeto <span class="k">↗</span></a>
+              <a href="sistema-cliente-detalhe.html?id=CLI-4">Abrir cliente <span class="k">â</span></a>
+              <a href="sistema-projeto-detalhe.html?p=P-01">Abrir projeto <span class="k">â</span></a>
               <a href="#extrato">Ver contrato</a>
               <a href="#extrato" class="sep del">Estornar</a>
             </div>
@@ -1931,15 +1931,15 @@
         <tr data-row="ext">
           <td><span class="chk-box" onclick="toggleRow(this,'ext',1080)"></span></td>
           <td>15 / 02</td>
-          <td><div class="name">RRT CAU 2026.0104 · ECCO</div><div class="sub">Taxa CAU BR · obra clínica</div></td>
-          <td>Operacional · RRT</td>
+          <td><div class="name">RRT CAU 2026.0104 Â· ECCO</div><div class="sub">Taxa CAU BR Â· obra clÃ­nica</div></td>
+          <td>Operacional Â· RRT</td>
           <td><span class="tag-un">Zenon Co.</span></td>
           <td>CAU BR</td>
-          <td class="pay-val out">− R$ 1.080</td>
+          <td class="pay-val out">â R$ 1.080</td>
           <td><span class="status-pill pago" onclick="cycleStatus(this)">Pago</span></td>
-          <td><span class="row-menu" onclick="toggleMenu(this)">⋮
+          <td><span class="row-menu" onclick="toggleMenu(this)">â®
             <div class="menu-list">
-              <a href="sistema-projeto-detalhe.html?p=P-01">Abrir projeto <span class="k">↗</span></a>
+              <a href="sistema-projeto-detalhe.html?p=P-01">Abrir projeto <span class="k">â</span></a>
               <a href="#extrato">Baixar boleto RRT</a>
               <a href="#extrato" class="sep del">Estornar</a>
             </div>
@@ -1953,18 +1953,18 @@
     <div class="section-head">
       <div>
         <div class="eyebrow">Captura de notas fiscais</div>
-        <h2>Subir <em>NF</em> e registrar automático</h2>
+        <h2>Subir <em>NF</em> e registrar automÃ¡tico</h2>
       </div>
       <div style="display:flex;gap:8px;align-items:center">
-        <span style="font-size:11px;color:var(--ink-mute);letter-spacing:.1em">3 NFs aguardando classificação</span>
-        <a href="#" class="btn ghost small">Regras automáticas</a>
+        <span style="font-size:11px;color:var(--ink-mute);letter-spacing:.1em">3 NFs aguardando classificaÃ§Ã£o</span>
+        <a href="#" class="btn ghost small">Regras automÃ¡ticas</a>
       </div>
     </div>
 
     <div class="nf-rules">
-      <span class="ic">✦</span>
+      <span class="ic">â¦</span>
       <div class="tx">
-        Arraste a <strong>NF</strong> (PDF, XML ou foto) na área abaixo. O sistema lê CNPJ, valor e data, sugere o <strong>negócio</strong> e a <strong>categoria</strong> com base em lançamentos anteriores. Você confirma, ajusta se precisar, e vira lançamento no Financeiro com link permanente para o arquivo. Cabana e Casa Blue também entram aqui — tanto <strong>entradas</strong> (aluguel, recebimentos) quanto <strong>saídas</strong> (energia, manutenção). <a href="sistema-configuracoes.html#integracoes">Configurar OCR</a>
+        Arraste a <strong>NF</strong> (PDF, XML ou foto) na Ã¡rea abaixo. O sistema lÃª CNPJ, valor e data, sugere o <strong>negÃ³cio</strong> e a <strong>categoria</strong> com base em lanÃ§amentos anteriores. VocÃª confirma, ajusta se precisar, e vira lanÃ§amento no Financeiro com link permanente para o arquivo. Cabana e Casa Blue tambÃ©m entram aqui â tanto <strong>entradas</strong> (aluguel, recebimentos) quanto <strong>saÃ­das</strong> (energia, manutenÃ§Ã£o). <a href="sistema-configuracoes.html#integracoes">Configurar OCR</a>
       </div>
     </div>
 
@@ -1973,10 +1973,10 @@
       <!-- DROP ZONE -->
       <label class="nf-drop" for="nf-input-file">
         <span class="nf-queue-chip">Fila: <strong>3</strong></span>
-        <div class="ico">↥</div>
+        <div class="ico">â¥</div>
         <div class="hd">Arraste a <em>nota fiscal</em> aqui</div>
         <div class="sub">ou clique para selecionar do computador. Aceita PDF, XML de NF-e / NFS-e e fotos JPG/PNG.</div>
-        <div class="formats">PDF · XML · JPG · PNG · até 10 MB</div>
+        <div class="formats">PDF Â· XML Â· JPG Â· PNG Â· atÃ© 10 MB</div>
         <a href="#" class="btn">Selecionar arquivo</a>
         <input type="file" id="nf-input-file" accept=".pdf,.xml,.jpg,.jpeg,.png" style="display:none">
       </label>
@@ -1985,8 +1985,8 @@
       <div class="nf-preview">
         <div class="nf-preview-head">
           <div>
-            <div class="file-tag" style="margin-bottom:8px">NF-e · #000.042.118 · extraído há 12s</div>
-            <h3>Leroy Merlin · <em>material de obra</em></h3>
+            <div class="file-tag" style="margin-bottom:8px">NF-e Â· #000.042.118 Â· extraÃ­do hÃ¡ 12s</div>
+            <h3>Leroy Merlin Â· <em>material de obra</em></h3>
           </div>
           <span class="proc-badge">Processado</span>
         </div>
@@ -1997,11 +1997,11 @@
             <span class="vl">01.438.784/0158-20</span>
           </div>
           <div class="nf-field">
-            <span class="lb">Razão social</span>
+            <span class="lb">RazÃ£o social</span>
             <span class="vl">LM Brasil LTDA</span>
           </div>
           <div class="nf-field">
-            <span class="lb">Data emissão</span>
+            <span class="lb">Data emissÃ£o</span>
             <span class="vl">18/04/2026</span>
           </div>
           <div class="nf-field big">
@@ -2009,38 +2009,38 @@
             <span class="vl"><em>R$</em> 4.280,00</span>
           </div>
           <div class="nf-field">
-            <span class="lb">Número NF</span>
+            <span class="lb">NÃºmero NF</span>
             <span class="vl">000.042.118</span>
           </div>
           <div class="nf-field">
             <span class="lb">Chave de acesso</span>
-            <span class="vl" style="font-size:11px;color:var(--ink-mute);letter-spacing:.02em">4126 0418 0143 8784 …</span>
+            <span class="vl" style="font-size:11px;color:var(--ink-mute);letter-spacing:.02em">4126 0418 0143 8784 â¦</span>
           </div>
         </div>
 
         <!-- Classification form -->
         <div class="nf-classif">
           <div class="nf-classif-head">
-            <span class="ttl">Classificação do lançamento</span>
-            <span class="ai-hint">Sugestão por histórico (Leroy → Obra CT Darkhouse)</span>
+            <span class="ttl">ClassificaÃ§Ã£o do lanÃ§amento</span>
+            <span class="ai-hint">SugestÃ£o por histÃ³rico (Leroy â Obra CT Darkhouse)</span>
           </div>
 
           <div class="nf-tipo">
-            <button class="on out">↓ Saída</button>
-            <button class="in">↑ Entrada</button>
+            <button class="on out">â SaÃ­da</button>
+            <button class="in">â Entrada</button>
           </div>
 
           <div class="nf-row">
             <div class="ff">
               <label>Unidade / fonte</label>
               <select>
-                <optgroup label="Negócios">
+                <optgroup label="NegÃ³cios">
                   <option>Zenon Co.</option>
                   <option>Yvyra Lab</option>
                   <option>Zenon Vision</option>
                   <option>Zenon Stay</option>
                 </optgroup>
-                <optgroup label="Fontes pessoais (entrada ou saída)">
+                <optgroup label="Fontes pessoais (entrada ou saÃ­da)">
                   <option>Cabana</option>
                   <option>Casa Blue</option>
                 </optgroup>
@@ -2050,40 +2050,40 @@
             <div class="ff">
               <label>Categoria</label>
               <select>
-                <option>Fornecedor · material</option>
-                <option>Fornecedor · obra</option>
-                <option>Operacional · locação</option>
-                <option>Equipe · PJ</option>
-                <option>Pessoal · Cabana</option>
-                <option>Pessoal · Casa Blue</option>
+                <option>Fornecedor Â· material</option>
+                <option>Fornecedor Â· obra</option>
+                <option>Operacional Â· locaÃ§Ã£o</option>
+                <option>Equipe Â· PJ</option>
+                <option>Pessoal Â· Cabana</option>
+                <option>Pessoal Â· Casa Blue</option>
               </select>
-              <span class="sugg">Sugerido: Fornecedor · material</span>
+              <span class="sugg">Sugerido: Fornecedor Â· material</span>
             </div>
             <div class="ff">
               <label>Obra / projeto vinculado</label>
               <select>
-                <option>CT Darkhouse — em obra</option>
+                <option>CT Darkhouse â em obra</option>
                 <option>Casa Juliana</option>
                 <option>Apt. Ana Paula</option>
                 <option>Loft Yvyra</option>
-                <option>— sem vínculo —</option>
+                <option>â sem vÃ­nculo â</option>
               </select>
             </div>
           </div>
 
           <div class="nf-row">
             <div class="ff">
-              <label>Conta bancária</label>
+              <label>Conta bancÃ¡ria</label>
               <select>
-                <option>Inter PJ · Zenon Co. (padrão)</option>
-                <option>Itaú PJ · Yvyra Lab</option>
+                <option>Inter PJ Â· Zenon Co. (padrÃ£o)</option>
+                <option>ItaÃº PJ Â· Yvyra Lab</option>
                 <option>Inter Reserva</option>
                 <option>Nubank Pessoal</option>
               </select>
             </div>
             <div class="ff">
               <label>Forma de pagamento</label>
-              <select><option>PIX</option><option>Boleto</option><option>Cartão de crédito</option><option>Transferência</option><option>Dinheiro</option></select>
+              <select><option>PIX</option><option>Boleto</option><option>CartÃ£o de crÃ©dito</option><option>TransferÃªncia</option><option>Dinheiro</option></select>
             </div>
             <div class="ff">
               <label>Vencimento / pagamento</label>
@@ -2098,7 +2098,7 @@
             </div>
             <div class="right">
               <a href="#" class="btn">Salvar como rascunho</a>
-              <button class="btn primary">Registrar lançamento</button>
+              <button class="btn primary">Registrar lanÃ§amento</button>
             </div>
           </div>
         </div>
@@ -2110,87 +2110,87 @@
     <div class="nf-queue" style="margin-top:20px">
       <div class="nf-queue-hd">
         <h3>NFs <em>recentes</em></h3>
-        <span class="count">Últimos 7 dias · 8 notas · R$ 18.420,00 movimentados</span>
+        <span class="count">Ãltimos 7 dias Â· 8 notas Â· R$ 18.420,00 movimentados</span>
       </div>
 
       <div class="nf-q-row">
         <div class="file-ico">PDF</div>
-        <div class="nm">NF 000.042.118<div class="sub">LM Brasil · hoje 14:22</div></div>
+        <div class="nm">NF 000.042.118<div class="sub">LM Brasil Â· hoje 14:22</div></div>
         <div class="emit">Leroy Merlin<div class="cnpj">01.438.784/0158-20</div></div>
-        <div class="vl out">− 4.280,00</div>
+        <div class="vl out">â 4.280,00</div>
         <span class="tag-un zenon">Zenon Co.</span>
-        <span class="st pend">Aguardando você</span>
-        <div class="row-btns"><a href="#" class="ic" title="Ver">👁</a><a href="#" class="ic" title="Editar">✎</a></div>
+        <span class="st pend">Aguardando vocÃª</span>
+        <div class="row-btns"><a href="#" class="ic" title="Ver">ð</a><a href="#" class="ic" title="Editar">â</a></div>
       </div>
 
       <div class="nf-q-row">
         <div class="file-ico">XML</div>
-        <div class="nm">NFS-e 2026/0041<div class="sub">Cliente PF · hoje 11:08</div></div>
-        <div class="emit">Aluguel Cabana · Abril<div class="cnpj">Locatário: Helena M. · CPF 094.***.***-12</div></div>
+        <div class="nm">NFS-e 2026/0041<div class="sub">Cliente PF Â· hoje 11:08</div></div>
+        <div class="emit">Aluguel Cabana Â· Abril<div class="cnpj">LocatÃ¡rio: Helena M. Â· CPF 094.***.***-12</div></div>
         <div class="vl in">+ 2.800,00</div>
-        <span class="tag-un pess">Cabana · entrada</span>
-        <span class="st pend">Aguardando você</span>
-        <div class="row-btns"><a href="#" class="ic" title="Ver">👁</a><a href="#" class="ic" title="Editar">✎</a></div>
+        <span class="tag-un pess">Cabana Â· entrada</span>
+        <span class="st pend">Aguardando vocÃª</span>
+        <div class="row-btns"><a href="#" class="ic" title="Ver">ð</a><a href="#" class="ic" title="Editar">â</a></div>
       </div>
 
       <div class="nf-q-row">
         <div class="file-ico">JPG</div>
-        <div class="nm">Foto da NF · Celesc<div class="sub">foto do app · ontem 19:40</div></div>
-        <div class="emit">Celesc Distribuição<div class="cnpj">08.336.783/0001-90</div></div>
-        <div class="vl out">− 318,40</div>
-        <span class="tag-un pess">Cabana · saída</span>
+        <div class="nm">Foto da NF Â· Celesc<div class="sub">foto do app Â· ontem 19:40</div></div>
+        <div class="emit">Celesc DistribuiÃ§Ã£o<div class="cnpj">08.336.783/0001-90</div></div>
+        <div class="vl out">â 318,40</div>
+        <span class="tag-un pess">Cabana Â· saÃ­da</span>
         <span class="st proc">OCR em processamento</span>
-        <div class="row-btns"><a href="#" class="ic" title="Ver">👁</a><a href="#" class="ic" title="Editar">✎</a></div>
+        <div class="row-btns"><a href="#" class="ic" title="Ver">ð</a><a href="#" class="ic" title="Editar">â</a></div>
       </div>
 
       <div class="nf-q-row">
         <div class="file-ico">PDF</div>
-        <div class="nm">NFS-e 2026/0040<div class="sub">Zenon Co. · 17/04 09:12</div></div>
-        <div class="emit">Prestação — Projeto Casa Juliana<div class="cnpj">Tomador: Juliana P. · CPF 152.***.***-88</div></div>
+        <div class="nm">NFS-e 2026/0040<div class="sub">Zenon Co. Â· 17/04 09:12</div></div>
+        <div class="emit">PrestaÃ§Ã£o â Projeto Casa Juliana<div class="cnpj">Tomador: Juliana P. Â· CPF 152.***.***-88</div></div>
         <div class="vl in">+ 18.000,00</div>
         <span class="tag-un zenon">Zenon Co.</span>
-        <span class="st ok">Lançada · parcela 2/3</span>
-        <div class="row-btns"><a href="#" class="ic" title="Ver">👁</a><a href="#" class="ic" title="Abrir lançamento">→</a></div>
+        <span class="st ok">LanÃ§ada Â· parcela 2/3</span>
+        <div class="row-btns"><a href="#" class="ic" title="Ver">ð</a><a href="#" class="ic" title="Abrir lanÃ§amento">â</a></div>
       </div>
 
       <div class="nf-q-row">
         <div class="file-ico">PDF</div>
-        <div class="nm">NF 884<div class="sub">Marcenaria · 16/04 16:45</div></div>
+        <div class="nm">NF 884<div class="sub">Marcenaria Â· 16/04 16:45</div></div>
         <div class="emit">Zigue Zague Marcenaria<div class="cnpj">24.118.009/0001-03</div></div>
-        <div class="vl out">− 6.420,00</div>
+        <div class="vl out">â 6.420,00</div>
         <span class="tag-un zenon">Zenon Co.</span>
-        <span class="st ok">Lançada</span>
-        <div class="row-btns"><a href="#" class="ic" title="Ver">👁</a><a href="#" class="ic" title="Abrir">→</a></div>
+        <span class="st ok">LanÃ§ada</span>
+        <div class="row-btns"><a href="#" class="ic" title="Ver">ð</a><a href="#" class="ic" title="Abrir">â</a></div>
       </div>
 
       <div class="nf-q-row">
         <div class="file-ico">XML</div>
-        <div class="nm">NF 1127<div class="sub">Yvyra · 15/04 10:20</div></div>
-        <div class="emit">Cerâmica São Bento<div class="cnpj">11.884.552/0001-44</div></div>
-        <div class="vl out">− 2.140,00</div>
+        <div class="nm">NF 1127<div class="sub">Yvyra Â· 15/04 10:20</div></div>
+        <div class="emit">CerÃ¢mica SÃ£o Bento<div class="cnpj">11.884.552/0001-44</div></div>
+        <div class="vl out">â 2.140,00</div>
         <span class="tag-un yvyra">Yvyra Lab</span>
-        <span class="st ok">Lançada · espelhada Notion</span>
-        <div class="row-btns"><a href="#" class="ic" title="Ver">👁</a><a href="#" class="ic" title="Abrir">→</a></div>
+        <span class="st ok">LanÃ§ada Â· espelhada Notion</span>
+        <div class="row-btns"><a href="#" class="ic" title="Ver">ð</a><a href="#" class="ic" title="Abrir">â</a></div>
       </div>
 
       <div class="nf-q-row">
         <div class="file-ico">JPG</div>
-        <div class="nm">Recibo Casa Blue<div class="sub">foto do condomínio · 14/04</div></div>
-        <div class="emit">Cond. Edifício Blue<div class="cnpj">13.998.001/0001-22</div></div>
-        <div class="vl out">− 1.240,00</div>
-        <span class="tag-un pess">Casa Blue · saída</span>
-        <span class="st ok">Lançada</span>
-        <div class="row-btns"><a href="#" class="ic" title="Ver">👁</a><a href="#" class="ic" title="Abrir">→</a></div>
+        <div class="nm">Recibo Casa Blue<div class="sub">foto do condomÃ­nio Â· 14/04</div></div>
+        <div class="emit">Cond. EdifÃ­cio Blue<div class="cnpj">13.998.001/0001-22</div></div>
+        <div class="vl out">â 1.240,00</div>
+        <span class="tag-un pess">Casa Blue Â· saÃ­da</span>
+        <span class="st ok">LanÃ§ada</span>
+        <div class="row-btns"><a href="#" class="ic" title="Ver">ð</a><a href="#" class="ic" title="Abrir">â</a></div>
       </div>
 
       <div class="nf-q-row">
         <div class="file-ico">PDF</div>
-        <div class="nm">NF 000.042.009<div class="sub">import problema · 13/04</div></div>
-        <div class="emit">CNPJ não reconhecido<div class="cnpj">—</div></div>
+        <div class="nm">NF 000.042.009<div class="sub">import problema Â· 13/04</div></div>
+        <div class="emit">CNPJ nÃ£o reconhecido<div class="cnpj">â</div></div>
         <div class="vl">R$ ?</div>
-        <span class="tag-un pend">Não identificado</span>
+        <span class="tag-un pend">NÃ£o identificado</span>
         <span class="st err">Erro no OCR</span>
-        <div class="row-btns"><a href="#" class="ic" title="Ver">👁</a><a href="#" class="ic" title="Reprocessar">⟳</a></div>
+        <div class="row-btns"><a href="#" class="ic" title="Ver">ð</a><a href="#" class="ic" title="Reprocessar">â³</a></div>
       </div>
     </div>
 
@@ -2199,8 +2199,8 @@
   <section id="conciliacao">
     <div class="section-head">
       <div>
-        <div class="eyebrow">Conciliação bancária</div>
-        <h2>Extrato do banco <em>×</em> lançamentos do sistema</h2>
+        <div class="eyebrow">ConciliaÃ§Ã£o bancÃ¡ria</div>
+        <h2>Extrato do banco <em>Ã</em> lanÃ§amentos do sistema</h2>
       </div>
       <div style="display:flex;gap:8px">
         <a href="#conciliacao" class="btn ghost small">Baixar OFX modelo</a>
@@ -2212,7 +2212,7 @@
       <div class="conc-stat ok"><div class="l">Conciliados</div><div class="v">38</div></div>
       <div class="conc-stat warn"><div class="l">Pendentes</div><div class="v">7</div></div>
       <div class="conc-stat"><div class="l">Ignorados</div><div class="v">2</div></div>
-      <div class="conc-stat"><div class="l">Diferença</div><div class="v" style="color:var(--alert)">R$ 1.240</div></div>
+      <div class="conc-stat"><div class="l">DiferenÃ§a</div><div class="v" style="color:var(--alert)">R$ 1.240</div></div>
     </div>
 
     <div class="conc-grid">
@@ -2220,15 +2220,15 @@
         <div class="conc-head">
           <div>
             <h3>Itens <em>a conciliar</em></h3>
-            <div class="sub">Banco Inter · conta 0001-12345-6 · extrato 01–18 / 04</div>
+            <div class="sub">Banco Inter Â· conta 0001-12345-6 Â· extrato 01â18 / 04</div>
           </div>
           <span class="badge warn">7 pendentes</span>
         </div>
 
         <div class="conc-row">
           <div class="dsc">
-            <div><strong>PIX RECEBIDO · RAFAEL T PRADO</strong></div>
-            <div class="sub2">17 / 04 · docID 8823991 · ref "sinal casa blue"</div>
+            <div><strong>PIX RECEBIDO Â· RAFAEL T PRADO</strong></div>
+            <div class="sub2">17 / 04 Â· docID 8823991 Â· ref "sinal casa blue"</div>
           </div>
           <div class="val" style="color:var(--ok)">+ R$ 25.600</div>
           <a href="#conciliacao" class="act" onclick="markConc(this,'done')">Vincular</a>
@@ -2236,62 +2236,62 @@
 
         <div class="conc-row">
           <div class="dsc">
-            <div><strong>PIX RECEBIDO · ANA P MELLO</strong></div>
-            <div class="sub2">15 / 04 · docID 8821544 · ref "parcela 2 apto"</div>
+            <div><strong>PIX RECEBIDO Â· ANA P MELLO</strong></div>
+            <div class="sub2">15 / 04 Â· docID 8821544 Â· ref "parcela 2 apto"</div>
           </div>
           <div class="val" style="color:var(--ok)">+ R$ 13.600</div>
-          <a href="#conciliacao" class="act done">✓ Casado</a>
+          <a href="#conciliacao" class="act done">â Casado</a>
         </div>
 
         <div class="conc-row">
           <div class="dsc">
-            <div><strong>TED ENVIADA · MARCENARIA MARIO</strong></div>
-            <div class="sub2">14 / 04 · docID 8820102 · contraparte Mario Ferreira ME</div>
+            <div><strong>TED ENVIADA Â· MARCENARIA MARIO</strong></div>
+            <div class="sub2">14 / 04 Â· docID 8820102 Â· contraparte Mario Ferreira ME</div>
           </div>
-          <div class="val" style="color:var(--alert)">− R$ 8.400</div>
+          <div class="val" style="color:var(--alert)">â R$ 8.400</div>
           <a href="#conciliacao" class="act" onclick="markConc(this,'done')">Vincular</a>
         </div>
 
         <div class="conc-row">
           <div class="dsc">
-            <div><strong>DÉBITO · BOLETO 23790.12345</strong></div>
-            <div class="sub2">13 / 04 · Casa dos Pisos SP · NF 44183</div>
+            <div><strong>DÃBITO Â· BOLETO 23790.12345</strong></div>
+            <div class="sub2">13 / 04 Â· Casa dos Pisos SP Â· NF 44183</div>
           </div>
-          <div class="val" style="color:var(--alert)">− R$ 12.480</div>
-          <a href="#conciliacao" class="act done">✓ Casado</a>
+          <div class="val" style="color:var(--alert)">â R$ 12.480</div>
+          <a href="#conciliacao" class="act done">â Casado</a>
         </div>
 
         <div class="conc-row">
           <div class="dsc">
-            <div><strong>PIX RECEBIDO · LAURA MENEZES</strong></div>
-            <div class="sub2">08 / 04 · docID 8806710 · ref "cabana 4 diárias"</div>
+            <div><strong>PIX RECEBIDO Â· LAURA MENEZES</strong></div>
+            <div class="sub2">08 / 04 Â· docID 8806710 Â· ref "cabana 4 diÃ¡rias"</div>
           </div>
           <div class="val" style="color:var(--ok)">+ R$ 5.600</div>
-          <a href="#conciliacao" class="act done">✓ Casado</a>
+          <a href="#conciliacao" class="act done">â Casado</a>
         </div>
 
         <div class="conc-row">
           <div class="dsc">
-            <div><strong>DÉBITO AUTOMÁTICO · STRIPE ASSINATURA</strong></div>
-            <div class="sub2">02 / 04 · 3 cobranças combinadas (Notion, Figma, Dropbox)</div>
+            <div><strong>DÃBITO AUTOMÃTICO Â· STRIPE ASSINATURA</strong></div>
+            <div class="sub2">02 / 04 Â· 3 cobranÃ§as combinadas (Notion, Figma, Dropbox)</div>
           </div>
-          <div class="val" style="color:var(--alert)">− R$ 1.480</div>
-          <a href="#conciliacao" class="act done">✓ Casado</a>
+          <div class="val" style="color:var(--alert)">â R$ 1.480</div>
+          <a href="#conciliacao" class="act done">â Casado</a>
         </div>
 
         <div class="conc-row">
           <div class="dsc">
-            <div><strong>TARIFA · PACOTE CONTA PJ</strong></div>
-            <div class="sub2">01 / 04 · não vinculado a categoria</div>
+            <div><strong>TARIFA Â· PACOTE CONTA PJ</strong></div>
+            <div class="sub2">01 / 04 Â· nÃ£o vinculado a categoria</div>
           </div>
-          <div class="val" style="color:var(--alert)">− R$ 89</div>
+          <div class="val" style="color:var(--alert)">â R$ 89</div>
           <a href="#conciliacao" class="act" onclick="markConc(this,'done')">Vincular</a>
         </div>
 
         <div class="conc-row">
           <div class="dsc">
-            <div><strong>CRÉDITO · DEPÓSITO ESPÉCIE</strong></div>
-            <div class="sub2">01 / 04 · sem identificação de origem</div>
+            <div><strong>CRÃDITO Â· DEPÃSITO ESPÃCIE</strong></div>
+            <div class="sub2">01 / 04 Â· sem identificaÃ§Ã£o de origem</div>
           </div>
           <div class="val" style="color:var(--ok)">+ R$ 1.240</div>
           <a href="#conciliacao" class="act" onclick="markConc(this,'done')">Investigar</a>
@@ -2303,27 +2303,27 @@
           <div class="conc-head">
             <div>
               <h3>Importar <em>extrato</em></h3>
-              <div class="sub">Suporta OFX, CSV (Inter, Nubank, BB, Itaú) e PDF via OCR</div>
+              <div class="sub">Suporta OFX, CSV (Inter, Nubank, BB, ItaÃº) e PDF via OCR</div>
             </div>
           </div>
           <label class="upload-box" for="fl-ofx">
             <div class="big">Arraste o arquivo aqui</div>
-            <div class="small">ou clique para selecionar · OFX / CSV / PDF até 10 MB</div>
+            <div class="small">ou clique para selecionar Â· OFX / CSV / PDF atÃ© 10 MB</div>
             <span class="btn">Escolher arquivo</span>
           </label>
           <input type="file" id="fl-ofx" accept=".ofx,.csv,.pdf" style="display:none">
           <div style="margin-top:12px;font-size:11px;color:var(--ink-mute);line-height:1.6">
-            <strong style="color:var(--ink)">Última importação:</strong> 18 / 04 / 2026 às 09:42 · 47 lançamentos processados · 38 casados automaticamente por valor+data, 7 precisam de ação manual.
+            <strong style="color:var(--ink)">Ãltima importaÃ§Ã£o:</strong> 18 / 04 / 2026 Ã s 09:42 Â· 47 lanÃ§amentos processados Â· 38 casados automaticamente por valor+data, 7 precisam de aÃ§Ã£o manual.
           </div>
         </div>
 
         <div class="conc-card">
           <div class="conc-head">
             <div>
-              <h3>Regras de <em>casamento</em> automático</h3>
-              <div class="sub">Padrões que o sistema usa para vincular extrato e lançamentos</div>
+              <h3>Regras de <em>casamento</em> automÃ¡tico</h3>
+              <div class="sub">PadrÃµes que o sistema usa para vincular extrato e lanÃ§amentos</div>
             </div>
-            <a href="sistema-configuracoes.html" class="link small">Editar →</a>
+            <a href="sistema-configuracoes.html" class="link small">Editar â</a>
           </div>
           <div style="display:flex;flex-direction:column;gap:10px;font-size:12px;color:var(--ink-body)">
             <div style="display:flex;justify-content:space-between;gap:10px;padding:8px 10px;background:var(--bg-alt);border-radius:3px">
@@ -2331,19 +2331,19 @@
               <span class="badge ok">auto</span>
             </div>
             <div style="display:flex;justify-content:space-between;gap:10px;padding:8px 10px;background:var(--bg-alt);border-radius:3px">
-              <span>Valor + data exata ≤ 2 dias corridos</span>
+              <span>Valor + data exata â¤ 2 dias corridos</span>
               <span class="badge ok">auto</span>
             </div>
             <div style="display:flex;justify-content:space-between;gap:10px;padding:8px 10px;background:var(--bg-alt);border-radius:3px">
-              <span>Ref. do PIX contém número da NF ou parcela</span>
+              <span>Ref. do PIX contÃ©m nÃºmero da NF ou parcela</span>
               <span class="badge ok">auto</span>
             </div>
             <div style="display:flex;justify-content:space-between;gap:10px;padding:8px 10px;background:var(--bg-alt);border-radius:3px">
-              <span>Boletos registrados (cobrança Asaas)</span>
+              <span>Boletos registrados (cobranÃ§a Asaas)</span>
               <span class="badge warn">off</span>
             </div>
             <div style="display:flex;justify-content:space-between;gap:10px;padding:8px 10px;background:var(--bg-alt);border-radius:3px">
-              <span>Tarifas bancárias recorrentes → categoria "Operacional"</span>
+              <span>Tarifas bancÃ¡rias recorrentes â categoria "Operacional"</span>
               <span class="badge ok">auto</span>
             </div>
           </div>
@@ -2354,7 +2354,7 @@
 
   <section id="novo-lancamento">
     <div class="section-head">
-      <div><div class="eyebrow">Registro rápido</div><h2>Novo <em>lançamento</em></h2></div>
+      <div><div class="eyebrow">Registro rÃ¡pido</div><h2>Novo <em>lanÃ§amento</em></h2></div>
     </div>
 
     <div class="lanc-form">
@@ -2363,7 +2363,7 @@
           <label>Tipo</label>
           <div class="lanc-tg">
             <button class="on in">Entrada</button>
-            <button>Saída</button>
+            <button>SaÃ­da</button>
           </div>
         </div>
         <div class="ff">
@@ -2375,58 +2375,58 @@
           <input type="number" placeholder="0,00" step="0.01">
         </div>
         <div class="ff">
-          <label>Unidade / classificação</label>
+          <label>Unidade / classificaÃ§Ã£o</label>
           <select>
-            <optgroup label="Negócios">
+            <optgroup label="NegÃ³cios">
               <option>Zenon Co.</option>
               <option>Yvyra Lab</option>
               <option>Zenon Vision</option>
               <option>Zenon Stay</option>
             </optgroup>
             <optgroup label="Despesas pessoais">
-              <option>Pessoal · Cabana</option>
-              <option>Pessoal · Casa Blue</option>
-              <option>Pessoal · outros</option>
+              <option>Pessoal Â· Cabana</option>
+              <option>Pessoal Â· Casa Blue</option>
+              <option>Pessoal Â· outros</option>
             </optgroup>
           </select>
         </div>
         <div class="ff wide">
-          <label>Descrição</label>
-          <input type="text" placeholder="Ex.: parcela 4/4 Casa Juliana · PIX">
+          <label>DescriÃ§Ã£o</label>
+          <input type="text" placeholder="Ex.: parcela 4/4 Casa Juliana Â· PIX">
         </div>
         <div class="ff">
           <label>Categoria</label>
           <select>
-            <option>Receita · projeto</option>
-            <option>Receita · recorrente</option>
-            <option>Receita · aluguel</option>
-            <option>Fornecedor · obra</option>
-            <option>Equipe · salário</option>
-            <option>Equipe · PJ</option>
-            <option>Operacional · locação</option>
+            <option>Receita Â· projeto</option>
+            <option>Receita Â· recorrente</option>
+            <option>Receita Â· aluguel</option>
+            <option>Fornecedor Â· obra</option>
+            <option>Equipe Â· salÃ¡rio</option>
+            <option>Equipe Â· PJ</option>
+            <option>Operacional Â· locaÃ§Ã£o</option>
             <option>Impostos</option>
-            <option>Marketing · ads</option>
-            <option>Software · SaaS</option>
+            <option>Marketing Â· ads</option>
+            <option>Software Â· SaaS</option>
           </select>
         </div>
         <div class="ff">
           <label>Cliente / fornecedor</label>
-          <input type="text" placeholder="Buscar cadastro…">
+          <input type="text" placeholder="Buscar cadastroâ¦">
         </div>
         <div class="ff">
           <label>Meio</label>
           <select>
             <option>PIX</option>
-            <option>Transferência</option>
+            <option>TransferÃªncia</option>
             <option>Boleto</option>
-            <option>Cartão de crédito</option>
+            <option>CartÃ£o de crÃ©dito</option>
             <option>Dinheiro</option>
           </select>
         </div>
         <div class="ff">
           <label>Projeto vinculado (opcional)</label>
           <select>
-            <option>— sem vínculo —</option>
+            <option>â sem vÃ­nculo â</option>
             <option>Casa Juliana</option>
             <option>Casa Blue</option>
             <option>CT Darkhouse</option>
@@ -2444,11 +2444,11 @@
         </div>
         <div class="ff wide">
           <label>Anexo (NF, comprovante)</label>
-          <input type="text" placeholder="— upload de arquivo —">
+          <input type="text" placeholder="â upload de arquivo â">
         </div>
       </div>
       <div class="lanc-foot">
-        <div class="hint">O lançamento é espelhado automaticamente na planilha Fluxo Pagamento e no Notion Financeiro.</div>
+        <div class="hint">O lanÃ§amento Ã© espelhado automaticamente na planilha Fluxo Pagamento e no Notion Financeiro.</div>
         <div style="display:flex;gap:8px">
           <a href="sistema-financeiro.html" class="btn ghost small">Cancelar</a>
           <a href="sistema-financeiro.html" class="btn small">Registrar</a>
@@ -2466,33 +2466,33 @@
         <div class="eyebrow" id="pd-eyebrow">Conta</div>
         <h3 id="pd-title">Detalhe</h3>
       </div>
-      <span class="pd-close" onclick="fecharDetalhe()" title="Fechar (Esc)">×</span>
+      <span class="pd-close" onclick="fecharDetalhe()" title="Fechar (Esc)">Ã</span>
     </div>
     <div class="pd-body" id="pd-body"><!-- preenchido via JS --></div>
     <div class="pd-foot">
-      <div class="pd-meta" id="pd-meta">—</div>
+      <div class="pd-meta" id="pd-meta">â</div>
       <div class="pd-act" id="pd-act-view">
         <a class="btn" href="#" onclick="event.preventDefault();fecharDetalhe()">Fechar</a>
         <a class="btn" href="#" id="pd-edit-btn" onclick="event.preventDefault();entrarEdicao()">Editar</a>
         <a class="btn" href="#" onclick="event.preventDefault();duplicarLancamento()">Duplicar</a>
         <a class="btn" href="#" style="color:var(--danger,#b44)" onclick="event.preventDefault();excluirLancamento()">Excluir</a>
-        <a class="btn primary" href="#" id="pd-pagar" onclick="event.preventDefault();marcarPagoFromModal()">✓ Marcar como pago</a>
+        <a class="btn primary" href="#" id="pd-pagar" onclick="event.preventDefault();marcarPagoFromModal()">â Marcar como pago</a>
       </div>
       <div class="pd-act" id="pd-act-edit" style="display:none">
         <a class="btn" href="#" onclick="event.preventDefault();sairEdicao()">Cancelar</a>
-        <a class="btn primary" href="#" onclick="event.preventDefault();salvarEdicao()">Salvar alterações</a>
+        <a class="btn primary" href="#" onclick="event.preventDefault();salvarEdicao()">Salvar alteraÃ§Ãµes</a>
       </div>
     </div>
   </div>
 </div>
 
 <footer>
-  <div>Cabral e Lima Design LTDA · CNPJ 59.525.877/0001-49 · CAU/BR A148704-5</div>
-  <div>sistema.zenonco.com.br · v2 — protótipo</div>
+  <div>Cabral e Lima Design LTDA Â· CNPJ 59.525.877/0001-49 Â· CAU/BR A148704-5</div>
+  <div>sistema.zenonco.com.br Â· v2 â protÃ³tipo</div>
 </footer>
 
 <script>
-  // Ciclo de status para pills (Pendente → Pago → Atrasado → Negociado → Cancelado → Pendente)
+  // Ciclo de status para pills (Pendente â Pago â Atrasado â Negociado â Cancelado â Pendente)
   const STATUS_CYCLE = ['pendente','pago','atrasado','negociado','cancelado'];
   const STATUS_LABEL = {
     pendente:'Pendente',
@@ -2559,7 +2559,7 @@
       const ctr = bar.querySelector('.sel-count');
       if(ctr){
         const txt = selCount + (selCount === 1 ? ' item selecionado' : ' itens selecionados');
-        const sumTxt = selSum > 0 ? ' · R$ ' + selSum.toLocaleString('pt-BR') : '';
+        const sumTxt = selSum > 0 ? ' Â· R$ ' + selSum.toLocaleString('pt-BR') : '';
         ctr.textContent = txt + sumTxt;
       }
     } else {
@@ -2571,7 +2571,7 @@
   function toggleMenu(el){
     closeAllMenus(el);
     el.classList.toggle('open');
-    // flip pra cima se não couber abaixo
+    // flip pra cima se nÃ£o couber abaixo
     if(el.classList.contains('open')){
       const list = el.querySelector('.menu-list');
       if(list){
@@ -2582,7 +2582,7 @@
         if(spaceBelow < listH + 12) list.classList.add('up');
       }
     }
-    // impedir propagação para document
+    // impedir propagaÃ§Ã£o para document
     event && event.stopPropagation && event.stopPropagation();
   }
 
@@ -2641,17 +2641,17 @@
     f._t = setTimeout(()=>{ f.style.opacity = '0'; }, 2200);
   }
 
-  // Conciliação: marcar item como casado
+  // ConciliaÃ§Ã£o: marcar item como casado
   function markConc(el, action){
     if(action === 'done'){
       el.classList.add('done');
-      el.textContent = '✓ Casado';
+      el.textContent = 'â Casado';
       el.onclick = null;
-      flash('Item vinculado ao lançamento correspondente');
+      flash('Item vinculado ao lanÃ§amento correspondente');
     }
   }
 
-  // Bulk action específica do extrato (diferente dos contas a receber/pagar)
+  // Bulk action especÃ­fica do extrato (diferente dos contas a receber/pagar)
   function bulkExtAction(action){
     const rows = document.querySelectorAll('[data-row="ext"]');
     let n = 0;
@@ -2662,20 +2662,20 @@
       cb.classList.remove('on');
     });
     updateBulkBar('ext');
-    if(action === 'conciliar') flash(n + ' ' + (n === 1 ? 'lançamento conciliado' : 'lançamentos conciliados'));
-    else if(action === 'export') flash('Exportando ' + n + ' ' + (n === 1 ? 'lançamento' : 'lançamentos') + ' em CSV…');
+    if(action === 'conciliar') flash(n + ' ' + (n === 1 ? 'lanÃ§amento conciliado' : 'lanÃ§amentos conciliados'));
+    else if(action === 'export') flash('Exportando ' + n + ' ' + (n === 1 ? 'lanÃ§amento' : 'lanÃ§amentos') + ' em CSVâ¦');
     else if(action === 'categorizar') flash('Abrindo seletor de categoria para ' + n + ' ' + (n === 1 ? 'item' : 'itens'));
-    else if(action === 'arquivar') flash(n + ' ' + (n === 1 ? 'lançamento arquivado' : 'lançamentos arquivados'));
+    else if(action === 'arquivar') flash(n + ' ' + (n === 1 ? 'lanÃ§amento arquivado' : 'lanÃ§amentos arquivados'));
   }
 
-  // Banner migração: botão "Ok, entendi"
+  // Banner migraÃ§Ã£o: botÃ£o "Ok, entendi"
   function dismissBanner(el){
     const b = el.closest('.migra-banner');
     if(b) b.style.display = 'none';
     try{ localStorage.setItem('zenon_migra_ok','1'); }catch(e){}
   }
 
-  // Exportar fluxo — dropdown de formatos
+  // Exportar fluxo â dropdown de formatos
   function toggleExport(btn){
     const wrap = btn.closest('.export-wrap');
     if(!wrap) return;
@@ -2687,10 +2687,10 @@
   function exportarFluxo(fmt){
     const labels = {csv:'CSV', xlsx:'Excel', pdf:'PDF', ofx:'OFX'};
     const label = labels[fmt] || fmt.toUpperCase();
-    flash('Gerando fluxo de caixa em ' + label + '… (abril/2026 + projeção 90 d)');
+    flash('Gerando fluxo de caixa em ' + label + 'â¦ (abril/2026 + projeÃ§Ã£o 90 d)');
     // fecha o menu
     document.querySelectorAll('.export-wrap.open').forEach(w => w.classList.remove('open'));
-    // Aqui entrará a chamada real ao worker (POST /api/financeiro/export?fmt=xxx) quando o backend for plugado
+    // Aqui entrarÃ¡ a chamada real ao worker (POST /api/financeiro/export?fmt=xxx) quando o backend for plugado
   }
   // Fecha export-menu ao clicar fora
   document.addEventListener('click', (e)=>{
@@ -2703,16 +2703,16 @@
   // MODAL DETALHE DE CONTA (a receber / a pagar)
   // ----------------------------------------------------------------------
   // Requisitos do Zenon (19/04/2026):
-  //  (a) clicar na linha → abre popup com todos os dados
-  //  (b) se data-rec="1"  → ao dar baixa, cria uma nova linha p/ o mês seguinte
-  //  (c) se data-parc="N/M" → dá baixa só na parcela atual, mantém as próximas
+  //  (a) clicar na linha â abre popup com todos os dados
+  //  (b) se data-rec="1"  â ao dar baixa, cria uma nova linha p/ o mÃªs seguinte
+  //  (c) se data-parc="N/M" â dÃ¡ baixa sÃ³ na parcela atual, mantÃ©m as prÃ³ximas
   // ======================================================================
   let __pdCurrentRow = null;
 
-  // parse "DD / MM" → "DD / MM" do mês seguinte (ajusta 31 se não couber)
+  // parse "DD / MM" â "DD / MM" do mÃªs seguinte (ajusta 31 se nÃ£o couber)
   function nextMonthBR(str){
     if(!str) return str;
-    // remove prefixo "~ " (estimado) mas mantém na saída
+    // remove prefixo "~ " (estimado) mas mantÃ©m na saÃ­da
     const est = /^~\s*/.test(str);
     const clean = str.replace(/^~\s*/,'').trim();
     const m = clean.match(/^(\d{1,2})\s*\/\s*(\d{1,2})$/);
@@ -2720,21 +2720,21 @@
     let d = parseInt(m[1],10), mm = parseInt(m[2],10);
     mm += 1;
     if(mm > 12) mm = 1;
-    // corta dia se mês mais curto
+    // corta dia se mÃªs mais curto
     const dim = [31,28,31,30,31,30,31,31,30,31,30,31];
     if(d > dim[mm-1]) d = dim[mm-1];
     const out = String(d).padStart(2,'0')+' / '+String(mm).padStart(2,'0');
     return est ? '~ '+out : out;
   }
 
-  // devolve "em N d" / "amanhã" etc aproximado (placeholder)
+  // devolve "em N d" / "amanhÃ£" etc aproximado (placeholder)
   function relWhen(str){
     const m = str && str.match(/^(\d{1,2})\s*\/\s*(\d{1,2})/);
     if(!m) return 'recorrente';
-    return 'próximo mês';
+    return 'prÃ³ximo mÃªs';
   }
 
-  // próxima parcela "N/M" → "(N+1)/M"  (retorna null se N+1 > M)
+  // prÃ³xima parcela "N/M" â "(N+1)/M"  (retorna null se N+1 > M)
   function nextParc(pStr){
     const m = pStr && pStr.match(/^(\d+)\/(\d+)$/);
     if(!m) return null;
@@ -2743,7 +2743,7 @@
     return n+'/'+tot;
   }
 
-  // delega clique em linha → abre modal (exceto se clicou em child interativo)
+  // delega clique em linha â abre modal (exceto se clicou em child interativo)
   document.addEventListener('click', function(e){
     const row = e.target.closest('.pay-row');
     if(!row) return;
@@ -2752,12 +2752,12 @@
     abrirDetalhe(row);
   });
 
-  // delega "✓ Marcar como pago" dentro dos menus
+  // delega "â Marcar como pago" dentro dos menus
   document.addEventListener('click', function(e){
     const a = e.target.closest('.menu-list a');
     if(!a) return;
     const txt = (a.textContent || '').trim();
-    if(txt.startsWith('✓')){
+    if(txt.startsWith('â')){
       e.preventDefault();
       e.stopPropagation();
       const row = a.closest('.pay-row');
@@ -2780,15 +2780,15 @@
     const d = row.dataset;
     const tipo = d.tipo || (d.row === 'rec' ? 'receber' : 'pagar');
     const isIn = tipo === 'receber';
-    const name = (row.querySelector('.pay-name')||{}).textContent?.trim() || '—';
+    const name = (row.querySelector('.pay-name')||{}).textContent?.trim() || 'â';
     const sub  = (row.querySelector('.pay-sub')||{}).textContent?.trim()  || '';
-    const when = (row.querySelector('.pay-when strong')||{}).textContent?.trim() || '—';
+    const when = (row.querySelector('.pay-when strong')||{}).textContent?.trim() || 'â';
     const whenSub = (row.querySelector('.pay-when')||{}).childNodes;
     let whenRel = '';
     if(whenSub){ whenSub.forEach(n=>{ if(n.nodeType===3) whenRel += (n.textContent||'').trim(); }); }
     const val  = (row.querySelector('.pay-val')||{}).textContent?.trim()  || '';
     const pill = row.querySelector('.status-pill');
-    const statusTxt = pill ? pill.textContent.trim() : '—';
+    const statusTxt = pill ? pill.textContent.trim() : 'â';
     const statusCls = pill ? (pill.className.match(/pago|pendente|atrasado|negociado|cancelado/)||['pendente'])[0] : 'pendente';
 
     const isRec  = d.rec === '1';
@@ -2797,12 +2797,12 @@
 
     // header
     document.getElementById('pd-eyebrow').textContent = (isIn ? 'A receber' : 'A pagar')
-      + (isRec ? ' · recorrente' : '')
-      + (isParc ? ' · parcela '+parc : '');
+      + (isRec ? ' Â· recorrente' : '')
+      + (isParc ? ' Â· parcela '+parc : '');
     const tituloEl = document.getElementById('pd-title');
     // tira badges inline do name limpo
     const nameClean = name.replace(/\s*(mensal|\d+\/\d+)\s*$/,'').trim();
-    tituloEl.innerHTML = nameClean.replace(/·/g,'<em>·</em>');
+    tituloEl.innerHTML = nameClean.replace(/Â·/g,'<em>Â·</em>');
 
     // hero + grid
     const body = document.getElementById('pd-body');
@@ -2819,41 +2819,41 @@
     html += '</div>';
 
     html += '<div class="pd-grid">';
-    html += field('Categoria', d.cat || '—');
-    html += field('Unidade', d.unidade || '—');
-    html += field('Conta bancária', d.conta || '—');
-    html += field('Forma', isIn ? 'Boleto / PIX' : 'PIX / Débito');
+    html += field('Categoria', d.cat || 'â');
+    html += field('Unidade', d.unidade || 'â');
+    html += field('Conta bancÃ¡ria', d.conta || 'â');
+    html += field('Forma', isIn ? 'Boleto / PIX' : 'PIX / DÃ©bito');
     if(d.contato){
       const contato = d.contatoLink
-        ? '<a href="'+d.contatoLink+'">'+d.contato+' →</a>'
+        ? '<a href="'+d.contatoLink+'">'+d.contato+' â</a>'
         : d.contato;
       html += field(isIn ? 'Cliente' : 'Fornecedor / Pessoa', contato);
     }
     if(d.projeto) html += field('Projeto', d.projeto);
     if(d.proposta){
       const prop = d.propostaLink
-        ? '<a href="'+d.propostaLink+'">'+d.proposta+' →</a>'
+        ? '<a href="'+d.propostaLink+'">'+d.proposta+' â</a>'
         : d.proposta;
       html += field('Proposta', prop);
     }
-    html += field('Descrição', sub || '—');
+    html += field('DescriÃ§Ã£o', sub || 'â');
     html += '</div>';
 
     if(d.obs){
-      html += '<div class="pd-note"><strong>Observação:</strong> '+d.obs+'</div>';
+      html += '<div class="pd-note"><strong>ObservaÃ§Ã£o:</strong> '+d.obs+'</div>';
     }
 
     // Parcelas (se parcelada): renderiza cronograma
     if(isParc){
       const [n,tot] = parc.split('/').map(x=>parseInt(x,10));
       html += '<div>';
-      html += '<div style="font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-mute);font-weight:700;margin-bottom:8px">Cronograma · '+tot+' parcelas</div>';
+      html += '<div style="font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-mute);font-weight:700;margin-bottom:8px">Cronograma Â· '+tot+' parcelas</div>';
       html += '<div class="pd-parc-list">';
       for(let i=1;i<=tot;i++){
         let cls='next', stTxt='Prevista';
         if(i < n){ cls='done'; stTxt='Pago'; }
         else if(i === n){ cls='curr'; stTxt='Atual'; }
-        // data aproximada: when é a parcela atual; gera ±1 mês por parcela
+        // data aproximada: when Ã© a parcela atual; gera Â±1 mÃªs por parcela
         let dt = when;
         if(i !== n){
           const diff = i - n;
@@ -2862,7 +2862,7 @@
           if(diff > 0){
             for(let k=0;k<diff;k++) cur = nextMonthBR(cur);
           } else {
-            // passa pra trás não temos helper; aproxima com "~"
+            // passa pra trÃ¡s nÃ£o temos helper; aproxima com "~"
             cur = '~ ant.';
           }
           dt = cur;
@@ -2877,21 +2877,21 @@
       html += '</div></div>';
     }
 
-    // nota recorrência
+    // nota recorrÃªncia
     if(isRec){
-      html += '<div class="pd-note"><strong>Recorrência ativa:</strong> quando você marcar esta como paga, o sistema cria automaticamente a próxima fatura com vencimento em <strong>'+nextMonthBR(when)+'</strong>.</div>';
+      html += '<div class="pd-note"><strong>RecorrÃªncia ativa:</strong> quando vocÃª marcar esta como paga, o sistema cria automaticamente a prÃ³xima fatura com vencimento em <strong>'+nextMonthBR(when)+'</strong>.</div>';
     }
     if(isParc){
-      html += '<div class="pd-note"><strong>Contrato parcelado:</strong> marcar a parcela '+parc+' como paga mantém as parcelas restantes em aberto no sistema, com seus respectivos vencimentos.</div>';
+      html += '<div class="pd-note"><strong>Contrato parcelado:</strong> marcar a parcela '+parc+' como paga mantÃ©m as parcelas restantes em aberto no sistema, com seus respectivos vencimentos.</div>';
     }
 
     body.innerHTML = html;
 
     // meta
     const id = d.id || 'sem id';
-    document.getElementById('pd-meta').textContent = 'ID: '+id+' · lançamento em '+(new Date()).toLocaleDateString('pt-BR');
+    document.getElementById('pd-meta').textContent = 'ID: '+id+' Â· lanÃ§amento em '+(new Date()).toLocaleDateString('pt-BR');
 
-    // botão pagar: esconde se já pago
+    // botÃ£o pagar: esconde se jÃ¡ pago
     const btn = document.getElementById('pd-pagar');
     if(statusCls === 'pago' || statusCls === 'cancelado'){
       btn.style.display = 'none';
@@ -2907,10 +2907,10 @@
     return '<div class="f"><span class="l">'+label+'</span><span class="v">'+value+'</span></div>';
   }
 
-  // ===== MODO EDIÇÃO =====
+  // ===== MODO EDIÃÃO =====
   function entrarEdicao(){
     const row = __pdCurrentRow;
-    if(!row){ flash('Nenhum lançamento selecionado.'); return; }
+    if(!row){ flash('Nenhum lanÃ§amento selecionado.'); return; }
     const d = row.dataset;
     const tipo = d.tipo || (d.row === 'rec' ? 'receber' : 'pagar');
     const isIn = tipo === 'receber';
@@ -2920,7 +2920,7 @@
     const sub  = (row.querySelector('.pay-sub')||{}).textContent?.trim()  || '';
     const when = (row.querySelector('.pay-when strong')||{}).textContent?.trim() || '';
     const val  = (row.querySelector('.pay-val')||{}).textContent?.trim()  || '';
-    // extrai só o número: "+ R$ 13.600" → "13.600" (mantém formato BR)
+    // extrai sÃ³ o nÃºmero: "+ R$ 13.600" â "13.600" (mantÃ©m formato BR)
     const valNum = val.replace(/^[\-\+]\s*/,'').replace(/R\$\s*|US\$\s*/,'').trim();
     const currency = d.currency || 'BRL';
     const isRec  = d.rec === '1';
@@ -2928,9 +2928,9 @@
     const pill = row.querySelector('.status-pill');
     const statusCls = pill ? (pill.className.match(/pago|pendente|atrasado|negociado|cancelado/)||['pendente'])[0] : 'pendente';
 
-    // opções
-    const catsIn = ['Projeto · Arquitetura','Projeto · Interiores','Projeto · Consultoria','Stay · Hospedagem','Stay · Diária extra','Vision · Licenciamento','Outros'];
-    const catsOut = ['Folha CLT','Pró-labore','PJ · Hora arquiteto','Obra · Material','Obra · Mão de obra','Aluguel escritório','SaaS / Assinaturas','Impostos','Marketing','Outros'];
+    // opÃ§Ãµes
+    const catsIn = ['Projeto Â· Arquitetura','Projeto Â· Interiores','Projeto Â· Consultoria','Stay Â· Hospedagem','Stay Â· DiÃ¡ria extra','Vision Â· Licenciamento','Outros'];
+    const catsOut = ['Folha CLT','PrÃ³-labore','PJ Â· Hora arquiteto','Obra Â· Material','Obra Â· MÃ£o de obra','Aluguel escritÃ³rio','SaaS / Assinaturas','Impostos','Marketing','Outros'];
     const contas = ['Inter PJ (Zenon)','BTG PJ (Zenon)','Nubank PF (Thereza)','Inter PF (Rodrigo)'];
     const unidades = ['Zenon Co.','Yvyra Arquitetura','Zenon Stay','Zenon Vision','Cabana (pessoal)','Casa Blue (pessoal)'];
     const statuses = ['pendente','pago','atrasado','negociado','cancelado'];
@@ -2944,13 +2944,13 @@
       + '<div class="pd-edit-form">'
       +   '<div class="ef-hero">'
       +     '<div class="ef-row"><label>Tipo</label>'
-      +       '<select id="ef-tipo"><option value="receber"'+(isIn?' selected':'')+'>A receber (entrada)</option><option value="pagar"'+(!isIn?' selected':'')+'>A pagar (saída)</option></select>'
+      +       '<select id="ef-tipo"><option value="receber"'+(isIn?' selected':'')+'>A receber (entrada)</option><option value="pagar"'+(!isIn?' selected':'')+'>A pagar (saÃ­da)</option></select>'
       +     '</div>'
       +     '<div class="ef-row"><label>Status</label><select id="ef-status">'+stOpts+'</select></div>'
       +   '</div>'
       +   '<div class="ef-grid">'
-      +     '<div class="ef-row full"><label>Descrição principal</label><input type="text" id="ef-nome" value="'+esc(nameClean)+'" placeholder="Ex.: Juliana Reis · sinal"></div>'
-      +     '<div class="ef-row full"><label>Sub-descrição (projeto, detalhe)</label><input type="text" id="ef-sub" value="'+esc(sub)+'" placeholder="Ex.: Casa Juliana · obra em andamento"></div>'
+      +     '<div class="ef-row full"><label>DescriÃ§Ã£o principal</label><input type="text" id="ef-nome" value="'+esc(nameClean)+'" placeholder="Ex.: Juliana Reis Â· sinal"></div>'
+      +     '<div class="ef-row full"><label>Sub-descriÃ§Ã£o (projeto, detalhe)</label><input type="text" id="ef-sub" value="'+esc(sub)+'" placeholder="Ex.: Casa Juliana Â· obra em andamento"></div>'
       +     '<div class="ef-row"><label>Valor</label>'
       +       '<div class="ef-cur-wrap">'
       +         '<select id="ef-cur"><option value="BRL"'+(currency==='BRL'?' selected':'')+'>R$</option><option value="USD"'+(currency==='USD'?' selected':'')+'>US$</option></select>'
@@ -2958,15 +2958,15 @@
       +       '</div>'
       +     '</div>'
       +     '<div class="ef-row"><label>Vencimento</label><input type="text" id="ef-when" value="'+esc(when)+'" placeholder="DD / MM"></div>'
-      +     '<div class="ef-row"><label>Categoria</label><select id="ef-cat"><option value="">—</option>'+catOpts+'</select></div>'
-      +     '<div class="ef-row"><label>Conta bancária</label><select id="ef-conta"><option value="">—</option>'+contaOpts+'</select></div>'
-      +     '<div class="ef-row"><label>Unidade de negócio</label><select id="ef-uni"><option value="">—</option>'+uniOpts+'</select></div>'
+      +     '<div class="ef-row"><label>Categoria</label><select id="ef-cat"><option value="">â</option>'+catOpts+'</select></div>'
+      +     '<div class="ef-row"><label>Conta bancÃ¡ria</label><select id="ef-conta"><option value="">â</option>'+contaOpts+'</select></div>'
+      +     '<div class="ef-row"><label>Unidade de negÃ³cio</label><select id="ef-uni"><option value="">â</option>'+uniOpts+'</select></div>'
       +     '<div class="ef-row"><label>'+(isIn?'Cliente':'Fornecedor')+'</label><input type="text" id="ef-contato" value="'+esc(d.contato||'')+'" placeholder="Nome"></div>'
-      +     '<div class="ef-row full"><label>Observação</label><textarea id="ef-obs" placeholder="Contexto, link interno, instruções de cobrança…">'+esc(d.obs||'')+'</textarea></div>'
+      +     '<div class="ef-row full"><label>ObservaÃ§Ã£o</label><textarea id="ef-obs" placeholder="Contexto, link interno, instruÃ§Ãµes de cobranÃ§aâ¦">'+esc(d.obs||'')+'</textarea></div>'
       +   '</div>'
       +   '<div class="ef-checks">'
-      +     '<label><input type="checkbox" id="ef-rec"'+(isRec?' checked':'')+'> Lançamento recorrente (mensal)</label>'
-      +     '<label><input type="checkbox" id="ef-parc-has"'+(parc?' checked':'')+'> É parcelado</label>'
+      +     '<label><input type="checkbox" id="ef-rec"'+(isRec?' checked':'')+'> LanÃ§amento recorrente (mensal)</label>'
+      +     '<label><input type="checkbox" id="ef-parc-has"'+(parc?' checked':'')+'> Ã parcelado</label>'
       +     '<span style="display:flex;align-items:center;gap:6px">'
       +       '<input type="text" id="ef-parc" value="'+esc(parc)+'" placeholder="Ex.: 2/5" style="width:70px;padding:5px 8px;font-size:12px">'
       +     '</span>'
@@ -2974,13 +2974,13 @@
       + '</div>';
 
     document.getElementById('pd-body').innerHTML = html;
-    document.getElementById('pd-eyebrow').textContent = 'Editando · ' + (isIn ? 'a receber' : 'a pagar');
+    document.getElementById('pd-eyebrow').textContent = 'Editando Â· ' + (isIn ? 'a receber' : 'a pagar');
     document.getElementById('pd-act-view').style.display = 'none';
     document.getElementById('pd-act-edit').style.display = '';
   }
 
   function sairEdicao(){
-    // volta pra visão — apenas recarrega detalhe
+    // volta pra visÃ£o â apenas recarrega detalhe
     if(__pdCurrentRow) abrirDetalhe(__pdCurrentRow);
     document.getElementById('pd-act-view').style.display = '';
     document.getElementById('pd-act-edit').style.display = 'none';
@@ -2988,7 +2988,7 @@
 
   function salvarEdicao(){
     const row = __pdCurrentRow;
-    if(!row){ flash('Nenhum lançamento selecionado.'); return; }
+    if(!row){ flash('Nenhum lanÃ§amento selecionado.'); return; }
 
     const tipo = document.getElementById('ef-tipo').value;
     const status = document.getElementById('ef-status').value;
@@ -3006,8 +3006,8 @@
     const hasParc = document.getElementById('ef-parc-has').checked;
     const parc = hasParc ? document.getElementById('ef-parc').value.trim() : '';
 
-    if(!nome){ flash('Descrição principal é obrigatória.'); return; }
-    if(!valNum){ flash('Valor é obrigatório.'); return; }
+    if(!nome){ flash('DescriÃ§Ã£o principal Ã© obrigatÃ³ria.'); return; }
+    if(!valNum){ flash('Valor Ã© obrigatÃ³rio.'); return; }
 
     const isIn = tipo === 'receber';
 
@@ -3022,7 +3022,7 @@
     row.dataset.contato = contato;
     row.dataset.obs = obs;
 
-    // --- atualiza DOM visível
+    // --- atualiza DOM visÃ­vel
     // Nome + badges
     const nameEl = row.querySelector('.pay-name');
     if(nameEl){
@@ -3049,7 +3049,7 @@
     // Valor
     const valEl = row.querySelector('.pay-val');
     if(valEl){
-      const signo = isIn ? '+ ' : '– ';
+      const signo = isIn ? '+ ' : 'â ';
       const simbol = cur === 'USD' ? 'US$ ' : 'R$ ';
       valEl.textContent = signo + simbol + valNum;
       valEl.classList.remove('in','out');
@@ -3060,11 +3060,11 @@
     if(pill){
       pill.className = 'status-pill ' + status;
       const label = {pendente:'Pendente',pago:'Pago',atrasado:'Atrasado',negociado:'Negociado',cancelado:'Cancelado'}[status] || 'Pendente';
-      pill.innerHTML = label + ' <span class="caret">▾</span>';
+      pill.innerHTML = label + ' <span class="caret">â¾</span>';
     }
 
-    flash('Alterações salvas.');
-    sairEdicao(); // volta pra visão e re-renderiza
+    flash('AlteraÃ§Ãµes salvas.');
+    sairEdicao(); // volta pra visÃ£o e re-renderiza
   }
 
   function duplicarLancamento(){
@@ -3075,29 +3075,29 @@
     const pill = clone.querySelector('.status-pill');
     if(pill){
       pill.className = 'status-pill pendente';
-      pill.innerHTML = 'Pendente <span class="caret">▾</span>';
+      pill.innerHTML = 'Pendente <span class="caret">â¾</span>';
     }
     row.parentNode.insertBefore(clone, row.nextSibling);
     fecharDetalhe();
-    flash('Lançamento duplicado abaixo. Clique pra editar.');
-    // abre edição direto no clone
+    flash('LanÃ§amento duplicado abaixo. Clique pra editar.');
+    // abre ediÃ§Ã£o direto no clone
     setTimeout(()=>{ abrirDetalhe(clone); setTimeout(()=>entrarEdicao(), 120); }, 150);
   }
 
   function excluirLancamento(){
     const row = __pdCurrentRow;
     if(!row){ return; }
-    const nome = (row.querySelector('.pay-name')||{}).textContent?.trim() || 'lançamento';
-    if(!confirm('Tem certeza que deseja excluir "'+nome+'"? Esta ação não pode ser desfeita.')) return;
+    const nome = (row.querySelector('.pay-name')||{}).textContent?.trim() || 'lanÃ§amento';
+    if(!confirm('Tem certeza que deseja excluir "'+nome+'"? Esta aÃ§Ã£o nÃ£o pode ser desfeita.')) return;
     row.style.transition = 'opacity .2s, transform .2s';
     row.style.opacity = '0';
     row.style.transform = 'translateX(-20px)';
     setTimeout(()=>{ row.remove(); }, 200);
     fecharDetalhe();
-    flash('Lançamento excluído.');
+    flash('LanÃ§amento excluÃ­do.');
   }
 
-  // helper — escape seguro pra atributos/textos
+  // helper â escape seguro pra atributos/textos
   function esc(s){
     return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
   }
@@ -3106,7 +3106,7 @@
     document.getElementById('pd-back').classList.remove('open');
     document.body.style.overflow = '';
     __pdCurrentRow = null;
-    // reset footer para modo visão (caso tenha ficado no modo edição)
+    // reset footer para modo visÃ£o (caso tenha ficado no modo ediÃ§Ã£o)
     const av = document.getElementById('pd-act-view');
     const ae = document.getElementById('pd-act-edit');
     if(av) av.style.display = '';
@@ -3136,21 +3136,21 @@
     row.classList.add('pago');
 
     const nome = (row.querySelector('.pay-name')||{}).textContent?.trim() || 'conta';
-    const nomeCurto = nome.split('·')[0].trim();
+    const nomeCurto = nome.split('Â·')[0].trim();
 
-    // 2a) RECORRENTE → cria clone para o próximo mês
+    // 2a) RECORRENTE â cria clone para o prÃ³ximo mÃªs
     if(isRec){
       const clone = cloneParaProximoMes(row);
       if(clone){
         const container = row.parentNode;
         container.appendChild(clone);
         requestAnimationFrame(()=> clone.classList.add('fade-in'));
-        flash('✓ Baixa feita · próxima '+nomeCurto+' gerada em '+clone.dataset.nextDate);
+        flash('â Baixa feita Â· prÃ³xima '+nomeCurto+' gerada em '+clone.dataset.nextDate);
         return;
       }
     }
 
-    // 2b) PARCELADA → atualiza texto pra mostrar próxima parcela no sistema
+    // 2b) PARCELADA â atualiza texto pra mostrar prÃ³xima parcela no sistema
     if(isParc){
       const prox = nextParc(parc);
       if(prox){
@@ -3159,19 +3159,19 @@
           const container = row.parentNode;
           container.appendChild(clone);
           requestAnimationFrame(()=> clone.classList.add('fade-in'));
-          flash('✓ Parcela '+parc+' paga · parcela '+prox+' em aberto');
+          flash('â Parcela '+parc+' paga Â· parcela '+prox+' em aberto');
           return;
         }
       } else {
-        flash('✓ Última parcela ('+parc+') paga — contrato quitado');
+        flash('â Ãltima parcela ('+parc+') paga â contrato quitado');
         return;
       }
     }
 
-    flash('✓ '+nomeCurto+' marcada como paga');
+    flash('â '+nomeCurto+' marcada como paga');
   }
 
-  // Clona a linha com vencimento no mês seguinte (recorrente)
+  // Clona a linha com vencimento no mÃªs seguinte (recorrente)
   function cloneParaProximoMes(row){
     const clone = row.cloneNode(true);
     // reset flags
@@ -3194,7 +3194,7 @@
       whenEl.style.color = '';
       whenStrong.style.color = '';
       // atualiza o texto relativo (fora do <strong>)
-      // remove text nodes que não sejam strong
+      // remove text nodes que nÃ£o sejam strong
       whenEl.childNodes.forEach(n=>{
         if(n.nodeType === 3) n.textContent = '';
       });
@@ -3203,16 +3203,16 @@
     // id novo
     clone.dataset.id = (row.dataset.id || 'rec') + '-'+novaData.replace(/\s|\//g,'');
     clone.dataset.nextDate = novaData;
-    // sub: troca "NF xxx" por "novo mês" genérico, senão mantém
+    // sub: troca "NF xxx" por "novo mÃªs" genÃ©rico, senÃ£o mantÃ©m
     const sub = clone.querySelector('.pay-sub');
     if(sub){
-      sub.innerHTML = sub.textContent.replace(/atraso.*$/i,'').replace(/<span[^>]*>.*?<\/span>/g,'').trim() || 'Gerado automaticamente pela recorrência';
-      if(sub.innerHTML.trim() === '') sub.innerHTML = 'Gerado automaticamente pela recorrência';
+      sub.innerHTML = sub.textContent.replace(/atraso.*$/i,'').replace(/<span[^>]*>.*?<\/span>/g,'').trim() || 'Gerado automaticamente pela recorrÃªncia';
+      if(sub.innerHTML.trim() === '') sub.innerHTML = 'Gerado automaticamente pela recorrÃªncia';
     }
     return clone;
   }
 
-  // Clona para próxima parcela (N+1/M) mantendo as datas originais
+  // Clona para prÃ³xima parcela (N+1/M) mantendo as datas originais
   function clonaProximaParcela(row, proxParc){
     const clone = row.cloneNode(true);
     clone.classList.remove('pago','atr','fade-in');
@@ -3228,7 +3228,7 @@
     // atualiza badge parc-tag
     const ptag = clone.querySelector('.parc-tag');
     if(ptag) ptag.textContent = proxParc;
-    // avança vencimento 1 mês (parcelas mensais)
+    // avanÃ§a vencimento 1 mÃªs (parcelas mensais)
     const whenEl = clone.querySelector('.pay-when');
     const whenStrong = whenEl && whenEl.querySelector('strong');
     let novaData = '';
@@ -3240,22 +3240,22 @@
       whenEl.childNodes.forEach(n=>{
         if(n.nodeType === 3) n.textContent = '';
       });
-      whenEl.appendChild(document.createTextNode('próximo mês'));
+      whenEl.appendChild(document.createTextNode('prÃ³ximo mÃªs'));
     }
     clone.dataset.id = (row.dataset.id || 'parc') + '-'+proxParc.replace('/','de');
-    // limpa sub de referências de atraso/boleto
+    // limpa sub de referÃªncias de atraso/boleto
     const sub = clone.querySelector('.pay-sub');
     if(sub){
       const base = (row.dataset.projeto || 'Contrato parcelado');
-      sub.innerHTML = base + ' · parcela gerada automaticamente';
+      sub.innerHTML = base + ' Â· parcela gerada automaticamente';
     }
     return clone;
   }
 </script>
 
 <script>
-  // ===== USD → BRL live conversion =====
-  // Lê cotação do cache do shell-fx.js (atualizada a cada 60s) e atualiza spans .fx-conv
+  // ===== USD â BRL live conversion =====
+  // LÃª cotaÃ§Ã£o do cache do shell-fx.js (atualizada a cada 60s) e atualiza spans .fx-conv
   function atualizarConversoesFX(){
     let bid = null;
     try {
@@ -3271,16 +3271,25 @@
       if(isNaN(usd)) return;
       const brl = usd * bid;
       const fmt = brl.toLocaleString('pt-BR',{minimumFractionDigits:0,maximumFractionDigits:0});
-      el.textContent = '≈ R$ ' + fmt + ' · cotação R$ ' + bid.toFixed(4).replace('.',',');
+      el.textContent = 'â R$ ' + fmt + ' Â· cotaÃ§Ã£o R$ ' + bid.toFixed(4).replace('.',',');
     });
   }
   atualizarConversoesFX();
-  setInterval(atualizarConversoesFX, 15000); // revê a cada 15s (pega cache novo)
+  setInterval(atualizarConversoesFX, 15000); // revÃª a cada 15s (pega cache novo)
 </script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="supabase-config.js"></script>
   <script src="supabase-client.js"></script>
   <script src="shell-user.js"></script>
 <script src="shell-fx.js"></script>
+<script>/* Financeiro Dynamic Month */
+(function(){
+  var _m=['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+  var now=new Date();
+  var txt=_m[now.getMonth()]+' / '+now.getFullYear();
+  var el=document.getElementById('fin-curr-month');
+  if(el)el.textContent=txt;
+})();
+</script>
 </body>
 </html>
