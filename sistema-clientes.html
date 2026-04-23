@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clientes — Zenon Sistema</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shell.css">
+<style>
+  .filters{
+    display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;
+  }
+  .filters a{
+    padding:8px 14px;border:1px solid var(--line);border-radius:999px;
+    font-size:12px;letter-spacing:.12em;text-transform:uppercase;font-weight:500;color:var(--ink-soft);
+    background:var(--paper);
+    transition:background .2s,color .2s,border-color .2s;
+  }
+  .filters a:hover{border-color:var(--accent);color:var(--ink)}
+  .filters a.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+
+  .client-avatar{
+    width:40px;height:40px;border-radius:50%;
+    background:var(--accent-soft);color:var(--accent-ink);
+    display:inline-flex;align-items:center;justify-content:center;
+    font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:17px;font-weight:600;
+    flex-shrink:0;
+  }
+  .client-cell{display:flex;align-items:center;gap:12px}
+  .doc-id{font-size:11px;color:var(--ink-mute);letter-spacing:.04em;font-variant-numeric:tabular-nums;font-weight:500}
+  .fin-mini{display:flex;flex-direction:column;gap:3px;min-width:120px}
+  .fin-mini .tot{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:17px;color:var(--ink);font-weight:600;line-height:1}
+  .fin-mini .split{font-size:10px;color:var(--ink-mute);letter-spacing:.06em;font-weight:600}
+  .fin-mini .split .pg{color:var(--ok);font-weight:700}
+  .fin-mini .split .ab{color:var(--warn);font-weight:700}
+  .portal-link{
+    display:inline-flex;align-items:center;gap:6px;
+    font-size:11px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;
+    color:var(--accent-ink);padding:6px 10px;background:var(--accent-soft);
+    border-radius:3px;border:1px solid transparent;transition:all .15s;white-space:nowrap;
+  }
+  .portal-link:hover{background:var(--paper);border-color:var(--accent);color:var(--ink)}
+  .portal-link .ar{font-weight:400;font-size:13px}
+
+  /* fila de leads do briefing */
+  .leads-box{
+    border:1px solid var(--line);border-radius:10px;background:var(--paper);
+    padding:20px 22px;margin-bottom:24px;
+  }
+  .leads-head{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin-bottom:14px;flex-wrap:wrap}
+  .leads-head h2{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:20px;font-weight:500;color:var(--ink);font-variation-settings:"opsz" 36,"SOFT" 40;letter-spacing:-0.01em;margin:0}
+  .leads-head .leads-sub{font-size:12px;color:var(--ink-mute)}
+  .leads-empty{color:var(--ink-mute);font-style:italic;font-size:13px;padding:14px 0}
+  .leads-grid{display:grid;gap:10px;grid-template-columns:1fr}
+  @media(min-width:900px){.leads-grid{grid-template-columns:1fr 1fr}}
+  .lead-card{
+    display:flex;gap:14px;align-items:center;padding:14px 16px;border-radius:8px;
+    background:var(--bg,#faf8f3);border:1px solid var(--line);
+  }
+  .lead-card .lc-ini{
+    width:36px;height:36px;border-radius:50%;flex-shrink:0;
+    background:color-mix(in srgb,var(--accent) 15%,transparent);
+    color:var(--accent-ink);display:inline-flex;align-items:center;justify-content:center;
+    font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:14px;font-weight:600;
+  }
+  .lead-card .lc-body{flex:1;min-width:0}
+  .lead-card .lc-name{font-size:14px;font-weight:600;color:var(--ink);line-height:1.25}
+  .lead-card .lc-meta{font-size:11.5px;color:var(--ink-mute);letter-spacing:.02em;margin-top:2px;line-height:1.4}
+  .lead-card .lc-id{font-family:ui-monospace,monospace;font-size:10.5px;background:var(--paper);padding:1px 6px;border-radius:4px;color:var(--ink-soft)}
+  .lead-card .lc-actions{display:flex;gap:6px;flex-shrink:0;flex-wrap:wrap;justify-content:flex-end}
+  .lead-card .lc-btn{
+    display:inline-flex;align-items:center;gap:4px;
+    padding:6px 10px;border-radius:4px;
+    font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;font-weight:700;
+    border:1px solid var(--line);background:var(--paper);color:var(--ink);
+    cursor:pointer;transition:all .15s;white-space:nowrap;
+  }
+  .lead-card .lc-btn:hover{border-color:var(--accent);color:var(--accent-ink);background:var(--accent-soft)}
+  .lead-card .lc-btn.primary{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .lead-card .lc-btn.primary:hover{background:var(--accent-ink);border-color:var(--accent-ink)}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-inner">
+    <div class="brand">Zen<span>o</span>n — Sistema</div>
+    <div class="search"><input type="search" placeholder="Buscar por nome, e-mail, CPF/CNPJ…"></div>
+    <div class="fx-chip" title="Cotação do dólar (USD/BRL)">
+      <span class="fx-code">USD</span>
+      <span class="fx-val"><span class="cur">R$</span>—</span>
+      <span class="fx-delta flat">…</span>
+      <div class="fx-tip"></div>
+    </div>
+
+    <div class="user-menu">
+      <button type="button" class="user-trigger" onclick="ZenonUser.toggleDropdown(event)" aria-haspopup="true" aria-expanded="false">
+        <span class="u-name" data-user-name>Rodrigo</span>
+        <span class="avatar" data-user="me">R</span>
+        <span class="u-caret">▾</span>
+      </button>
+      <div class="user-dropdown" role="menu">
+        <div class="ud-head">
+          <span class="avatar" data-user="me">R</span>
+          <div>
+            <div class="name" data-user-name>Rodrigo</div>
+            <div class="role" data-user-role>Sócio · Arquiteto responsável</div>
+          </div>
+        </div>
+        <a href="sistema-perfil.html"><span class="ic">◎</span>Ver perfil</a>
+        <a href="sistema-configuracoes.html"><span class="ic">⚙</span>Configurações</a>
+        <a href="sistema-empresa.html"><span class="ic">⌂</span>Dados da empresa</a>
+        <a href="https://www.notion.so/Zenon" target="_blank"><span class="ic">✱</span>Atividades · Notion ↗</a>
+        <div class="ud-sep"></div>
+        <a href="sistema-login.html" class="sign-out"><span class="ic">↪</span>Sair</a>
+      </div>
+    </div>
+  </div>
+  <nav class="tabs">
+    <a href="sistema-painel.html">Painel</a>
+    <a href="sistema-clientes.html" class="active">Clientes</a>
+    <a href="sistema-projetos.html">Projetos</a>
+    <a href="sistema-obra.html">Obra</a>
+    <a href="sistema-obra-financeiro.html">Obra financeiro</a>
+    <a href="sistema-propostas.html">Propostas</a>
+    <a href="sistema-financeiro.html">Financeiro</a>
+    <a href="sistema-empresa.html">Empresa</a>
+    <a href="sistema-log.html">Log da equipe</a>
+  </nav>
+</header>
+
+<main>
+  <div class="page-head">
+    <div>
+      <div class="eyebrow">Casa · pessoas</div>
+      <h1><em>Clientes</em> da Zenon</h1>
+      <div class="sub" id="clientes-sub">carregando resumo…</div>
+    </div>
+    <div class="actions">
+      <button type="button" class="btn ghost small" onclick="exportarClientesCSV()">Exportar CSV</button>
+      <a href="sistema-cliente-novo.html" class="btn small">+ Novo cliente</a>
+    </div>
+  </div>
+
+  <section>
+    <div class="kpis" id="clientes-kpis">
+      <div class="kpi"><div class="l">Total na base</div><div class="n" id="kpi-total">—</div><div class="delta">Notion DB CLIENTES + leads do briefing</div></div>
+      <div class="kpi"><div class="l">Leads (briefing)</div><div class="n" id="kpi-leads">—</div><div class="delta" id="kpi-leads-sub">—</div></div>
+      <div class="kpi"><div class="l">Ativos</div><div class="n" id="kpi-ativos">—</div><div class="delta" id="kpi-ativos-sub">—</div></div>
+      <div class="kpi"><div class="l">Canal principal</div><div class="n">Indicação</div><div class="delta">Rafael Monici · Vasconcellos</div></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="leads-box" id="leads-box" style="display:none">
+      <div class="leads-head">
+        <div>
+          <h2>Leads do briefing</h2>
+          <div class="leads-sub">preenchidos no portal Yvyra · rascunho de proposta já pronto pra editar</div>
+        </div>
+        <div class="leads-sub" id="leads-count"></div>
+      </div>
+      <div class="leads-grid" id="leads-grid"></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="filters" id="cli-filters">
+      <a href="#" data-f="todos" class="active">Todos</a>
+      <a href="#" data-f="lead">Leads</a>
+      <a href="#" data-f="ativo">Ativos</a>
+      <a href="#" data-f="em proposta">Em proposta</a>
+      <a href="#" data-f="pós-entrega">Pós-entrega</a>
+      <a href="#" data-f="sem retorno">Sem retorno</a>
+    </div>
+
+    <table class="tbl">
+      <thead>
+        <tr>
+          <th>Cliente · contato</th>
+          <th>CPF / CNPJ</th>
+          <th>Projeto atual</th>
+          <th>Financeiro</th>
+          <th>Origem</th>
+          <th>Status</th>
+          <th>Portal</th>
+        </tr>
+      </thead>
+      <tbody id="cli-tbody">
+        <tr><td colspan="7" style="text-align:center;padding:30px;color:var(--ink-mute);font-style:italic">Carregando clientes…</td></tr>
+      </tbody>
+    </table>
+  </section>
+</main>
+
+<footer>
+  <div>Cabral e Lima Design LTDA · CNPJ 59.525.877/0001-49 · CAU/BR A148704-5</div>
+  <div>sistema.zenonco.com.br · v2 — protótipo</div>
+</footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script src="supabase-client.js"></script>
+  <script src="shell-user.js"></script>
+<script src="shell-fx.js"></script>
+<script src="sistema-data.js"></script>
+<script>
+(function () {
+  const SD = window.SistemaData;
+
+  // Ordem de exibição (prioritizada: ativos primeiro → em proposta → aguardando → pós-entrega → legado)
+  const CLIENTES_ORDEM = ['CLI-4','CLI-1','CLI-5','CLI-6','CLI-8','CLI-9','CLI-7','CLI-3'];
+
+  function iniciais(nome) {
+    const s = (nome || '').trim();
+    if (!s) return '??';
+    const partes = s.split(/\s+/).filter(Boolean);
+    if (partes.length === 1) return partes[0].slice(0,2).toUpperCase();
+    return (partes[0][0] + partes[partes.length-1][0]).toUpperCase();
+  }
+
+  function deriveStatus(cli, proj) {
+    // Status derivado do cliente + projeto vinculado
+    if (cli.status === 'Lead') return { label:'Lead', cls:'info' };
+    if (cli.id === 'CLI-7') return { label:'A consolidar', cls:'neutral', legado:true };
+    if (!proj) return { label:'Sem projeto', cls:'neutral' };
+    const s = (proj.status || '').toLowerCase();
+    if (s.includes('concluído') || s.includes('entregue')) return { label:'Pós-entrega', cls:'neutral' };
+    if (s.includes('travado') || s.includes('aguardando')) return { label:'Aguardando cliente', cls:'warn' };
+    if (s.includes('briefing')) return { label:'Em proposta', cls:'info' };
+    // Em proposta se tem propostaId em rascunho
+    if (cli.propostas && cli.propostas.length) {
+      const pp = SD.getProposta(cli.propostas[0]);
+      if (pp && pp.status === 'Rascunho') return { label:'Em proposta', cls:'info' };
+    }
+    return { label:'Ativo', cls:'ok' };
+  }
+
+  function deriveFinanceiro(cli, proj) {
+    if (!proj) return { tot:'—', split:'sem projeto', mute:true };
+    if (proj.honorarios > 0) {
+      return {
+        tot: SD.fmtBRL(proj.honorarios),
+        split: '<span class="pg">● pago '+SD.fmtBRL(proj.honorariosPagos)+'</span> · <span class="ab">em aberto '+SD.fmtBRL(proj.honorariosARecever)+'</span>'
+      };
+    }
+    // Projeto sem honorários — verifica rascunho de proposta
+    if (cli.propostas && cli.propostas.length) {
+      const pp = SD.getProposta(cli.propostas[0]);
+      if (pp && pp.valorTotal > 0) {
+        const statusTxt = pp.status === 'Rascunho'
+          ? '<span style="color:var(--info)">● rascunho '+pp.data+(pp.validade ? ' · validade '+pp.validade : '')+'</span>'
+          : '<span style="color:var(--ink-mute)">'+pp.status+'</span>';
+        return { tot: SD.fmtBRL(pp.valorTotal), split: statusTxt };
+      }
+    }
+    if ((proj.status || '').toLowerCase().includes('concluído') || (proj.status || '').toLowerCase().includes('entregue')) {
+      return { tot:'concluído', split:'<span class="pg">● projeto entregue</span>' };
+    }
+    if ((proj.status || '').toLowerCase().includes('briefing')) {
+      return { tot:'em briefing', split:'proposta em elaboração', mute:true };
+    }
+    if ((proj.status || '').toLowerCase().includes('travado')) {
+      return { tot:'a precificar', split:'aguardando cliente retomar', mute:true };
+    }
+    return { tot:'a precificar', split:'sem honorários formalizados', mute:true };
+  }
+
+  function deriveOrigem(cli) {
+    const o = cli.origem && cli.origem !== '—' ? cli.origem : '—';
+    const tags = (cli.tags || []).filter(t => !/^(P|M|L|XL|Rural)$/i.test(t) && !/residencial|comercial|saúde|rural/i.test(t));
+    const sub = tags.length ? tags.slice(0,2).join(' · ') : '—';
+    return { main: o, sub: sub };
+  }
+
+  function portalSlug(cli) {
+    return (cli.nome || '')
+      .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g,'-')
+      .replace(/^-+|-+$/g,'');
+  }
+
+  function renderRow(cid) {
+    const cli = SD.getCliente(cid);
+    if (!cli) return '';
+    const proj = (cli.projetos && cli.projetos.length) ? SD.getProjeto(cli.projetos[0]) : null;
+    const status = deriveStatus(cli, proj);
+    const fin = deriveFinanceiro(cli, proj);
+    const origem = deriveOrigem(cli);
+
+    const rowOpacity = status.legado ? ' style="opacity:.75"' : '';
+
+    // Contato line
+    const contatoParts = [];
+    if (cli.email && cli.email !== '—') contatoParts.push(cli.email);
+    if (cli.telefone && cli.telefone !== '—') contatoParts.push(cli.telefone);
+    if (!contatoParts.length && cli.endereco && cli.endereco !== '—') {
+      // extrai só o bairro/cidade
+      const parts = cli.endereco.split(',').map(s=>s.trim());
+      contatoParts.push(parts.slice(-2).join(', ') || cli.endereco);
+    }
+    if (status.legado) contatoParts.length = 0, contatoParts.push('<em>Notion · registro legado · possível duplicado de CLI-9</em>');
+    const contato = contatoParts.join(' · ') || '—';
+
+    // Documento
+    const docId = cli.doc && cli.doc !== '—' ? cli.doc : '—';
+    const docTipo = cli.doc && cli.doc !== '—'
+      ? (cli.tipo === 'PJ' ? 'CNPJ · PJ' : 'CPF · PF')
+      : (cli.tipo === 'PJ' ? 'a cadastrar' : (cli.nome && cli.nome.split(/\s+e\s+/i).length > 1 ? 'casal · PF' : 'a cadastrar'));
+
+    // Projeto
+    const projMain = proj ? proj.titulo : 'Sem projeto';
+    const projSub = proj
+      ? ('[' + (proj.ref || '—') + '] ' + (proj.tipo || '—') + ' · ' + (proj.fase || proj.status || ''))
+      : '—';
+
+    // Portal link → abre o portal Yvyra (yvyra-preview.html) na seção de login
+    const portalBtn = status.legado
+      ? '<span class="portal-link" style="opacity:.6;pointer-events:none">Portal <span class="ar">↗</span></span>'
+      : '<a href="../yvyra-preview.html#entrar" target="_blank" class="portal-link">Portal <span class="ar">↗</span></a>';
+
+    return ''
+      + '<tr data-cli="'+cli.id+'"'+rowOpacity+'>'
+      +   '<td>'
+      +     '<div class="client-cell">'
+      +       '<div class="client-avatar">'+iniciais(cli.nome)+'</div>'
+      +       '<div>'
+      +         '<div class="name">'+cli.nome+'</div>'
+      +         '<div class="sub">'+contato+'</div>'
+      +       '</div>'
+      +     '</div>'
+      +   '</td>'
+      +   '<td><span class="doc-id">'+docId+'</span><div class="sub">'+docTipo+'</div></td>'
+      +   '<td><div class="name">'+projMain+'</div><div class="sub">'+projSub+'</div></td>'
+      +   '<td>'
+      +     '<div class="fin-mini">'
+      +       '<div class="tot"'+(fin.mute ? ' style="color:var(--ink-mute)"' : '')+'>'+fin.tot+'</div>'
+      +       '<div class="split">'+(fin.mute ? '<span style="color:var(--ink-mute)">'+fin.split+'</span>' : fin.split)+'</div>'
+      +     '</div>'
+      +   '</td>'
+      +   '<td>'+origem.main+'<div class="sub">'+origem.sub+'</div></td>'
+      +   '<td><span class="badge '+status.cls+'">'+status.label+'</span></td>'
+      +   '<td>'+portalBtn+'</td>'
+      + '</tr>';
+  }
+
+  function renderLeadsBox() {
+    const box = document.getElementById('leads-box');
+    const grid = document.getElementById('leads-grid');
+    const count = document.getElementById('leads-count');
+    if (!box || !grid) return;
+    const leads = (typeof SD.listarLeads === 'function') ? SD.listarLeads() : [];
+    if (!leads.length) { box.style.display = 'none'; return; }
+    box.style.display = '';
+    count.textContent = leads.length + ' ' + (leads.length === 1 ? 'lead ativo' : 'leads ativos');
+    grid.innerHTML = leads.map(item => {
+      const c = item.cliente;
+      const rasc = (item.rascunhos && item.rascunhos[0]) || null;
+      const meta = [];
+      if (c.briefing && c.briefing.tipo) meta.push(c.briefing.tipo);
+      if (c.briefing && c.briefing.metragem) meta.push(c.briefing.metragem);
+      if (c.briefing && c.briefing.local) meta.push(c.briefing.local);
+      if (c.criadoEm) meta.push('em ' + c.criadoEm);
+      const contato = [c.telefone, c.email].filter(x => x && x !== '—').join(' · ');
+      const metaLine = meta.join(' · ') + (contato ? ' · ' + contato : '');
+      const abrir = rasc
+        ? '<a class="lc-btn primary" href="sistema-proposta-detalhe.html?id='+rasc.id+'">abrir rascunho '+rasc.id+' →</a>'
+        : '';
+      const detalhe = '<a class="lc-btn" href="sistema-cliente-detalhe.html?id='+c.id+'">ver perfil</a>';
+      return ''
+        + '<div class="lead-card" data-lead="'+c.id+'">'
+        +   '<div class="lc-ini">'+iniciais(c.nome)+'</div>'
+        +   '<div class="lc-body">'
+        +     '<div class="lc-name">'+c.nome+' <span class="lc-id">'+c.id+'</span></div>'
+        +     '<div class="lc-meta">'+(metaLine || '—')+'</div>'
+        +   '</div>'
+        +   '<div class="lc-actions">'+detalhe+abrir+'</div>'
+        + '</div>';
+    }).join('');
+  }
+
+  function refreshResumo() {
+    const todosIds = Object.keys(SD.CLIENTES);
+    const leadsIds = todosIds.filter(id => SD.CLIENTES[id].status === 'Lead');
+    const ativos = todosIds.filter(id => {
+      const c = SD.CLIENTES[id];
+      if (c.status === 'Lead') return false;
+      const p = (c.projetos && c.projetos.length) ? SD.getProjeto(c.projetos[0]) : null;
+      if (!p) return false;
+      const s = (p.status || '').toLowerCase();
+      return !s.includes('travado') && !s.includes('concluído') && !s.includes('entregue') && !s.includes('briefing');
+    });
+    const sub = document.getElementById('clientes-sub');
+    if (sub) {
+      const partes = [todosIds.length + ' registros'];
+      if (leadsIds.length) partes.push(leadsIds.length + ' lead' + (leadsIds.length > 1 ? 's' : '') + ' do briefing');
+      partes.push(ativos.length + ' ativo' + (ativos.length !== 1 ? 's' : ''));
+      sub.textContent = partes.join(' · ');
+    }
+    const k1 = document.getElementById('kpi-total'); if (k1) k1.textContent = todosIds.length;
+    const k2 = document.getElementById('kpi-leads'); if (k2) k2.textContent = leadsIds.length;
+    const k2s = document.getElementById('kpi-leads-sub');
+    if (k2s) k2s.textContent = leadsIds.length ? 'briefings aguardando proposta' : 'nenhum lead ativo';
+    const k3 = document.getElementById('kpi-ativos'); if (k3) k3.textContent = ativos.length;
+    const k3s = document.getElementById('kpi-ativos-sub');
+    if (k3s) k3s.textContent = ativos.length ? ativos.map(id => SD.CLIENTES[id].nome.split(/\s+/)[0]).slice(0,3).join(' · ') : '—';
+  }
+
+  function renderAll() {
+    const tbody = document.getElementById('cli-tbody');
+    if (!tbody) return;
+    // Todos os IDs: ordem preset + quaisquer novos (leads criados dinamicamente)
+    const todos = CLIENTES_ORDEM.slice();
+    Object.keys(SD.CLIENTES).forEach(id => { if (todos.indexOf(id) === -1) todos.push(id); });
+    const html = todos.map(renderRow).join('');
+    tbody.innerHTML = html || '<tr><td colspan="7" style="text-align:center;padding:30px;color:var(--ink-mute);font-style:italic">Nenhum cliente cadastrado.</td></tr>';
+    wireRows();
+    renderLeadsBox();
+    refreshResumo();
+  }
+
+  function wireRows() {
+    document.querySelectorAll('.tbl tbody tr').forEach(tr => {
+      tr.style.cursor = 'pointer';
+      tr.addEventListener('click', (e) => {
+        if (e.target.closest('a') || e.target.closest('button')) return;
+        const id = tr.dataset.cli || '';
+        window.location.href = 'sistema-cliente-detalhe.html' + (id ? '?id='+id : '');
+      });
+    });
+  }
+
+  // ===== BUSCA =====
+  const searchInp = document.querySelector('.search input');
+  if (searchInp) {
+    searchInp.addEventListener('input', () => {
+      const q = searchInp.value.toLowerCase().trim();
+      document.querySelectorAll('.tbl tbody tr').forEach(tr => {
+        const t = tr.innerText.toLowerCase();
+        tr.style.display = (!q || t.includes(q)) ? '' : 'none';
+      });
+    });
+  }
+
+  // ===== FILTROS =====
+  document.querySelectorAll('#cli-filters a').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      document.querySelectorAll('#cli-filters a').forEach(x => x.classList.toggle('active', x === a));
+      const f = a.dataset.f;
+      document.querySelectorAll('.tbl tbody tr').forEach(tr => {
+        if (f === 'todos') { tr.style.display = ''; return; }
+        const badge = (tr.querySelector('.badge')?.innerText || '').toLowerCase();
+        tr.style.display = badge.includes(f) ? '' : 'none';
+      });
+    });
+  });
+
+  // ===== EXPORTAR CSV =====
+  window.exportarClientesCSV = function () {
+    const rows = [['Cliente','Contato','Documento','Projeto atual','Valor contrato','Pago','Em aberto','Origem','Status']];
+    document.querySelectorAll('.tbl tbody tr').forEach(tr => {
+      if (tr.style.display === 'none') return;
+      const tds = tr.querySelectorAll('td');
+      const nome = tr.querySelector('.client-cell .name')?.innerText || '';
+      const contato = tr.querySelector('.client-cell .sub')?.innerText || '';
+      const doc = tr.querySelector('.doc-id')?.innerText || '';
+      const proj = tds[2]?.innerText.replace(/\s+/g,' ').trim() || '';
+      const tot = tr.querySelector('.fin-mini .tot')?.innerText || '';
+      const split = tr.querySelector('.fin-mini .split')?.innerText || '';
+      const origem = tds[4]?.innerText.replace(/\s+/g,' ').trim() || '';
+      const status = tr.querySelector('.badge')?.innerText || '';
+      const m1 = (split.match(/pago\s*([R$\s\d.,kM]+)/i) || [,''])[1].trim();
+      const m2 = (split.match(/aberto\s*([R$\s\d.,kM]+)/i) || [,''])[1].trim();
+      rows.push([nome, contato, doc, proj, tot, m1, m2, origem, status]);
+    });
+    const csv = rows.map(r => r.map(x => '"'+String(x).replace(/"/g,'""')+'"').join(';')).join('\n');
+    const blob = new Blob(['\ufeff'+csv], {type:'text/csv;charset=utf-8'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'zenon-clientes.csv';
+    a.click();
+    URL.revokeObjectURL(a.href);
+  };
+
+  // Re-render ao editar qualquer campo em outras abas (via localStorage)
+  window.addEventListener('storage', (e) => {
+    if (e.key === 'zenon_sistema_overrides_v2') {
+      // recarrega overrides na aba atual
+      location.reload();
+    }
+  });
+
+  // Render inicial
+  renderAll();
+})();
+</script>
+</body>
+</html>
