@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cliente Â· Zenon Sistema</title>
+<title>Cliente · Zenon Sistema</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -23,7 +23,7 @@
   .client-info h1{font-family:'Fraunces',serif;font-size:38px;line-height:1.1;font-weight:500;margin-bottom:4px}
   .client-info h1 em{color:var(--accent-ink);font-style:italic}
   .client-info .contact{font-size:13px;color:var(--ink-soft);margin-top:4px;line-height:1.5}
-  .client-info .contact span + span::before{content:' Â· ';color:var(--ink-mute)}
+  .client-info .contact span + span::before{content:' · ';color:var(--ink-mute)}
   .client-info .tags-h{display:flex;gap:5px;margin-top:10px;flex-wrap:wrap}
   .client-actions{display:flex;flex-direction:column;gap:6px;align-items:flex-end}
   @media (max-width:900px){.client-actions{flex-direction:row;flex-wrap:wrap;align-items:flex-start}}
@@ -129,34 +129,34 @@
 
 <header class="top">
   <div class="top-inner">
-    <div class="brand">Zen<span>o</span>n â Sistema</div>
-    <div class="search"><input type="search" placeholder="Buscar por nome, e-mail, CPF/CNPJâ¦"></div>
-    <div class="fx-chip" title="CotaÃ§Ã£o do dÃ³lar (USD/BRL)">
+    <div class="brand">Zen<span>o</span>n — Sistema</div>
+    <div class="search"><input type="search" placeholder="Buscar por nome, e-mail, CPF/CNPJ…"></div>
+    <div class="fx-chip" title="Cotação do dólar (USD/BRL)">
       <span class="fx-code">USD</span>
-      <span class="fx-val"><span class="cur">R$</span>â</span>
-      <span class="fx-delta flat">â¦</span>
+      <span class="fx-val"><span class="cur">R$</span>—</span>
+      <span class="fx-delta flat">…</span>
       <div class="fx-tip"></div>
     </div>
     <div class="user-menu">
       <button type="button" class="user-trigger" onclick="ZenonUser.toggleDropdown(event)" aria-haspopup="true" aria-expanded="false">
         <span class="u-name" data-user-name>Rodrigo</span>
         <span class="avatar" data-user="me">R</span>
-        <span class="u-caret">â¾</span>
+        <span class="u-caret">▾</span>
       </button>
       <div class="user-dropdown" role="menu">
         <div class="ud-head">
           <span class="avatar" data-user="me">R</span>
           <div>
             <div class="name" data-user-name>Rodrigo</div>
-            <div class="role" data-user-role>SÃ³cio Â· Arquiteto responsÃ¡vel</div>
+            <div class="role" data-user-role>Sócio · Arquiteto responsável</div>
           </div>
         </div>
-        <a href="sistema-perfil.html"><span class="ic">â</span>Ver perfil</a>
-        <a href="sistema-configuracoes.html"><span class="ic">â</span>ConfiguraÃ§Ãµes</a>
-        <a href="sistema-empresa.html"><span class="ic">â</span>Dados da empresa</a>
-        <a href="https://www.notion.so/Zenon" target="_blank"><span class="ic">â±</span>Atividades Â· Notion â</a>
+        <a href="sistema-perfil.html"><span class="ic">◎</span>Ver perfil</a>
+        <a href="sistema-configuracoes.html"><span class="ic">⚙</span>Configurações</a>
+        <a href="sistema-empresa.html"><span class="ic">⌂</span>Dados da empresa</a>
+        <a href="https://www.notion.so/Zenon" target="_blank"><span class="ic">✱</span>Atividades · Notion ↗</a>
         <div class="ud-sep"></div>
-        <a href="sistema-login.html" class="sign-out"><span class="ic">âª</span>Sair</a>
+        <a href="sistema-login.html" class="sign-out"><span class="ic">↪</span>Sair</a>
       </div>
     </div>
   </div>
@@ -176,13 +176,13 @@
 <main>
   <div class="breadc">
     <a href="sistema-clientes.html">Clientes</a>
-    <span class="sep">âº</span>
-    <span id="brc-titulo">â¦</span>
+    <span class="sep">›</span>
+    <span id="brc-titulo">…</span>
     <span class="ovslot" id="ovbar-mount"></span>
   </div>
 
   <div id="cliente-root">
-    <div class="empty-card">Carregando dados do clienteâ¦</div>
+    <div class="empty-card">Carregando dados do cliente…</div>
   </div>
 </main>
 
@@ -190,14 +190,14 @@
 <div class="file-preview" id="file-preview">
   <span class="ic" id="fp-ic">PDF</span>
   <div>
-    <div style="font-weight:600;font-size:12px" id="fp-nm">â</div>
-    <div style="font-size:10px;color:var(--ink-mute);letter-spacing:.1em;text-transform:uppercase">VisualizaÃ§Ã£o nÃ£o disponÃ­vel â baixandoâ¦</div>
+    <div style="font-weight:600;font-size:12px" id="fp-nm">—</div>
+    <div style="font-size:10px;color:var(--ink-mute);letter-spacing:.1em;text-transform:uppercase">Visualização não disponível — baixando…</div>
   </div>
 </div>
 
 <footer>
-  <div>Cabral e Lima Design LTDA Â· CNPJ 59.525.877/0001-49 Â· CAU/BR A148704-5</div>
-  <div>sistema.zenonco.com.br Â· v2 â protÃ³tipo</div>
+  <div>Cabral e Lima Design LTDA · CNPJ 59.525.877/0001-49 · CAU/BR A148704-5</div>
+  <div>sistema.zenonco.com.br · v2 — protótipo</div>
 </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -226,13 +226,13 @@
   function render() {
     const cli = SD.getCliente(id);
     if (!cli) {
-      document.title = 'Cliente nÃ£o encontrado Â· Zenon Sistema';
-      brc.textContent = 'Cliente nÃ£o encontrado';
-      root.innerHTML = '<div class="empty-card">Cliente <b>' + id + '</b> nÃ£o encontrado.<br><a href="sistema-clientes.html" class="link" style="margin-top:10px;display:inline-block">â Voltar</a></div>';
+      document.title = 'Cliente não encontrado · Zenon Sistema';
+      brc.textContent = 'Cliente não encontrado';
+      root.innerHTML = '<div class="empty-card">Cliente <b>' + id + '</b> não encontrado.<br><a href="sistema-clientes.html" class="link" style="margin-top:10px;display:inline-block">← Voltar</a></div>';
       return;
     }
 
-    document.title = cli.nome + ' Â· Cliente Â· Zenon Sistema';
+    document.title = cli.nome + ' · Cliente · Zenon Sistema';
     brc.textContent = cli.nome;
 
     // override bar
@@ -259,11 +259,11 @@
       + '<div class="client-head">'
       +   '<div class="big-avatar">' + initials + '</div>'
       +   '<div class="client-info">'
-      +     '<div class="eyebrow">' + cli.id + ' Â· ' + (cli.tipo === 'PJ' ? 'PESSOA JURÃDICA' : 'PESSOA FÃSICA') + '</div>'
+      +     '<div class="eyebrow">' + cli.id + ' · ' + (cli.tipo === 'PJ' ? 'PESSOA JURÍDICA' : 'PESSOA FÍSICA') + '</div>'
       +     '<h1 ' + ed('nome','text') + ' data-raw="' + esc(cli.nome) + '">' + esc(cli.nome) + '</h1>'
       +     '<div class="contact">'
-      +       '<span ' + ed('email','text') + ' data-raw="' + esc(cli.email||'') + '">' + esc(cli.email || 'â') + '</span>'
-      +       '<span ' + ed('telefone','text') + ' data-raw="' + esc(cli.telefone||'') + '">' + esc(cli.telefone || 'â') + '</span>'
+      +       '<span ' + ed('email','text') + ' data-raw="' + esc(cli.email||'') + '">' + esc(cli.email || '—') + '</span>'
+      +       '<span ' + ed('telefone','text') + ' data-raw="' + esc(cli.telefone||'') + '">' + esc(cli.telefone || '—') + '</span>'
       +     '</div>'
       +     '<div class="tags-h">' + ativoBadge + projBadge + propBadge + tagsHTML + '</div>'
       +   '</div>'
@@ -294,24 +294,24 @@
     const finTabLabel  = 'Financeiro' + (financeirosVinc.length ? ' (' + financeirosVinc.length + ')' : '');
     const tabsHTML = ''
       + '<div class="tab-sub" id="subTabs">'
-      +   '<a data-tab="geral">VisÃ£o geral</a>'
+      +   '<a data-tab="geral">Visão geral</a>'
       +   '<a data-tab="projetos">' + projTabLabel + '</a>'
       +   '<a data-tab="propostas">' + propTabLabel + '</a>'
       +   '<a data-tab="financeiro">' + finTabLabel + '</a>'
       +   '<a data-tab="arquivos">Arquivos</a>'
-      +   '<a data-tab="historico">HistÃ³rico Â· notas</a>'
+      +   '<a data-tab="historico">Histórico · notas</a>'
       + '</div>';
 
     // ----- CADASTRO DL (inline editable) -----
     const cadastroDL = ''
       + '<dl class="info-grid">'
-      +   '<dt>Tipo</dt><dd><span ' + ed('tipo','select') + ' data-edit-options="PF,PJ" data-raw="' + esc(cli.tipo||'') + '">' + (cli.tipo === 'PJ' ? 'Pessoa jurÃ­dica' : 'Pessoa fÃ­sica') + '</span></dd>'
-      +   '<dt>' + (cli.tipo === 'PJ' ? 'CNPJ' : 'CPF') + '</dt><dd><span ' + ed('doc','text') + ' data-raw="' + esc(cli.doc||'') + '">' + esc(cli.doc || 'â') + '</span></dd>'
-      +   '<dt>E-mail</dt><dd><span ' + ed('email','text') + ' data-raw="' + esc(cli.email||'') + '">' + esc(cli.email || 'â') + '</span></dd>'
-      +   '<dt>Telefone</dt><dd><span ' + ed('telefone','text') + ' data-raw="' + esc(cli.telefone||'') + '">' + esc(cli.telefone || 'â') + '</span></dd>'
-      +   '<dt>EndereÃ§o</dt><dd><span ' + ed('endereco','text') + ' data-raw="' + esc(cli.endereco||'') + '">' + esc(cli.endereco || 'â') + '</span></dd>'
-      +   '<dt>Origem</dt><dd><span ' + ed('origem','text') + ' data-raw="' + esc(cli.origem||'') + '">' + esc(cli.origem || 'â') + '</span></dd>'
-      +   '<dt>ObservaÃ§Ã£o</dt><dd class="obs"><span ' + ed('obs','textarea') + ' data-rows="3" data-raw="' + esc(cli.obs||'') + '">' + esc(cli.obs || 'â') + '</span></dd>'
+      +   '<dt>Tipo</dt><dd><span ' + ed('tipo','select') + ' data-edit-options="PF,PJ" data-raw="' + esc(cli.tipo||'') + '">' + (cli.tipo === 'PJ' ? 'Pessoa jurídica' : 'Pessoa física') + '</span></dd>'
+      +   '<dt>' + (cli.tipo === 'PJ' ? 'CNPJ' : 'CPF') + '</dt><dd><span ' + ed('doc','text') + ' data-raw="' + esc(cli.doc||'') + '">' + esc(cli.doc || '—') + '</span></dd>'
+      +   '<dt>E-mail</dt><dd><span ' + ed('email','text') + ' data-raw="' + esc(cli.email||'') + '">' + esc(cli.email || '—') + '</span></dd>'
+      +   '<dt>Telefone</dt><dd><span ' + ed('telefone','text') + ' data-raw="' + esc(cli.telefone||'') + '">' + esc(cli.telefone || '—') + '</span></dd>'
+      +   '<dt>Endereço</dt><dd><span ' + ed('endereco','text') + ' data-raw="' + esc(cli.endereco||'') + '">' + esc(cli.endereco || '—') + '</span></dd>'
+      +   '<dt>Origem</dt><dd><span ' + ed('origem','text') + ' data-raw="' + esc(cli.origem||'') + '">' + esc(cli.origem || '—') + '</span></dd>'
+      +   '<dt>Observação</dt><dd class="obs"><span ' + ed('obs','textarea') + ' data-rows="3" data-raw="' + esc(cli.obs||'') + '">' + esc(cli.obs || '—') + '</span></dd>'
       + '</dl>';
 
     // ----- RESUMO FIN -----
@@ -321,13 +321,13 @@
         + '<div class="fc pg"><div class="l">Pago</div><div class="v">' + SD.fmtBRLshort(totalRecebido) + '</div></div>'
         + '<div class="fc ab"><div class="l">A receber</div><div class="v">' + SD.fmtBRLshort(totalAReceber) + '</div></div>'
       + '</div>'
-      : '<div class="empty-card">Sem cobranÃ§a formalizada para este cliente.</div>';
+      : '<div class="empty-card">Sem cobrança formalizada para este cliente.</div>';
 
     // ----- TIMELINE MINI -----
     let tlItems = [];
     financeirosVinc.forEach(f => {
       (f.parcelas||[]).forEach(p => {
-        tlItems.push({ data: p.venc, titulo: 'Parcela ' + p.n + ' Â· ' + p.desc, sub: SD.fmtBRL(p.valor) + ' â ' + p.status, status: p.status });
+        tlItems.push({ data: p.venc, titulo: 'Parcela ' + p.n + ' · ' + p.desc, sub: SD.fmtBRL(p.valor) + ' — ' + p.status, status: p.status });
       });
     });
     tlItems.sort((a,b) => {
@@ -342,12 +342,12 @@
           + '<span class="badge ' + (t.status === 'Recebido' ? 'ok' : 'warn') + '">' + esc(t.status) + '</span></div>').join('') + '</div>'
       : '<div class="empty-card">Sem linha do tempo financeira.</div>';
 
-    // ----- MINI-LISTA propostas + projetos na visÃ£o geral -----
+    // ----- MINI-LISTA propostas + projetos na visão geral -----
     const propMiniHTML = propostasVinc.length
       ? propostasVinc.slice(0,4).map(p => ''
           + '<a class="mini-row" href="sistema-proposta-detalhe.html?id=' + p.id + '" style="text-decoration:none;color:inherit">'
           + '<span class="id-chip">[' + p.id + ']</span>'
-          + '<div><div class="t">' + esc(p.titulo) + '</div><div class="s">' + esc(p.status) + ' Â· ' + esc(p.data) + '</div></div>'
+          + '<div><div class="t">' + esc(p.titulo) + '</div><div class="s">' + esc(p.status) + ' · ' + esc(p.data) + '</div></div>'
           + '<div class="r">' + SD.fmtBRLshort(p.valorTotal||0) + '</div>'
           + '</a>').join('')
       : '<div class="empty-card">Sem propostas vinculadas.</div>';
@@ -356,7 +356,7 @@
       ? projetosVinc.slice(0,4).map(p => ''
           + '<a class="mini-row" href="sistema-projeto-detalhe.html?p=' + p.id + '" style="text-decoration:none;color:inherit">'
           + '<span class="id-chip">[' + p.id + ']</span>'
-          + '<div><div class="t">' + esc(p.titulo) + '</div><div class="s">' + esc(p.fase||'â') + ' Â· ' + esc(p.bairro||'â') + '</div></div>'
+          + '<div><div class="t">' + esc(p.titulo) + '</div><div class="s">' + esc(p.fase||'—') + ' · ' + esc(p.bairro||'—') + '</div></div>'
           + '<div class="r">' + (p.progresso||0) + '%</div>'
           + '</a>').join('')
       : '<div class="empty-card">Sem projetos vinculados.</div>';
@@ -381,7 +381,7 @@
     const projTableRows = projetosVinc.map(p => ''
       + '<tr onclick="location.href=\'sistema-projeto-detalhe.html?p=' + p.id + '\'" style="cursor:pointer">'
       +   '<td><span class="id-chip" style="font-family:Fraunces,serif;color:var(--accent-ink);font-weight:600">[' + p.id + ']</span></td>'
-      +   '<td><div class="name">' + esc(p.titulo) + '</div><div class="sub">' + esc(p.metragem || 'â') + ' Â· ' + esc(p.bairro || 'â') + '</div></td>'
+      +   '<td><div class="name">' + esc(p.titulo) + '</div><div class="sub">' + esc(p.metragem || '—') + ' · ' + esc(p.bairro || '—') + '</div></td>'
       +   '<td><span class="badge ' + ((p.progresso||0) >= 100 ? 'ok' : ((p.progresso||0) >= 50 ? 'info' : 'warn')) + '">' + esc(p.fase) + '</span></td>'
       +   '<td><div class="bar ok" style="width:120px"><span style="width:' + (p.progresso||0) + '%"></span></div><div class="sub">' + (p.progresso||0) + '%</div></td>'
       + '</tr>').join('');
@@ -399,7 +399,7 @@
     const propTableRows = propostasVinc.map(p => ''
       + '<tr onclick="location.href=\'sistema-proposta-detalhe.html?id=' + p.id + '\'" style="cursor:pointer">'
       +   '<td><span class="id-chip" style="font-family:Fraunces,serif;color:var(--accent-ink);font-weight:600">[' + p.id + ']</span></td>'
-      +   '<td><div class="name">' + esc(p.titulo) + '</div><div class="sub">' + esc(p.data||'â') + (p.validade ? ' Â· val. ' + esc(p.validade) : '') + '</div></td>'
+      +   '<td><div class="name">' + esc(p.titulo) + '</div><div class="sub">' + esc(p.data||'—') + (p.validade ? ' · val. ' + esc(p.validade) : '') + '</div></td>'
       +   '<td><span class="badge ' + (p.status==='Aceita'?'ok':p.status==='Recusada'?'alert':'warn') + '">' + esc(p.status) + '</span></td>'
       +   '<td class="num">' + SD.fmtBRL(p.valorTotal||0) + '</td>'
       + '</tr>').join('');
@@ -416,18 +416,18 @@
     // ----- PANEL FINANCEIRO -----
     const finCardsHTML = financeirosVinc.map(f => {
       const parcelasHTML = (f.parcelas||[]).map(p => ''
-        + '<tr><td>' + p.n + '/' + f.parcelas.length + ' Â· ' + esc(p.desc) + '</td><td>' + esc(p.venc) + '</td><td class="num">' + SD.fmtBRL(p.valor) + '</td>'
+        + '<tr><td>' + p.n + '/' + f.parcelas.length + ' · ' + esc(p.desc) + '</td><td>' + esc(p.venc) + '</td><td class="num">' + SD.fmtBRL(p.valor) + '</td>'
         + '<td><span class="badge ' + (p.status === 'Recebido' ? 'ok' : 'warn') + '">' + esc(p.status) + '</span></td>'
         + '<td><a class="btn ghost small" href="sistema-financeiro.html?f=' + f.id + '">Abrir</a></td></tr>').join('');
       return ''
-        + '<div class="info-card" style="margin-bottom:16px"><h3>' + f.id + ' Â· <em>' + esc(f.titulo) + '</em></h3>'
+        + '<div class="info-card" style="margin-bottom:16px"><h3>' + f.id + ' · <em>' + esc(f.titulo) + '</em></h3>'
         +   '<div class="fin-snap">'
         +     '<div class="fc"><div class="l">Contrato</div><div class="v">' + SD.fmtBRLshort(f.total) + '</div></div>'
         +     '<div class="fc pg"><div class="l">Pago</div><div class="v">' + SD.fmtBRLshort(f.recebido) + '</div></div>'
         +     '<div class="fc ab"><div class="l">A receber</div><div class="v">' + SD.fmtBRLshort(f.aReceber) + '</div></div>'
         +   '</div>'
         +   '<table class="tbl" style="margin-top:16px"><thead><tr><th>Parcela</th><th>Vencimento</th><th class="num">Valor</th><th>Status</th><th></th></tr></thead><tbody>' + parcelasHTML + '</tbody></table>'
-        +   '<div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap"><a href="sistema-financeiro.html?f=' + f.id + '" class="btn ghost small">Abrir no Financeiro</a>' + '<a href="index.html#portal" target="_blank" class="btn ghost small">Portal do cliente â</a>' + '</div>'
+        +   '<div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap"><a href="sistema-financeiro.html?f=' + f.id + '" class="btn ghost small">Abrir no Financeiro</a>' + '<a href="index.html#portal" target="_blank" class="btn ghost small">Portal do cliente ↗</a>' + '</div>'
         + '</div>';
     }).join('');
 
@@ -444,21 +444,21 @@
           + '<td><span class="badge ' + (f.status === 'Pago' ? 'ok' : (String(f.status||'').indexOf('A pagar') === 0 ? 'warn' : 'neutral')) + '">' + esc(f.status) + '</span></td></tr>').join('');
         obraBlock = ''
           + '<div class="info-card" style="margin-top:16px"><h3>'
-          +   '<span>Despesas de obra Â· <em>' + esc(obra.titulo) + '</em></span>'
-          +   '<a href="sistema-obra-financeiro.html?p=' + projComObra.id + '" style="font-family:Inter,sans-serif;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent-ink);text-decoration:none;font-weight:700">Abrir â</a>'
+          +   '<span>Despesas de obra · <em>' + esc(obra.titulo) + '</em></span>'
+          +   '<a href="sistema-obra-financeiro.html?p=' + projComObra.id + '" style="font-family:Inter,sans-serif;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent-ink);text-decoration:none;font-weight:700">Abrir ↗</a>'
           + '</h3>'
           + '<div class="fin-snap" style="margin-bottom:12px">'
-          +   '<div class="fc"><div class="l">OrÃ§amento obra</div><div class="v">' + SD.fmtBRLshort(obra.orcado) + '</div></div>'
+          +   '<div class="fc"><div class="l">Orçamento obra</div><div class="v">' + SD.fmtBRLshort(obra.orcado) + '</div></div>'
           +   '<div class="fc pg"><div class="l">Gasto</div><div class="v">' + SD.fmtBRLshort(obra.realizado) + '</div></div>'
           +   '<div class="fc ab"><div class="l">A pagar</div><div class="v">' + SD.fmtBRLshort((obra.orcado||0) - (obra.realizado||0)) + '</div></div>'
           + '</div>'
-          + '<table class="tbl"><thead><tr><th>Fornecedor</th><th>Categoria</th><th class="num">OrÃ§ado</th><th class="num">Realizado</th><th>Status</th></tr></thead><tbody>' + fornHTML + '</tbody></table></div>';
+          + '<table class="tbl"><thead><tr><th>Fornecedor</th><th>Categoria</th><th class="num">Orçado</th><th class="num">Realizado</th><th>Status</th></tr></thead><tbody>' + fornHTML + '</tbody></table></div>';
       }
     }
 
     const panelFinanceiro = ''
       + '<div class="tab-panel" data-panel="financeiro">'
-      +   (financeirosVinc.length ? finCardsHTML : '<div class="empty-card">Cliente sem cobranÃ§a formalizada.</div>')
+      +   (financeirosVinc.length ? finCardsHTML : '<div class="empty-card">Cliente sem cobrança formalizada.</div>')
       +   obraBlock
       + '</div>';
 
@@ -467,19 +467,19 @@
     const arqGrid = arquivosCli.length
       ? '<div class="files-grid">' + arquivosCli.map(a => ''
           + '<div class="file-tile" onclick="abrirArquivo(this)" data-tipo="' + esc(a.ic) + '" data-nome="' + esc(a.nm) + '">'
-          +   '<div class="ic">' + esc(a.ic) + '</div><div class="nm">' + esc(a.nm) + '</div><div class="meta">' + esc(a.mt) + ' Â· ' + esc(a._proj) + '</div>'
+          +   '<div class="ic">' + esc(a.ic) + '</div><div class="nm">' + esc(a.nm) + '</div><div class="meta">' + esc(a.mt) + ' · ' + esc(a._proj) + '</div>'
           + '</div>').join('') + '</div>'
       : '<div class="empty-card">Nenhum arquivo cadastrado para este cliente.</div>';
 
     const panelArquivos = ''
       + '<div class="tab-panel" data-panel="arquivos">'
-      +   '<div class="info-card"><h3>Arquivos Â· pasta do cliente</h3>' + arqGrid
+      +   '<div class="info-card"><h3>Arquivos · pasta do cliente</h3>' + arqGrid
       +     '<div style="margin-top:14px"><button class="btn ghost small" onclick="document.getElementById(\'upload-fake\').click()">+ Enviar arquivo</button>'
       +     '<input type="file" id="upload-fake" style="display:none" onchange="uploadArquivo(this)"></div>'
       +   '</div>'
       + '</div>';
 
-    // ----- PANEL HISTÃRICO -----
+    // ----- PANEL HISTÓRICO -----
     const panelHistorico = ''
       + '<div class="tab-panel" data-panel="historico">'
       +   '<div class="info-card"><h3>Notas internas</h3>'
@@ -487,7 +487,7 @@
       +       '<div class="note"><div class="nh"><b>Sistema</b><span class="when">' + cli.id + '</span></div><p>' + esc(cli.obs || 'Sem notas iniciais.') + '</p></div>'
       +     '</div>'
       +     '<div class="note-new" id="note-new">'
-      +       '<textarea id="note-txt" placeholder="Escreva uma nota interna sobre este clienteâ¦"></textarea>'
+      +       '<textarea id="note-txt" placeholder="Escreva uma nota interna sobre este cliente…"></textarea>'
       +       '<div class="actions"><button class="btn ghost small" onclick="cancelarNota()">Cancelar</button><button class="btn small" onclick="salvarNota()">Salvar nota</button></div>'
       +     '</div>'
       +     '<div style="margin-top:14px" id="note-new-btn"><button type="button" class="btn ghost small" onclick="novaNota()">+ Nova nota</button></div>'
@@ -498,18 +498,18 @@
     const modalHTML = ''
       + '<div class="modal-back" id="edit-back" onclick="fecharEditar()"></div>'
       + '<div class="modal-card" id="edit-card" role="dialog" aria-modal="true">'
-      +   '<div class="modal-head"><h2>Editar <em>cadastro</em></h2><button type="button" class="close" onclick="fecharEditar()" aria-label="Fechar">â</button></div>'
+      +   '<div class="modal-head"><h2>Editar <em>cadastro</em></h2><button type="button" class="close" onclick="fecharEditar()" aria-label="Fechar">✕</button></div>'
       +   '<div class="modal-body">'
       +     '<div class="fld"><label>Nome</label><input type="text" id="e-nome" value="' + esc(cli.nome) + '"></div>'
-      +     '<div class="fld row"><div class="fld"><label>Tipo</label><select id="e-tipo"><option value="PF"' + (cli.tipo==='PF'?' selected':'') + '>Pessoa fÃ­sica</option><option value="PJ"' + (cli.tipo==='PJ'?' selected':'') + '>Pessoa jurÃ­dica</option></select></div>'
+      +     '<div class="fld row"><div class="fld"><label>Tipo</label><select id="e-tipo"><option value="PF"' + (cli.tipo==='PF'?' selected':'') + '>Pessoa física</option><option value="PJ"' + (cli.tipo==='PJ'?' selected':'') + '>Pessoa jurídica</option></select></div>'
       +       '<div class="fld"><label>' + (cli.tipo==='PJ'?'CNPJ':'CPF') + '</label><input type="text" id="e-doc" value="' + esc(cli.doc||'') + '"></div></div>'
-      +     '<div class="fld row"><div class="fld"><label>E-mail</label><input type="email" id="e-email" value="' + esc(cli.email==='â'?'':cli.email||'') + '"></div>'
-      +       '<div class="fld"><label>Telefone</label><input type="text" id="e-tel" value="' + esc(cli.telefone==='â'?'':cli.telefone||'') + '"></div></div>'
-      +     '<div class="fld"><label>EndereÃ§o</label><input type="text" id="e-end" value="' + esc(cli.endereco==='â'?'':cli.endereco||'') + '"></div>'
-      +     '<div class="fld"><label>Origem</label><input type="text" id="e-canal" value="' + esc(cli.origem==='â'?'':cli.origem||'') + '"></div>'
-      +     '<div class="fld"><label>ObservaÃ§Ã£o</label><textarea id="e-obs" rows="3">' + esc(cli.obs||'') + '</textarea></div>'
+      +     '<div class="fld row"><div class="fld"><label>E-mail</label><input type="email" id="e-email" value="' + esc(cli.email==='—'?'':cli.email||'') + '"></div>'
+      +       '<div class="fld"><label>Telefone</label><input type="text" id="e-tel" value="' + esc(cli.telefone==='—'?'':cli.telefone||'') + '"></div></div>'
+      +     '<div class="fld"><label>Endereço</label><input type="text" id="e-end" value="' + esc(cli.endereco==='—'?'':cli.endereco||'') + '"></div>'
+      +     '<div class="fld"><label>Origem</label><input type="text" id="e-canal" value="' + esc(cli.origem==='—'?'':cli.origem||'') + '"></div>'
+      +     '<div class="fld"><label>Observação</label><textarea id="e-obs" rows="3">' + esc(cli.obs||'') + '</textarea></div>'
       +   '</div>'
-      +   '<div class="modal-foot"><button type="button" class="btn ghost small" onclick="fecharEditar()">Cancelar</button><button type="button" class="btn small" onclick="salvarCadastro()">Salvar alteraÃ§Ãµes</button></div>'
+      +   '<div class="modal-foot"><button type="button" class="btn ghost small" onclick="fecharEditar()">Cancelar</button><button type="button" class="btn small" onclick="salvarCadastro()">Salvar alterações</button></div>'
       + '</div>';
 
     root.innerHTML = heroHTML + kpisHTML + tabsHTML + panelGeral + panelProjetos + panelPropostas + panelFinanceiro + panelArquivos + panelHistorico + modalHTML;
@@ -535,7 +535,7 @@
     if (d.tipo === 'cliente' && d.id === id) render();
   });
 
-  // expor id p/ funÃ§Ãµes globais
+  // expor id p/ funções globais
   window.__cliId = id;
 })();
 
@@ -551,7 +551,7 @@ function fecharEditar(){
 function salvarCadastro(){
   const SD = window.SistemaData;
   const id = window.__cliId;
-  const tipoMap = { 'PF':'PF', 'PJ':'PJ', 'Pessoa fÃ­sica':'PF', 'Pessoa jurÃ­dica':'PJ' };
+  const tipoMap = { 'PF':'PF', 'PJ':'PJ', 'Pessoa física':'PF', 'Pessoa jurídica':'PJ' };
   const v = {
     nome:     (document.getElementById('e-nome')||{}).value || '',
     tipo:     tipoMap[(document.getElementById('e-tipo')||{}).value] || 'PF',
@@ -568,7 +568,7 @@ function salvarCadastro(){
   });
   fecharEditar();
   flash(ok ? 'Cadastro atualizado.' : 'Erro ao salvar cadastro.');
-  // o evento sistema-edit-saved nÃ£o dispara para update() via cÃ³digo â forÃ§amos render
+  // o evento sistema-edit-saved não dispara para update() via código — forçamos render
   document.dispatchEvent(new CustomEvent('sistema-edit-saved', { detail: { tipo: 'cliente', id: id, path: '*', value: null } }));
 }
 document.addEventListener('keydown', e => { if(e.key === 'Escape') fecharEditar(); });
@@ -594,7 +594,7 @@ function uploadArquivo(input){
   tile.innerHTML = '<div class="ic">'+ext+'</div><div class="nm">'+f.name.replace(/\.[^.]+$/, '')+'</div><div class="meta">hoje</div>';
   document.querySelector('.tab-panel[data-panel="arquivos"] .files-grid')?.appendChild(tile);
   input.value = '';
-  flash('Arquivo '+f.name+' anexado (protÃ³tipo).');
+  flash('Arquivo '+f.name+' anexado (protótipo).');
 }
 
 // ===== notas =====
@@ -619,11 +619,11 @@ function salvarNota(){
   const mi = String(d.getMinutes()).padStart(2,'0');
   const el = document.createElement('div');
   el.className = 'note';
-  el.innerHTML = '<div class="nh"><b>'+autor+'</b><span class="when">'+dd+' / '+mm+' Â· '+hh+':'+mi+'</span></div><p>'+txt.replace(/</g,'&lt;')+'</p>';
+  el.innerHTML = '<div class="nh"><b>'+autor+'</b><span class="when">'+dd+' / '+mm+' · '+hh+':'+mi+'</span></div><p>'+txt.replace(/</g,'&lt;')+'</p>';
   const list = document.getElementById('notas-list');
   list.insertBefore(el, list.firstChild);
   cancelarNota();
-  flash('Nota salva (protÃ³tipo).');
+  flash('Nota salva (protótipo).');
 }
 
 // ===== flash =====
@@ -641,20 +641,8 @@ function flash(msg){
   window.__flashTO = setTimeout(() => el.style.opacity = '0', 2400);
 }
 </script>
-<script>/* Fix portal links in cliente-detalhe */
-(function(){
-  var _cid=new URLSearchParams(location.search).get('id')||'';
-  if(!_cid)return;
-  function _fixPortal(){
-    document.querySelectorAll('a[href="index.html#portal"]').forEach(function(a){
-      a.href='index.html?cliente='+_cid+'#portal';
-    });
-  }
-  _fixPortal();
-  var obs=new MutationObserver(_fixPortal);
-  obs.observe(document.body,{childList:true,subtree:true});
-  window.addEventListener('load',_fixPortal);
-})();
+<script>/* Fix portal links */
+(function(){var _cid=new URLSearchParams(location.search).get('id')||'';if(!_cid)return;function _fix(){document.querySelectorAll('a[href="index.html#portal"]').forEach(function(a){a.href='index.html?cliente='+_cid+'#portal';});}  _fix();var obs=new MutationObserver(_fix);obs.observe(document.body,{childList:true,subtree:true});})();
 </script>
 </body>
 </html>
