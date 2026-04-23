@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Propostas — Zenon Sistema</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shell.css">
+<style>
+  .filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+  .filters a{padding:8px 14px;border:1px solid var(--line);border-radius:999px;font-size:12px;letter-spacing:.12em;text-transform:uppercase;font-weight:500;color:var(--ink-soft);background:var(--paper);transition:all .2s;cursor:pointer}
+  .filters a:hover{border-color:var(--accent);color:var(--ink)}
+  .filters a.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+
+  .pipe-cols{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+  @media (max-width:1100px){.pipe-cols{grid-template-columns:repeat(3,1fr)}}
+  @media (max-width:700px){.pipe-cols{grid-template-columns:repeat(2,1fr)}}
+  @media (max-width:520px){.pipe-cols{grid-template-columns:1fr}}
+  .pipe-col{background:var(--bg-alt);border:1px solid var(--line-soft);border-radius:4px;padding:14px 12px;display:flex;flex-direction:column;gap:10px;min-height:280px}
+  .pipe-col h4{font-family:'Inter',sans-serif;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink);font-weight:700;display:flex;justify-content:space-between;align-items:center}
+  .pipe-col h4 .count{background:var(--paper);color:var(--ink);padding:2px 8px;border-radius:999px;font-size:11px;border:1px solid var(--line);letter-spacing:0;font-weight:600}
+  .pipe-col h4 .sum{font-family:'Fraunces',serif;font-size:12px;color:var(--accent-ink);font-weight:600;letter-spacing:0;text-transform:none}
+
+  .pipe-card{background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:12px 13px;display:flex;flex-direction:column;gap:5px;transition:transform .2s,box-shadow .2s,border-color .2s;position:relative}
+  .pipe-card:hover{transform:translateY(-2px);box-shadow:0 12px 24px -18px rgba(20,17,13,.2);border-color:var(--accent)}
+  .pipe-card .topline{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+  .pipe-card .pid{font-family:'Fraunces',serif;color:var(--accent-ink);font-weight:600;font-size:11px}
+  .pipe-card .client{font-weight:600;font-size:13px;color:var(--ink);line-height:1.25}
+  .pipe-card .scope{font-size:12px;color:var(--ink-soft);line-height:1.35}
+  .pipe-card .value{font-family:'Fraunces',serif;font-size:22px;color:var(--accent-ink);font-weight:500;line-height:1.05;margin-top:3px}
+  .pipe-card .foot{display:flex;justify-content:space-between;align-items:center;padding-top:8px;border-top:1px solid var(--line-soft);font-size:10px;color:var(--ink-mute);letter-spacing:.08em;text-transform:uppercase;font-weight:600;margin-top:4px}
+  .pipe-card .gotobtn{display:block;text-align:center;margin-top:8px;padding:6px 8px;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft);background:var(--bg-alt);border:1px solid var(--line-soft);border-radius:3px;text-decoration:none;font-weight:700;cursor:pointer}
+  .pipe-card .gotobtn:hover{color:var(--accent-ink);border-color:var(--accent)}
+
+  .empty-col{font-size:11px;color:var(--ink-mute);padding:18px 12px;text-align:center;border:1px dashed var(--line-soft);border-radius:4px;font-style:italic}
+
+  .pipe-card.s-aprovada{border-left:3px solid var(--ok)}
+  .pipe-card.s-recusada{border-left:3px solid var(--alert);opacity:.7}
+  .pipe-card.s-negoc   {border-left:3px solid var(--warn)}
+  .pipe-card.s-enviada {border-left:3px solid var(--accent)}
+  .pipe-card.s-arqui   {opacity:.55}
+
+  /* Drag & drop */
+  .pipe-card{cursor:grab}
+  .pipe-card:active{cursor:grabbing}
+  .pipe-card.dragging{opacity:.4;transform:rotate(-1.5deg) scale(.98)}
+  .pipe-col.drag-over{background:var(--accent-soft);border-color:var(--accent);border-style:solid}
+  .pipe-col.drag-over .empty-col{border-color:var(--accent);color:var(--accent-ink)}
+
+  /* Menu de status dentro do card */
+  .card-status{position:relative;display:inline-flex;align-items:center;gap:4px;cursor:pointer;user-select:none}
+  .card-status::after{content:'▾';font-size:9px;color:var(--ink-mute);margin-left:2px;transition:transform .15s}
+  .card-status.open::after{transform:rotate(180deg)}
+  .card-status:hover::after{color:var(--accent-ink)}
+  .status-menu{position:absolute;top:calc(100% + 4px);left:0;background:var(--paper);border:1px solid var(--line);border-radius:4px;box-shadow:0 12px 28px -12px rgba(20,17,13,.25);padding:4px;min-width:180px;z-index:40;display:flex;flex-direction:column;gap:2px}
+  .status-menu button{background:none;border:none;padding:8px 12px;text-align:left;font-family:'Inter',sans-serif;font-size:12px;color:var(--ink);cursor:pointer;border-radius:3px;display:flex;align-items:center;gap:8px}
+  .status-menu button:hover{background:var(--bg-alt)}
+  .status-menu button.is-current{background:var(--accent-soft);color:var(--accent-ink);font-weight:600}
+  .status-menu button .dot{width:8px;height:8px;border-radius:50%;display:inline-block;flex-shrink:0}
+  .status-menu button .dot.s-rascunho{background:var(--ink-mute)}
+  .status-menu button .dot.s-enviada{background:var(--accent)}
+  .status-menu button .dot.s-negoc{background:var(--warn)}
+  .status-menu button .dot.s-aprovada{background:var(--ok)}
+  .status-menu button .dot.s-recusada{background:var(--alert)}
+
+  /* Dica acima do pipeline */
+  .pipe-hint{font-size:11px;color:var(--ink-mute);font-style:italic;margin-bottom:10px;padding:6px 10px;background:var(--accent-soft);border-left:2px solid var(--accent);border-radius:0 3px 3px 0}
+  .pipe-hint b{font-style:normal;color:var(--accent-ink);font-weight:600}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-inner">
+    <div class="brand">Zen<span>o</span>n — Sistema</div>
+    <div class="search"><input type="search" placeholder="Buscar proposta por cliente, valor, versão…"></div>
+    <div class="fx-chip" title="Cotação do dólar (USD/BRL)">
+      <span class="fx-code">USD</span>
+      <span class="fx-val"><span class="cur">R$</span>—</span>
+      <span class="fx-delta flat">…</span>
+      <div class="fx-tip"></div>
+    </div>
+    <div class="user-menu">
+      <button type="button" class="user-trigger" onclick="ZenonUser.toggleDropdown(event)" aria-haspopup="true" aria-expanded="false">
+        <span class="u-name" data-user-name>Rodrigo</span>
+        <span class="avatar" data-user="me">R</span>
+        <span class="u-caret">▾</span>
+      </button>
+      <div class="user-dropdown" role="menu">
+        <div class="ud-head">
+          <span class="avatar" data-user="me">R</span>
+          <div>
+            <div class="name" data-user-name>Rodrigo</div>
+            <div class="role" data-user-role>Sócio · Arquiteto responsável</div>
+          </div>
+        </div>
+        <a href="sistema-perfil.html"><span class="ic">◎</span>Ver perfil</a>
+        <a href="sistema-configuracoes.html"><span class="ic">⚙</span>Configurações</a>
+        <a href="sistema-empresa.html"><span class="ic">⌂</span>Dados da empresa</a>
+        <a href="https://www.notion.so/Zenon" target="_blank"><span class="ic">✱</span>Atividades · Notion ↗</a>
+        <div class="ud-sep"></div>
+        <a href="sistema-login.html" class="sign-out"><span class="ic">↪</span>Sair</a>
+      </div>
+    </div>
+  </div>
+  <nav class="tabs">
+    <a href="sistema-painel.html">Painel</a>
+    <a href="sistema-clientes.html">Clientes</a>
+    <a href="sistema-projetos.html">Projetos</a>
+    <a href="sistema-obra.html">Obra</a>
+    <a href="sistema-obra-financeiro.html">Obra financeiro</a>
+    <a href="sistema-propostas.html" class="active">Propostas</a>
+    <a href="sistema-financeiro.html">Financeiro</a>
+    <a href="sistema-empresa.html">Empresa</a>
+    <a href="sistema-log.html">Log da equipe</a>
+  </nav>
+</header>
+
+<main>
+  <div class="page-head">
+    <div>
+      <div class="eyebrow">Comercial</div>
+      <h1><em>Propostas</em> em andamento</h1>
+      <div class="sub" id="sub-total">…</div>
+    </div>
+    <div class="actions">
+      <a href="sistema-proposta-blocos.html" class="btn ghost small">Biblioteca de blocos</a>
+      <a href="sistema-proposta-nova.html" class="btn small">+ Nova proposta</a>
+    </div>
+  </div>
+
+  <section>
+    <div class="kpis" id="kpis-mount"></div>
+  </section>
+
+  <section>
+    <div class="filters" id="filters">
+      <a data-filter="all" class="active">Todas</a>
+      <a data-filter="Rascunho">Rascunhos</a>
+      <a data-filter="Enviada">Enviadas</a>
+      <a data-filter="Em negociação">Em negociação</a>
+      <a data-filter="Aprovada">Aprovadas</a>
+      <a data-filter="Recusada">Recusadas</a>
+      <a data-filter="Arquivada">Arquivadas</a>
+    </div>
+
+    <div class="pipe-hint">Dica: <b>arraste</b> um card para outra coluna ou <b>clique no status</b> para escolher onde mover a proposta.</div>
+    <div class="pipe-cols" id="pipe-mount"></div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <div><div class="eyebrow">Histórico</div><h2>Últimas <em>propostas</em></h2></div>
+    </div>
+    <table class="tbl" id="hist-tbl">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Cliente</th>
+          <th>Escopo</th>
+          <th>Versão</th>
+          <th class="num">Valor</th>
+          <th>Data</th>
+          <th>Status</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="hist-body"></tbody>
+    </table>
+  </section>
+</main>
+
+<footer>
+  <div>Cabral e Lima Design LTDA · CNPJ 59.525.877/0001-49 · CAU/BR A148704-5</div>
+  <div>sistema.zenonco.com.br · v2 — protótipo</div>
+</footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script src="supabase-client.js"></script>
+  <script src="shell-user.js"></script>
+<script src="shell-fx.js"></script>
+<script src="sistema-data.js"></script>
+<script src="sistema-edit.js"></script>
+<script>
+(function () {
+  const SD = window.SistemaData;
+  if (!SD) { console.error('SistemaData não disponível'); return; }
+
+  /* Status canônicos e buckets de coluna — 'Aprovada' é a chave oficial.
+     'Aceita' é aceito como alias (migração) e normalizado em runtime. */
+  const COLS = [
+    { key: 'Rascunho',      label: 'Rascunho',      cls: '' },
+    { key: 'Enviada',       label: 'Enviada',       cls: 's-enviada' },
+    { key: 'Em negociação', label: 'Em negociação', cls: 's-negoc' },
+    { key: 'Aprovada',      label: 'Aprovada',      cls: 's-aprovada' },
+    { key: 'Recusada',      label: 'Recusada',      cls: 's-recusada' }
+  ];
+  const EMPTY_MSG = {
+    'Rascunho':       'Nenhuma proposta em rascunho.',
+    'Enviada':        'Nenhuma proposta enviada aguardando retorno.',
+    'Em negociação':  'Nenhuma proposta em revisão de escopo / preço.',
+    'Aprovada':       'Nenhuma proposta aprovada no momento.',
+    'Recusada':       'Sem propostas recusadas.'
+  };
+  const ALL_STATUS = ['Rascunho','Enviada','Em negociação','Aprovada','Recusada','Arquivada'];
+
+  /* Normaliza alias "Aceita" → "Aprovada" sem mexer no dado bruto */
+  function normStatus(s) {
+    if (s === 'Aceita') return 'Aprovada';
+    return s || 'Rascunho';
+  }
+
+  let currentFilter = 'all';
+
+  function esc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+  function getPropostas() {
+    const arr = [];
+    Object.keys(SD.PROPOSTAS || {}).forEach(k => arr.push(SD.PROPOSTAS[k]));
+    return arr;
+  }
+
+  function badgeClassFor(status) {
+    const s = normStatus(status);
+    if (s === 'Aprovada')      return 'ok';
+    if (s === 'Recusada')      return 'alert';
+    if (s === 'Enviada')       return 'info';
+    if (s === 'Em negociação') return 'warn';
+    if (s === 'Arquivada')     return 'neutral';
+    return 'neutral';
+  }
+  function badgeFor(status) {
+    const s = normStatus(status);
+    return '<span class="badge ' + badgeClassFor(s) + '">' + s + '</span>';
+  }
+
+  function clienteNomeFor(p) {
+    if (p.clienteNome) return p.clienteNome;
+    if (p.cliente) {
+      const c = SD.getCliente(p.cliente);
+      if (c) return c.nome;
+    }
+    return '—';
+  }
+
+  function renderKPIs(props) {
+    const total     = props.reduce((s,p) => s + (p.valorTotal||0), 0);
+    const emFunil   = props.filter(p => ['Rascunho','Enviada','Em negociação'].indexOf(normStatus(p.status)) >= 0);
+    const aprovadas = props.filter(p => normStatus(p.status) === 'Aprovada');
+    const ticketArr = props.filter(p => (p.valorTotal||0) > 0);
+    const ticket    = ticketArr.length ? Math.round(total / ticketArr.length) : 0;
+    const enviadas  = props.filter(p => ['Enviada','Em negociação','Aprovada','Recusada'].indexOf(normStatus(p.status)) >= 0);
+    const convPct   = enviadas.length ? Math.round(aprovadas.length / enviadas.length * 100) : 0;
+
+    const valFunil = emFunil.reduce((s,p) => s + (p.valorTotal||0), 0);
+    const valAprov = aprovadas.reduce((s,p) => s + (p.valorTotal||0), 0);
+
+    const lastAprov = aprovadas.slice().sort((a,b) => (b.data||'').localeCompare(a.data||''))[0];
+
+    document.getElementById('kpis-mount').innerHTML = ''
+      + '<div class="kpi"><div class="l">Em funil</div><div class="n">' + SD.fmtBRLshort(valFunil) + '</div><div class="delta">' + emFunil.length + ' proposta' + (emFunil.length!==1?'s':'') + ' em aberto</div></div>'
+      + '<div class="kpi"><div class="l">Aprovadas 2026</div><div class="n">' + SD.fmtBRLshort(valAprov) + '</div><div class="delta up">' + (lastAprov ? esc(clienteNomeFor(lastAprov)) + ' · ' + esc(lastAprov.data||'') : '—') + '</div></div>'
+      + '<div class="kpi"><div class="l">Ticket médio</div><div class="n">' + SD.fmtBRLshort(ticket) + '</div><div class="delta">Média de ' + ticketArr.length + ' proposta' + (ticketArr.length!==1?'s':'') + '</div></div>'
+      + '<div class="kpi accent"><div class="l">Conversão</div><div class="n"><em>' + convPct + '%</em></div><div class="delta" style="color:#e8a877">' + aprovadas.length + '/' + enviadas.length + ' aceitas</div></div>';
+
+    document.getElementById('sub-total').textContent =
+      props.length + ' proposta' + (props.length!==1?'s':'') + ' · '
+      + SD.fmtBRL(total) + ' total · '
+      + aprovadas.length + ' aprovada' + (aprovadas.length!==1?'s':'') + ' · '
+      + emFunil.filter(p=>normStatus(p.status)==='Rascunho').length + ' em rascunho';
+  }
+
+  function cardHTML(p, col) {
+    const clienteNome = clienteNomeFor(p);
+    const escopoTxt = (p.escopo || p.titulo || '—');
+    const clsStatus = col ? col.cls : '';
+    const st = normStatus(p.status);
+    return ''
+      + '<div class="pipe-card ' + clsStatus + '" data-prop="' + p.id + '" draggable="true">'
+      +   '<div class="topline">'
+      +     '<div class="client" ' + mkEdit(p.id,'titulo','text') + ' data-raw="' + esc(p.titulo||'') + '">' + esc(clienteNome) + '</div>'
+      +     '<span class="pid">[' + p.id + ']</span>'
+      +   '</div>'
+      +   '<div class="scope" ' + mkEdit(p.id,'escopo','text') + ' data-raw="' + esc(p.escopo||p.titulo||'') + '">' + esc(escopoTxt) + '</div>'
+      +   '<div class="value" ' + mkEdit(p.id,'valorTotal','currency','brl') + ' data-raw="' + (p.valorTotal||0) + '">' + SD.fmtBRL(p.valorTotal||0) + '</div>'
+      +   '<div class="foot">'
+      +     '<span class="card-status" data-status-trigger="' + p.id + '" title="Clique para alterar status">'
+      +       '<span class="badge ' + badgeClassFor(st) + '">' + st + '</span>'
+      +     '</span>'
+      +     '<span ' + mkEdit(p.id,'data','text') + ' data-raw="' + esc(p.data||'') + '">' + esc(p.data||'—') + '</span>'
+      +   '</div>'
+      +   '<a class="gotobtn" href="sistema-proposta-detalhe.html?id=' + p.id + '">Abrir detalhe →</a>'
+      + '</div>';
+  }
+
+  /* ---------- Status menu + drag & drop ---------- */
+  const DOT_CLS = { 'Rascunho':'s-rascunho','Enviada':'s-enviada','Em negociação':'s-negoc','Aprovada':'s-aprovada','Recusada':'s-recusada','Arquivada':'s-rascunho' };
+
+  function closeStatusMenu() {
+    document.querySelectorAll('.status-menu').forEach(m => m.remove());
+    document.querySelectorAll('.card-status.open').forEach(s => s.classList.remove('open'));
+  }
+
+  function openStatusMenu(trigger, pid) {
+    closeStatusMenu();
+    const prop = SD.getProposta(pid);
+    if (!prop) return;
+    const cur = normStatus(prop.status);
+    const menu = document.createElement('div');
+    menu.className = 'status-menu';
+    menu.innerHTML = ALL_STATUS.map(s => {
+      const dot = DOT_CLS[s] || 's-rascunho';
+      const isCur = (s === cur);
+      return '<button type="button" data-st="' + s + '"' + (isCur ? ' class="is-current"' : '') + '>'
+           + '<span class="dot ' + dot + '"></span>' + s
+           + (isCur ? ' <span style="margin-left:auto;color:var(--accent-ink)">✓</span>' : '')
+           + '</button>';
+    }).join('');
+    trigger.classList.add('open');
+    trigger.appendChild(menu);
+    // bloqueia propagação (evita fechar ao clicar dentro)
+    menu.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const btn = e.target.closest('button[data-st]');
+      if (!btn) return;
+      const novo = btn.dataset.st;
+      if (novo && novo !== cur) {
+        SD.update('proposta', pid, 'status', novo);
+        document.dispatchEvent(new CustomEvent('sistema-edit-saved', { detail:{ tipo:'proposta', id:pid, path:'status', value:novo } }));
+      }
+      closeStatusMenu();
+    });
+  }
+
+  function bindCardInteractions(root) {
+    /* click no badge → abrir menu */
+    root.querySelectorAll('.card-status[data-status-trigger]').forEach(trig => {
+      trig.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        if (trig.classList.contains('open')) { closeStatusMenu(); return; }
+        openStatusMenu(trig, trig.dataset.statusTrigger);
+      });
+    });
+
+    /* drag & drop */
+    root.querySelectorAll('.pipe-card[draggable="true"]').forEach(card => {
+      card.addEventListener('dragstart', (e) => {
+        card.classList.add('dragging');
+        e.dataTransfer.effectAllowed = 'move';
+        e.dataTransfer.setData('text/plain', card.dataset.prop);
+      });
+      card.addEventListener('dragend', () => {
+        card.classList.remove('dragging');
+        document.querySelectorAll('.pipe-col.drag-over').forEach(c => c.classList.remove('drag-over'));
+      });
+    });
+
+    root.querySelectorAll('.pipe-col').forEach(col => {
+      col.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        e.dataTransfer.dropEffect = 'move';
+        col.classList.add('drag-over');
+      });
+      col.addEventListener('dragleave', (e) => {
+        // só remove se saiu de verdade da coluna, não só de um filho
+        if (!col.contains(e.relatedTarget)) col.classList.remove('drag-over');
+      });
+      col.addEventListener('drop', (e) => {
+        e.preventDefault();
+        col.classList.remove('drag-over');
+        const pid = e.dataTransfer.getData('text/plain');
+        const newStatus = col.dataset.status;
+        if (!pid || !newStatus) return;
+        const prop = SD.getProposta(pid);
+        if (!prop) return;
+        if (normStatus(prop.status) === newStatus) return; // mesmo lugar
+        SD.update('proposta', pid, 'status', newStatus);
+        document.dispatchEvent(new CustomEvent('sistema-edit-saved', { detail:{ tipo:'proposta', id:pid, path:'status', value:newStatus } }));
+      });
+    });
+  }
+
+  /* fecha menu ao clicar fora ou apertar Esc */
+  document.addEventListener('click', closeStatusMenu);
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeStatusMenu(); });
+
+  function mkEdit(pid, field, type, fmt) {
+    let a = 'data-edit="proposta:' + pid + ':' + field + '" data-edit-type="' + (type||'text') + '"';
+    if (fmt) a += ' data-edit-fmt="' + fmt + '"';
+    return a;
+  }
+
+  function renderColumns() {
+    const props = getPropostas();
+    // bucket por status
+    const byStatus = {};
+    COLS.forEach(c => byStatus[c.key] = []);
+    const outros = [];
+    props.forEach(p => {
+      const s = normStatus(p.status);
+      if (byStatus[s]) byStatus[s].push(p);
+      else outros.push(p);
+    });
+    // filtro ativo
+    const active = currentFilter;
+    const mount = document.getElementById('pipe-mount');
+    let html = '';
+    COLS.forEach(col => {
+      if (active !== 'all' && active !== col.key) return;
+      const arr = byStatus[col.key] || [];
+      const sum = arr.reduce((s,p)=>s+(p.valorTotal||0),0);
+      html += '<div class="pipe-col" data-status="' + col.key + '">'
+           +   '<h4><span>' + col.label + '</span><span class="sum">' + (sum ? SD.fmtBRLshort(sum) : '—') + '</span><span class="count">' + arr.length + '</span></h4>'
+           +   (arr.length
+                 ? arr.map(p => cardHTML(p, col)).join('')
+                 : '<div class="empty-col">' + EMPTY_MSG[col.key] + '</div>')
+           + '</div>';
+    });
+    mount.innerHTML = html;
+    bindCardInteractions(mount);
+
+    // KPIs sempre sobre o conjunto completo
+    renderKPIs(props);
+
+    // tabela histórico — todas as propostas ordenadas por data decrescente
+    const tb = document.getElementById('hist-body');
+    const sorted = props.slice().sort((a,b) => {
+      const pa = (a.data||'').split('/').reverse().join('');
+      const pb = (b.data||'').split('/').reverse().join('');
+      return pb.localeCompare(pa);
+    });
+    tb.innerHTML = sorted.map(p => ''
+      + '<tr>'
+      +   '<td><span class="id-chip" style="font-family:Fraunces,serif;color:var(--accent-ink);font-weight:600">[' + p.id + ']</span></td>'
+      +   '<td><div class="name">' + esc(clienteNomeFor(p)) + '</div>' + (p.clienteNome ? '' : '') + '</td>'
+      +   '<td>' + esc(p.escopo||p.titulo||'—') + '</td>'
+      +   '<td>' + esc(p.versao || 'v1') + '</td>'
+      +   '<td class="num" ' + mkEdit(p.id,'valorTotal','currency','brl') + ' data-raw="' + (p.valorTotal||0) + '">' + SD.fmtBRL(p.valorTotal||0) + '</td>'
+      +   '<td>' + esc(p.data||'—') + '</td>'
+      +   '<td>' + badgeFor(p.status) + '</td>'
+      +   '<td><a href="sistema-proposta-detalhe.html?id=' + p.id + '" class="btn ghost small">Abrir</a></td>'
+      + '</tr>').join('');
+  }
+
+  function bindFilters() {
+    document.querySelectorAll('#filters a').forEach(a => {
+      a.addEventListener('click', (e) => {
+        e.preventDefault();
+        currentFilter = a.dataset.filter;
+        document.querySelectorAll('#filters a').forEach(x => x.classList.toggle('active', x === a));
+        renderColumns();
+      });
+    });
+  }
+
+  renderColumns();
+  bindFilters();
+
+  // Auto-refresh ao editar qualquer proposta
+  document.addEventListener('sistema-edit-saved', (e) => {
+    const d = e.detail || {};
+    if (d.tipo === 'proposta') renderColumns();
+  });
+})();
+</script>
+</body>
+</html>
