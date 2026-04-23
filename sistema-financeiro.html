@@ -1,0 +1,3286 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Financeiro — Zenon Sistema</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shell.css">
+<style>
+  .filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+  .filters a{
+    padding:8px 14px;border:1px solid var(--line);border-radius:999px;
+    font-size:12px;letter-spacing:.12em;text-transform:uppercase;font-weight:500;color:var(--ink-soft);
+    background:var(--paper);transition:all .2s;
+  }
+  .filters a:hover{border-color:var(--accent);color:var(--ink)}
+  .filters a.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+
+  .fin-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:18px}
+  @media (max-width:960px){.fin-grid{grid-template-columns:1fr}}
+
+  .caixa-proj{
+    background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:24px;
+  }
+  .caixa-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}
+  .caixa-cell{
+    background:var(--bg-alt);border:1px solid var(--line-soft);border-radius:4px;padding:16px;
+    display:flex;flex-direction:column;gap:6px;
+  }
+  .caixa-cell .l{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-mute);font-weight:600}
+  .caixa-cell .v{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:30px;color:var(--ink);line-height:1;font-weight:500}
+  .caixa-cell.pos .v{color:var(--ok)}
+  .caixa-cell.neg .v{color:var(--alert)}
+  .caixa-cell .sub{font-size:11px;color:var(--ink-soft)}
+
+  .alert-box{
+    background:#fdf5ef;border:1px solid #e8c8a3;border-left:3px solid var(--warn);
+    border-radius:4px;padding:18px;display:flex;flex-direction:column;gap:10px;
+  }
+  .alert-box h4{
+    font-family:'Inter',sans-serif;font-size:11px;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--warn);font-weight:700;
+  }
+  .alert-item{
+    display:flex;justify-content:space-between;align-items:center;gap:12px;
+    padding:10px 0;border-bottom:1px solid #e8c8a3;font-size:13px;
+  }
+  .alert-item:last-child{border-bottom:none}
+  .alert-item .name{font-weight:600;color:var(--ink)}
+  .alert-item .sub{font-size:11px;color:var(--ink-soft)}
+  .alert-item .value{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:20px;color:var(--warn);font-weight:600}
+
+  .split-amt{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media (max-width:700px){.split-amt{grid-template-columns:1fr}}
+  .amt-block{
+    background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:22px;
+  }
+  .amt-block .head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px}
+  .amt-block .head h3{font-size:17px;font-weight:500}
+  .amt-block .big{
+    font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:42px;line-height:1;font-weight:500;
+  }
+  .amt-block.in .big{color:var(--ok)}
+  .amt-block.out .big{color:var(--alert)}
+  .amt-block .sub{font-size:12px;color:var(--ink-soft);margin-top:6px}
+  .amt-block ul{list-style:none;margin-top:16px;padding-top:14px;border-top:1px solid var(--line-soft)}
+  .amt-block li{
+    display:flex;justify-content:space-between;align-items:center;gap:10px;
+    padding:9px 0;font-size:13px;border-bottom:1px solid var(--line-soft);
+  }
+  .amt-block li:last-child{border-bottom:none}
+  .amt-block li .lbl{color:var(--ink);font-weight:500}
+  .amt-block li .day{font-size:11px;color:var(--ink-mute)}
+  .amt-block li .v{font-family:'Inter',sans-serif;font-weight:600;color:var(--ink)}
+
+  /* ===== GRÁFICOS ===== */
+  .chart-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:18px}
+  @media (max-width:960px){.chart-grid{grid-template-columns:1fr}}
+
+  .chart-card{
+    background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:24px;
+  }
+  .chart-card .chd{
+    display:flex;justify-content:space-between;align-items:baseline;margin-bottom:18px;gap:12px;
+  }
+  .chart-card .chd h3{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:22px;font-weight:500;color:var(--ink)}
+  .chart-card .chd h3 em{color:var(--accent-ink);font-style:italic}
+  .chart-card .chd .tot{text-align:right}
+  .chart-card .chd .tot .v{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:26px;color:var(--ink);font-weight:500;line-height:1}
+  .chart-card .chd .tot .v.pos{color:var(--ok)}
+  .chart-card .chd .tot .l{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-mute);font-weight:600}
+
+  .legend{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:12px;font-size:11px;color:var(--ink-soft);font-weight:500}
+  .legend span{display:inline-flex;align-items:center;gap:6px}
+  .legend i{width:10px;height:10px;border-radius:2px;display:inline-block}
+
+  /* Bar chart (Histórico mensal) */
+  .bar-chart{
+    display:grid;grid-template-columns:repeat(12,1fr);gap:10px;align-items:end;
+    height:220px;padding:10px 0;border-bottom:1px solid var(--line-soft);position:relative;
+  }
+  .bar-chart::before{
+    content:'';position:absolute;left:0;right:0;bottom:33%;border-top:1px dashed var(--line-soft);
+  }
+  .bar-chart::after{
+    content:'';position:absolute;left:0;right:0;bottom:66%;border-top:1px dashed var(--line-soft);
+  }
+  .bar-col{display:flex;flex-direction:column;align-items:center;gap:2px;position:relative;height:100%;justify-content:flex-end}
+  .bar-col .pair{
+    display:flex;gap:2px;width:100%;align-items:flex-end;height:100%;
+  }
+  .bar-col .pair b{
+    flex:1;background:var(--ok);border-radius:1px 1px 0 0;display:block;min-height:2px;
+    transition:transform .15s;
+  }
+  .bar-col .pair b.out{background:var(--alert);opacity:.8}
+  .bar-col:hover .pair b{transform:scaleX(1.08)}
+  .bar-labels{display:grid;grid-template-columns:repeat(12,1fr);gap:10px;margin-top:8px}
+  .bar-labels span{font-size:10px;color:var(--ink-mute);text-align:center;font-weight:600;letter-spacing:.08em;text-transform:uppercase}
+  .bar-labels span.now{color:var(--accent-ink);font-weight:700}
+
+  /* Line chart (Saldo acumulado) */
+  .line-chart{
+    position:relative;height:220px;padding:10px 0;border-bottom:1px solid var(--line-soft);
+  }
+  .line-chart svg{width:100%;height:100%;overflow:visible}
+  .line-grid line{stroke:var(--line-soft);stroke-dasharray:3,4}
+  .line-axis text{font-size:10px;fill:var(--ink-mute);font-family:'Inter',sans-serif;font-weight:600}
+  .line-area{fill:var(--accent-soft);opacity:.45}
+  .line-path{fill:none;stroke:var(--accent-ink);stroke-width:2;stroke-linejoin:round}
+  .line-dot{fill:var(--paper);stroke:var(--accent-ink);stroke-width:2}
+  .line-dot.now{fill:var(--accent-ink);stroke:#fff}
+  .line-lbls{display:grid;grid-template-columns:repeat(12,1fr);gap:4px;margin-top:8px}
+  .line-lbls span{font-size:10px;color:var(--ink-mute);text-align:center;font-weight:600;letter-spacing:.08em;text-transform:uppercase}
+  .line-lbls span.now{color:var(--accent-ink);font-weight:700}
+
+  /* Pie / donut */
+  .pie-row{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+  @media (max-width:960px){.pie-row{grid-template-columns:1fr}}
+  .pie-card{
+    background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:24px;
+    display:grid;grid-template-columns:180px 1fr;gap:24px;align-items:center;
+  }
+  @media (max-width:600px){.pie-card{grid-template-columns:1fr;text-align:center;justify-items:center}}
+  .donut{width:180px;height:180px;position:relative}
+  .donut svg{transform:rotate(-90deg)}
+  .donut .cen{
+    position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;
+  }
+  .donut .cen .v{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:26px;color:var(--ink);font-weight:500;line-height:1}
+  .donut .cen .l{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-mute);font-weight:600;margin-top:3px}
+  .pie-legend{display:flex;flex-direction:column;gap:8px}
+  .pie-legend h4{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:18px;font-weight:500;color:var(--ink);margin-bottom:4px}
+  .pie-legend h4 em{color:var(--accent-ink);font-style:italic}
+  .pl-row{display:grid;grid-template-columns:14px 1fr auto auto;gap:8px;align-items:center;font-size:13px;padding:6px 0;border-bottom:1px dashed var(--line-soft)}
+  .pl-row:last-child{border-bottom:none}
+  .pl-row i{width:10px;height:10px;border-radius:2px}
+  .pl-row .pn{color:var(--ink)}
+  .pl-row .pv{font-weight:600;font-variant-numeric:tabular-nums;color:var(--ink)}
+  .pl-row .pp{font-size:11px;color:var(--ink-mute);font-weight:600;min-width:38px;text-align:right}
+
+  /* Extrato */
+  .ext-toolbar{
+    display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;
+    margin-bottom:14px;
+  }
+  .ext-toolbar .grp{display:flex;gap:6px;flex-wrap:wrap}
+  .ext-toolbar .chip{
+    padding:6px 12px;border:1px solid var(--line);border-radius:999px;font-size:11px;letter-spacing:.08em;
+    text-transform:uppercase;font-weight:600;color:var(--ink-soft);background:var(--paper);cursor:pointer;
+  }
+  .ext-toolbar .chip.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .ext-toolbar .chip.in.on{background:var(--ok);border-color:var(--ok)}
+  .ext-toolbar .chip.out.on{background:var(--alert);border-color:var(--alert)}
+
+  .tbl.ext td .tag-un{
+    display:inline-block;padding:1px 8px;border-radius:999px;font-size:10px;letter-spacing:.1em;
+    text-transform:uppercase;font-weight:700;color:var(--ink);background:var(--bg-alt);border:1px solid var(--line-soft);
+  }
+  .tbl.ext .in{color:var(--ok);font-weight:600}
+  .tbl.ext .out{color:var(--alert);font-weight:600}
+  /* overrides para tornar células interativas */
+  .tbl.ext td{overflow:visible;vertical-align:middle}
+  .tbl.ext td .pay-val{display:inline;min-width:0;font-family:'Inter',sans-serif;font-size:13px;font-weight:600}
+  .tbl.ext td .status-pill{min-width:80px;font-size:9px;padding:4px 18px 4px 8px}
+  .tbl.ext td .row-menu{width:22px;height:22px}
+
+  /* Exportar fluxo dropdown */
+  .export-wrap{position:relative;display:inline-block}
+  .export-menu{
+    position:absolute;top:calc(100% + 6px);right:0;min-width:200px;
+    background:var(--paper);border:1px solid var(--line);border-radius:4px;
+    box-shadow:0 8px 24px rgba(30,40,60,.10);padding:6px;
+    display:none;z-index:50;
+  }
+  .export-wrap.open .export-menu{display:block}
+  .export-menu a{
+    display:block;padding:8px 12px;font-size:12px;color:var(--ink);
+    text-decoration:none;border-radius:3px;letter-spacing:.02em;
+  }
+  .export-menu a:hover{background:var(--bg-alt);color:var(--accent-ink)}
+
+  /* Scroll suave + offset do topbar em âncoras */
+  html{scroll-behavior:smooth}
+  section[id]{scroll-margin-top:96px}
+
+  /* Lançamento form */
+  .lanc-form{
+    background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:26px;
+  }
+  .lanc-grid{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:14px;
+  }
+  @media (max-width:900px){.lanc-grid{grid-template-columns:repeat(2,1fr)}}
+  @media (max-width:540px){.lanc-grid{grid-template-columns:1fr}}
+  .lanc-grid .ff{display:flex;flex-direction:column;gap:6px}
+  .lanc-grid .ff.wide{grid-column:span 2}
+  .lanc-grid .ff label{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft);font-weight:600}
+  .lanc-grid .ff input,.lanc-grid .ff select{
+    border:1px solid var(--line);background:var(--bg);padding:9px 12px;font-family:'Inter',sans-serif;
+    font-size:13px;color:var(--ink);border-radius:3px;
+  }
+  .lanc-tg{display:flex;gap:0;border:1px solid var(--line);border-radius:3px;overflow:hidden}
+  .lanc-tg button{
+    flex:1;background:var(--bg);border:none;padding:9px 6px;font-size:11px;font-weight:600;
+    letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);cursor:pointer;
+  }
+  .lanc-tg button.on.in{background:var(--ok);color:#fff}
+  .lanc-tg button.on.out{background:var(--alert);color:#fff}
+  .lanc-foot{
+    display:flex;justify-content:space-between;align-items:center;
+    margin-top:18px;padding-top:14px;border-top:1px solid var(--line-soft);
+  }
+  .lanc-foot .hint{font-size:11px;color:var(--ink-mute);font-style:italic}
+
+  /* ============ BANNER migração Notion ============ */
+  .migra-banner{
+    background:linear-gradient(135deg,#f4ede0 0%,#ece4d4 100%);border:1px solid #d9cfba;border-left:3px solid var(--accent);
+    border-radius:4px;padding:16px 20px;display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:center;margin-bottom:22px;
+  }
+  .migra-banner .ico{
+    width:40px;height:40px;border-radius:50%;background:var(--accent);color:#fff;
+    display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;flex-shrink:0;
+  }
+  .migra-banner h4{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:20px;font-weight:500;color:var(--ink);line-height:1.1}
+  .migra-banner h4 em{font-style:italic;color:var(--accent-ink)}
+  .migra-banner p{font-size:12px;color:var(--ink-body);line-height:1.5;margin-top:3px}
+  .migra-banner .actions{display:flex;gap:8px}
+
+  /* ============ contas a pagar/receber tabelas avançadas ============ */
+  .pay-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media (max-width:1100px){.pay-grid-2{grid-template-columns:1fr}}
+
+  .pay-table{background:var(--paper);border:1px solid var(--line);border-radius:4px;display:flex;flex-direction:column;position:relative}
+  .pay-table .pt-head{padding:16px 20px;border-bottom:1px solid var(--line-soft);display:flex;justify-content:space-between;align-items:center;gap:10px;border-radius:4px 4px 0 0;background:var(--paper)}
+  .pay-table .pt-head h3{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:22px;font-weight:500;color:var(--ink);line-height:1}
+  .pay-table .pt-head h3 em{font-style:italic;color:var(--accent-ink)}
+  .pay-table .pt-head .tot{font-size:11px;color:var(--ink-soft);margin-top:3px}
+  .pay-table .pt-head .tot strong{color:var(--ink);font-weight:600}
+  .pay-table.in .pt-head h3 em{color:var(--ok)}
+  .pay-table.out .pt-head h3 em{color:var(--alert)}
+
+  /* bulk bar */
+  .bulk-bar{
+    display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 16px;
+    background:var(--accent-soft);border-top:1px solid var(--accent);border-bottom:1px solid var(--accent);
+    font-size:12px;color:var(--accent-ink);font-weight:600;
+  }
+  .bulk-bar.hidden{display:none}
+  .bulk-bar .sel-count{letter-spacing:.08em}
+  .bulk-bar .bulk-actions{display:flex;gap:6px;flex-wrap:wrap}
+  .bulk-bar button{
+    font-family:'Inter',sans-serif;font-size:10px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;
+    padding:6px 12px;border-radius:3px;cursor:pointer;border:1px solid var(--accent-ink);background:#fff;color:var(--accent-ink);
+  }
+  .bulk-bar button:hover{background:var(--accent-ink);color:#fff}
+  .bulk-bar button.primary{background:var(--accent-ink);color:#fff}
+  .bulk-bar button.primary:hover{background:var(--ink);border-color:var(--ink)}
+
+  /* linhas de contas */
+  .pay-rows{display:flex;flex-direction:column}
+  .pay-row{
+    display:grid;grid-template-columns:28px 1fr auto auto auto;gap:12px;align-items:center;
+    padding:12px 16px;border-bottom:1px solid var(--line-soft);transition:background .15s;
+  }
+  .pay-row:last-child{border-bottom:none;border-radius:0 0 4px 4px}
+  .pay-row:hover{background:var(--bg-alt)}
+  .pay-row.atr{background:#fdf5ef}
+  .pay-row.atr:hover{background:#f7e8d5}
+  .pay-row.pago{opacity:.6}
+
+  .chk-box{width:16px;height:16px;border:1.5px solid var(--line-strong);border-radius:2px;cursor:pointer;background:#fff;position:relative;flex-shrink:0}
+  .chk-box.on{background:var(--accent-ink);border-color:var(--accent-ink)}
+  .chk-box.on::after{content:'✓';position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700}
+
+  .pay-main{display:flex;flex-direction:column;gap:2px;min-width:0}
+  .pay-name{font-size:13px;color:var(--ink);font-weight:500;line-height:1.3}
+  .pay-name a{color:var(--accent-ink);text-decoration:none;border-bottom:1px dotted var(--accent)}
+  .pay-name a:hover{color:var(--ink)}
+  .pay-sub{font-size:11px;color:var(--ink-soft);letter-spacing:.04em}
+  .pay-sub .atr-lbl{color:var(--alert);font-weight:700}
+
+  .pay-when{font-size:11px;color:var(--ink-mute);letter-spacing:.08em;text-transform:uppercase;font-weight:600;text-align:right;min-width:70px}
+  .pay-when strong{display:block;color:var(--ink);font-size:13px;text-transform:none;letter-spacing:0;font-weight:600;margin-bottom:2px}
+
+  .pay-val{font-family:'Inter',sans-serif;font-size:15px;font-weight:700;font-variant-numeric:tabular-nums;min-width:110px;text-align:right}
+  .pay-val.in{color:var(--ok)}
+  .pay-val.out{color:var(--alert)}
+
+  /* Status dropdown (clicável) */
+  .status-pill{
+    position:relative;display:inline-block;font-size:10px;letter-spacing:.12em;text-transform:uppercase;
+    font-weight:700;padding:5px 22px 5px 10px;border-radius:14px;cursor:pointer;border:1px solid transparent;min-width:96px;text-align:center;
+  }
+  .status-pill::after{content:'▾';position:absolute;right:8px;top:50%;transform:translateY(-50%);font-size:9px;opacity:.7}
+  .status-pill.pago{background:#e8f3ea;color:#2d6a4f;border-color:#b7d7c0}
+  .status-pill.pendente{background:#fff4e2;color:#8e5a2b;border-color:#e2c79a}
+  .status-pill.atrasado{background:#fce5e0;color:#b53939;border-color:#f0bfb4}
+  .status-pill.negociado{background:#e3e9f5;color:#3b4d8e;border-color:#c2cee6}
+  .status-pill.cancelado{background:var(--line-soft);color:var(--ink-mute);border-color:var(--line);text-decoration:line-through}
+
+  /* Menu 3-pontos */
+  .row-menu{position:relative;width:26px;height:26px;display:flex;align-items:center;justify-content:center;color:var(--ink-mute);cursor:pointer;border-radius:3px;font-size:16px;font-weight:700;letter-spacing:-1px}
+  .row-menu:hover{background:var(--bg-alt);color:var(--ink)}
+  .menu-list{
+    position:absolute;top:calc(100% + 4px);right:0;min-width:180px;background:var(--paper);border:1px solid var(--line);
+    border-radius:4px;box-shadow:0 6px 18px rgba(26,22,18,.1);z-index:20;display:none;flex-direction:column;padding:4px;
+  }
+  .row-menu.open .menu-list{display:flex}
+  .menu-list.up{top:auto;bottom:calc(100% + 4px)}
+  .menu-list a{font-size:12px;color:var(--ink-body);padding:8px 12px;text-decoration:none;border-radius:2px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+  .menu-list a:hover{background:var(--bg-alt);color:var(--ink)}
+  .menu-list a.sep{border-top:1px solid var(--line-soft);margin-top:2px;padding-top:10px}
+  .menu-list a.del{color:var(--alert)}
+  .menu-list .k{font-size:10px;color:var(--ink-mute);letter-spacing:.08em;font-family:monospace}
+
+  /* conciliação bancária */
+  .conc-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:18px}
+  @media (max-width:1000px){.conc-grid{grid-template-columns:1fr}}
+  .conc-card{background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:24px}
+  .conc-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding-bottom:14px;border-bottom:1px solid var(--line-soft);margin-bottom:14px}
+  .conc-head h3{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:22px;font-weight:500;color:var(--ink)}
+  .conc-head h3 em{font-style:italic;color:var(--accent-ink)}
+  .conc-head .sub{font-size:12px;color:var(--ink-soft);margin-top:3px}
+  .conc-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}
+  .conc-stat{background:var(--bg-alt);padding:10px 12px;border-radius:3px;border:1px solid var(--line-soft)}
+  .conc-stat .l{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-mute);font-weight:700}
+  .conc-stat .v{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:22px;color:var(--ink);font-weight:500;line-height:1;margin-top:2px}
+  .conc-stat.ok .v{color:var(--ok)}
+  .conc-stat.warn .v{color:#8e5a2b}
+
+  .conc-row{display:grid;grid-template-columns:1fr auto auto;gap:12px;align-items:center;padding:10px 0;border-bottom:1px dashed var(--line-soft);font-size:13px}
+  .conc-row:last-child{border-bottom:none}
+  .conc-row .dsc{color:var(--ink)}
+  .conc-row .dsc .sub2{font-size:11px;color:var(--ink-soft);margin-top:2px}
+  .conc-row .val{font-weight:600;font-variant-numeric:tabular-nums;color:var(--ink);text-align:right}
+  .conc-row .act{font-size:10px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;padding:5px 10px;border-radius:3px;cursor:pointer;text-decoration:none;border:1px solid var(--line-strong);color:var(--accent-ink);background:var(--bg)}
+  .conc-row .act:hover{border-color:var(--accent);background:var(--accent-soft)}
+  .conc-row .act.done{background:var(--ok);color:#fff;border-color:var(--ok);cursor:default}
+
+  /* Extrato bancário - contas */
+  .bank-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+  .bank-card{
+    background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:18px 20px;
+    display:flex;flex-direction:column;gap:10px;position:relative;overflow:hidden;transition:all .15s;
+  }
+  .bank-card:hover{border-color:var(--ink-soft);transform:translateY(-1px);box-shadow:0 4px 12px rgba(26,22,18,.06)}
+  .bank-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--bank-accent,var(--ink))}
+  .bank-card.inter{--bank-accent:#ff7a00}
+  .bank-card.itau{--bank-accent:#ec7000}
+  .bank-card.bb{--bank-accent:#fae128}
+  .bank-card.nubank{--bank-accent:#820ad1}
+  .bank-card.poupanca{--bank-accent:#2d6a4f}
+  .bank-card.pessoal{--bank-accent:#8b5a3c;background:#fbf8f3}
+  .bank-card .b-head{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
+  .bank-card .b-name{font-family:'Inter',sans-serif;font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--ink-mute)}
+  .bank-card .b-num{font-size:10px;color:var(--ink-mute);letter-spacing:.05em;font-family:monospace;margin-top:2px}
+  .bank-card .b-type{font-size:9px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;padding:3px 7px;border-radius:2px;background:var(--bg-alt);color:var(--ink-soft);border:1px solid var(--line-soft)}
+  .bank-card .b-type.pess{background:#efe5d6;color:#8b5a3c;border-color:#dcc8a8}
+  .bank-card .b-sal{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:34px;font-weight:500;color:var(--ink);line-height:1;font-variant-numeric:tabular-nums}
+  .bank-card .b-sal .cur{font-size:14px;color:var(--ink-mute);letter-spacing:.08em;margin-right:4px;font-weight:600;font-family:'Inter',sans-serif}
+  .bank-card.neg .b-sal{color:var(--alert)}
+  .bank-card .b-flow{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding-top:10px;border-top:1px solid var(--line-soft)}
+  .bank-card .b-flow .f{display:flex;flex-direction:column;gap:2px}
+  .bank-card .b-flow .l{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-mute);font-weight:700}
+  .bank-card .b-flow .v{font-size:13px;font-weight:700;font-variant-numeric:tabular-nums}
+  .bank-card .b-flow .v.in{color:var(--ok)}
+  .bank-card .b-flow .v.out{color:var(--alert)}
+  .bank-card .b-mini{display:flex;flex-direction:column;gap:4px;margin-top:4px}
+  .bank-card .b-mini .row{display:flex;justify-content:space-between;font-size:11px;color:var(--ink-body);gap:8px}
+  .bank-card .b-mini .row .d{color:var(--ink-mute);font-size:10px;letter-spacing:.08em;min-width:38px}
+  .bank-card .b-mini .row .n{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .bank-card .b-mini .row .v{font-weight:600;font-variant-numeric:tabular-nums}
+  .bank-card .b-mini .row .v.in{color:var(--ok)}
+  .bank-card .b-mini .row .v.out{color:var(--alert)}
+  .bank-card .b-foot{display:flex;justify-content:space-between;align-items:center;padding-top:10px;border-top:1px solid var(--line-soft);font-size:11px}
+  .bank-card .b-foot a{font-size:10px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;color:var(--accent-ink);text-decoration:none}
+  .bank-card .b-foot a:hover{color:var(--ink)}
+  .bank-card .b-foot .sync{color:var(--ok);display:flex;align-items:center;gap:4px;font-size:10px}
+  .bank-card .b-foot .sync::before{content:'●';font-size:8px;animation:pulse 2s infinite}
+  .bank-card .b-foot .sync.warn{color:#8e5a2b}
+  @keyframes pulse{50%{opacity:.4}}
+
+  /* Barra de resumo consolidado */
+  .bank-summary{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:0;
+    background:var(--paper);border:1px solid var(--line);border-radius:4px;overflow:hidden;margin-bottom:14px;
+  }
+  .bank-summary > div{padding:16px 20px;border-right:1px solid var(--line-soft)}
+  .bank-summary > div:last-child{border-right:none}
+  .bank-summary .l{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-mute);font-weight:700}
+  .bank-summary .v{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:28px;font-weight:500;color:var(--ink);line-height:1;margin-top:4px}
+  .bank-summary .v.ok{color:var(--ok)}
+  .bank-summary .v.alert{color:var(--alert)}
+  .bank-summary .sub{font-size:11px;color:var(--ink-soft);margin-top:4px}
+
+  /* === USD KPIs (strip logo abaixo dos KPIs em real) === */
+  .kpi-usd-wrap{
+    margin-top:12px;background:#faf4e6;border:1px solid #e4d6b4;border-radius:4px;
+    padding:14px 18px 16px;
+  }
+  .kpi-usd-head{
+    display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:10px;
+  }
+  .kpi-usd-head .eyb{
+    font-size:10px;letter-spacing:.22em;text-transform:uppercase;font-weight:700;color:#7a5720;
+  }
+  .kpi-usd-head .eyb::before{
+    content:'$';display:inline-block;width:16px;height:16px;line-height:16px;text-align:center;
+    background:#7a5720;color:#faf4e6;border-radius:50%;font-weight:900;margin-right:6px;font-size:10px;vertical-align:-1px;
+  }
+  .kpi-usd-head .fx-note{font-size:11px;color:#8e6a36;font-style:italic}
+  .kpi-usd-head .fx-note strong{font-style:normal;font-weight:600;color:#5a3e15;font-variant-numeric:tabular-nums}
+  .kpi-usd{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:12px;
+  }
+  @media (max-width:900px){.kpi-usd{grid-template-columns:repeat(2,1fr)}}
+  .kpi-usd > div{
+    background:#fff8e8;border:1px solid #e0d1a6;border-radius:3px;padding:12px 14px;
+    display:flex;flex-direction:column;gap:3px;
+  }
+  .kpi-usd .l{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:#8e6a36;font-weight:700}
+  .kpi-usd .n{
+    font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:28px;line-height:1;font-weight:500;color:#5a3e15;
+    font-variant-numeric:tabular-nums;
+  }
+  .kpi-usd .n .cur{font-family:'Inter',sans-serif;font-size:11px;color:#8e6a36;letter-spacing:.06em;margin-right:3px;font-weight:600}
+  .kpi-usd .sub{font-size:11px;color:#8e6a36;margin-top:2px}
+  .kpi-usd .sub.ok{color:#2d6a4f}
+  .kpi-usd .sub.alert{color:#b53939}
+  .kpi-usd > div.accent{background:#5a3e15;border-color:#5a3e15}
+  .kpi-usd > div.accent .l{color:#dcc89a}
+  .kpi-usd > div.accent .n,.kpi-usd > div.accent .n .cur{color:#fff8e8}
+  .kpi-usd > div.accent .sub{color:#e8c992}
+
+  /* === USD row dentro do bank-summary === */
+  .bank-summary-usd{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:0;
+    background:#fff8e8;border:1px solid #e0d1a6;border-top:none;border-radius:0 0 4px 4px;overflow:hidden;margin-top:-14px;margin-bottom:14px;
+  }
+  .bank-summary-usd > div{padding:12px 20px;border-right:1px solid #e4d6b4;display:flex;align-items:center;gap:10px}
+  .bank-summary-usd > div:last-child{border-right:none}
+  .bank-summary-usd .tag{
+    font-size:9px;letter-spacing:.16em;text-transform:uppercase;font-weight:800;color:#7a5720;
+    background:#fff;border:1px solid #d8c89a;border-radius:2px;padding:3px 6px;flex-shrink:0;
+  }
+  .bank-summary-usd .l{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#8e6a36;font-weight:700;margin-bottom:2px}
+  .bank-summary-usd .v{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:22px;line-height:1;font-weight:500;color:#5a3e15;font-variant-numeric:tabular-nums}
+  .bank-summary-usd .v.ok{color:#2d6a4f}
+  .bank-summary-usd .v.alert{color:#b53939}
+  .bank-summary-usd .sub{font-size:10px;color:#8e6a36;margin-top:3px}
+
+  /* === Card BTG USD === */
+  .bank-card.btg{--bank-accent:#003c7e;background:linear-gradient(180deg,#fff 0%,#fff8e8 100%)}
+  .bank-card.btg .b-sal{color:#5a3e15}
+  .bank-card.btg .cur-mini{
+    display:inline-block;margin-left:8px;font-family:'Inter',sans-serif;font-size:10px;color:#8e6a36;
+    font-weight:500;font-style:italic;letter-spacing:.03em;vertical-align:2px;
+  }
+
+  /* Tag de unidade pessoal no extrato */
+  .tag-un.pess{background:#efe5d6;color:#8b5a3c;border-color:#dcc8a8}
+
+  /* upload area */
+  .upload-box{
+    border:2px dashed var(--line-strong);background:var(--bg-alt);border-radius:4px;padding:22px;text-align:center;
+    display:flex;flex-direction:column;gap:8px;cursor:pointer;transition:all .15s;
+  }
+  .upload-box:hover{border-color:var(--accent);background:var(--accent-soft)}
+  .upload-box .big{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:20px;color:var(--ink);font-weight:500}
+  .upload-box .small{font-size:11px;color:var(--ink-mute)}
+  .upload-box .btn{display:inline-block;margin-top:4px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;padding:8px 16px;background:var(--ink);color:#fff;border-radius:3px;border:none}
+
+  /* NF capture */
+  .nf-grid{display:grid;grid-template-columns:380px 1fr;gap:22px;align-items:start}
+  @media (max-width:980px){.nf-grid{grid-template-columns:1fr}}
+  .nf-drop{
+    border:2px dashed #c9a97a;background:linear-gradient(180deg,#fdfbf5,#faf4e8);
+    border-radius:6px;padding:32px 20px;text-align:center;
+    display:flex;flex-direction:column;gap:10px;cursor:pointer;transition:all .2s;
+    min-height:260px;justify-content:center;position:relative;overflow:hidden
+  }
+  .nf-drop:hover{border-color:var(--accent-ink);background:linear-gradient(180deg,#f9f1e1,#f3e8d2)}
+  .nf-drop .ico{font-size:48px;color:var(--accent-ink);line-height:1;margin-bottom:2px;font-family:'Fraunces','Source Serif 4',Georgia,serif;font-style:italic}
+  .nf-drop .hd{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:22px;color:var(--ink);font-weight:500;line-height:1.15}
+  .nf-drop .hd em{font-style:italic;color:var(--accent-ink)}
+  .nf-drop .sub{font-size:12px;color:var(--ink-body);max-width:260px;margin:0 auto;line-height:1.5}
+  .nf-drop .formats{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-mute);font-weight:600;margin-top:6px}
+  .nf-drop .btn{align-self:center;margin-top:8px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;padding:10px 20px;background:var(--ink);color:#fff;border-radius:3px;border:none;text-decoration:none}
+  .nf-drop .btn:hover{background:var(--accent-ink)}
+
+  .nf-queue-chip{display:inline-flex;gap:6px;align-items:center;background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:4px 10px;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);font-weight:600;position:absolute;top:12px;right:12px}
+  .nf-queue-chip strong{color:var(--accent-ink);font-size:11px}
+
+  /* NF preview card */
+  .nf-preview{background:var(--paper);border:1px solid var(--line);border-radius:6px;padding:22px 26px;display:flex;flex-direction:column;gap:16px;min-height:260px}
+  .nf-preview.empty{align-items:center;justify-content:center;text-align:center;border-style:dashed;color:var(--ink-mute);font-size:13px;background:var(--bg-alt)}
+  .nf-preview-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;padding-bottom:14px;border-bottom:1px solid var(--line-soft)}
+  .nf-preview-head h3{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:22px;font-weight:500;color:var(--ink);line-height:1.15}
+  .nf-preview-head h3 em{font-style:italic;color:var(--accent-ink)}
+  .nf-preview-head .file-tag{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-mute);font-weight:700;background:var(--bg-alt);padding:5px 10px;border-radius:10px;border:1px solid var(--line)}
+  .nf-preview-head .proc-badge{font-size:10px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;padding:4px 10px;border-radius:10px;background:#e8f3ea;color:#2d6a4f;border:1px solid #b7d7c0}
+  .nf-preview-head .proc-badge::before{content:'●';margin-right:4px}
+
+  .nf-fields{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .nf-field{display:flex;flex-direction:column;gap:3px}
+  .nf-field .lb{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-mute);font-weight:700}
+  .nf-field .vl{font-size:14px;color:var(--ink);font-weight:500}
+  .nf-field.big .vl{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:22px;color:var(--ink);font-weight:500}
+  .nf-field.big .vl em{font-style:italic;color:var(--accent-ink)}
+
+  /* NF classification form */
+  .nf-classif{background:var(--bg-alt);border-radius:4px;padding:18px 20px;border:1px solid var(--line-soft);display:flex;flex-direction:column;gap:14px}
+  .nf-classif-head{display:flex;justify-content:space-between;align-items:center}
+  .nf-classif-head .ttl{font-family:'Inter',sans-serif;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-mute);font-weight:700}
+  .nf-classif-head .ai-hint{font-size:10px;color:var(--accent-ink);font-style:italic;display:flex;align-items:center;gap:4px}
+  .nf-classif-head .ai-hint::before{content:'✦';font-style:normal}
+
+  .nf-tipo{display:flex;gap:0;border:1px solid var(--line);border-radius:3px;overflow:hidden;width:fit-content}
+  .nf-tipo button{font-family:'Inter',sans-serif;font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;padding:8px 18px;border:none;background:var(--bg);color:var(--ink-soft);cursor:pointer;border-right:1px solid var(--line)}
+  .nf-tipo button:last-child{border-right:none}
+  .nf-tipo button.on.in{background:#e8f3ea;color:#2d6a4f}
+  .nf-tipo button.on.out{background:#fbeee6;color:#8e4a2b}
+
+  .nf-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  .nf-row .ff label{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-mute);font-weight:700;display:block;margin-bottom:4px}
+  .nf-row .ff select,.nf-row .ff input{width:100%;border:1px solid var(--line);background:var(--bg);padding:9px 12px;font-family:'Inter',sans-serif;font-size:13px;color:var(--ink);border-radius:3px}
+  .nf-row .ff select:focus,.nf-row .ff input:focus{outline:none;border-color:var(--accent)}
+  .nf-row .ff .sugg{font-size:10px;color:var(--accent-ink);margin-top:4px;font-style:italic}
+
+  .nf-actions{display:flex;justify-content:space-between;align-items:center;gap:10px;padding-top:12px;border-top:1px solid var(--line-soft);flex-wrap:wrap}
+  .nf-actions .left{display:flex;gap:8px}
+  .nf-actions .right{display:flex;gap:8px}
+  .nf-actions .btn{font-family:'Inter',sans-serif;font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;padding:10px 18px;border-radius:3px;text-decoration:none;border:1px solid var(--line-strong);color:var(--ink-soft);background:var(--bg);cursor:pointer}
+  .nf-actions .btn:hover{border-color:var(--accent);color:var(--accent-ink)}
+  .nf-actions .btn.primary{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .nf-actions .btn.primary:hover{background:var(--accent-ink);border-color:var(--accent-ink);color:#fff}
+  .nf-actions .btn.warn{color:#c4614e}
+  .nf-actions .btn.warn:hover{border-color:#c4614e;color:#c4614e}
+
+  /* NF queue list */
+  .nf-queue{background:var(--paper);border:1px solid var(--line);border-radius:6px;padding:0;overflow:hidden}
+  .nf-queue-hd{display:flex;justify-content:space-between;align-items:center;padding:14px 22px;background:var(--bg-alt);border-bottom:1px solid var(--line-soft)}
+  .nf-queue-hd h3{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:20px;font-weight:500;color:var(--ink)}
+  .nf-queue-hd h3 em{font-style:italic;color:var(--accent-ink)}
+  .nf-queue-hd .count{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-mute);font-weight:600}
+
+  .nf-q-row{display:grid;grid-template-columns:36px 1fr 1.2fr .8fr 120px 140px 110px;gap:14px;align-items:center;padding:14px 22px;border-bottom:1px solid var(--line-soft);transition:background .15s}
+  .nf-q-row:last-child{border-bottom:none}
+  .nf-q-row:hover{background:#fafaf6}
+  .nf-q-row .file-ico{width:36px;height:42px;background:linear-gradient(180deg,#f3e8d2,#e8d7b0);border:1px solid #c9a97a;border-radius:3px;display:flex;align-items:center;justify-content:center;color:#8b5a3c;font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:11px;font-weight:700;letter-spacing:.05em;position:relative}
+  .nf-q-row .file-ico::after{content:'';position:absolute;top:0;right:0;width:10px;height:10px;background:var(--bg);border-left:1px solid #c9a97a;border-bottom:1px solid #c9a97a}
+  .nf-q-row .nm{font-weight:500;color:var(--ink);font-size:13px}
+  .nf-q-row .nm .sub{font-size:11px;color:var(--ink-soft);font-weight:400;margin-top:2px}
+  .nf-q-row .emit{font-size:13px;color:var(--ink-body)}
+  .nf-q-row .emit .cnpj{font-size:10px;color:var(--ink-mute);letter-spacing:.02em;margin-top:2px}
+  .nf-q-row .vl{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:17px;font-weight:500;color:var(--ink);font-variant-numeric:tabular-nums;text-align:right}
+  .nf-q-row .vl.in{color:#2d6a4f}
+  .nf-q-row .vl.out{color:#8e4a2b}
+  .nf-q-row .tag-un{display:inline-block;font-size:10px;letter-spacing:.08em;text-transform:uppercase;font-weight:700;padding:3px 8px;border-radius:10px;border:1px solid var(--line)}
+  .nf-q-row .tag-un.zenon{background:var(--accent-soft);color:var(--accent-ink);border-color:#dcc8a8}
+  .nf-q-row .tag-un.yvyra{background:#e7edf6;color:#335077;border-color:#b8c7df}
+  .nf-q-row .tag-un.vision{background:#f4e6ec;color:#7a2f50;border-color:#e2c0ce}
+  .nf-q-row .tag-un.stay{background:#e5f0ec;color:#2d6a4f;border-color:#b7d7c0}
+  .nf-q-row .tag-un.pess{background:#efe5d6;color:#8b5a3c;border-color:#dcc8a8}
+  .nf-q-row .tag-un.pend{background:var(--line-soft);color:var(--ink-mute);border-style:dashed}
+  .nf-q-row .st{font-size:10px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;padding:4px 10px;border-radius:10px;width:fit-content}
+  .nf-q-row .st.ok{background:#e8f3ea;color:#2d6a4f;border:1px solid #b7d7c0}
+  .nf-q-row .st.pend{background:#fff4e2;color:#8e5a2b;border:1px solid #e2c79a}
+  .nf-q-row .st.proc{background:#e7edf6;color:#335077;border:1px solid #b8c7df}
+  .nf-q-row .st.err{background:#fbeee6;color:#c4614e;border:1px solid #e4c2a8}
+  .nf-q-row .row-btns{display:flex;gap:4px;justify-content:flex-end}
+  .nf-q-row .row-btns .ic{width:28px;height:28px;border-radius:3px;border:1px solid var(--line);background:var(--bg);display:inline-flex;align-items:center;justify-content:center;color:var(--ink-soft);cursor:pointer;font-size:12px;text-decoration:none}
+  .nf-q-row .row-btns .ic:hover{border-color:var(--accent);color:var(--accent-ink)}
+
+  /* auto-rules info */
+  .nf-rules{background:#fdfbf5;border:1px solid #e8d4a8;border-left:3px solid var(--accent);border-radius:4px;padding:14px 18px;display:flex;gap:14px;align-items:flex-start}
+  .nf-rules .ic{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-style:italic;font-size:24px;color:var(--accent-ink);line-height:1;flex-shrink:0}
+  .nf-rules .tx{font-size:12px;color:var(--ink-body);line-height:1.5}
+  .nf-rules .tx strong{color:var(--ink);font-weight:600}
+  .nf-rules .tx a{color:var(--accent-ink);text-decoration:none;border-bottom:1px dotted var(--accent);font-weight:500}
+
+  /* ============ recorrência + parcela: badges inline ============ */
+  .pay-row{cursor:pointer}
+  .pay-row .chk-box,.pay-row .status-pill,.pay-row .row-menu,.pay-row .pay-name a{cursor:pointer}
+  .rec-tag,.parc-tag{
+    display:inline-flex;align-items:center;gap:3px;
+    font-family:'Inter',sans-serif;font-size:9px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;
+    padding:2px 7px;border-radius:10px;margin-left:6px;vertical-align:middle;
+  }
+  .rec-tag{background:#e8f3ea;color:#2d6a4f;border:1px solid #b7d7c0}
+  .rec-tag::before{content:'↻';font-size:10px;margin-right:2px}
+  .parc-tag{background:#e7edf6;color:#3b4d8e;border:1px solid #b8c7df;font-family:monospace;font-weight:600;letter-spacing:.04em}
+  .ex-tag{background:#fff4df;color:#8a5a14;border:1px solid #e8c878;font-style:italic;font-family:'Fraunces','Source Serif 4',Georgia,serif;text-transform:none;letter-spacing:.02em;font-weight:500;font-size:10px;padding:1px 7px}
+  .ex-tag::before{content:'⚠';font-size:9px;margin-right:3px}
+  .pay-row[data-ex="1"]{background:repeating-linear-gradient(45deg,transparent 0,transparent 8px,rgba(184,148,85,.03) 8px,rgba(184,148,85,.03) 16px),#fffdf8}
+  .cur-tag{
+    display:inline-flex;align-items:center;
+    font-family:'Inter',sans-serif;font-size:9px;letter-spacing:.14em;text-transform:uppercase;font-weight:800;
+    padding:2px 7px;border-radius:10px;margin-left:6px;vertical-align:middle;
+  }
+  .cur-tag.usd{background:#f0e8d8;color:#7a5720;border:1px solid #d8c89a}
+  .cur-tag.usd::before{content:'$';font-weight:900;margin-right:2px}
+  .cur-tag.brl{background:#eee5da;color:#6a5433;border:1px solid #c8b89a}
+  .fx-conv{
+    display:inline-block;margin-left:6px;
+    font-size:10px;color:var(--ink-mute);letter-spacing:.04em;font-weight:500;font-style:italic;
+  }
+  .pay-val .usd-pair{
+    display:block;font-size:10px;color:var(--ink-mute);letter-spacing:.04em;font-weight:500;
+    font-family:'Inter',sans-serif;text-transform:none;margin-top:2px;font-style:italic;
+  }
+  .pay-row.fade-in{animation:fadeSlide .4s ease-out}
+  @keyframes fadeSlide{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+
+  /* ============ modal detalhe conta ============ */
+  .pd-back{
+    position:fixed;inset:0;background:rgba(26,22,18,.48);backdrop-filter:blur(2px);
+    z-index:200;display:none;align-items:center;justify-content:center;padding:40px 20px;overflow-y:auto;
+  }
+  .pd-back.open{display:flex}
+  .pd-modal{
+    background:var(--paper);border:1px solid var(--line);border-radius:4px;
+    width:min(720px,100%);max-height:calc(100vh - 80px);overflow-y:auto;
+    box-shadow:0 20px 60px rgba(26,22,18,.3);display:flex;flex-direction:column;
+    animation:pdIn .22s cubic-bezier(.2,.8,.2,1);
+  }
+  @keyframes pdIn{from{opacity:0;transform:translateY(8px) scale(.98)}to{opacity:1;transform:none}}
+  .pd-head{
+    padding:22px 26px 18px;border-bottom:1px solid var(--line-soft);
+    display:grid;grid-template-columns:1fr auto;gap:14px;align-items:flex-start;
+  }
+  .pd-head .eyebrow{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-mute);font-weight:700;margin-bottom:4px}
+  .pd-head h3{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:26px;font-weight:500;color:var(--ink);line-height:1.15;letter-spacing:.01em}
+  .pd-head h3 em{font-style:italic;color:var(--accent-ink)}
+  .pd-close{
+    width:30px;height:30px;border:1px solid var(--line);border-radius:50%;
+    display:flex;align-items:center;justify-content:center;cursor:pointer;
+    font-size:16px;color:var(--ink-soft);background:var(--bg);font-weight:400;line-height:1;
+  }
+  .pd-close:hover{border-color:var(--ink);color:var(--ink);background:#fff}
+  .pd-body{padding:22px 26px;display:flex;flex-direction:column;gap:18px}
+  .pd-hero{
+    display:grid;grid-template-columns:1fr auto auto;gap:14px;align-items:center;
+    padding:16px 18px;background:var(--bg-alt);border:1px solid var(--line-soft);border-radius:4px;
+  }
+  .pd-hero .pd-val{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:34px;font-weight:500;font-variant-numeric:tabular-nums;line-height:1}
+  .pd-hero .pd-val.in{color:var(--ok)}
+  .pd-hero .pd-val.out{color:var(--alert)}
+  .pd-hero .pd-when{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-mute);font-weight:700;text-align:right}
+  .pd-hero .pd-when strong{display:block;font-family:'Inter',sans-serif;color:var(--ink);font-size:18px;font-weight:600;text-transform:none;letter-spacing:0;margin-bottom:3px}
+  .pd-hero .pd-badges{display:flex;flex-direction:column;gap:4px;align-items:flex-end}
+  .pd-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px 20px}
+  .pd-grid .f{display:flex;flex-direction:column;gap:2px;padding:8px 0;border-bottom:1px dashed var(--line-soft)}
+  .pd-grid .f:last-child,.pd-grid .f:nth-last-child(2):not(:nth-child(odd)){border-bottom:none}
+  .pd-grid .l{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-mute);font-weight:700}
+  .pd-grid .v{font-size:13px;color:var(--ink);line-height:1.3}
+  .pd-grid .v.mono{font-family:monospace;font-size:12px}
+  .pd-grid .v a{color:var(--accent-ink);text-decoration:none;border-bottom:1px dotted var(--accent)}
+  .pd-note{
+    font-size:12px;color:var(--ink-body);line-height:1.55;padding:14px 16px;
+    background:#fdfbf5;border:1px solid #e8d4a8;border-left:3px solid var(--accent);border-radius:3px;
+  }
+  .pd-note strong{color:var(--accent-ink);font-weight:600}
+  .pd-parc-list{display:flex;flex-direction:column;gap:6px;margin-top:4px}
+  .pd-parc-list .parc-item{
+    display:grid;grid-template-columns:auto 1fr auto auto;gap:10px;align-items:center;
+    padding:8px 10px;background:var(--bg);border:1px solid var(--line-soft);border-radius:3px;font-size:12px;
+  }
+  .pd-parc-list .parc-item .p-num{font-family:monospace;font-weight:700;color:var(--ink-mute);min-width:32px}
+  .pd-parc-list .parc-item .p-dt{color:var(--ink-body);font-weight:500}
+  .pd-parc-list .parc-item .p-vl{font-variant-numeric:tabular-nums;font-weight:600;color:var(--ink)}
+  .pd-parc-list .parc-item .p-st{font-size:9px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;padding:3px 8px;border-radius:10px}
+  .pd-parc-list .parc-item.done{background:#f5f9f5;border-color:#cbe2cd}
+  .pd-parc-list .parc-item.done .p-st{background:#e8f3ea;color:#2d6a4f}
+  .pd-parc-list .parc-item.curr{background:#fff8ea;border-color:#e2c79a}
+  .pd-parc-list .parc-item.curr .p-st{background:#fff4e2;color:#8e5a2b}
+  .pd-parc-list .parc-item.next .p-st{background:var(--line-soft);color:var(--ink-mute)}
+  .pd-foot{
+    padding:18px 26px;border-top:1px solid var(--line-soft);
+    display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap;
+    background:var(--bg);border-radius:0 0 4px 4px;
+  }
+  .pd-foot .pd-act{display:flex;gap:8px;flex-wrap:wrap}
+  .pd-foot .pd-act .btn{
+    font-family:'Inter',sans-serif;font-size:10px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;
+    padding:9px 14px;border-radius:3px;cursor:pointer;border:1px solid var(--line-strong);background:#fff;color:var(--ink-body);text-decoration:none;
+  }
+  .pd-foot .pd-act .btn:hover{border-color:var(--ink);color:var(--ink)}
+  .pd-foot .pd-act .btn.primary{background:var(--ok);color:#fff;border-color:var(--ok)}
+  .pd-foot .pd-act .btn.primary:hover{background:#245b42;border-color:#245b42}
+  .pd-foot .pd-act .btn.danger{color:var(--alert);border-color:#e4c2a8}
+  .pd-foot .pd-act .btn.danger:hover{background:var(--alert);color:#fff;border-color:var(--alert)}
+  .pd-foot .pd-meta{font-size:10px;color:var(--ink-mute);letter-spacing:.08em}
+  @media (max-width:640px){
+    .pd-grid{grid-template-columns:1fr}
+    .pd-hero{grid-template-columns:1fr;text-align:left}
+    .pd-hero .pd-when,.pd-hero .pd-badges{text-align:left;align-items:flex-start}
+  }
+
+  /* ===== Modo edição ===== */
+  .pd-edit-form{display:flex;flex-direction:column;gap:16px}
+  .pd-edit-form .ef-hero{
+    background:var(--bg-alt);border:1px solid var(--line-soft);border-radius:4px;padding:16px 18px;
+    display:grid;grid-template-columns:1fr 1fr;gap:12px;
+  }
+  @media (max-width:640px){.pd-edit-form .ef-hero{grid-template-columns:1fr}}
+  .pd-edit-form .ef-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+  @media (max-width:640px){.pd-edit-form .ef-grid{grid-template-columns:1fr}}
+  .pd-edit-form .ef-row{display:flex;flex-direction:column;gap:5px}
+  .pd-edit-form .ef-row.full{grid-column:1/-1}
+  .pd-edit-form label{
+    font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-mute);font-weight:700;
+  }
+  .pd-edit-form input,.pd-edit-form select,.pd-edit-form textarea{
+    width:100%;border:1px solid var(--line);background:#fff;border-radius:3px;
+    padding:9px 11px;font:inherit;font-size:13px;color:var(--ink);
+    transition:border-color .15s, box-shadow .15s;
+  }
+  .pd-edit-form input:focus,.pd-edit-form select:focus,.pd-edit-form textarea:focus{
+    outline:none;border-color:var(--accent-ink);box-shadow:0 0 0 3px rgba(138,100,61,.12);
+  }
+  .pd-edit-form .ef-cur-wrap{display:grid;grid-template-columns:70px 1fr;gap:6px}
+  .pd-edit-form .ef-cur-wrap select{padding:9px 6px;font-weight:700;color:var(--accent-ink);text-align:center}
+  .pd-edit-form textarea{min-height:60px;resize:vertical}
+  .pd-edit-form .ef-checks{
+    display:flex;gap:16px;flex-wrap:wrap;padding:10px 12px;
+    background:var(--bg);border:1px solid var(--line-soft);border-radius:3px;
+  }
+  .pd-edit-form .ef-checks label{
+    display:inline-flex;align-items:center;gap:6px;cursor:pointer;
+    letter-spacing:.04em;text-transform:none;font-size:12px;font-weight:500;color:var(--ink-body);
+  }
+  .pd-edit-form .ef-checks input[type="checkbox"]{
+    width:16px;height:16px;accent-color:var(--accent-ink);cursor:pointer;
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-inner">
+    <div class="brand">Zen<span>o</span>n — Sistema</div>
+    <div class="search"><input type="search" placeholder="Buscar lançamento, cliente, parcela…"></div>
+    <div class="fx-chip" title="Cotação do dólar (USD/BRL)">
+      <span class="fx-code">USD</span>
+      <span class="fx-val"><span class="cur">R$</span>—</span>
+      <span class="fx-delta flat">…</span>
+      <div class="fx-tip"></div>
+    </div>
+
+    <div class="user-menu">
+      <button type="button" class="user-trigger" onclick="ZenonUser.toggleDropdown(event)" aria-haspopup="true" aria-expanded="false">
+        <span class="u-name" data-user-name>Rodrigo</span>
+        <span class="avatar" data-user="me">R</span>
+        <span class="u-caret">▾</span>
+      </button>
+      <div class="user-dropdown" role="menu">
+        <div class="ud-head">
+          <span class="avatar" data-user="me">R</span>
+          <div>
+            <div class="name" data-user-name>Rodrigo</div>
+            <div class="role" data-user-role>Sócio · Arquiteto responsável</div>
+          </div>
+        </div>
+        <a href="sistema-perfil.html"><span class="ic">◎</span>Ver perfil</a>
+        <a href="sistema-configuracoes.html"><span class="ic">⚙</span>Configurações</a>
+        <a href="sistema-empresa.html"><span class="ic">⌂</span>Dados da empresa</a>
+        <a href="https://www.notion.so/Zenon" target="_blank"><span class="ic">✱</span>Atividades · Notion ↗</a>
+        <div class="ud-sep"></div>
+        <a href="sistema-login.html" class="sign-out"><span class="ic">↪</span>Sair</a>
+      </div>
+    </div>
+  </div>
+  <nav class="tabs">
+    <a href="sistema-painel.html">Painel</a>
+    <a href="sistema-clientes.html">Clientes</a>
+    <a href="sistema-projetos.html">Projetos</a>
+    <a href="sistema-obra.html">Obra</a>
+    <a href="sistema-obra-financeiro.html">Obra financeiro</a>
+    <a href="sistema-propostas.html">Propostas</a>
+    <a href="sistema-financeiro.html" class="active">Financeiro</a>
+    <a href="sistema-empresa.html">Empresa</a>
+    <a href="sistema-log.html">Log da equipe</a>
+  </nav>
+</header>
+
+<main>
+  <div class="page-head">
+    <div>
+      <div class="eyebrow">Caixa · fluxo</div>
+      <h1><em>Financeiro</em> da empresa</h1>
+      <div class="sub">Só Zenon Co. + pessoais (Cabana / Casa Blue) · <a href="sistema-obra-financeiro.html" style="color:var(--accent-ink,#8a643d);text-decoration:none">fornecedores e despesas de obra ficam em Obra → Financeiro ↗</a> · Abril / 2026 · <strong>R$ 25.910</strong> em aberto · 2 clientes reais (ECCO + CT Darkhouse)</div>
+    </div>
+    <div class="actions">
+      <a href="#conciliacao" class="btn ghost small">Conciliar banco</a>
+      <div class="export-wrap">
+        <button class="btn ghost small" onclick="toggleExport(this)" type="button">Exportar fluxo ▾</button>
+        <div class="export-menu">
+          <a href="#" onclick="exportarFluxo('csv');return false">Como CSV (.csv)</a>
+          <a href="#" onclick="exportarFluxo('xlsx');return false">Como Excel (.xlsx)</a>
+          <a href="#" onclick="exportarFluxo('pdf');return false">Como PDF (.pdf)</a>
+          <a href="#" onclick="exportarFluxo('ofx');return false">Como OFX (bancos)</a>
+        </div>
+      </div>
+      <a href="#novo-lancamento" class="btn small">+ Lançamento</a>
+    </div>
+  </div>
+
+  <!-- SUBNAV : EMPRESA / PESSOAL / OBRA -->
+  <style>
+    .fin-subnav{display:flex;gap:0;margin:-8px 0 28px;padding:0;border-bottom:1px solid var(--line);flex-wrap:wrap}
+    .fin-subnav a{font-family:'Inter',sans-serif;text-transform:uppercase;letter-spacing:.16em;font-size:10.5px;font-weight:700;color:var(--ink-mute);text-decoration:none;padding:12px 18px 14px;border-bottom:2px solid transparent;margin-bottom:-1px;display:inline-flex;align-items:center;gap:8px;transition:color .15s, border-color .15s}
+    .fin-subnav a:hover{color:var(--ink)}
+    .fin-subnav a.active{color:var(--ink);border-bottom-color:var(--accent,#b89455)}
+    .fin-subnav a .sn-sub{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-style:italic;font-weight:500;text-transform:none;letter-spacing:0;font-size:13px;color:var(--ink-mute);margin-left:2px}
+    .fin-subnav a.active .sn-sub{color:var(--accent,#b89455)}
+    .fin-subnav .sn-spacer{flex:1}
+    .fin-subnav .sn-hint{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-style:italic;font-size:13px;color:var(--ink-mute);padding:12px 0 14px}
+  </style>
+  <nav class="fin-subnav" aria-label="Recorte do financeiro">
+    <a href="sistema-financeiro.html" class="active">Empresa <span class="sn-sub">Zenon · Yvyra</span></a>
+    <a href="sistema-financeiro.html#pessoal">Pessoal <span class="sn-sub">Cabana · Casa Blue</span></a>
+    <div class="sn-spacer"></div>
+    <span class="sn-hint">Só <em>Zenon e pessoais</em> · fornecedores e despesas de obra ficam em <a href="sistema-obra-financeiro.html" style="color:var(--accent-ink,#8a643d);text-decoration:none;border-bottom:1px dotted var(--accent,#b89455)">Obra → Financeiro ↗</a></span>
+  </nav>
+
+  <!-- BANNER MIGRAÇÃO -->
+  <div class="migra-banner">
+    <div class="ico">↳</div>
+    <div>
+      <h4>Financeiro agora <em>nativo no sistema</em></h4>
+      <p>Importamos <strong>apenas Zenon Co.</strong> do Notion para cá — todas as 246 movimentações dos últimos 12 meses foram espelhadas, <strong>sem mexer no arquivo original</strong> (o Notion continua intacto, só paramos de escrever lá). <strong>Yvyra Lab segue no Notion</strong> por enquanto e migra aos poucos. Obra e Projeto permanecem no Notion como fonte da verdade. <strong>Cabana</strong> e <strong>Casa Blue</strong> entram no sistema como <strong>despesas pessoais centralizadas</strong> (não são unidades de negócio — ficam separadas dos KPIs da empresa).</p>
+    </div>
+    <div class="actions">
+      <a href="sistema-configuracoes.html#integracoes" class="btn ghost small">Ver integração</a>
+      <a href="#" class="btn small" onclick="dismissBanner(this);return false;">Ok, entendi</a>
+    </div>
+  </div>
+
+  <section>
+    <div class="kpis">
+      <div class="kpi"><div class="l">Saldo atual</div><div class="n">R$ 33.343</div><div class="delta">Inter PJ Zenon + BTG</div></div>
+      <div class="kpi"><div class="l">A receber · 30 d</div><div class="n">R$ 25.910</div><div class="delta up">4 parcelas · ECCO + ALVARA</div></div>
+      <div class="kpi"><div class="l">Recebido 2026</div><div class="n">R$ 33.343</div><div class="delta up">10 parcelas compensadas</div></div>
+      <div class="kpi accent"><div class="l">Total contratado</div><div class="n"><em>R$ 59.253</em></div><div class="delta" style="color:#e8a877">ECCO R$ 39.453 · ALVARA R$ 19.800</div></div>
+    </div>
+
+    <!-- === STRIP EM DÓLAR · contratos internacionais === -->
+    <div class="kpi-usd-wrap">
+      <div class="kpi-usd-head">
+        <span class="eyb">Em dólar · quando aplicável</span>
+        <span class="fx-note">Cotação de hoje · <strong>1&nbsp;USD&nbsp;=&nbsp;R$&nbsp;5,13</strong> · atualizado há 4 min · hoje sem contratos USD ativos</span>
+      </div>
+      <div class="kpi-usd">
+        <div>
+          <div class="l">Saldo em dólar</div>
+          <div class="n"><span class="cur">US$</span>0</div>
+          <div class="sub">BTG PJ · conta USD reservada</div>
+        </div>
+        <div>
+          <div class="l">A receber · 30 d</div>
+          <div class="n"><span class="cur">US$</span>0</div>
+          <div class="sub">nenhum contrato USD ativo</div>
+        </div>
+        <div>
+          <div class="l">A pagar · 30 d</div>
+          <div class="n"><span class="cur">US$</span>240</div>
+          <div class="sub alert">Figma + Notion · SaaS mensal</div>
+        </div>
+        <div class="accent">
+          <div class="l">Histórico 2025</div>
+          <div class="n"><span class="cur">US$</span>0</div>
+          <div class="sub">ambos os contratos reais (ECCO + ALVARA) em BRL</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="extrato-bancario">
+    <div class="section-head">
+      <div><div class="eyebrow">Extrato bancário</div><h2>Saldo por <em>conta</em></h2></div>
+      <div style="display:flex;gap:8px">
+        <a href="#conciliacao" class="btn ghost small">Conciliar banco</a>
+        <a href="sistema-configuracoes.html#integracoes" class="btn ghost small">Adicionar conta</a>
+      </div>
+    </div>
+
+    <div class="bank-summary">
+      <div>
+        <div class="l">Saldo consolidado PJ</div>
+        <div class="v">R$ 33.343</div>
+        <div class="sub">2 contas Zenon · Inter PJ + BTG PJ</div>
+      </div>
+      <div>
+        <div class="l">Entradas · Abr</div>
+        <div class="v ok">+ R$ 4.497</div>
+        <div class="sub">1 lançamento · ECCO parcela 4/7 programada</div>
+      </div>
+      <div>
+        <div class="l">Saídas · Abr</div>
+        <div class="v alert">− R$ 2.100</div>
+        <div class="sub">SaaS + contabilidade mensal</div>
+      </div>
+      <div>
+        <div class="l">Resultado do mês</div>
+        <div class="v ok">+ R$ 2.397</div>
+        <div class="sub">margem operacional projetada</div>
+      </div>
+    </div>
+
+    <!-- === LINHA EM DÓLAR · só operacional (SaaS) === -->
+    <div class="bank-summary-usd">
+      <div>
+        <span class="tag">USD</span>
+        <div>
+          <div class="l">Saldo em dólar</div>
+          <div class="v">US$ 0</div>
+          <div class="sub">BTG PJ · conta USD · reserva</div>
+        </div>
+      </div>
+      <div>
+        <span class="tag">USD</span>
+        <div>
+          <div class="l">Entradas · Abr</div>
+          <div class="v">+ US$ 0</div>
+          <div class="sub">sem contratos USD ativos</div>
+        </div>
+      </div>
+      <div>
+        <span class="tag">USD</span>
+        <div>
+          <div class="l">Saídas · Abr</div>
+          <div class="v alert">− US$ 240</div>
+          <div class="sub">Figma + Notion · SaaS mensal</div>
+        </div>
+      </div>
+      <div>
+        <span class="tag">USD</span>
+        <div>
+          <div class="l">Resultado · Abr</div>
+          <div class="v alert">− US$ 240</div>
+          <div class="sub">≈ R$ 1.231 convertidos via BTG</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bank-grid">
+      <div class="bank-card inter">
+        <div class="b-head">
+          <div>
+            <div class="b-name">Banco Inter — PJ</div>
+            <div class="b-num">Ag. 0001 · Zenon Co. (Cabral e Lima Design LTDA)</div>
+          </div>
+          <span class="b-type">Principal</span>
+        </div>
+        <div class="b-sal"><span class="cur">R$</span>28.846</div>
+        <div class="b-flow">
+          <div class="f"><div class="l">Entradas · 2026</div><div class="v in">+ 33.343</div></div>
+          <div class="f"><div class="l">Saídas · 2026</div><div class="v out">− 4.497</div></div>
+        </div>
+        <div class="b-mini">
+          <div class="row"><span class="d">02/04</span><span class="n">PIX Rafael Monici · ECCO parcela 3/7</span><span class="v in">+4.497</span></div>
+          <div class="row"><span class="d">26/03</span><span class="n">PIX Rafael Monici · ECCO parcela 2/7</span><span class="v in">+7.884</span></div>
+          <div class="row"><span class="d">27/02</span><span class="n">PIX CT Darkhouse · ALVARA sinal + parcela 2/3</span><span class="v in">+11.880</span></div>
+        </div>
+        <div class="b-foot">
+          <a href="sistema-financeiro.html#extrato">Ver extrato completo →</a>
+          <span class="sync">Sincronizado há 4 min</span>
+        </div>
+      </div>
+
+      <div class="bank-card btg">
+        <div class="b-head">
+          <div>
+            <div class="b-name">BTG — PJ <span class="cur-mini">empresa</span></div>
+            <div class="b-num">Zenon Co. · conta digital · USD reserva</div>
+          </div>
+          <span class="b-type" style="background:#fff8e8;color:#7a5720;border-color:#d8c89a">Secundária</span>
+        </div>
+        <div class="b-sal"><span class="cur">R$</span>4.497<span class="cur-mini">+ US$ 0 reserva</span></div>
+        <div class="b-flow">
+          <div class="f"><div class="l">Entradas · Abr</div><div class="v in">+ 4.497</div></div>
+          <div class="f"><div class="l">Saídas · Abr</div><div class="v out">− 0</div></div>
+        </div>
+        <div class="b-mini">
+          <div class="row"><span class="d">10/04</span><span class="n">Transferência Inter → BTG (reserva caixa)</span><span class="v in">+4.497</span></div>
+          <div class="row"><span class="d">—</span><span class="n">Conta USD zerada · disponível para contratos internacionais</span><span class="v" style="color:var(--ink-mute)">US$ 0</span></div>
+        </div>
+        <div class="b-foot">
+          <a href="sistema-financeiro.html#extrato">Ver extrato completo →</a>
+          <span class="sync">Sincronizado há 6 min</span>
+        </div>
+      </div>
+
+      <div class="bank-card pessoal">
+        <div class="b-head">
+          <div>
+            <div class="b-name">Nubank — Thereza</div>
+            <div class="b-num">Conta PF Thereza · Cabana + Casa Blue</div>
+          </div>
+          <span class="b-type pess">Despesas pessoais</span>
+        </div>
+        <div class="b-sal"><span class="cur">R$</span>—</div>
+        <div class="b-flow">
+          <div class="f"><div class="l">Entradas · Abr</div><div class="v" style="color:var(--ink-mute)">— sem sync</div></div>
+          <div class="f"><div class="l">Saídas · Abr</div><div class="v" style="color:var(--ink-mute)">— sem sync</div></div>
+        </div>
+        <div class="b-mini">
+          <div class="row"><span class="d">—</span><span class="n">Importação manual · OFX mensal</span><span class="v" style="color:var(--ink-mute)">—</span></div>
+          <div class="row"><span class="d">—</span><span class="n">Cabana e Casa Blue = <strong>fontes pessoais</strong>, fora dos KPIs de empresa</span><span class="v" style="color:var(--ink-mute)">info</span></div>
+        </div>
+        <div class="b-foot">
+          <a href="sistema-financeiro.html#extrato">Ver extrato pessoal →</a>
+          <span class="sync warn">Importação manual</span>
+        </div>
+      </div>
+
+      <div class="bank-card pessoal">
+        <div class="b-head">
+          <div>
+            <div class="b-name">Inter — Rodrigo</div>
+            <div class="b-num">Conta PF Rodrigo · sócio · despesas pessoais</div>
+          </div>
+          <span class="b-type pess">Sócio PF</span>
+        </div>
+        <div class="b-sal"><span class="cur">R$</span>—</div>
+        <div class="b-flow">
+          <div class="f"><div class="l">Entradas · Abr</div><div class="v" style="color:var(--ink-mute)">— sem sync</div></div>
+          <div class="f"><div class="l">Saídas · Abr</div><div class="v" style="color:var(--ink-mute)">— sem sync</div></div>
+        </div>
+        <div class="b-mini">
+          <div class="row"><span class="d">—</span><span class="n">Conta do sócio · pró-labore Zenon Co. chega aqui mensalmente</span><span class="v" style="color:var(--ink-mute)">—</span></div>
+          <div class="row"><span class="d">—</span><span class="n">Sem integração · visão só para conciliar distribuição de lucros</span><span class="v" style="color:var(--ink-mute)">info</span></div>
+        </div>
+        <div class="b-foot">
+          <a href="sistema-financeiro.html#extrato">Ver extrato PF →</a>
+          <span class="sync warn">Importação manual</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:12px;padding:10px 14px;background:var(--bg-alt);border:1px dashed var(--line);border-radius:3px;font-size:11px;color:var(--ink-body);display:flex;align-items:center;gap:8px">
+      <strong style="color:var(--ink);font-size:12px">ℹ</strong>
+      <span>A conta Nubank pessoal é exibida aqui apenas para controle — <strong>não entra</strong> nos KPIs de receita, margem ou projeção de negócio. Cabana e Casa Blue são despesas pessoais centralizadas no sistema por conveniência.</span>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <div><div class="eyebrow">Projeção</div><h2>Caixa <em>projetado</em> · 30 / 60 / 90</h2></div>
+      <div class="filters" style="margin-bottom:0">
+        <a href="#" class="active">Tudo</a>
+        <a href="#">Só confirmado</a>
+      </div>
+    </div>
+
+    <div class="fin-grid">
+      <div class="caixa-proj">
+        <div style="display:flex;justify-content:space-between;align-items:baseline">
+          <div>
+            <div class="eyebrow">Saldo hoje</div>
+            <div style="font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:44px;line-height:1;font-weight:500;color:var(--ink)">R$ 33.343</div>
+          </div>
+          <span class="badge ok">Caixa leve · operação enxuta</span>
+        </div>
+
+        <div class="caixa-row">
+          <div class="caixa-cell pos">
+            <div class="l">30 dias</div>
+            <div class="v">R$ 45.760</div>
+            <div class="sub">+R$ 12.417 · ECCO 4/7 + ALVARA CT 3/3</div>
+          </div>
+          <div class="caixa-cell pos">
+            <div class="l">60 dias</div>
+            <div class="v">R$ 50.257</div>
+            <div class="sub">+R$ 4.497 · ECCO parcela 5/7 (20/05)</div>
+          </div>
+          <div class="caixa-cell pos">
+            <div class="l">90 dias</div>
+            <div class="v">R$ 54.754</div>
+            <div class="sub">+R$ 4.497 · ECCO parcela 6/7 (20/06)</div>
+          </div>
+        </div>
+
+        <div style="margin-top:18px;padding-top:14px;border-top:1px solid var(--line-soft)">
+          <div class="eyebrow" style="margin-bottom:8px">Composição · próximos 30 d</div>
+          <div class="bar ok" style="margin-bottom:6px"><span style="width:85%"></span></div>
+          <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--ink-soft)">
+            <span>Entradas · R$ 12.417</span>
+            <span>Saídas · R$ 2.100 · 17%</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="alert-box">
+        <h4>⚠ Atenção · 3 alertas</h4>
+        <div class="alert-item">
+          <div>
+            <div class="name">Rafael Monici · ECCO parcela 4/7</div>
+            <div class="sub">Vence 25 / 04 · 6 d</div>
+          </div>
+          <div class="value">R$ 4.497</div>
+        </div>
+        <div class="alert-item">
+          <div>
+            <div class="name">CT Darkhouse · ALVARA parcela 3/3</div>
+            <div class="sub">Vence na entrega do alvará · ~05 / 05</div>
+          </div>
+          <div class="value">R$ 7.920</div>
+        </div>
+        <div class="alert-item">
+          <div>
+            <div class="name">Proposta Juliana Vasconcellos · PRO-5</div>
+            <div class="sub">Rascunho 13/2026 · sem retorno após 17/04</div>
+          </div>
+          <div class="value" style="color:var(--ink-soft);font-size:16px">R$ 32.800</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <div><div class="eyebrow">Operar · próximos 30 d</div><h2>Contas a <em>receber</em> & a <em>pagar</em></h2></div>
+      <div class="filters" style="margin-bottom:0">
+        <a href="#" class="active">30 d</a>
+        <a href="#">60 d</a>
+        <a href="#">90 d</a>
+        <a href="#">Atrasados</a>
+      </div>
+    </div>
+
+    <div class="pay-grid-2">
+
+      <!-- ========= CONTAS A RECEBER ========= -->
+      <div class="pay-table in">
+        <div class="pt-head">
+          <div>
+            <h3>A <em>receber</em></h3>
+            <div class="tot">5 parcelas · <strong>R$ 25.910</strong> · ECCO (4) + ALVARA CT (1)</div>
+          </div>
+          <div style="display:flex;gap:6px">
+            <span class="chk-box" onclick="toggleAll(this,'rec')" title="Selecionar todas"></span>
+            <a href="#" class="btn ghost small" style="font-size:10px;padding:5px 10px">Cobrar todas</a>
+          </div>
+        </div>
+
+        <div class="bulk-bar hidden" id="bulk-rec">
+          <span class="sel-count"><strong id="cnt-rec">0</strong> selecionada(s) · <span id="sum-rec">R$ 0</span></span>
+          <div class="bulk-actions">
+            <button class="primary">✓ Marcar recebidas</button>
+            <button>Enviar lembrete</button>
+            <button>Negociar</button>
+            <button>Cancelar</button>
+          </div>
+        </div>
+
+        <div class="pay-rows" id="rows-rec">
+
+          <div class="pay-row" data-row="rec" data-id="rec-ecco-4" data-parc="4/7" data-tipo="receber"
+               data-cat="Honorários · obra clínica" data-conta="Inter PJ Zenon" data-unidade="Zenon Co."
+               data-projeto="Clínica ECCO" data-projeto-link="sistema-projeto-detalhe.html?p=P-01"
+               data-contato="Rafael Monici" data-contato-link="sistema-cliente-detalhe.html?id=CLI-4"
+               data-obs="FIN-01 · contrato 7x · R$ 39.453 total · 3 parcelas pagas">
+            <span class="chk-box" onclick="event.stopPropagation();toggleRow(this,'rec',4497)"></span>
+            <div class="pay-main">
+              <div class="pay-name"><a href="sistema-cliente-detalhe.html?id=CLI-4" onclick="event.stopPropagation()">Rafael Monici</a> <span class="parc-tag">4/7</span></div>
+              <div class="pay-sub">Clínica ECCO · obra em andamento · boleto PIX enviado 18/04</div>
+            </div>
+            <div class="pay-when"><strong>25 / 04</strong>em 6 d</div>
+            <div class="pay-val in">+ R$ 4.497</div>
+            <div style="display:flex;gap:4px;align-items:center">
+              <span class="status-pill pendente" onclick="cycleStatus(this)">Pendente</span>
+              <span class="row-menu" onclick="toggleMenu(this)">⋮
+                <div class="menu-list">
+                  <a href="#">✓ Marcar como pago</a>
+                  <a href="#">✉ Reenviar lembrete <span class="k">R</span></a>
+                  <a href="#">🤝 Marcar negociado</a>
+                  <a href="#">📎 Anexar comprovante</a>
+                  <a href="sistema-cliente-detalhe.html?id=CLI-4">Abrir cliente →</a>
+                  <a href="#" class="sep">Editar parcela</a>
+                  <a href="#">Reemitir boleto</a>
+                  <a href="#" class="del">Cancelar parcela</a>
+                </div>
+              </span>
+            </div>
+          </div>
+
+          <div class="pay-row" data-row="rec" data-id="rec-alvara-ct-3" data-parc="3/3" data-tipo="receber"
+               data-cat="Consultoria técnica · Alvará" data-conta="Inter PJ Zenon" data-unidade="Zenon Co."
+               data-projeto="CT Darkhouse · Regularização" data-projeto-link="sistema-projeto-detalhe.html?p=P-03"
+               data-contato="CT Darkhouse" data-contato-link="sistema-cliente-detalhe.html?id=CLI-1"
+               data-proposta="PRO-1" data-proposta-link="sistema-proposta-detalhe.html?p=PRO-1"
+               data-obs="FIN-02 · contrato 3x · R$ 19.800 total · parcela final na entrega do alvará">
+            <span class="chk-box" onclick="event.stopPropagation();toggleRow(this,'rec',7920)"></span>
+            <div class="pay-main">
+              <div class="pay-name"><a href="sistema-cliente-detalhe.html?id=CLI-1" onclick="event.stopPropagation()">CT Darkhouse</a> <span class="parc-tag">3/3</span></div>
+              <div class="pay-sub">ALVARA · consultoria técnica · parcela final na entrega</div>
+            </div>
+            <div class="pay-when"><strong>05 / 05</strong>em 16 d</div>
+            <div class="pay-val in">+ R$ 7.920</div>
+            <div style="display:flex;gap:4px;align-items:center">
+              <span class="status-pill pendente" onclick="cycleStatus(this)">Pendente</span>
+              <span class="row-menu" onclick="toggleMenu(this)">⋮
+                <div class="menu-list">
+                  <a href="#">✓ Marcar como pago</a>
+                  <a href="#">✉ Reenviar lembrete</a>
+                  <a href="#">🤝 Marcar negociado</a>
+                  <a href="sistema-proposta-detalhe.html?p=PRO-1">Abrir proposta →</a>
+                  <a href="#" class="sep">Editar parcela</a>
+                  <a href="#" class="del">Cancelar parcela</a>
+                </div>
+              </span>
+            </div>
+          </div>
+
+          <div class="pay-row" data-row="rec" data-id="rec-ecco-5" data-parc="5/7" data-tipo="receber"
+               data-cat="Honorários · obra clínica" data-conta="Inter PJ Zenon" data-unidade="Zenon Co."
+               data-projeto="Clínica ECCO" data-contato="Rafael Monici" data-contato-link="sistema-cliente-detalhe.html?id=CLI-4"
+               data-obs="Parcela 5/7 na entrega técnica da obra">
+            <span class="chk-box" onclick="event.stopPropagation();toggleRow(this,'rec',4497)"></span>
+            <div class="pay-main">
+              <div class="pay-name"><a href="sistema-cliente-detalhe.html?id=CLI-4" onclick="event.stopPropagation()">Rafael Monici</a> <span class="parc-tag">5/7</span></div>
+              <div class="pay-sub">Clínica ECCO · na entrega técnica da obra</div>
+            </div>
+            <div class="pay-when"><strong>20 / 05</strong>em 31 d</div>
+            <div class="pay-val in">+ R$ 4.497</div>
+            <div style="display:flex;gap:4px;align-items:center">
+              <span class="status-pill pendente" onclick="cycleStatus(this)">Pendente</span>
+              <span class="row-menu" onclick="toggleMenu(this)">⋮
+                <div class="menu-list">
+                  <a href="#">✓ Marcar como pago</a>
+                  <a href="#">✉ Reenviar lembrete</a>
+                  <a href="sistema-cliente-detalhe.html?id=CLI-4">Abrir cliente →</a>
+                  <a href="#" class="sep">Editar</a>
+                  <a href="#" class="del">Cancelar</a>
+                </div>
+              </span>
+            </div>
+          </div>
+
+          <div class="pay-row" data-row="rec" data-id="rec-ecco-6" data-parc="6/7" data-tipo="receber"
+               data-cat="Honorários · obra clínica" data-conta="Inter PJ Zenon" data-unidade="Zenon Co."
+               data-projeto="Clínica ECCO" data-contato="Rafael Monici" data-contato-link="sistema-cliente-detalhe.html?id=CLI-4"
+               data-obs="Parcela 6/7 · 30 dias após entrega">
+            <span class="chk-box" onclick="event.stopPropagation();toggleRow(this,'rec',4497)"></span>
+            <div class="pay-main">
+              <div class="pay-name"><a href="sistema-cliente-detalhe.html?id=CLI-4" onclick="event.stopPropagation()">Rafael Monici</a> <span class="parc-tag">6/7</span></div>
+              <div class="pay-sub">Clínica ECCO · 30 d após entrega</div>
+            </div>
+            <div class="pay-when"><strong>20 / 06</strong>em 62 d</div>
+            <div class="pay-val in">+ R$ 4.497</div>
+            <div style="display:flex;gap:4px;align-items:center">
+              <span class="status-pill pendente" onclick="cycleStatus(this)">Pendente</span>
+              <span class="row-menu" onclick="toggleMenu(this)">⋮
+                <div class="menu-list">
+                  <a href="#">✓ Marcar como pago</a>
+                  <a href="#">✉ Reenviar lembrete</a>
+                  <a href="sistema-cliente-detalhe.html?id=CLI-4">Abrir cliente →</a>
+                  <a href="#" class="sep">Editar</a>
+                  <a href="#" class="del">Cancelar</a>
+                </div>
+              </span>
+            </div>
+          </div>
+
+          <div class="pay-row" data-row="rec" data-id="rec-ecco-7" data-parc="7/7" data-tipo="receber"
+               data-cat="Honorários · obra clínica" data-conta="Inter PJ Zenon" data-unidade="Zenon Co."
+               data-projeto="Clínica ECCO" data-contato="Rafael Monici" data-contato-link="sistema-cliente-detalhe.html?id=CLI-4"
+               data-obs="Parcela 7/7 final · retenção pós-entrega liberada">
+            <span class="chk-box" onclick="event.stopPropagation();toggleRow(this,'rec',4499)"></span>
+            <div class="pay-main">
+              <div class="pay-name"><a href="sistema-cliente-detalhe.html?id=CLI-4" onclick="event.stopPropagation()">Rafael Monici</a> <span class="parc-tag">7/7</span></div>
+              <div class="pay-sub">Clínica ECCO · parcela final · retenção pós-entrega</div>
+            </div>
+            <div class="pay-when"><strong>20 / 07</strong>em 92 d</div>
+            <div class="pay-val in">+ R$ 4.499</div>
+            <div style="display:flex;gap:4px;align-items:center">
+              <span class="status-pill pendente" onclick="cycleStatus(this)">Pendente</span>
+              <span class="row-menu" onclick="toggleMenu(this)">⋮
+                <div class="menu-list">
+                  <a href="#">✓ Marcar como pago</a>
+                  <a href="#">✉ Reenviar lembrete</a>
+                  <a href="sistema-cliente-detalhe.html?id=CLI-4">Abrir cliente →</a>
+                  <a href="#" class="sep">Editar</a>
+                  <a href="#" class="del">Cancelar</a>
+                </div>
+              </span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ========= CONTAS A PAGAR ========= -->
+      <div class="pay-table out">
+        <div class="pt-head">
+          <div>
+            <h3>A <em>pagar</em></h3>
+            <div class="tot">5 contas <span class="ex-tag">exemplo</span> · <strong>R$ 23.500</strong> · só despesas da empresa <span style="color:var(--ink-mute)">·</span> <a href="sistema-obra-financeiro.html" style="font-family:'Fraunces','Source Serif 4',Georgia,serif;font-style:italic;color:var(--accent,#b89455);text-decoration:none">obra → financeiro →</a></div>
+          </div>
+          <div style="display:flex;gap:6px">
+            <span class="chk-box" onclick="toggleAll(this,'pag')" title="Selecionar todas"></span>
+            <a href="#" class="btn ghost small" style="font-size:10px;padding:5px 10px">Pagar todas</a>
+          </div>
+        </div>
+
+        <!-- ⚠ banner: dados em construção — BD real sendo montado em paralelo -->
+        <div style="margin:0 14px 10px;padding:10px 14px;background:linear-gradient(90deg,#fff7e6,#fff);border:1px solid #e8c878;border-left:3px solid #b89455;border-radius:4px;font-family:'Inter',sans-serif;font-size:12.5px;line-height:1.55;color:#6b4a1f;display:flex;gap:10px;align-items:flex-start">
+          <span style="font-size:15px;line-height:1">⚠</span>
+          <div>
+            <strong style="font-family:'Fraunces','Source Serif 4',Georgia,serif;font-style:italic;font-weight:500;color:#3d2a08">Dados de exemplo</strong> — as 5 contas abaixo são placeholders, não refletem as contas reais do Zenon.
+            <br><span style="color:#8a6a2e">O BD real (Inter PJ Zenon, BTG PJ Zenon, Nubank Thereza, Inter Rodrigo) está sendo montado em paralelo. Assim que entrar, esta seção será substituída pelos débitos efetivos das 4 contas.</span>
+          </div>
+        </div>
+
+        <div class="bulk-bar hidden" id="bulk-pag">
+          <span class="sel-count"><strong id="cnt-pag">0</strong> selecionada(s) · <span id="sum-pag">R$ 0</span></span>
+          <div class="bulk-actions">
+            <button class="primary">✓ Pagar selecionadas</button>
+            <button>Agendar pagamento</button>
+            <button>Negociar</button>
+            <button>Cancelar</button>
+          </div>
+        </div>
+
+        <div class="pay-rows" id="rows-pag">
+
+          <div class="pay-row" data-row="pag" data-id="pag-breno-clt" data-rec="1" data-tipo="pagar" data-ex="1"
+               data-cat="Folha · CLT" data-conta="Inter PJ Zenon" data-unidade="Zenon Co."
+               data-contato="Breno Lima" data-contato-link="sistema-configuracoes.html#equipe"
+               data-obs="[EXEMPLO — a confirmar no BD real] Recorrência mensal · PIX dia 20 · chave: CPF">
+            <span class="chk-box" onclick="event.stopPropagation();toggleRow(this,'pag',6800)"></span>
+            <div class="pay-main">
+              <div class="pay-name">Equipe · Breno Lima <span class="rec-tag">mensal</span> <span class="ex-tag">exemplo</span></div>
+              <div class="pay-sub">Folha CLT abril · PIX na conta cadastrada</div>
+            </div>
+            <div class="pay-when"><strong>20 / 04</strong>amanhã</div>
+            <div class="pay-val out">− R$ 6.800</div>
+            <div style="display:flex;gap:4px;align-items:center">
+              <span class="status-pill pendente" onclick="cycleStatus(this)">Pendente</span>
+              <span class="row-menu" onclick="toggleMenu(this)">⋮
+                <div class="menu-list">
+                  <a href="#">✓ Marcar como pago</a>
+                  <a href="#">📅 Agendar PIX</a>
+                  <a href="#">📎 Anexar holerite</a>
+                  <a href="sistema-configuracoes.html#equipe">Abrir membro →</a>
+                  <a href="#" class="sep">Editar</a>
+                </div>
+              </span>
+            </div>
+          </div>
+
+          <div class="pay-row" data-row="pag" data-id="pag-aluguel-sala" data-rec="1" data-tipo="pagar" data-ex="1"
+               data-cat="Estrutura · aluguel" data-conta="Inter PJ Zenon" data-unidade="Zenon Co."
+               data-contato="Imob. Perdizes"
+               data-obs="[EXEMPLO — a confirmar no BD real] Recorrência mensal · vencimento dia 25 · contrato 30 meses · reajuste IGP-M anual">
+            <span class="chk-box" onclick="event.stopPropagation();toggleRow(this,'pag',3200)"></span>
+            <div class="pay-main">
+              <div class="pay-name">Aluguel sala · Pinheiros <span class="rec-tag">mensal</span> <span class="ex-tag">exemplo</span></div>
+              <div class="pay-sub">Imob. Perdizes · contrato mensal</div>
+            </div>
+            <div class="pay-when"><strong>25 / 04</strong>em 6 d</div>
+            <div class="pay-val out">− R$ 3.200</div>
+            <div style="display:flex;gap:4px;align-items:center">
+              <span class="status-pill pendente" onclick="cycleStatus(this)">Pendente</span>
+              <span class="row-menu" onclick="toggleMenu(this)">⋮
+                <div class="menu-list">
+                  <a href="#">✓ Marcar como pago</a>
+                  <a href="#">📅 Agendar pagamento</a>
+                  <a href="#">📎 Anexar boleto</a>
+                  <a href="#" class="sep">Editar</a>
+                </div>
+              </span>
+            </div>
+          </div>
+
+          <div class="pay-row" data-row="pag" data-id="pag-saas" data-rec="1" data-tipo="pagar" data-ex="1"
+               data-cat="Ferramentas · SaaS" data-conta="Cartão Stripe (BTG)" data-unidade="Zenon Co."
+               data-contato="Notion + Figma + Dropbox"
+               data-obs="[EXEMPLO — a confirmar valores reais no BD] Recorrência mensal · débito automático no cartão · 3 assinaturas consolidadas">
+            <span class="chk-box" onclick="event.stopPropagation();toggleRow(this,'pag',1480)"></span>
+            <div class="pay-main">
+              <div class="pay-name">SaaS · Notion, Figma, Dropbox <span class="rec-tag">mensal</span> <span class="ex-tag">exemplo</span></div>
+              <div class="pay-sub">Cartão Stripe · 3 assinaturas</div>
+            </div>
+            <div class="pay-when"><strong>28 / 04</strong>em 9 d</div>
+            <div class="pay-val out">− R$ 1.480</div>
+            <div style="display:flex;gap:4px;align-items:center">
+              <span class="status-pill pendente" onclick="cycleStatus(this)">Pendente</span>
+              <span class="row-menu" onclick="toggleMenu(this)">⋮
+                <div class="menu-list">
+                  <a href="#">✓ Marcar como pago</a>
+                  <a href="#">Gerenciar assinaturas</a>
+                  <a href="#" class="sep">Editar</a>
+                </div>
+              </span>
+            </div>
+          </div>
+
+          <div class="pay-row" data-row="pag" data-id="pag-luana-019" data-tipo="pagar" data-ex="1"
+               data-cat="Equipe · PJ" data-conta="Inter PJ Zenon" data-unidade="Yvyra Arq"
+               data-projeto="Casa Blue + Yvyra" data-contato="Luana Costa" data-contato-link="sistema-configuracoes.html#equipe"
+               data-obs="[EXEMPLO — a confirmar no BD real] NF 019 · 104h no mês · rateio 60/40 (Casa Blue / Yvyra geral)">
+            <span class="chk-box" onclick="event.stopPropagation();toggleRow(this,'pag',7200)"></span>
+            <div class="pay-main">
+              <div class="pay-name">Luana Costa · PJ hora-arquiteto <span class="ex-tag">exemplo</span></div>
+              <div class="pay-sub">NF 019 · Casa Blue + Yvyra (104h)</div>
+            </div>
+            <div class="pay-when"><strong>30 / 04</strong>em 11 d</div>
+            <div class="pay-val out">− R$ 7.200</div>
+            <div style="display:flex;gap:4px;align-items:center">
+              <span class="status-pill pendente" onclick="cycleStatus(this)">Pendente</span>
+              <span class="row-menu" onclick="toggleMenu(this)">⋮
+                <div class="menu-list">
+                  <a href="#">✓ Marcar como pago</a>
+                  <a href="#">📎 Anexar NF</a>
+                  <a href="sistema-configuracoes.html#equipe">Abrir PJ →</a>
+                  <a href="#" class="sep">Editar</a>
+                </div>
+              </span>
+            </div>
+          </div>
+
+          <div class="pay-row" data-row="pag" data-id="pag-impostos" data-rec="1" data-tipo="pagar" data-ex="1"
+               data-cat="Impostos · DAS + ISS" data-conta="Inter PJ Zenon" data-unidade="Zenon Co."
+               data-contato="Receita Federal + Prefeitura SP"
+               data-obs="[EXEMPLO — a confirmar valores reais no BD] Recorrência mensal · DAS vence dia 20 · ISS SP vence dia 05 — gerar guias no dia 01">
+            <span class="chk-box" onclick="event.stopPropagation();toggleRow(this,'pag',4820)"></span>
+            <div class="pay-main">
+              <div class="pay-name">Impostos · DAS + ISS <span class="rec-tag">mensal</span> <span class="ex-tag">exemplo</span></div>
+              <div class="pay-sub">Receita Federal + Prefeitura SP</div>
+            </div>
+            <div class="pay-when"><strong>05 / 05</strong>em 16 d</div>
+            <div class="pay-val out">− R$ 4.820</div>
+            <div style="display:flex;gap:4px;align-items:center">
+              <span class="status-pill pendente" onclick="cycleStatus(this)">Pendente</span>
+              <span class="row-menu" onclick="toggleMenu(this)">⋮
+                <div class="menu-list">
+                  <a href="#">✓ Marcar como pago</a>
+                  <a href="#">📎 Anexar DARF</a>
+                  <a href="#" class="sep">Editar</a>
+                </div>
+              </span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <div><div class="eyebrow">Por projeto</div><h2>Parcelas <em>em aberto</em> por contrato</h2></div>
+    </div>
+    <table class="tbl">
+      <thead>
+        <tr>
+          <th>Projeto · cliente</th>
+          <th>Contrato</th>
+          <th>Parcelas</th>
+          <th class="num">Pago</th>
+          <th class="num">A receber</th>
+          <th>Próximo vencimento</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr data-projeto-link="sistema-projeto-detalhe.html?p=P-01">
+          <td><div class="name">Clínica ECCO</div><div class="sub">Rafael Monici · endoscopia</div></td>
+          <td>R$ 39.453<div class="sub">honorários · 7 parcelas</div></td>
+          <td>3 / 7</td>
+          <td class="num">R$ 21.463</td>
+          <td class="num">R$ 17.990</td>
+          <td>25 / 04<div class="sub">parcela 4/7</div></td>
+          <td><span class="badge ok">Em dia</span></td>
+        </tr>
+        <tr data-projeto-link="sistema-projeto-detalhe.html?p=P-03">
+          <td><div class="name">CT Darkhouse</div><div class="sub">Jakson Nantes · regularização</div></td>
+          <td>R$ 19.800<div class="sub">alvará + CT · 3 parcelas</div></td>
+          <td>2 / 3</td>
+          <td class="num">R$ 11.880</td>
+          <td class="num">R$ 7.920</td>
+          <td>05 / 05<div class="sub">parcela 3/3 · final</div></td>
+          <td><span class="badge ok">Em dia</span></td>
+        </tr>
+        <tr data-proposta-link="sistema-proposta-detalhe.html?p=PRO-5" style="opacity:.82">
+          <td><div class="name">Juliana e Felipe Vasconcellos</div><div class="sub">Projeto Arquitetura · Navegantes, Santos</div></td>
+          <td>R$ 32.800<div class="sub">proposta 13/2026 · rascunho v1</div></td>
+          <td>—</td>
+          <td class="num">—</td>
+          <td class="num" style="color:var(--ink-mute)">R$ 32.800</td>
+          <td>—<div class="sub">aguardando aceite</div></td>
+          <td><span class="badge neutral">Proposta</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <div><div class="eyebrow">12 meses · visão macro</div><h2>Histórico <em>mensal</em> e saldo acumulado</h2></div>
+      <div class="filters" style="margin-bottom:0">
+        <a href="#" class="active">12 m</a>
+        <a href="#">6 m</a>
+        <a href="#">Ano corrente</a>
+      </div>
+    </div>
+
+    <div class="chart-grid">
+      <div class="chart-card">
+        <div class="chd">
+          <div>
+            <h3>Entradas × <em>Saídas</em> · mensal</h3>
+            <div class="legend" style="margin-top:6px">
+              <span><i style="background:var(--ok)"></i> Entradas</span>
+              <span><i style="background:var(--alert)"></i> Saídas</span>
+            </div>
+          </div>
+          <div class="tot">
+            <div class="v pos">R$ 8.336</div>
+            <div class="l">Média mensal · ano corrente</div>
+          </div>
+        </div>
+        <div class="bar-chart">
+          <div class="bar-col"><div class="pair"><b style="height:0%"></b><b class="out" style="height:2%"></b></div></div>
+          <div class="bar-col"><div class="pair"><b style="height:0%"></b><b class="out" style="height:2%"></b></div></div>
+          <div class="bar-col"><div class="pair"><b style="height:0%"></b><b class="out" style="height:2%"></b></div></div>
+          <div class="bar-col"><div class="pair"><b style="height:0%"></b><b class="out" style="height:2%"></b></div></div>
+          <div class="bar-col"><div class="pair"><b style="height:0%"></b><b class="out" style="height:2%"></b></div></div>
+          <div class="bar-col"><div class="pair"><b style="height:0%"></b><b class="out" style="height:3%"></b></div></div>
+          <div class="bar-col"><div class="pair"><b style="height:0%"></b><b class="out" style="height:3%"></b></div></div>
+          <div class="bar-col"><div class="pair"><b style="height:0%"></b><b class="out" style="height:3%"></b></div></div>
+          <div class="bar-col"><div class="pair"><b style="height:0%"></b><b class="out" style="height:4%"></b></div></div>
+          <div class="bar-col"><div class="pair"><b style="height:60%"></b><b class="out" style="height:5%"></b></div></div>
+          <div class="bar-col"><div class="pair"><b style="height:40%"></b><b class="out" style="height:5%"></b></div></div>
+          <div class="bar-col"><div class="pair"><b style="height:22%"></b><b class="out" style="height:5%"></b></div></div>
+        </div>
+        <div class="bar-labels">
+          <span>Mai</span><span>Jun</span><span>Jul</span><span>Ago</span>
+          <span>Set</span><span>Out</span><span>Nov</span><span>Dez</span>
+          <span>Jan</span><span>Fev</span><span>Mar</span><span class="now">Abr</span>
+        </div>
+      </div>
+
+      <div class="chart-card">
+        <div class="chd">
+          <div>
+            <h3>Saldo <em>acumulado</em></h3>
+            <div class="legend" style="margin-top:6px">
+              <span><i style="background:var(--accent-ink)"></i> Caixa consolidado · Inter PJ + BTG PJ</span>
+            </div>
+          </div>
+          <div class="tot">
+            <div class="v">R$ 33.343</div>
+            <div class="l">Saldo atual · hoje</div>
+          </div>
+        </div>
+        <div class="line-chart">
+          <svg viewBox="0 0 600 220" preserveAspectRatio="none">
+            <g class="line-grid">
+              <line x1="0" y1="55" x2="600" y2="55"></line>
+              <line x1="0" y1="110" x2="600" y2="110"></line>
+              <line x1="0" y1="165" x2="600" y2="165"></line>
+            </g>
+            <path class="line-area" d="M 0 210 L 50 210 L 100 210 L 150 210 L 200 210 L 250 210 L 300 210 L 350 210 L 400 210 L 450 130 L 500 78 L 550 50 L 600 45 L 600 220 L 0 220 Z"></path>
+            <path class="line-path" d="M 0 210 L 50 210 L 100 210 L 150 210 L 200 210 L 250 210 L 300 210 L 350 210 L 400 210 L 450 130 L 500 78 L 550 50 L 600 45"></path>
+            <circle class="line-dot" cx="50" cy="210" r="3"></circle>
+            <circle class="line-dot" cx="100" cy="210" r="3"></circle>
+            <circle class="line-dot" cx="150" cy="210" r="3"></circle>
+            <circle class="line-dot" cx="200" cy="210" r="3"></circle>
+            <circle class="line-dot" cx="250" cy="210" r="3"></circle>
+            <circle class="line-dot" cx="300" cy="210" r="3"></circle>
+            <circle class="line-dot" cx="350" cy="210" r="3"></circle>
+            <circle class="line-dot" cx="400" cy="210" r="3"></circle>
+            <circle class="line-dot" cx="450" cy="130" r="3"></circle>
+            <circle class="line-dot" cx="500" cy="78" r="3"></circle>
+            <circle class="line-dot" cx="550" cy="50" r="3"></circle>
+            <circle class="line-dot now" cx="600" cy="45" r="5"></circle>
+            <g class="line-axis">
+              <text x="6" y="50">R$ 33k</text>
+              <text x="6" y="105">R$ 22k</text>
+              <text x="6" y="160">R$ 11k</text>
+            </g>
+          </svg>
+        </div>
+        <div class="line-lbls">
+          <span>Mai</span><span>Jun</span><span>Jul</span><span>Ago</span>
+          <span>Set</span><span>Out</span><span>Nov</span><span>Dez</span>
+          <span>Jan</span><span>Fev</span><span>Mar</span><span class="now">Abr</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <div><div class="eyebrow">Distribuição por unidade de negócio</div><h2>Receita e <em>gastos</em> por unidade</h2></div>
+    </div>
+
+    <div class="pie-row">
+      <div class="pie-card">
+        <div class="donut">
+          <svg width="180" height="180" viewBox="0 0 42 42">
+            <circle cx="21" cy="21" r="15.9" fill="none" stroke="var(--bg-alt)" stroke-width="7"></circle>
+            <circle cx="21" cy="21" r="15.9" fill="none" stroke="#2f6f4f" stroke-width="7"
+                    stroke-dasharray="100 0" stroke-dashoffset="25"></circle>
+          </svg>
+          <div class="cen">
+            <div class="v">R$ 33,3k</div>
+            <div class="l">Receita 2026</div>
+          </div>
+        </div>
+        <div class="pie-legend">
+          <h4>Receita <em>por unidade</em></h4>
+          <div class="pl-row"><i style="background:#6a4f8a"></i><span class="pn">Yvyra Arquitetura</span><span class="pv">R$ 33.343</span><span class="pp">100%</span></div>
+          <div class="pl-row" style="opacity:.55"><i style="background:#b67a3b"></i><span class="pn">Zenon Stay</span><span class="pv">R$ 0</span><span class="pp">—</span></div>
+          <div class="pl-row" style="opacity:.55"><i style="background:#3a6db8"></i><span class="pn">Zenon Vision <span style="font-size:10px;color:var(--ink-mute)">· interno</span></span><span class="pv">R$ 0</span><span class="pp">—</span></div>
+          <div class="pl-row" style="font-size:11px;color:var(--ink-mute);border-top:1px dashed var(--line-soft);margin-top:4px;padding-top:6px">
+            <span>Cabana + Casa Blue são fontes pessoais — não entram no KPI empresa.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="pie-card">
+        <div class="donut">
+          <svg width="180" height="180" viewBox="0 0 42 42">
+            <circle cx="21" cy="21" r="15.9" fill="none" stroke="var(--bg-alt)" stroke-width="7"></circle>
+            <circle cx="21" cy="21" r="15.9" fill="none" stroke="#1a1612" stroke-width="7"
+                    stroke-dasharray="55 45" stroke-dashoffset="25"></circle>
+            <circle cx="21" cy="21" r="15.9" fill="none" stroke="#6b5b3b" stroke-width="7"
+                    stroke-dasharray="20 80" stroke-dashoffset="-30"></circle>
+            <circle cx="21" cy="21" r="15.9" fill="none" stroke="#a84545" stroke-width="7"
+                    stroke-dasharray="15 85" stroke-dashoffset="-50"></circle>
+            <circle cx="21" cy="21" r="15.9" fill="none" stroke="#888" stroke-width="7"
+                    stroke-dasharray="10 90" stroke-dashoffset="-65"></circle>
+          </svg>
+          <div class="cen">
+            <div class="v" style="color:var(--alert)">R$ 14,4k</div>
+            <div class="l">Gastos 2026</div>
+          </div>
+        </div>
+        <div class="pie-legend">
+          <h4>Gastos <em>por categoria</em></h4>
+          <div class="pl-row"><i style="background:#1a1612"></i><span class="pn">Operacional · contador, conta PJ</span><span class="pv">R$ 7.900</span><span class="pp">55%</span></div>
+          <div class="pl-row"><i style="background:#6b5b3b"></i><span class="pn">Impostos · DAS Simples</span><span class="pv">R$ 2.880</span><span class="pp">20%</span></div>
+          <div class="pl-row"><i style="background:#a84545"></i><span class="pn">RRTs · CAU BR</span><span class="pv">R$ 2.160</span><span class="pp">15%</span></div>
+          <div class="pl-row"><i style="background:#888"></i><span class="pn">Software · Notion + Figma</span><span class="pv">R$ 1.440</span><span class="pp">10%</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <div><div class="eyebrow">Extrato detalhado</div><h2>Todos os <em>lançamentos</em></h2></div>
+      <a href="#extrato" class="link">Exportar CSV →</a>
+    </div>
+
+    <div class="ext-toolbar">
+      <div class="grp">
+        <span class="chip on">Todos</span>
+        <span class="chip in on">Entradas</span>
+        <span class="chip out">Saídas</span>
+      </div>
+      <div class="grp">
+        <span class="chip on">Abr / 2026</span>
+        <span class="chip">Mar / 2026</span>
+        <span class="chip">Fev / 2026</span>
+        <span class="chip">Trimestre</span>
+        <span class="chip">Ano</span>
+      </div>
+      <div class="grp">
+        <span class="chip on">Tudo</span>
+        <span class="chip">Negócios</span>
+        <span class="chip">Pessoal</span>
+      </div>
+      <div class="grp">
+        <span class="chip">Zenon Co.</span>
+        <span class="chip">Yvyra Lab</span>
+        <span class="chip" style="background:#efe5d6;color:#8b5a3c;border-color:#dcc8a8">Cabana</span>
+        <span class="chip" style="background:#efe5d6;color:#8b5a3c;border-color:#dcc8a8">Casa Blue</span>
+      </div>
+    </div>
+
+    <div class="bulk-bar hidden" id="bulk-ext" style="margin-bottom:10px">
+      <div class="sel-count">0 itens selecionados</div>
+      <div class="bulk-actions">
+        <button class="primary" onclick="bulkExtAction('conciliar')">Conciliar selecionados</button>
+        <button onclick="bulkExtAction('export')">Exportar CSV</button>
+        <button onclick="bulkExtAction('categorizar')">Recategorizar</button>
+        <button onclick="bulkExtAction('arquivar')">Arquivar</button>
+      </div>
+    </div>
+
+    <table class="tbl ext">
+      <thead>
+        <tr>
+          <th style="width:28px"><span class="chk-box" onclick="toggleAll(this,'ext')" title="Selecionar todas"></span></th>
+          <th>Data</th>
+          <th>Descrição</th>
+          <th>Categoria</th>
+          <th>Unidade</th>
+          <th>Cliente / fornecedor</th>
+          <th class="num">Valor</th>
+          <th>Status</th>
+          <th style="width:28px"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr data-row="ext">
+          <td><span class="chk-box" onclick="toggleRow(this,'ext',4497)"></span></td>
+          <td>20 / 04</td>
+          <td><div class="name"><a href="sistema-projeto-detalhe.html?p=P-01" style="color:var(--ink);text-decoration:none">Parcela 3/7 · Clínica ECCO</a></div><div class="sub">PIX · Rafael Monici</div></td>
+          <td>Receita · honorários obra</td>
+          <td><span class="tag-un">Zenon Co.</span></td>
+          <td><a href="sistema-cliente-detalhe.html?id=CLI-4" style="color:var(--ink-body);text-decoration:none;border-bottom:1px dotted var(--line-strong)">Rafael Monici</a></td>
+          <td class="pay-val in">+ R$ 4.497</td>
+          <td><span class="status-pill pago" onclick="cycleStatus(this)">Pago</span></td>
+          <td><span class="row-menu" onclick="toggleMenu(this)">⋮
+            <div class="menu-list">
+              <a href="sistema-projeto-detalhe.html?p=P-01">Abrir projeto <span class="k">↗</span></a>
+              <a href="sistema-cliente-detalhe.html?id=CLI-4">Abrir cliente <span class="k">↗</span></a>
+              <a href="#conciliacao" class="sep">Ver no extrato bancário</a>
+              <a href="#extrato">Editar lançamento</a>
+              <a href="#extrato">Anexar comprovante</a>
+              <a href="#extrato" class="sep del">Estornar</a>
+            </div>
+          </span></td>
+        </tr>
+        <tr data-row="ext">
+          <td><span class="chk-box" onclick="toggleRow(this,'ext',5600)"></span></td>
+          <td>12 / 04</td>
+          <td><div class="name">Cabana · 4 diárias hóspede</div><div class="sub">PIX · fim de semana longo</div></td>
+          <td>Pessoal · aluguel temporada</td>
+          <td><span class="tag-un pess">Pessoal · Cabana</span></td>
+          <td>Laura Menezes</td>
+          <td class="pay-val in">+ R$ 5.600</td>
+          <td><span class="status-pill pago" onclick="cycleStatus(this)">Pago</span></td>
+          <td><span class="row-menu" onclick="toggleMenu(this)">⋮
+            <div class="menu-list">
+              <a href="#extrato">Emitir recibo</a>
+              <a href="#extrato">Ver histórico Cabana</a>
+              <a href="#extrato" class="sep del">Estornar</a>
+            </div>
+          </span></td>
+        </tr>
+        <tr data-row="ext">
+          <td><span class="chk-box" onclick="toggleRow(this,'ext',1840)"></span></td>
+          <td>10 / 04</td>
+          <td><div class="name">Casa Blue · condomínio</div><div class="sub">Boleto mensal abr/26</div></td>
+          <td>Pessoal · moradia</td>
+          <td><span class="tag-un pess">Pessoal · Casa Blue</span></td>
+          <td>Cond. Residencial Vila</td>
+          <td class="pay-val out">− R$ 1.840</td>
+          <td><span class="status-pill pago" onclick="cycleStatus(this)">Pago</span></td>
+          <td><span class="row-menu" onclick="toggleMenu(this)">⋮
+            <div class="menu-list">
+              <a href="#extrato">Baixar boleto</a>
+              <a href="#extrato">Ver histórico Casa Blue</a>
+              <a href="#extrato">Programar próximo mês</a>
+              <a href="#extrato" class="sep del">Estornar</a>
+            </div>
+          </span></td>
+        </tr>
+        <tr data-row="ext">
+          <td><span class="chk-box" onclick="toggleRow(this,'ext',620)"></span></td>
+          <td>05 / 04</td>
+          <td><div class="name">Cabana · energia + água</div><div class="sub">Enel + Sabesp · mar/26</div></td>
+          <td>Pessoal · utilities</td>
+          <td><span class="tag-un pess">Pessoal · Cabana</span></td>
+          <td>Enel · Sabesp</td>
+          <td class="pay-val out">− R$ 620</td>
+          <td><span class="status-pill pago" onclick="cycleStatus(this)">Pago</span></td>
+          <td><span class="row-menu" onclick="toggleMenu(this)">⋮
+            <div class="menu-list">
+              <a href="#extrato">Baixar boleto</a>
+              <a href="#extrato">Ver histórico</a>
+              <a href="#extrato" class="sep del">Estornar</a>
+            </div>
+          </span></td>
+        </tr>
+        <tr data-row="ext">
+          <td><span class="chk-box" onclick="toggleRow(this,'ext',450)"></span></td>
+          <td>05 / 04</td>
+          <td><div class="name">Contador · mensalidade abril</div><div class="sub">Contabilidade Cabral e Lima</div></td>
+          <td>Operacional · contador</td>
+          <td><span class="tag-un">Zenon Co.</span></td>
+          <td>Contabilidade CL</td>
+          <td class="pay-val out">− R$ 450</td>
+          <td><span class="status-pill pago" onclick="cycleStatus(this)">Pago</span></td>
+          <td><span class="row-menu" onclick="toggleMenu(this)">⋮
+            <div class="menu-list">
+              <a href="#extrato">Baixar NF</a>
+              <a href="#extrato">Clonar próximo mês</a>
+              <a href="#extrato" class="sep del">Estornar</a>
+            </div>
+          </span></td>
+        </tr>
+        <tr data-row="ext">
+          <td><span class="chk-box" onclick="toggleRow(this,'ext',720)"></span></td>
+          <td>05 / 04</td>
+          <td><div class="name">Impostos · DAS março</div><div class="sub">Simples Nacional · anexo IV</div></td>
+          <td>Impostos</td>
+          <td><span class="tag-un">Zenon Co.</span></td>
+          <td>Receita Federal</td>
+          <td class="pay-val out">− R$ 720</td>
+          <td><span class="status-pill pago" onclick="cycleStatus(this)">Pago</span></td>
+          <td><span class="row-menu" onclick="toggleMenu(this)">⋮
+            <div class="menu-list">
+              <a href="#extrato">Baixar DARF</a>
+              <a href="#extrato">Ver guia original</a>
+              <a href="#extrato" class="sep del">Estornar</a>
+            </div>
+          </span></td>
+        </tr>
+        <tr data-row="ext">
+          <td><span class="chk-box" onclick="toggleRow(this,'ext',4497)"></span></td>
+          <td>20 / 03</td>
+          <td><div class="name"><a href="sistema-projeto-detalhe.html?p=P-01" style="color:var(--ink);text-decoration:none">Parcela 2/7 · Clínica ECCO</a></div><div class="sub">PIX · Rafael Monici</div></td>
+          <td>Receita · honorários obra</td>
+          <td><span class="tag-un">Zenon Co.</span></td>
+          <td><a href="sistema-cliente-detalhe.html?id=CLI-4" style="color:var(--ink-body);text-decoration:none;border-bottom:1px dotted var(--line-strong)">Rafael Monici</a></td>
+          <td class="pay-val in">+ R$ 4.497</td>
+          <td><span class="status-pill pago" onclick="cycleStatus(this)">Pago</span></td>
+          <td><span class="row-menu" onclick="toggleMenu(this)">⋮
+            <div class="menu-list">
+              <a href="sistema-cliente-detalhe.html?id=CLI-4">Abrir cliente <span class="k">↗</span></a>
+              <a href="sistema-projeto-detalhe.html?p=P-01">Abrir projeto <span class="k">↗</span></a>
+              <a href="#extrato">Ver cronograma</a>
+              <a href="#extrato" class="sep del">Estornar</a>
+            </div>
+          </span></td>
+        </tr>
+        <tr data-row="ext">
+          <td><span class="chk-box" onclick="toggleRow(this,'ext',240)"></span></td>
+          <td>02 / 03</td>
+          <td><div class="name">Software · Notion + Figma</div><div class="sub">Assinaturas recorrentes</div></td>
+          <td>Software · SaaS</td>
+          <td><span class="tag-un">Zenon Co.</span></td>
+          <td>Stripe · 2 assinaturas</td>
+          <td class="pay-val out">− R$ 240</td>
+          <td><span class="status-pill pago" onclick="cycleStatus(this)">Pago</span></td>
+          <td><span class="row-menu" onclick="toggleMenu(this)">⋮
+            <div class="menu-list">
+              <a href="sistema-configuracoes.html">Ver integrações <span class="k">↗</span></a>
+              <a href="#extrato">Separar em 2 lançamentos</a>
+              <a href="#extrato" class="sep del">Estornar</a>
+            </div>
+          </span></td>
+        </tr>
+        <tr data-row="ext">
+          <td><span class="chk-box" onclick="toggleRow(this,'ext',5940)"></span></td>
+          <td>27 / 02</td>
+          <td><div class="name"><a href="sistema-projeto-detalhe.html?p=P-03" style="color:var(--ink);text-decoration:none">Parcela 2/3 · CT Darkhouse</a></div><div class="sub">PIX · aprovação alvará</div></td>
+          <td>Receita · consultoria técnica</td>
+          <td><span class="tag-un">Zenon Co.</span></td>
+          <td><a href="sistema-cliente-detalhe.html?id=CLI-1" style="color:var(--ink-body);text-decoration:none;border-bottom:1px dotted var(--line-strong)">Jakson Nantes</a></td>
+          <td class="pay-val in">+ R$ 5.940</td>
+          <td><span class="status-pill pago" onclick="cycleStatus(this)">Pago</span></td>
+          <td><span class="row-menu" onclick="toggleMenu(this)">⋮
+            <div class="menu-list">
+              <a href="sistema-cliente-detalhe.html?id=CLI-1">Abrir cliente <span class="k">↗</span></a>
+              <a href="sistema-projeto-detalhe.html?p=P-03">Abrir projeto <span class="k">↗</span></a>
+              <a href="#extrato">Ver cronograma</a>
+              <a href="#extrato" class="sep del">Estornar</a>
+            </div>
+          </span></td>
+        </tr>
+        <tr data-row="ext">
+          <td><span class="chk-box" onclick="toggleRow(this,'ext',5940)"></span></td>
+          <td>25 / 02</td>
+          <td><div class="name"><a href="sistema-projeto-detalhe.html?p=P-03" style="color:var(--ink);text-decoration:none">Parcela 1/3 · CT Darkhouse</a></div><div class="sub">PIX · sinal regularização</div></td>
+          <td>Receita · consultoria técnica</td>
+          <td><span class="tag-un">Zenon Co.</span></td>
+          <td><a href="sistema-cliente-detalhe.html?id=CLI-1" style="color:var(--ink-body);text-decoration:none;border-bottom:1px dotted var(--line-strong)">Jakson Nantes</a></td>
+          <td class="pay-val in">+ R$ 5.940</td>
+          <td><span class="status-pill pago" onclick="cycleStatus(this)">Pago</span></td>
+          <td><span class="row-menu" onclick="toggleMenu(this)">⋮
+            <div class="menu-list">
+              <a href="sistema-cliente-detalhe.html?id=CLI-1">Abrir cliente <span class="k">↗</span></a>
+              <a href="sistema-projeto-detalhe.html?p=P-03">Abrir projeto <span class="k">↗</span></a>
+              <a href="#extrato">Ver cronograma</a>
+              <a href="#extrato" class="sep del">Estornar</a>
+            </div>
+          </span></td>
+        </tr>
+        <tr data-row="ext">
+          <td><span class="chk-box" onclick="toggleRow(this,'ext',12469)"></span></td>
+          <td>20 / 02</td>
+          <td><div class="name"><a href="sistema-projeto-detalhe.html?p=P-01" style="color:var(--ink);text-decoration:none">Parcela 1/7 · Clínica ECCO</a></div><div class="sub">PIX · sinal contrato</div></td>
+          <td>Receita · honorários obra</td>
+          <td><span class="tag-un">Zenon Co.</span></td>
+          <td><a href="sistema-cliente-detalhe.html?id=CLI-4" style="color:var(--ink-body);text-decoration:none;border-bottom:1px dotted var(--line-strong)">Rafael Monici</a></td>
+          <td class="pay-val in">+ R$ 12.469</td>
+          <td><span class="status-pill pago" onclick="cycleStatus(this)">Pago</span></td>
+          <td><span class="row-menu" onclick="toggleMenu(this)">⋮
+            <div class="menu-list">
+              <a href="sistema-cliente-detalhe.html?id=CLI-4">Abrir cliente <span class="k">↗</span></a>
+              <a href="sistema-projeto-detalhe.html?p=P-01">Abrir projeto <span class="k">↗</span></a>
+              <a href="#extrato">Ver contrato</a>
+              <a href="#extrato" class="sep del">Estornar</a>
+            </div>
+          </span></td>
+        </tr>
+        <tr data-row="ext">
+          <td><span class="chk-box" onclick="toggleRow(this,'ext',1080)"></span></td>
+          <td>15 / 02</td>
+          <td><div class="name">RRT CAU 2026.0104 · ECCO</div><div class="sub">Taxa CAU BR · obra clínica</div></td>
+          <td>Operacional · RRT</td>
+          <td><span class="tag-un">Zenon Co.</span></td>
+          <td>CAU BR</td>
+          <td class="pay-val out">− R$ 1.080</td>
+          <td><span class="status-pill pago" onclick="cycleStatus(this)">Pago</span></td>
+          <td><span class="row-menu" onclick="toggleMenu(this)">⋮
+            <div class="menu-list">
+              <a href="sistema-projeto-detalhe.html?p=P-01">Abrir projeto <span class="k">↗</span></a>
+              <a href="#extrato">Baixar boleto RRT</a>
+              <a href="#extrato" class="sep del">Estornar</a>
+            </div>
+          </span></td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section id="nf-upload">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">Captura de notas fiscais</div>
+        <h2>Subir <em>NF</em> e registrar automático</h2>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <span style="font-size:11px;color:var(--ink-mute);letter-spacing:.1em">3 NFs aguardando classificação</span>
+        <a href="#" class="btn ghost small">Regras automáticas</a>
+      </div>
+    </div>
+
+    <div class="nf-rules">
+      <span class="ic">✦</span>
+      <div class="tx">
+        Arraste a <strong>NF</strong> (PDF, XML ou foto) na área abaixo. O sistema lê CNPJ, valor e data, sugere o <strong>negócio</strong> e a <strong>categoria</strong> com base em lançamentos anteriores. Você confirma, ajusta se precisar, e vira lançamento no Financeiro com link permanente para o arquivo. Cabana e Casa Blue também entram aqui — tanto <strong>entradas</strong> (aluguel, recebimentos) quanto <strong>saídas</strong> (energia, manutenção). <a href="sistema-configuracoes.html#integracoes">Configurar OCR</a>
+      </div>
+    </div>
+
+    <div class="nf-grid" style="margin-top:18px">
+
+      <!-- DROP ZONE -->
+      <label class="nf-drop" for="nf-input-file">
+        <span class="nf-queue-chip">Fila: <strong>3</strong></span>
+        <div class="ico">↥</div>
+        <div class="hd">Arraste a <em>nota fiscal</em> aqui</div>
+        <div class="sub">ou clique para selecionar do computador. Aceita PDF, XML de NF-e / NFS-e e fotos JPG/PNG.</div>
+        <div class="formats">PDF · XML · JPG · PNG · até 10 MB</div>
+        <a href="#" class="btn">Selecionar arquivo</a>
+        <input type="file" id="nf-input-file" accept=".pdf,.xml,.jpg,.jpeg,.png" style="display:none">
+      </label>
+
+      <!-- PREVIEW + CLASSIFICATION -->
+      <div class="nf-preview">
+        <div class="nf-preview-head">
+          <div>
+            <div class="file-tag" style="margin-bottom:8px">NF-e · #000.042.118 · extraído há 12s</div>
+            <h3>Leroy Merlin · <em>material de obra</em></h3>
+          </div>
+          <span class="proc-badge">Processado</span>
+        </div>
+
+        <div class="nf-fields">
+          <div class="nf-field">
+            <span class="lb">CNPJ emitente</span>
+            <span class="vl">01.438.784/0158-20</span>
+          </div>
+          <div class="nf-field">
+            <span class="lb">Razão social</span>
+            <span class="vl">LM Brasil LTDA</span>
+          </div>
+          <div class="nf-field">
+            <span class="lb">Data emissão</span>
+            <span class="vl">18/04/2026</span>
+          </div>
+          <div class="nf-field big">
+            <span class="lb">Valor total</span>
+            <span class="vl"><em>R$</em> 4.280,00</span>
+          </div>
+          <div class="nf-field">
+            <span class="lb">Número NF</span>
+            <span class="vl">000.042.118</span>
+          </div>
+          <div class="nf-field">
+            <span class="lb">Chave de acesso</span>
+            <span class="vl" style="font-size:11px;color:var(--ink-mute);letter-spacing:.02em">4126 0418 0143 8784 …</span>
+          </div>
+        </div>
+
+        <!-- Classification form -->
+        <div class="nf-classif">
+          <div class="nf-classif-head">
+            <span class="ttl">Classificação do lançamento</span>
+            <span class="ai-hint">Sugestão por histórico (Leroy → Obra CT Darkhouse)</span>
+          </div>
+
+          <div class="nf-tipo">
+            <button class="on out">↓ Saída</button>
+            <button class="in">↑ Entrada</button>
+          </div>
+
+          <div class="nf-row">
+            <div class="ff">
+              <label>Unidade / fonte</label>
+              <select>
+                <optgroup label="Negócios">
+                  <option>Zenon Co.</option>
+                  <option>Yvyra Lab</option>
+                  <option>Zenon Vision</option>
+                  <option>Zenon Stay</option>
+                </optgroup>
+                <optgroup label="Fontes pessoais (entrada ou saída)">
+                  <option>Cabana</option>
+                  <option>Casa Blue</option>
+                </optgroup>
+              </select>
+              <span class="sugg">Sugerido: Zenon Co. (obra vinculada)</span>
+            </div>
+            <div class="ff">
+              <label>Categoria</label>
+              <select>
+                <option>Fornecedor · material</option>
+                <option>Fornecedor · obra</option>
+                <option>Operacional · locação</option>
+                <option>Equipe · PJ</option>
+                <option>Pessoal · Cabana</option>
+                <option>Pessoal · Casa Blue</option>
+              </select>
+              <span class="sugg">Sugerido: Fornecedor · material</span>
+            </div>
+            <div class="ff">
+              <label>Obra / projeto vinculado</label>
+              <select>
+                <option>CT Darkhouse — em obra</option>
+                <option>Casa Juliana</option>
+                <option>Apt. Ana Paula</option>
+                <option>Loft Yvyra</option>
+                <option>— sem vínculo —</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="nf-row">
+            <div class="ff">
+              <label>Conta bancária</label>
+              <select>
+                <option>Inter PJ · Zenon Co. (padrão)</option>
+                <option>Itaú PJ · Yvyra Lab</option>
+                <option>Inter Reserva</option>
+                <option>Nubank Pessoal</option>
+              </select>
+            </div>
+            <div class="ff">
+              <label>Forma de pagamento</label>
+              <select><option>PIX</option><option>Boleto</option><option>Cartão de crédito</option><option>Transferência</option><option>Dinheiro</option></select>
+            </div>
+            <div class="ff">
+              <label>Vencimento / pagamento</label>
+              <input type="date" value="2026-04-25">
+            </div>
+          </div>
+
+          <div class="nf-actions">
+            <div class="left">
+              <a href="#" class="btn" title="Ver a NF completa">Ver NF</a>
+              <a href="#" class="btn warn">Rejeitar</a>
+            </div>
+            <div class="right">
+              <a href="#" class="btn">Salvar como rascunho</a>
+              <button class="btn primary">Registrar lançamento</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- QUEUE -->
+    <div class="nf-queue" style="margin-top:20px">
+      <div class="nf-queue-hd">
+        <h3>NFs <em>recentes</em></h3>
+        <span class="count">Últimos 7 dias · 8 notas · R$ 18.420,00 movimentados</span>
+      </div>
+
+      <div class="nf-q-row">
+        <div class="file-ico">PDF</div>
+        <div class="nm">NF 000.042.118<div class="sub">LM Brasil · hoje 14:22</div></div>
+        <div class="emit">Leroy Merlin<div class="cnpj">01.438.784/0158-20</div></div>
+        <div class="vl out">− 4.280,00</div>
+        <span class="tag-un zenon">Zenon Co.</span>
+        <span class="st pend">Aguardando você</span>
+        <div class="row-btns"><a href="#" class="ic" title="Ver">👁</a><a href="#" class="ic" title="Editar">✎</a></div>
+      </div>
+
+      <div class="nf-q-row">
+        <div class="file-ico">XML</div>
+        <div class="nm">NFS-e 2026/0041<div class="sub">Cliente PF · hoje 11:08</div></div>
+        <div class="emit">Aluguel Cabana · Abril<div class="cnpj">Locatário: Helena M. · CPF 094.***.***-12</div></div>
+        <div class="vl in">+ 2.800,00</div>
+        <span class="tag-un pess">Cabana · entrada</span>
+        <span class="st pend">Aguardando você</span>
+        <div class="row-btns"><a href="#" class="ic" title="Ver">👁</a><a href="#" class="ic" title="Editar">✎</a></div>
+      </div>
+
+      <div class="nf-q-row">
+        <div class="file-ico">JPG</div>
+        <div class="nm">Foto da NF · Celesc<div class="sub">foto do app · ontem 19:40</div></div>
+        <div class="emit">Celesc Distribuição<div class="cnpj">08.336.783/0001-90</div></div>
+        <div class="vl out">− 318,40</div>
+        <span class="tag-un pess">Cabana · saída</span>
+        <span class="st proc">OCR em processamento</span>
+        <div class="row-btns"><a href="#" class="ic" title="Ver">👁</a><a href="#" class="ic" title="Editar">✎</a></div>
+      </div>
+
+      <div class="nf-q-row">
+        <div class="file-ico">PDF</div>
+        <div class="nm">NFS-e 2026/0040<div class="sub">Zenon Co. · 17/04 09:12</div></div>
+        <div class="emit">Prestação — Projeto Casa Juliana<div class="cnpj">Tomador: Juliana P. · CPF 152.***.***-88</div></div>
+        <div class="vl in">+ 18.000,00</div>
+        <span class="tag-un zenon">Zenon Co.</span>
+        <span class="st ok">Lançada · parcela 2/3</span>
+        <div class="row-btns"><a href="#" class="ic" title="Ver">👁</a><a href="#" class="ic" title="Abrir lançamento">→</a></div>
+      </div>
+
+      <div class="nf-q-row">
+        <div class="file-ico">PDF</div>
+        <div class="nm">NF 884<div class="sub">Marcenaria · 16/04 16:45</div></div>
+        <div class="emit">Zigue Zague Marcenaria<div class="cnpj">24.118.009/0001-03</div></div>
+        <div class="vl out">− 6.420,00</div>
+        <span class="tag-un zenon">Zenon Co.</span>
+        <span class="st ok">Lançada</span>
+        <div class="row-btns"><a href="#" class="ic" title="Ver">👁</a><a href="#" class="ic" title="Abrir">→</a></div>
+      </div>
+
+      <div class="nf-q-row">
+        <div class="file-ico">XML</div>
+        <div class="nm">NF 1127<div class="sub">Yvyra · 15/04 10:20</div></div>
+        <div class="emit">Cerâmica São Bento<div class="cnpj">11.884.552/0001-44</div></div>
+        <div class="vl out">− 2.140,00</div>
+        <span class="tag-un yvyra">Yvyra Lab</span>
+        <span class="st ok">Lançada · espelhada Notion</span>
+        <div class="row-btns"><a href="#" class="ic" title="Ver">👁</a><a href="#" class="ic" title="Abrir">→</a></div>
+      </div>
+
+      <div class="nf-q-row">
+        <div class="file-ico">JPG</div>
+        <div class="nm">Recibo Casa Blue<div class="sub">foto do condomínio · 14/04</div></div>
+        <div class="emit">Cond. Edifício Blue<div class="cnpj">13.998.001/0001-22</div></div>
+        <div class="vl out">− 1.240,00</div>
+        <span class="tag-un pess">Casa Blue · saída</span>
+        <span class="st ok">Lançada</span>
+        <div class="row-btns"><a href="#" class="ic" title="Ver">👁</a><a href="#" class="ic" title="Abrir">→</a></div>
+      </div>
+
+      <div class="nf-q-row">
+        <div class="file-ico">PDF</div>
+        <div class="nm">NF 000.042.009<div class="sub">import problema · 13/04</div></div>
+        <div class="emit">CNPJ não reconhecido<div class="cnpj">—</div></div>
+        <div class="vl">R$ ?</div>
+        <span class="tag-un pend">Não identificado</span>
+        <span class="st err">Erro no OCR</span>
+        <div class="row-btns"><a href="#" class="ic" title="Ver">👁</a><a href="#" class="ic" title="Reprocessar">⟳</a></div>
+      </div>
+    </div>
+
+  </section>
+
+  <section id="conciliacao">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow">Conciliação bancária</div>
+        <h2>Extrato do banco <em>×</em> lançamentos do sistema</h2>
+      </div>
+      <div style="display:flex;gap:8px">
+        <a href="#conciliacao" class="btn ghost small">Baixar OFX modelo</a>
+        <a href="sistema-financeiro.html" class="btn small">Importar extrato</a>
+      </div>
+    </div>
+
+    <div class="conc-stats" style="grid-template-columns:repeat(4,1fr);margin-bottom:18px">
+      <div class="conc-stat ok"><div class="l">Conciliados</div><div class="v">38</div></div>
+      <div class="conc-stat warn"><div class="l">Pendentes</div><div class="v">7</div></div>
+      <div class="conc-stat"><div class="l">Ignorados</div><div class="v">2</div></div>
+      <div class="conc-stat"><div class="l">Diferença</div><div class="v" style="color:var(--alert)">R$ 1.240</div></div>
+    </div>
+
+    <div class="conc-grid">
+      <div class="conc-card">
+        <div class="conc-head">
+          <div>
+            <h3>Itens <em>a conciliar</em></h3>
+            <div class="sub">Banco Inter · conta 0001-12345-6 · extrato 01–18 / 04</div>
+          </div>
+          <span class="badge warn">7 pendentes</span>
+        </div>
+
+        <div class="conc-row">
+          <div class="dsc">
+            <div><strong>PIX RECEBIDO · RAFAEL T PRADO</strong></div>
+            <div class="sub2">17 / 04 · docID 8823991 · ref "sinal casa blue"</div>
+          </div>
+          <div class="val" style="color:var(--ok)">+ R$ 25.600</div>
+          <a href="#conciliacao" class="act" onclick="markConc(this,'done')">Vincular</a>
+        </div>
+
+        <div class="conc-row">
+          <div class="dsc">
+            <div><strong>PIX RECEBIDO · ANA P MELLO</strong></div>
+            <div class="sub2">15 / 04 · docID 8821544 · ref "parcela 2 apto"</div>
+          </div>
+          <div class="val" style="color:var(--ok)">+ R$ 13.600</div>
+          <a href="#conciliacao" class="act done">✓ Casado</a>
+        </div>
+
+        <div class="conc-row">
+          <div class="dsc">
+            <div><strong>TED ENVIADA · MARCENARIA MARIO</strong></div>
+            <div class="sub2">14 / 04 · docID 8820102 · contraparte Mario Ferreira ME</div>
+          </div>
+          <div class="val" style="color:var(--alert)">− R$ 8.400</div>
+          <a href="#conciliacao" class="act" onclick="markConc(this,'done')">Vincular</a>
+        </div>
+
+        <div class="conc-row">
+          <div class="dsc">
+            <div><strong>DÉBITO · BOLETO 23790.12345</strong></div>
+            <div class="sub2">13 / 04 · Casa dos Pisos SP · NF 44183</div>
+          </div>
+          <div class="val" style="color:var(--alert)">− R$ 12.480</div>
+          <a href="#conciliacao" class="act done">✓ Casado</a>
+        </div>
+
+        <div class="conc-row">
+          <div class="dsc">
+            <div><strong>PIX RECEBIDO · LAURA MENEZES</strong></div>
+            <div class="sub2">08 / 04 · docID 8806710 · ref "cabana 4 diárias"</div>
+          </div>
+          <div class="val" style="color:var(--ok)">+ R$ 5.600</div>
+          <a href="#conciliacao" class="act done">✓ Casado</a>
+        </div>
+
+        <div class="conc-row">
+          <div class="dsc">
+            <div><strong>DÉBITO AUTOMÁTICO · STRIPE ASSINATURA</strong></div>
+            <div class="sub2">02 / 04 · 3 cobranças combinadas (Notion, Figma, Dropbox)</div>
+          </div>
+          <div class="val" style="color:var(--alert)">− R$ 1.480</div>
+          <a href="#conciliacao" class="act done">✓ Casado</a>
+        </div>
+
+        <div class="conc-row">
+          <div class="dsc">
+            <div><strong>TARIFA · PACOTE CONTA PJ</strong></div>
+            <div class="sub2">01 / 04 · não vinculado a categoria</div>
+          </div>
+          <div class="val" style="color:var(--alert)">− R$ 89</div>
+          <a href="#conciliacao" class="act" onclick="markConc(this,'done')">Vincular</a>
+        </div>
+
+        <div class="conc-row">
+          <div class="dsc">
+            <div><strong>CRÉDITO · DEPÓSITO ESPÉCIE</strong></div>
+            <div class="sub2">01 / 04 · sem identificação de origem</div>
+          </div>
+          <div class="val" style="color:var(--ok)">+ R$ 1.240</div>
+          <a href="#conciliacao" class="act" onclick="markConc(this,'done')">Investigar</a>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <div class="conc-card">
+          <div class="conc-head">
+            <div>
+              <h3>Importar <em>extrato</em></h3>
+              <div class="sub">Suporta OFX, CSV (Inter, Nubank, BB, Itaú) e PDF via OCR</div>
+            </div>
+          </div>
+          <label class="upload-box" for="fl-ofx">
+            <div class="big">Arraste o arquivo aqui</div>
+            <div class="small">ou clique para selecionar · OFX / CSV / PDF até 10 MB</div>
+            <span class="btn">Escolher arquivo</span>
+          </label>
+          <input type="file" id="fl-ofx" accept=".ofx,.csv,.pdf" style="display:none">
+          <div style="margin-top:12px;font-size:11px;color:var(--ink-mute);line-height:1.6">
+            <strong style="color:var(--ink)">Última importação:</strong> 18 / 04 / 2026 às 09:42 · 47 lançamentos processados · 38 casados automaticamente por valor+data, 7 precisam de ação manual.
+          </div>
+        </div>
+
+        <div class="conc-card">
+          <div class="conc-head">
+            <div>
+              <h3>Regras de <em>casamento</em> automático</h3>
+              <div class="sub">Padrões que o sistema usa para vincular extrato e lançamentos</div>
+            </div>
+            <a href="sistema-configuracoes.html" class="link small">Editar →</a>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px;font-size:12px;color:var(--ink-body)">
+            <div style="display:flex;justify-content:space-between;gap:10px;padding:8px 10px;background:var(--bg-alt);border-radius:3px">
+              <span>PIX com CPF/CNPJ de cliente cadastrado</span>
+              <span class="badge ok">auto</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;gap:10px;padding:8px 10px;background:var(--bg-alt);border-radius:3px">
+              <span>Valor + data exata ≤ 2 dias corridos</span>
+              <span class="badge ok">auto</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;gap:10px;padding:8px 10px;background:var(--bg-alt);border-radius:3px">
+              <span>Ref. do PIX contém número da NF ou parcela</span>
+              <span class="badge ok">auto</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;gap:10px;padding:8px 10px;background:var(--bg-alt);border-radius:3px">
+              <span>Boletos registrados (cobrança Asaas)</span>
+              <span class="badge warn">off</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;gap:10px;padding:8px 10px;background:var(--bg-alt);border-radius:3px">
+              <span>Tarifas bancárias recorrentes → categoria "Operacional"</span>
+              <span class="badge ok">auto</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="novo-lancamento">
+    <div class="section-head">
+      <div><div class="eyebrow">Registro rápido</div><h2>Novo <em>lançamento</em></h2></div>
+    </div>
+
+    <div class="lanc-form">
+      <div class="lanc-grid">
+        <div class="ff">
+          <label>Tipo</label>
+          <div class="lanc-tg">
+            <button class="on in">Entrada</button>
+            <button>Saída</button>
+          </div>
+        </div>
+        <div class="ff">
+          <label>Data</label>
+          <input type="date" value="2026-04-19">
+        </div>
+        <div class="ff">
+          <label>Valor (R$)</label>
+          <input type="number" placeholder="0,00" step="0.01">
+        </div>
+        <div class="ff">
+          <label>Unidade / classificação</label>
+          <select>
+            <optgroup label="Negócios">
+              <option>Zenon Co.</option>
+              <option>Yvyra Lab</option>
+              <option>Zenon Vision</option>
+              <option>Zenon Stay</option>
+            </optgroup>
+            <optgroup label="Despesas pessoais">
+              <option>Pessoal · Cabana</option>
+              <option>Pessoal · Casa Blue</option>
+              <option>Pessoal · outros</option>
+            </optgroup>
+          </select>
+        </div>
+        <div class="ff wide">
+          <label>Descrição</label>
+          <input type="text" placeholder="Ex.: parcela 4/4 Casa Juliana · PIX">
+        </div>
+        <div class="ff">
+          <label>Categoria</label>
+          <select>
+            <option>Receita · projeto</option>
+            <option>Receita · recorrente</option>
+            <option>Receita · aluguel</option>
+            <option>Fornecedor · obra</option>
+            <option>Equipe · salário</option>
+            <option>Equipe · PJ</option>
+            <option>Operacional · locação</option>
+            <option>Impostos</option>
+            <option>Marketing · ads</option>
+            <option>Software · SaaS</option>
+          </select>
+        </div>
+        <div class="ff">
+          <label>Cliente / fornecedor</label>
+          <input type="text" placeholder="Buscar cadastro…">
+        </div>
+        <div class="ff">
+          <label>Meio</label>
+          <select>
+            <option>PIX</option>
+            <option>Transferência</option>
+            <option>Boleto</option>
+            <option>Cartão de crédito</option>
+            <option>Dinheiro</option>
+          </select>
+        </div>
+        <div class="ff">
+          <label>Projeto vinculado (opcional)</label>
+          <select>
+            <option>— sem vínculo —</option>
+            <option>Casa Juliana</option>
+            <option>Casa Blue</option>
+            <option>CT Darkhouse</option>
+            <option>Apt. Ana Paula</option>
+            <option>Loft Yvyra</option>
+          </select>
+        </div>
+        <div class="ff">
+          <label>Status</label>
+          <select>
+            <option>Compensado</option>
+            <option>Pendente</option>
+            <option>Previsto</option>
+          </select>
+        </div>
+        <div class="ff wide">
+          <label>Anexo (NF, comprovante)</label>
+          <input type="text" placeholder="— upload de arquivo —">
+        </div>
+      </div>
+      <div class="lanc-foot">
+        <div class="hint">O lançamento é espelhado automaticamente na planilha Fluxo Pagamento e no Notion Financeiro.</div>
+        <div style="display:flex;gap:8px">
+          <a href="sistema-financeiro.html" class="btn ghost small">Cancelar</a>
+          <a href="sistema-financeiro.html" class="btn small">Registrar</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ============ MODAL DETALHE CONTA ============ -->
+<div class="pd-back" id="pd-back" onclick="if(event.target===this) fecharDetalhe()">
+  <div class="pd-modal" id="pd-modal" role="dialog" aria-modal="true" aria-labelledby="pd-title">
+    <div class="pd-head">
+      <div>
+        <div class="eyebrow" id="pd-eyebrow">Conta</div>
+        <h3 id="pd-title">Detalhe</h3>
+      </div>
+      <span class="pd-close" onclick="fecharDetalhe()" title="Fechar (Esc)">×</span>
+    </div>
+    <div class="pd-body" id="pd-body"><!-- preenchido via JS --></div>
+    <div class="pd-foot">
+      <div class="pd-meta" id="pd-meta">—</div>
+      <div class="pd-act" id="pd-act-view">
+        <a class="btn" href="#" onclick="event.preventDefault();fecharDetalhe()">Fechar</a>
+        <a class="btn" href="#" id="pd-edit-btn" onclick="event.preventDefault();entrarEdicao()">Editar</a>
+        <a class="btn" href="#" onclick="event.preventDefault();duplicarLancamento()">Duplicar</a>
+        <a class="btn" href="#" style="color:var(--danger,#b44)" onclick="event.preventDefault();excluirLancamento()">Excluir</a>
+        <a class="btn primary" href="#" id="pd-pagar" onclick="event.preventDefault();marcarPagoFromModal()">✓ Marcar como pago</a>
+      </div>
+      <div class="pd-act" id="pd-act-edit" style="display:none">
+        <a class="btn" href="#" onclick="event.preventDefault();sairEdicao()">Cancelar</a>
+        <a class="btn primary" href="#" onclick="event.preventDefault();salvarEdicao()">Salvar alterações</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div>Cabral e Lima Design LTDA · CNPJ 59.525.877/0001-49 · CAU/BR A148704-5</div>
+  <div>sistema.zenonco.com.br · v2 — protótipo</div>
+</footer>
+
+<script>
+  // Ciclo de status para pills (Pendente → Pago → Atrasado → Negociado → Cancelado → Pendente)
+  const STATUS_CYCLE = ['pendente','pago','atrasado','negociado','cancelado'];
+  const STATUS_LABEL = {
+    pendente:'Pendente',
+    pago:'Pago',
+    atrasado:'Atrasado',
+    negociado:'Negociado',
+    cancelado:'Cancelado'
+  };
+
+  function cycleStatus(pill){
+    if(!pill) return;
+    const cur = STATUS_CYCLE.find(s => pill.classList.contains(s)) || 'pendente';
+    const next = STATUS_CYCLE[(STATUS_CYCLE.indexOf(cur)+1) % STATUS_CYCLE.length];
+    STATUS_CYCLE.forEach(s => pill.classList.remove(s));
+    pill.classList.add(next);
+    pill.textContent = STATUS_LABEL[next];
+    // Fechar menus abertos
+    closeAllMenus();
+    // Reflexos: se pago, deixa row opaca; se atrasado, adiciona bg
+    const row = pill.closest('.pay-row');
+    if(row){
+      row.classList.remove('pago','atr');
+      if(next === 'pago') row.classList.add('pago');
+      if(next === 'atrasado') row.classList.add('atr');
+    }
+  }
+
+  // Checkbox por linha
+  function toggleRow(box, group, val){
+    box.classList.toggle('on');
+    updateBulkBar(group);
+  }
+
+  // Checkbox master
+  function toggleAll(box, group){
+    box.classList.toggle('on');
+    const on = box.classList.contains('on');
+    document.querySelectorAll('[data-row="'+group+'"] .chk-box').forEach(cb=>{
+      if(cb === box) return;
+      if(on) cb.classList.add('on'); else cb.classList.remove('on');
+    });
+    updateBulkBar(group);
+  }
+
+  function updateBulkBar(group){
+    const rows = document.querySelectorAll('[data-row="'+group+'"]');
+    let selCount = 0, selSum = 0;
+    rows.forEach(r=>{
+      const cb = r.querySelector('.chk-box');
+      if(cb && cb.classList.contains('on')){
+        selCount++;
+        // valor pode estar em data-val no checkbox ou em pay-val
+        const valEl = r.querySelector('.pay-val');
+        if(valEl){
+          const num = (valEl.textContent.match(/[\d\.]+/g) || []).join('').replace(/\./g,'');
+          selSum += parseInt(num || '0',10);
+        }
+      }
+    });
+    const bar = document.getElementById('bulk-'+group);
+    if(!bar) return;
+    if(selCount > 0){
+      bar.classList.remove('hidden');
+      const ctr = bar.querySelector('.sel-count');
+      if(ctr){
+        const txt = selCount + (selCount === 1 ? ' item selecionado' : ' itens selecionados');
+        const sumTxt = selSum > 0 ? ' · R$ ' + selSum.toLocaleString('pt-BR') : '';
+        ctr.textContent = txt + sumTxt;
+      }
+    } else {
+      bar.classList.add('hidden');
+    }
+  }
+
+  // Menu 3 pontinhos
+  function toggleMenu(el){
+    closeAllMenus(el);
+    el.classList.toggle('open');
+    // flip pra cima se não couber abaixo
+    if(el.classList.contains('open')){
+      const list = el.querySelector('.menu-list');
+      if(list){
+        list.classList.remove('up');
+        const rect = el.getBoundingClientRect();
+        const listH = list.offsetHeight || 220;
+        const spaceBelow = window.innerHeight - rect.bottom;
+        if(spaceBelow < listH + 12) list.classList.add('up');
+      }
+    }
+    // impedir propagação para document
+    event && event.stopPropagation && event.stopPropagation();
+  }
+
+  function closeAllMenus(except){
+    document.querySelectorAll('.row-menu.open').forEach(m=>{
+      if(m !== except) m.classList.remove('open');
+    });
+  }
+
+  document.addEventListener('click', function(e){
+    if(!e.target.closest('.row-menu')) closeAllMenus();
+  });
+
+  // Bulk actions (afeta linhas selecionadas do grupo)
+  function bulkAction(group, action){
+    const rows = document.querySelectorAll('[data-row="'+group+'"]');
+    let n = 0;
+    rows.forEach(r=>{
+      const cb = r.querySelector('.chk-box');
+      if(!cb || !cb.classList.contains('on')) return;
+      n++;
+      const pill = r.querySelector('.status-pill');
+      if(!pill) return;
+      STATUS_CYCLE.forEach(s => pill.classList.remove(s));
+      if(action === 'pago'){
+        pill.classList.add('pago'); pill.textContent = 'Pago';
+        r.classList.remove('atr'); r.classList.add('pago');
+      } else if(action === 'negociado'){
+        pill.classList.add('negociado'); pill.textContent = 'Negociado';
+        r.classList.remove('atr','pago');
+      } else if(action === 'cancelado'){
+        pill.classList.add('cancelado'); pill.textContent = 'Cancelado';
+        r.classList.remove('atr','pago');
+      }
+      // desmarcar
+      cb.classList.remove('on');
+    });
+    updateBulkBar(group);
+    if(n > 0){
+      flash(n + (n === 1 ? ' item atualizado' : ' itens atualizados'));
+    }
+  }
+
+  // Feedback visual simples
+  function flash(msg){
+    let f = document.getElementById('flash');
+    if(!f){
+      f = document.createElement('div');
+      f.id = 'flash';
+      f.style.cssText = 'position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 18px;border-radius:3px;font-size:12px;letter-spacing:.06em;z-index:100;box-shadow:0 4px 14px rgba(0,0,0,.2);opacity:0;transition:opacity .2s';
+      document.body.appendChild(f);
+    }
+    f.textContent = msg;
+    f.style.opacity = '1';
+    clearTimeout(f._t);
+    f._t = setTimeout(()=>{ f.style.opacity = '0'; }, 2200);
+  }
+
+  // Conciliação: marcar item como casado
+  function markConc(el, action){
+    if(action === 'done'){
+      el.classList.add('done');
+      el.textContent = '✓ Casado';
+      el.onclick = null;
+      flash('Item vinculado ao lançamento correspondente');
+    }
+  }
+
+  // Bulk action específica do extrato (diferente dos contas a receber/pagar)
+  function bulkExtAction(action){
+    const rows = document.querySelectorAll('[data-row="ext"]');
+    let n = 0;
+    rows.forEach(r=>{
+      const cb = r.querySelector('.chk-box');
+      if(!cb || !cb.classList.contains('on')) return;
+      n++;
+      cb.classList.remove('on');
+    });
+    updateBulkBar('ext');
+    if(action === 'conciliar') flash(n + ' ' + (n === 1 ? 'lançamento conciliado' : 'lançamentos conciliados'));
+    else if(action === 'export') flash('Exportando ' + n + ' ' + (n === 1 ? 'lançamento' : 'lançamentos') + ' em CSV…');
+    else if(action === 'categorizar') flash('Abrindo seletor de categoria para ' + n + ' ' + (n === 1 ? 'item' : 'itens'));
+    else if(action === 'arquivar') flash(n + ' ' + (n === 1 ? 'lançamento arquivado' : 'lançamentos arquivados'));
+  }
+
+  // Banner migração: botão "Ok, entendi"
+  function dismissBanner(el){
+    const b = el.closest('.migra-banner');
+    if(b) b.style.display = 'none';
+    try{ localStorage.setItem('zenon_migra_ok','1'); }catch(e){}
+  }
+
+  // Exportar fluxo — dropdown de formatos
+  function toggleExport(btn){
+    const wrap = btn.closest('.export-wrap');
+    if(!wrap) return;
+    // fecha outros dropdowns
+    document.querySelectorAll('.export-wrap.open').forEach(w => { if(w !== wrap) w.classList.remove('open'); });
+    wrap.classList.toggle('open');
+    event && event.stopPropagation && event.stopPropagation();
+  }
+  function exportarFluxo(fmt){
+    const labels = {csv:'CSV', xlsx:'Excel', pdf:'PDF', ofx:'OFX'};
+    const label = labels[fmt] || fmt.toUpperCase();
+    flash('Gerando fluxo de caixa em ' + label + '… (abril/2026 + projeção 90 d)');
+    // fecha o menu
+    document.querySelectorAll('.export-wrap.open').forEach(w => w.classList.remove('open'));
+    // Aqui entrará a chamada real ao worker (POST /api/financeiro/export?fmt=xxx) quando o backend for plugado
+  }
+  // Fecha export-menu ao clicar fora
+  document.addEventListener('click', (e)=>{
+    if(!e.target.closest('.export-wrap')){
+      document.querySelectorAll('.export-wrap.open').forEach(w => w.classList.remove('open'));
+    }
+  });
+
+  // ======================================================================
+  // MODAL DETALHE DE CONTA (a receber / a pagar)
+  // ----------------------------------------------------------------------
+  // Requisitos do Zenon (19/04/2026):
+  //  (a) clicar na linha → abre popup com todos os dados
+  //  (b) se data-rec="1"  → ao dar baixa, cria uma nova linha p/ o mês seguinte
+  //  (c) se data-parc="N/M" → dá baixa só na parcela atual, mantém as próximas
+  // ======================================================================
+  let __pdCurrentRow = null;
+
+  // parse "DD / MM" → "DD / MM" do mês seguinte (ajusta 31 se não couber)
+  function nextMonthBR(str){
+    if(!str) return str;
+    // remove prefixo "~ " (estimado) mas mantém na saída
+    const est = /^~\s*/.test(str);
+    const clean = str.replace(/^~\s*/,'').trim();
+    const m = clean.match(/^(\d{1,2})\s*\/\s*(\d{1,2})$/);
+    if(!m) return str;
+    let d = parseInt(m[1],10), mm = parseInt(m[2],10);
+    mm += 1;
+    if(mm > 12) mm = 1;
+    // corta dia se mês mais curto
+    const dim = [31,28,31,30,31,30,31,31,30,31,30,31];
+    if(d > dim[mm-1]) d = dim[mm-1];
+    const out = String(d).padStart(2,'0')+' / '+String(mm).padStart(2,'0');
+    return est ? '~ '+out : out;
+  }
+
+  // devolve "em N d" / "amanhã" etc aproximado (placeholder)
+  function relWhen(str){
+    const m = str && str.match(/^(\d{1,2})\s*\/\s*(\d{1,2})/);
+    if(!m) return 'recorrente';
+    return 'próximo mês';
+  }
+
+  // próxima parcela "N/M" → "(N+1)/M"  (retorna null se N+1 > M)
+  function nextParc(pStr){
+    const m = pStr && pStr.match(/^(\d+)\/(\d+)$/);
+    if(!m) return null;
+    const n = parseInt(m[1],10)+1, tot = parseInt(m[2],10);
+    if(n > tot) return null;
+    return n+'/'+tot;
+  }
+
+  // delega clique em linha → abre modal (exceto se clicou em child interativo)
+  document.addEventListener('click', function(e){
+    const row = e.target.closest('.pay-row');
+    if(!row) return;
+    // ignora se veio de child interativo
+    if(e.target.closest('.chk-box,.status-pill,.row-menu,.menu-list,.pay-name a')) return;
+    abrirDetalhe(row);
+  });
+
+  // delega "✓ Marcar como pago" dentro dos menus
+  document.addEventListener('click', function(e){
+    const a = e.target.closest('.menu-list a');
+    if(!a) return;
+    const txt = (a.textContent || '').trim();
+    if(txt.startsWith('✓')){
+      e.preventDefault();
+      e.stopPropagation();
+      const row = a.closest('.pay-row');
+      if(row){
+        closeAllMenus();
+        marcarPago(row);
+      }
+    }
+  });
+
+  // tecla ESC fecha modal
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape') fecharDetalhe();
+  });
+
+  function abrirDetalhe(row){
+    if(!row) return;
+    __pdCurrentRow = row;
+
+    const d = row.dataset;
+    const tipo = d.tipo || (d.row === 'rec' ? 'receber' : 'pagar');
+    const isIn = tipo === 'receber';
+    const name = (row.querySelector('.pay-name')||{}).textContent?.trim() || '—';
+    const sub  = (row.querySelector('.pay-sub')||{}).textContent?.trim()  || '';
+    const when = (row.querySelector('.pay-when strong')||{}).textContent?.trim() || '—';
+    const whenSub = (row.querySelector('.pay-when')||{}).childNodes;
+    let whenRel = '';
+    if(whenSub){ whenSub.forEach(n=>{ if(n.nodeType===3) whenRel += (n.textContent||'').trim(); }); }
+    const val  = (row.querySelector('.pay-val')||{}).textContent?.trim()  || '';
+    const pill = row.querySelector('.status-pill');
+    const statusTxt = pill ? pill.textContent.trim() : '—';
+    const statusCls = pill ? (pill.className.match(/pago|pendente|atrasado|negociado|cancelado/)||['pendente'])[0] : 'pendente';
+
+    const isRec  = d.rec === '1';
+    const parc   = d.parc || '';
+    const isParc = !!parc;
+
+    // header
+    document.getElementById('pd-eyebrow').textContent = (isIn ? 'A receber' : 'A pagar')
+      + (isRec ? ' · recorrente' : '')
+      + (isParc ? ' · parcela '+parc : '');
+    const tituloEl = document.getElementById('pd-title');
+    // tira badges inline do name limpo
+    const nameClean = name.replace(/\s*(mensal|\d+\/\d+)\s*$/,'').trim();
+    tituloEl.innerHTML = nameClean.replace(/·/g,'<em>·</em>');
+
+    // hero + grid
+    const body = document.getElementById('pd-body');
+    const badges = [];
+    if(isRec) badges.push('<span class="rec-tag">mensal</span>');
+    if(isParc) badges.push('<span class="parc-tag">'+parc+'</span>');
+    badges.push('<span class="status-pill '+statusCls+'" style="cursor:default">'+statusTxt+'</span>');
+
+    let html = '';
+    html += '<div class="pd-hero">';
+    html += '  <div class="pd-val '+(isIn?'in':'out')+'">'+val+'</div>';
+    html += '  <div class="pd-when"><strong>'+when+'</strong>'+whenRel+'</div>';
+    html += '  <div class="pd-badges">'+badges.join('')+'</div>';
+    html += '</div>';
+
+    html += '<div class="pd-grid">';
+    html += field('Categoria', d.cat || '—');
+    html += field('Unidade', d.unidade || '—');
+    html += field('Conta bancária', d.conta || '—');
+    html += field('Forma', isIn ? 'Boleto / PIX' : 'PIX / Débito');
+    if(d.contato){
+      const contato = d.contatoLink
+        ? '<a href="'+d.contatoLink+'">'+d.contato+' →</a>'
+        : d.contato;
+      html += field(isIn ? 'Cliente' : 'Fornecedor / Pessoa', contato);
+    }
+    if(d.projeto) html += field('Projeto', d.projeto);
+    if(d.proposta){
+      const prop = d.propostaLink
+        ? '<a href="'+d.propostaLink+'">'+d.proposta+' →</a>'
+        : d.proposta;
+      html += field('Proposta', prop);
+    }
+    html += field('Descrição', sub || '—');
+    html += '</div>';
+
+    if(d.obs){
+      html += '<div class="pd-note"><strong>Observação:</strong> '+d.obs+'</div>';
+    }
+
+    // Parcelas (se parcelada): renderiza cronograma
+    if(isParc){
+      const [n,tot] = parc.split('/').map(x=>parseInt(x,10));
+      html += '<div>';
+      html += '<div style="font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-mute);font-weight:700;margin-bottom:8px">Cronograma · '+tot+' parcelas</div>';
+      html += '<div class="pd-parc-list">';
+      for(let i=1;i<=tot;i++){
+        let cls='next', stTxt='Prevista';
+        if(i < n){ cls='done'; stTxt='Pago'; }
+        else if(i === n){ cls='curr'; stTxt='Atual'; }
+        // data aproximada: when é a parcela atual; gera ±1 mês por parcela
+        let dt = when;
+        if(i !== n){
+          const diff = i - n;
+          let cur = when;
+          const step = diff > 0 ? nextMonthBR : (s)=>s;
+          if(diff > 0){
+            for(let k=0;k<diff;k++) cur = nextMonthBR(cur);
+          } else {
+            // passa pra trás não temos helper; aproxima com "~"
+            cur = '~ ant.';
+          }
+          dt = cur;
+        }
+        html += '<div class="parc-item '+cls+'">';
+        html += '<span class="p-num">'+i+'/'+tot+'</span>';
+        html += '<span class="p-dt">'+dt+'</span>';
+        html += '<span class="p-vl">'+val.replace(/^[\-\+]\s*/,'')+'</span>';
+        html += '<span class="p-st">'+stTxt+'</span>';
+        html += '</div>';
+      }
+      html += '</div></div>';
+    }
+
+    // nota recorrência
+    if(isRec){
+      html += '<div class="pd-note"><strong>Recorrência ativa:</strong> quando você marcar esta como paga, o sistema cria automaticamente a próxima fatura com vencimento em <strong>'+nextMonthBR(when)+'</strong>.</div>';
+    }
+    if(isParc){
+      html += '<div class="pd-note"><strong>Contrato parcelado:</strong> marcar a parcela '+parc+' como paga mantém as parcelas restantes em aberto no sistema, com seus respectivos vencimentos.</div>';
+    }
+
+    body.innerHTML = html;
+
+    // meta
+    const id = d.id || 'sem id';
+    document.getElementById('pd-meta').textContent = 'ID: '+id+' · lançamento em '+(new Date()).toLocaleDateString('pt-BR');
+
+    // botão pagar: esconde se já pago
+    const btn = document.getElementById('pd-pagar');
+    if(statusCls === 'pago' || statusCls === 'cancelado'){
+      btn.style.display = 'none';
+    } else {
+      btn.style.display = '';
+    }
+
+    document.getElementById('pd-back').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function field(label, value){
+    return '<div class="f"><span class="l">'+label+'</span><span class="v">'+value+'</span></div>';
+  }
+
+  // ===== MODO EDIÇÃO =====
+  function entrarEdicao(){
+    const row = __pdCurrentRow;
+    if(!row){ flash('Nenhum lançamento selecionado.'); return; }
+    const d = row.dataset;
+    const tipo = d.tipo || (d.row === 'rec' ? 'receber' : 'pagar');
+    const isIn = tipo === 'receber';
+
+    const name = (row.querySelector('.pay-name')||{}).textContent?.trim() || '';
+    const nameClean = name.replace(/\s*(mensal|\d+\/\d+)\s*$/,'').trim();
+    const sub  = (row.querySelector('.pay-sub')||{}).textContent?.trim()  || '';
+    const when = (row.querySelector('.pay-when strong')||{}).textContent?.trim() || '';
+    const val  = (row.querySelector('.pay-val')||{}).textContent?.trim()  || '';
+    // extrai só o número: "+ R$ 13.600" → "13.600" (mantém formato BR)
+    const valNum = val.replace(/^[\-\+]\s*/,'').replace(/R\$\s*|US\$\s*/,'').trim();
+    const currency = d.currency || 'BRL';
+    const isRec  = d.rec === '1';
+    const parc   = d.parc || '';
+    const pill = row.querySelector('.status-pill');
+    const statusCls = pill ? (pill.className.match(/pago|pendente|atrasado|negociado|cancelado/)||['pendente'])[0] : 'pendente';
+
+    // opções
+    const catsIn = ['Projeto · Arquitetura','Projeto · Interiores','Projeto · Consultoria','Stay · Hospedagem','Stay · Diária extra','Vision · Licenciamento','Outros'];
+    const catsOut = ['Folha CLT','Pró-labore','PJ · Hora arquiteto','Obra · Material','Obra · Mão de obra','Aluguel escritório','SaaS / Assinaturas','Impostos','Marketing','Outros'];
+    const contas = ['Inter PJ (Zenon)','BTG PJ (Zenon)','Nubank PF (Thereza)','Inter PF (Rodrigo)'];
+    const unidades = ['Zenon Co.','Yvyra Arquitetura','Zenon Stay','Zenon Vision','Cabana (pessoal)','Casa Blue (pessoal)'];
+    const statuses = ['pendente','pago','atrasado','negociado','cancelado'];
+
+    const catOpts = (isIn ? catsIn : catsOut).map(c => '<option'+(c===d.cat?' selected':'')+'>'+c+'</option>').join('');
+    const contaOpts = contas.map(c => '<option'+(c===d.conta?' selected':'')+'>'+c+'</option>').join('');
+    const uniOpts = unidades.map(u => '<option'+(u===d.unidade?' selected':'')+'>'+u+'</option>').join('');
+    const stOpts = statuses.map(s => '<option value="'+s+'"'+(s===statusCls?' selected':'')+'>'+s.charAt(0).toUpperCase()+s.slice(1)+'</option>').join('');
+
+    const html = ''
+      + '<div class="pd-edit-form">'
+      +   '<div class="ef-hero">'
+      +     '<div class="ef-row"><label>Tipo</label>'
+      +       '<select id="ef-tipo"><option value="receber"'+(isIn?' selected':'')+'>A receber (entrada)</option><option value="pagar"'+(!isIn?' selected':'')+'>A pagar (saída)</option></select>'
+      +     '</div>'
+      +     '<div class="ef-row"><label>Status</label><select id="ef-status">'+stOpts+'</select></div>'
+      +   '</div>'
+      +   '<div class="ef-grid">'
+      +     '<div class="ef-row full"><label>Descrição principal</label><input type="text" id="ef-nome" value="'+esc(nameClean)+'" placeholder="Ex.: Juliana Reis · sinal"></div>'
+      +     '<div class="ef-row full"><label>Sub-descrição (projeto, detalhe)</label><input type="text" id="ef-sub" value="'+esc(sub)+'" placeholder="Ex.: Casa Juliana · obra em andamento"></div>'
+      +     '<div class="ef-row"><label>Valor</label>'
+      +       '<div class="ef-cur-wrap">'
+      +         '<select id="ef-cur"><option value="BRL"'+(currency==='BRL'?' selected':'')+'>R$</option><option value="USD"'+(currency==='USD'?' selected':'')+'>US$</option></select>'
+      +         '<input type="text" id="ef-val" value="'+esc(valNum)+'" placeholder="0,00">'
+      +       '</div>'
+      +     '</div>'
+      +     '<div class="ef-row"><label>Vencimento</label><input type="text" id="ef-when" value="'+esc(when)+'" placeholder="DD / MM"></div>'
+      +     '<div class="ef-row"><label>Categoria</label><select id="ef-cat"><option value="">—</option>'+catOpts+'</select></div>'
+      +     '<div class="ef-row"><label>Conta bancária</label><select id="ef-conta"><option value="">—</option>'+contaOpts+'</select></div>'
+      +     '<div class="ef-row"><label>Unidade de negócio</label><select id="ef-uni"><option value="">—</option>'+uniOpts+'</select></div>'
+      +     '<div class="ef-row"><label>'+(isIn?'Cliente':'Fornecedor')+'</label><input type="text" id="ef-contato" value="'+esc(d.contato||'')+'" placeholder="Nome"></div>'
+      +     '<div class="ef-row full"><label>Observação</label><textarea id="ef-obs" placeholder="Contexto, link interno, instruções de cobrança…">'+esc(d.obs||'')+'</textarea></div>'
+      +   '</div>'
+      +   '<div class="ef-checks">'
+      +     '<label><input type="checkbox" id="ef-rec"'+(isRec?' checked':'')+'> Lançamento recorrente (mensal)</label>'
+      +     '<label><input type="checkbox" id="ef-parc-has"'+(parc?' checked':'')+'> É parcelado</label>'
+      +     '<span style="display:flex;align-items:center;gap:6px">'
+      +       '<input type="text" id="ef-parc" value="'+esc(parc)+'" placeholder="Ex.: 2/5" style="width:70px;padding:5px 8px;font-size:12px">'
+      +     '</span>'
+      +   '</div>'
+      + '</div>';
+
+    document.getElementById('pd-body').innerHTML = html;
+    document.getElementById('pd-eyebrow').textContent = 'Editando · ' + (isIn ? 'a receber' : 'a pagar');
+    document.getElementById('pd-act-view').style.display = 'none';
+    document.getElementById('pd-act-edit').style.display = '';
+  }
+
+  function sairEdicao(){
+    // volta pra visão — apenas recarrega detalhe
+    if(__pdCurrentRow) abrirDetalhe(__pdCurrentRow);
+    document.getElementById('pd-act-view').style.display = '';
+    document.getElementById('pd-act-edit').style.display = 'none';
+  }
+
+  function salvarEdicao(){
+    const row = __pdCurrentRow;
+    if(!row){ flash('Nenhum lançamento selecionado.'); return; }
+
+    const tipo = document.getElementById('ef-tipo').value;
+    const status = document.getElementById('ef-status').value;
+    const nome = document.getElementById('ef-nome').value.trim();
+    const sub = document.getElementById('ef-sub').value.trim();
+    const valNum = document.getElementById('ef-val').value.trim();
+    const cur = document.getElementById('ef-cur').value;
+    const when = document.getElementById('ef-when').value.trim();
+    const cat = document.getElementById('ef-cat').value;
+    const conta = document.getElementById('ef-conta').value;
+    const uni = document.getElementById('ef-uni').value;
+    const contato = document.getElementById('ef-contato').value.trim();
+    const obs = document.getElementById('ef-obs').value.trim();
+    const isRec = document.getElementById('ef-rec').checked;
+    const hasParc = document.getElementById('ef-parc-has').checked;
+    const parc = hasParc ? document.getElementById('ef-parc').value.trim() : '';
+
+    if(!nome){ flash('Descrição principal é obrigatória.'); return; }
+    if(!valNum){ flash('Valor é obrigatório.'); return; }
+
+    const isIn = tipo === 'receber';
+
+    // --- escreve data-attrs
+    row.dataset.tipo = tipo;
+    row.dataset.rec = isRec ? '1' : '';
+    row.dataset.parc = parc;
+    row.dataset.currency = cur;
+    row.dataset.cat = cat;
+    row.dataset.conta = conta;
+    row.dataset.unidade = uni;
+    row.dataset.contato = contato;
+    row.dataset.obs = obs;
+
+    // --- atualiza DOM visível
+    // Nome + badges
+    const nameEl = row.querySelector('.pay-name');
+    if(nameEl){
+      let badges = '';
+      if(isRec) badges += ' <span class="rec-tag">mensal</span>';
+      if(parc) badges += ' <span class="parc-tag">'+parc+'</span>';
+      // preserva links internos se existirem originalmente
+      const hasLink = nameEl.querySelector('a');
+      if(hasLink){
+        hasLink.textContent = nome;
+        // remove badges antigos
+        nameEl.querySelectorAll('.rec-tag,.parc-tag').forEach(b=>b.remove());
+        if(badges) hasLink.insertAdjacentHTML('afterend', badges);
+      } else {
+        nameEl.innerHTML = esc(nome) + badges;
+      }
+    }
+    // Sub
+    const subEl = row.querySelector('.pay-sub');
+    if(subEl) subEl.textContent = sub;
+    // Vencimento
+    const whenEl = row.querySelector('.pay-when strong');
+    if(whenEl) whenEl.textContent = when;
+    // Valor
+    const valEl = row.querySelector('.pay-val');
+    if(valEl){
+      const signo = isIn ? '+ ' : '– ';
+      const simbol = cur === 'USD' ? 'US$ ' : 'R$ ';
+      valEl.textContent = signo + simbol + valNum;
+      valEl.classList.remove('in','out');
+      valEl.classList.add(isIn ? 'in' : 'out');
+    }
+    // Status pill
+    const pill = row.querySelector('.status-pill');
+    if(pill){
+      pill.className = 'status-pill ' + status;
+      const label = {pendente:'Pendente',pago:'Pago',atrasado:'Atrasado',negociado:'Negociado',cancelado:'Cancelado'}[status] || 'Pendente';
+      pill.innerHTML = label + ' <span class="caret">▾</span>';
+    }
+
+    flash('Alterações salvas.');
+    sairEdicao(); // volta pra visão e re-renderiza
+  }
+
+  function duplicarLancamento(){
+    const row = __pdCurrentRow;
+    if(!row){ flash('Nada pra duplicar.'); return; }
+    const clone = row.cloneNode(true);
+    // Reset status para pendente
+    const pill = clone.querySelector('.status-pill');
+    if(pill){
+      pill.className = 'status-pill pendente';
+      pill.innerHTML = 'Pendente <span class="caret">▾</span>';
+    }
+    row.parentNode.insertBefore(clone, row.nextSibling);
+    fecharDetalhe();
+    flash('Lançamento duplicado abaixo. Clique pra editar.');
+    // abre edição direto no clone
+    setTimeout(()=>{ abrirDetalhe(clone); setTimeout(()=>entrarEdicao(), 120); }, 150);
+  }
+
+  function excluirLancamento(){
+    const row = __pdCurrentRow;
+    if(!row){ return; }
+    const nome = (row.querySelector('.pay-name')||{}).textContent?.trim() || 'lançamento';
+    if(!confirm('Tem certeza que deseja excluir "'+nome+'"? Esta ação não pode ser desfeita.')) return;
+    row.style.transition = 'opacity .2s, transform .2s';
+    row.style.opacity = '0';
+    row.style.transform = 'translateX(-20px)';
+    setTimeout(()=>{ row.remove(); }, 200);
+    fecharDetalhe();
+    flash('Lançamento excluído.');
+  }
+
+  // helper — escape seguro pra atributos/textos
+  function esc(s){
+    return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  function fecharDetalhe(){
+    document.getElementById('pd-back').classList.remove('open');
+    document.body.style.overflow = '';
+    __pdCurrentRow = null;
+    // reset footer para modo visão (caso tenha ficado no modo edição)
+    const av = document.getElementById('pd-act-view');
+    const ae = document.getElementById('pd-act-edit');
+    if(av) av.style.display = '';
+    if(ae) ae.style.display = 'none';
+  }
+
+  function marcarPagoFromModal(){
+    if(__pdCurrentRow) marcarPago(__pdCurrentRow);
+    fecharDetalhe();
+  }
+
+  function marcarPago(row){
+    if(!row) return;
+    const d = row.dataset;
+    const isRec  = d.rec === '1';
+    const parc   = d.parc || '';
+    const isParc = !!parc;
+
+    // 1) marca a linha atual como paga
+    const pill = row.querySelector('.status-pill');
+    if(pill){
+      STATUS_CYCLE.forEach(s => pill.classList.remove(s));
+      pill.classList.add('pago');
+      pill.textContent = 'Pago';
+    }
+    row.classList.remove('atr');
+    row.classList.add('pago');
+
+    const nome = (row.querySelector('.pay-name')||{}).textContent?.trim() || 'conta';
+    const nomeCurto = nome.split('·')[0].trim();
+
+    // 2a) RECORRENTE → cria clone para o próximo mês
+    if(isRec){
+      const clone = cloneParaProximoMes(row);
+      if(clone){
+        const container = row.parentNode;
+        container.appendChild(clone);
+        requestAnimationFrame(()=> clone.classList.add('fade-in'));
+        flash('✓ Baixa feita · próxima '+nomeCurto+' gerada em '+clone.dataset.nextDate);
+        return;
+      }
+    }
+
+    // 2b) PARCELADA → atualiza texto pra mostrar próxima parcela no sistema
+    if(isParc){
+      const prox = nextParc(parc);
+      if(prox){
+        const clone = clonaProximaParcela(row, prox);
+        if(clone){
+          const container = row.parentNode;
+          container.appendChild(clone);
+          requestAnimationFrame(()=> clone.classList.add('fade-in'));
+          flash('✓ Parcela '+parc+' paga · parcela '+prox+' em aberto');
+          return;
+        }
+      } else {
+        flash('✓ Última parcela ('+parc+') paga — contrato quitado');
+        return;
+      }
+    }
+
+    flash('✓ '+nomeCurto+' marcada como paga');
+  }
+
+  // Clona a linha com vencimento no mês seguinte (recorrente)
+  function cloneParaProximoMes(row){
+    const clone = row.cloneNode(true);
+    // reset flags
+    clone.classList.remove('pago','atr','fade-in');
+    const pill = clone.querySelector('.status-pill');
+    if(pill){
+      STATUS_CYCLE.forEach(s => pill.classList.remove(s));
+      pill.classList.add('pendente');
+      pill.textContent = 'Pendente';
+    }
+    const cb = clone.querySelector('.chk-box');
+    if(cb) cb.classList.remove('on');
+    // atualiza data
+    const whenEl = clone.querySelector('.pay-when');
+    const whenStrong = whenEl && whenEl.querySelector('strong');
+    let novaData = '';
+    if(whenStrong){
+      novaData = nextMonthBR(whenStrong.textContent.trim());
+      whenStrong.textContent = novaData;
+      whenEl.style.color = '';
+      whenStrong.style.color = '';
+      // atualiza o texto relativo (fora do <strong>)
+      // remove text nodes que não sejam strong
+      whenEl.childNodes.forEach(n=>{
+        if(n.nodeType === 3) n.textContent = '';
+      });
+      whenEl.appendChild(document.createTextNode('recorrente'));
+    }
+    // id novo
+    clone.dataset.id = (row.dataset.id || 'rec') + '-'+novaData.replace(/\s|\//g,'');
+    clone.dataset.nextDate = novaData;
+    // sub: troca "NF xxx" por "novo mês" genérico, senão mantém
+    const sub = clone.querySelector('.pay-sub');
+    if(sub){
+      sub.innerHTML = sub.textContent.replace(/atraso.*$/i,'').replace(/<span[^>]*>.*?<\/span>/g,'').trim() || 'Gerado automaticamente pela recorrência';
+      if(sub.innerHTML.trim() === '') sub.innerHTML = 'Gerado automaticamente pela recorrência';
+    }
+    return clone;
+  }
+
+  // Clona para próxima parcela (N+1/M) mantendo as datas originais
+  function clonaProximaParcela(row, proxParc){
+    const clone = row.cloneNode(true);
+    clone.classList.remove('pago','atr','fade-in');
+    const pill = clone.querySelector('.status-pill');
+    if(pill){
+      STATUS_CYCLE.forEach(s => pill.classList.remove(s));
+      pill.classList.add('pendente');
+      pill.textContent = 'Pendente';
+    }
+    const cb = clone.querySelector('.chk-box');
+    if(cb) cb.classList.remove('on');
+    clone.dataset.parc = proxParc;
+    // atualiza badge parc-tag
+    const ptag = clone.querySelector('.parc-tag');
+    if(ptag) ptag.textContent = proxParc;
+    // avança vencimento 1 mês (parcelas mensais)
+    const whenEl = clone.querySelector('.pay-when');
+    const whenStrong = whenEl && whenEl.querySelector('strong');
+    let novaData = '';
+    if(whenStrong){
+      novaData = nextMonthBR(whenStrong.textContent.trim());
+      whenStrong.textContent = novaData;
+      whenEl.style.color = '';
+      whenStrong.style.color = '';
+      whenEl.childNodes.forEach(n=>{
+        if(n.nodeType === 3) n.textContent = '';
+      });
+      whenEl.appendChild(document.createTextNode('próximo mês'));
+    }
+    clone.dataset.id = (row.dataset.id || 'parc') + '-'+proxParc.replace('/','de');
+    // limpa sub de referências de atraso/boleto
+    const sub = clone.querySelector('.pay-sub');
+    if(sub){
+      const base = (row.dataset.projeto || 'Contrato parcelado');
+      sub.innerHTML = base + ' · parcela gerada automaticamente';
+    }
+    return clone;
+  }
+</script>
+
+<script>
+  // ===== USD → BRL live conversion =====
+  // Lê cotação do cache do shell-fx.js (atualizada a cada 60s) e atualiza spans .fx-conv
+  function atualizarConversoesFX(){
+    let bid = null;
+    try {
+      const raw = localStorage.getItem('zenon_fx_usd_brl');
+      if(raw){
+        const q = JSON.parse(raw);
+        bid = parseFloat(q.bid);
+      }
+    } catch(e){}
+    if(!bid || isNaN(bid)) bid = 5.20; // fallback
+    document.querySelectorAll('.fx-conv[data-usd]').forEach(el => {
+      const usd = parseFloat(el.dataset.usd);
+      if(isNaN(usd)) return;
+      const brl = usd * bid;
+      const fmt = brl.toLocaleString('pt-BR',{minimumFractionDigits:0,maximumFractionDigits:0});
+      el.textContent = '≈ R$ ' + fmt + ' · cotação R$ ' + bid.toFixed(4).replace('.',',');
+    });
+  }
+  atualizarConversoesFX();
+  setInterval(atualizarConversoesFX, 15000); // revê a cada 15s (pega cache novo)
+</script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script src="supabase-client.js"></script>
+  <script src="shell-user.js"></script>
+<script src="shell-fx.js"></script>
+</body>
+</html>
