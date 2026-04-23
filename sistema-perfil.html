@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Perfil — Zenon</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shell.css">
+<style>
+  .page-head{margin-bottom:28px}
+  .perfil-grid{display:grid;grid-template-columns:300px 1fr;gap:26px;align-items:flex-start}
+  @media (max-width:900px){.perfil-grid{grid-template-columns:1fr}}
+
+  /* coluna lateral: foto + info */
+  .pf-side{
+    background:var(--paper);border:1px solid var(--line);border-radius:4px;
+    padding:28px 22px;display:flex;flex-direction:column;align-items:center;gap:14px;position:sticky;top:120px;
+  }
+  .pf-photo-wrap{
+    position:relative;width:160px;height:160px;border-radius:50%;
+    background:var(--accent);color:#fff;
+    font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:72px;font-weight:500;
+    display:flex;align-items:center;justify-content:center;
+    background-size:cover;background-position:center;overflow:hidden;
+    border:2px solid var(--paper);box-shadow:0 0 0 1px var(--line),0 10px 30px rgba(26,22,18,.1);
+  }
+  .pf-photo-wrap.has-photo{background-color:var(--bg-alt)}
+  .pf-photo-wrap.has-photo .pf-ini{opacity:0}
+  .pf-photo-wrap .pf-ini{transition:opacity .2s}
+  .pf-photo-wrap .pf-cam{
+    position:absolute;bottom:6px;right:6px;width:36px;height:36px;border-radius:50%;
+    background:var(--paper);border:1px solid var(--line);color:var(--ink-soft);
+    display:flex;align-items:center;justify-content:center;cursor:pointer;
+    box-shadow:0 2px 8px rgba(26,22,18,.14);transition:color .15s,border-color .15s;
+  }
+  .pf-photo-wrap .pf-cam:hover{color:var(--accent-ink);border-color:var(--accent)}
+  .pf-photo-wrap .pf-cam svg{width:18px;height:18px}
+
+  .pf-photo-actions{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-top:4px}
+  .pf-photo-actions button{
+    font-family:'Inter',sans-serif;font-size:10px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;
+    padding:7px 12px;border-radius:3px;cursor:pointer;border:1px solid var(--line);background:var(--bg);color:var(--ink-body);
+  }
+  .pf-photo-actions button:hover{border-color:var(--ink);color:var(--ink)}
+  .pf-photo-actions button.danger{color:var(--alert);border-color:#e4c2a8}
+  .pf-photo-actions button.danger:hover{background:#fbeee6}
+
+  .pf-name{
+    font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:28px;font-weight:500;
+    color:var(--ink);text-align:center;line-height:1.1;margin-top:4px;
+  }
+  .pf-name em{font-style:italic;color:var(--accent-ink)}
+  .pf-role{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-mute);font-weight:700;text-align:center}
+  .pf-side .pf-sep{width:60%;border-top:1px solid var(--line-soft);margin:12px 0 6px}
+  .pf-meta-list{display:flex;flex-direction:column;gap:10px;width:100%;font-size:12px;color:var(--ink-body)}
+  .pf-meta-list .m{display:flex;justify-content:space-between;align-items:center;gap:10px}
+  .pf-meta-list .m .l{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-mute);font-weight:700}
+  .pf-meta-list .m .v{color:var(--ink);font-weight:500;text-align:right}
+  .pf-meta-list .m .v.ok{color:var(--ok)}
+
+  /* lado direito: cards */
+  .pf-main{display:flex;flex-direction:column;gap:22px}
+  .pf-card{background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:24px 26px}
+  .pf-card h3{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:22px;font-weight:500;color:var(--ink);line-height:1;margin-bottom:3px}
+  .pf-card h3 em{font-style:italic;color:var(--accent-ink)}
+  .pf-card .pf-sub{font-size:11px;color:var(--ink-soft);letter-spacing:.04em;margin-bottom:18px}
+
+  .pf-form{display:grid;grid-template-columns:1fr 1fr;gap:14px 18px}
+  .pf-form .f{display:flex;flex-direction:column;gap:4px}
+  .pf-form .f.full{grid-column:1/-1}
+  .pf-form label{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-mute);font-weight:700}
+  .pf-form input,.pf-form select,.pf-form textarea{
+    font-family:'Inter',sans-serif;font-size:13px;color:var(--ink);
+    padding:9px 12px;border:1px solid var(--line);border-radius:3px;background:var(--bg);
+    transition:border-color .15s,background .15s;
+  }
+  .pf-form input:focus,.pf-form select:focus,.pf-form textarea:focus{outline:none;border-color:var(--accent);background:var(--paper)}
+  .pf-form textarea{resize:vertical;min-height:74px;font-family:inherit}
+  .pf-form .hint{font-size:10px;color:var(--ink-mute);margin-top:2px;letter-spacing:.02em}
+
+  .pf-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:20px;padding-top:18px;border-top:1px solid var(--line-soft)}
+  .pf-actions .btn{
+    font-family:'Inter',sans-serif;font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;
+    padding:10px 16px;border-radius:3px;cursor:pointer;border:1px solid var(--line-strong);background:#fff;color:var(--ink-body);text-decoration:none;
+  }
+  .pf-actions .btn:hover{border-color:var(--ink);color:var(--ink)}
+  .pf-actions .btn.primary{background:var(--accent-ink);color:#fff;border-color:var(--accent-ink)}
+  .pf-actions .btn.primary:hover{background:var(--ink);border-color:var(--ink)}
+
+  /* Preferências */
+  .pf-prefs{display:flex;flex-direction:column;gap:4px}
+  .pf-pref-row{
+    display:grid;grid-template-columns:1fr auto;gap:14px;padding:14px 0;align-items:center;
+    border-bottom:1px dashed var(--line-soft);
+  }
+  .pf-pref-row:last-child{border-bottom:none}
+  .pf-pref-row .pr-lbl{font-size:13px;color:var(--ink);font-weight:500}
+  .pf-pref-row .pr-sub{font-size:11px;color:var(--ink-soft);margin-top:2px;line-height:1.45}
+  /* toggle switch */
+  .pf-toggle{position:relative;width:40px;height:22px;display:inline-block;cursor:pointer}
+  .pf-toggle input{opacity:0;width:0;height:0}
+  .pf-toggle .tr{
+    position:absolute;inset:0;border-radius:12px;background:var(--line);transition:background .18s;
+  }
+  .pf-toggle .tr::before{
+    content:'';position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:#fff;
+    transition:transform .18s;box-shadow:0 1px 3px rgba(0,0,0,.18);
+  }
+  .pf-toggle input:checked + .tr{background:var(--accent-ink)}
+  .pf-toggle input:checked + .tr::before{transform:translateX(18px)}
+
+  /* Segurança */
+  .pf-sec-row{
+    display:flex;justify-content:space-between;align-items:center;gap:14px;
+    padding:14px 0;border-bottom:1px dashed var(--line-soft);
+  }
+  .pf-sec-row:last-child{border-bottom:none}
+  .pf-sec-row .sc-info .t{font-size:13px;color:var(--ink);font-weight:500}
+  .pf-sec-row .sc-info .s{font-size:11px;color:var(--ink-soft);margin-top:2px;line-height:1.45}
+  .pf-sec-row .sc-status{display:flex;align-items:center;gap:10px}
+  .pf-sec-row .badge{font-size:9px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;padding:3px 8px;border-radius:10px}
+  .pf-sec-row .badge.ok{background:#e8f3ea;color:#2d6a4f;border:1px solid #b7d7c0}
+  .pf-sec-row .badge.warn{background:#fff4e2;color:#8e5a2b;border:1px solid #e2c79a}
+  .pf-sec-row .btn-mini{
+    font-size:10px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;
+    padding:6px 10px;border-radius:3px;border:1px solid var(--line);background:var(--bg);color:var(--ink-body);text-decoration:none;cursor:pointer;
+  }
+  .pf-sec-row .btn-mini:hover{border-color:var(--ink);color:var(--ink)}
+
+  /* Sessões */
+  .pf-sessions{display:flex;flex-direction:column}
+  .pf-sess-row{
+    display:grid;grid-template-columns:32px 1fr auto;gap:14px;padding:14px 0;align-items:center;
+    border-bottom:1px dashed var(--line-soft);font-size:13px;
+  }
+  .pf-sess-row:last-child{border-bottom:none}
+  .pf-sess-row .ico{
+    width:32px;height:32px;border-radius:4px;background:var(--bg-alt);border:1px solid var(--line);
+    display:flex;align-items:center;justify-content:center;color:var(--ink-soft);
+  }
+  .pf-sess-row .ico svg{width:16px;height:16px}
+  .pf-sess-row .dv{color:var(--ink);font-weight:500}
+  .pf-sess-row .dv .loc{font-size:11px;color:var(--ink-soft);margin-top:2px;letter-spacing:.04em}
+  .pf-sess-row .dv .loc.curr{color:var(--ok);font-weight:600}
+  .pf-sess-row a{font-size:10px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--alert);text-decoration:none;border-bottom:1px solid transparent;padding-bottom:1px}
+  .pf-sess-row a:hover{border-color:var(--alert)}
+  .pf-sess-row.curr a{color:var(--ink-mute);pointer-events:none;opacity:.5}
+
+  /* upload input escondido */
+  #pf-file{display:none}
+
+  .saved-flash{
+    position:fixed;bottom:24px;left:50%;transform:translateX(-50%);
+    background:var(--ok);color:#fff;padding:10px 20px;border-radius:3px;font-size:12px;
+    letter-spacing:.08em;z-index:200;box-shadow:0 6px 20px rgba(0,0,0,.18);
+    opacity:0;transition:opacity .2s;
+  }
+  .saved-flash.show{opacity:1}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-inner">
+    <div class="brand">Zen<span>o</span>n — Sistema</div>
+    <div class="search"><input type="search" placeholder="Buscar projeto, cliente, obra, proposta…"></div>
+    <div class="fx-chip" title="Cotação do dólar (USD/BRL)">
+      <span class="fx-code">USD</span>
+      <span class="fx-val"><span class="cur">R$</span>—</span>
+      <span class="fx-delta flat">…</span>
+      <div class="fx-tip"></div>
+    </div>
+
+    <div class="user-menu">
+      <button type="button" class="user-trigger" onclick="ZenonUser.toggleDropdown(event)" aria-haspopup="true" aria-expanded="false">
+        <span class="u-name" data-user-name>Rodrigo</span>
+        <span class="avatar" data-user="me">R</span>
+        <span class="u-caret">▾</span>
+      </button>
+      <div class="user-dropdown" role="menu">
+        <div class="ud-head">
+          <span class="avatar" data-user="me">R</span>
+          <div>
+            <div class="name" data-user-name>Rodrigo</div>
+            <div class="role" data-user-role>Sócio · Arquiteto responsável</div>
+          </div>
+        </div>
+        <a href="sistema-perfil.html" class="active"><span class="ic">👤</span>Ver perfil</a>
+        <a href="sistema-configuracoes.html"><span class="ic">⚙</span>Configurações</a>
+        <a href="sistema-empresa.html"><span class="ic">⌂</span>Dados da empresa</a>
+        <a href="https://www.notion.so/Zenon" target="_blank"><span class="ic">✱</span>Atividades · Notion ↗</a>
+        <div class="ud-sep"></div>
+        <a href="sistema-login.html" class="sign-out"><span class="ic">↪</span>Sair</a>
+      </div>
+    </div>
+  </div>
+  <nav class="tabs">
+    <a href="sistema-painel.html">Painel</a>
+    <a href="sistema-clientes.html">Clientes</a>
+    <a href="sistema-projetos.html">Projetos</a>
+    <a href="sistema-obra.html">Obra</a>
+    <a href="sistema-obra-financeiro.html">Obra financeiro</a>
+    <a href="sistema-propostas.html">Propostas</a>
+    <a href="sistema-financeiro.html">Financeiro</a>
+    <a href="sistema-empresa.html">Empresa</a>
+    <a href="sistema-log.html">Log da equipe</a>
+  </nav>
+</header>
+
+<main>
+  <div class="page-head">
+    <div>
+      <div class="eyebrow">Sua conta</div>
+      <h1>Perfil de <em>usuário</em>.</h1>
+      <div class="sub">Foto, dados pessoais, preferências e segurança do seu acesso ao sistema.</div>
+    </div>
+    <div class="actions">
+      <a href="sistema-configuracoes.html" class="btn ghost small">Configurações do sistema →</a>
+    </div>
+  </div>
+
+  <div class="perfil-grid">
+    <!-- ============ COLUNA LATERAL (FOTO + META) ============ -->
+    <aside class="pf-side">
+      <div class="pf-photo-wrap" id="pf-photo">
+        <span class="pf-ini" id="pf-ini">R</span>
+        <span class="pf-cam" onclick="document.getElementById('pf-file').click()" title="Trocar foto">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+            <circle cx="12" cy="13" r="4"/>
+          </svg>
+        </span>
+        <input type="file" id="pf-file" accept="image/png,image/jpeg,image/webp" onchange="handlePhotoFile(this)">
+      </div>
+      <div class="pf-photo-actions">
+        <button type="button" onclick="document.getElementById('pf-file').click()">Trocar foto</button>
+        <button type="button" class="danger" onclick="removerFoto()">Remover</button>
+      </div>
+      <div class="pf-name" id="pf-display-name">Rodrigo <em>Cabral</em></div>
+      <div class="pf-role">Sócio · Arquiteto responsável</div>
+
+      <div class="pf-sep"></div>
+
+      <div class="pf-meta-list">
+        <div class="m"><span class="l">E-mail</span><span class="v">zenon.gestao@<br>gmail.com</span></div>
+        <div class="m"><span class="l">CAU</span><span class="v">A148704-5</span></div>
+        <div class="m"><span class="l">Empresa</span><span class="v">Cabral e Lima<br>Design LTDA</span></div>
+        <div class="m"><span class="l">Último login</span><span class="v ok">agora</span></div>
+      </div>
+    </aside>
+
+    <!-- ============ COLUNA PRINCIPAL ============ -->
+    <div class="pf-main">
+
+      <!-- DADOS PESSOAIS -->
+      <section class="pf-card">
+        <h3>Dados <em>pessoais</em></h3>
+        <div class="pf-sub">Essas informações aparecem no sistema e nas propostas emitidas por você.</div>
+        <form class="pf-form" onsubmit="event.preventDefault();salvarDados();">
+          <div class="f"><label>Nome</label><input type="text" id="f-nome" value="Rodrigo"></div>
+          <div class="f"><label>Sobrenome</label><input type="text" id="f-sobrenome" value="Cabral"></div>
+          <div class="f"><label>Cargo / Função</label><input type="text" id="f-cargo" value="Sócio · Arquiteto responsável"></div>
+          <div class="f"><label>CAU / Registro</label><input type="text" id="f-cau" value="A148704-5"></div>
+          <div class="f"><label>E-mail</label><input type="email" id="f-email" value="zenon.gestao@gmail.com"></div>
+          <div class="f"><label>Telefone / WhatsApp</label><input type="tel" id="f-tel" placeholder="(DDD) número" value="(11) 94030-0048"></div>
+          <div class="f full">
+            <label>Bio curta</label>
+            <textarea id="f-bio" placeholder="Aparece no portal do cliente e em propostas institucionais…">Arquiteto responsável técnico pela Zenon Co. Projetos sob medida, gestão de obra e curadoria de ambientes residenciais e comerciais. Unidades de negócio: Zenon Co. (guarda-chuva), Yvyra Arquitetura, Zenon Stay, Zenon Vision.</textarea>
+            <span class="hint">Máx. 240 caracteres · aparece no portal do cliente.</span>
+          </div>
+          <div class="pf-actions full" style="grid-column:1/-1">
+            <button type="button" class="btn">Cancelar</button>
+            <button type="submit" class="btn primary">Salvar alterações</button>
+          </div>
+        </form>
+      </section>
+
+      <!-- PREFERÊNCIAS -->
+      <section class="pf-card">
+        <h3>Preferências do <em>sistema</em></h3>
+        <div class="pf-sub">Como você quer receber notificações, formato de números e tema visual.</div>
+        <div class="pf-prefs">
+          <div class="pf-pref-row">
+            <div>
+              <div class="pr-lbl">Notificações por e-mail</div>
+              <div class="pr-sub">Resumo diário do que aconteceu na equipe + alertas de propostas aceitas.</div>
+            </div>
+            <label class="pf-toggle"><input type="checkbox" checked><span class="tr"></span></label>
+          </div>
+          <div class="pf-pref-row">
+            <div>
+              <div class="pr-lbl">Alertas de obra no WhatsApp</div>
+              <div class="pr-sub">Relatório semanal da obra + incidentes urgentes fora de horário.</div>
+            </div>
+            <label class="pf-toggle"><input type="checkbox" checked><span class="tr"></span></label>
+          </div>
+          <div class="pf-pref-row">
+            <div>
+              <div class="pr-lbl">Lembrete de contas a pagar</div>
+              <div class="pr-sub">3 dias antes do vencimento de cada recorrência ou boleto.</div>
+            </div>
+            <label class="pf-toggle"><input type="checkbox" checked><span class="tr"></span></label>
+          </div>
+          <div class="pf-pref-row">
+            <div>
+              <div class="pr-lbl">Modo escuro automático</div>
+              <div class="pr-sub">Segue o sistema operacional. Experimental.</div>
+            </div>
+            <label class="pf-toggle"><input type="checkbox"><span class="tr"></span></label>
+          </div>
+          <div class="pf-pref-row">
+            <div>
+              <div class="pr-lbl">Formato de moeda</div>
+              <div class="pr-sub">Escolha como valores monetários aparecem no sistema.</div>
+            </div>
+            <select style="font-family:'Inter',sans-serif;font-size:12px;padding:7px 10px;border:1px solid var(--line);border-radius:3px;background:var(--bg);color:var(--ink)">
+              <option>R$ 13.600,00 (BR)</option>
+              <option>R$ 13 600,00</option>
+              <option>13.600 BRL</option>
+            </select>
+          </div>
+        </div>
+      </section>
+
+      <!-- SEGURANÇA -->
+      <section class="pf-card">
+        <h3><em>Segurança</em> da conta</h3>
+        <div class="pf-sub">Senha, autenticação de 2 fatores e dispositivos conectados.</div>
+
+        <div class="pf-sec-row">
+          <div class="sc-info">
+            <div class="t">Senha</div>
+            <div class="s">Última alteração há 47 dias · recomendado trocar a cada 90 d.</div>
+          </div>
+          <div class="sc-status">
+            <span class="badge warn">Forte</span>
+            <a href="#" class="btn-mini">Alterar senha</a>
+          </div>
+        </div>
+
+        <div class="pf-sec-row">
+          <div class="sc-info">
+            <div class="t">Autenticação em 2 fatores</div>
+            <div class="s">Código de 6 dígitos via app autenticador (Authy / Google Authenticator).</div>
+          </div>
+          <div class="sc-status">
+            <span class="badge ok">Ativa</span>
+            <a href="#" class="btn-mini">Gerenciar</a>
+          </div>
+        </div>
+
+        <div class="pf-sec-row">
+          <div class="sc-info">
+            <div class="t">Chaves de acesso (passkey)</div>
+            <div class="s">Login sem senha via biometria do dispositivo.</div>
+          </div>
+          <div class="sc-status">
+            <span class="badge warn">Não configurada</span>
+            <a href="#" class="btn-mini">Adicionar passkey</a>
+          </div>
+        </div>
+
+        <div class="pf-sec-row">
+          <div class="sc-info">
+            <div class="t">Assinatura digital (e-CPF A1)</div>
+            <div class="s">Usado para emitir NF-e e assinar contratos. Associada ao seu CPF.</div>
+          </div>
+          <div class="sc-status">
+            <span class="badge ok">Válida até 14/08/2026</span>
+            <a href="sistema-empresa.html#certificados" class="btn-mini">Ver certificado</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- SESSÕES ATIVAS -->
+      <section class="pf-card">
+        <h3>Dispositivos <em>conectados</em></h3>
+        <div class="pf-sub">Onde sua conta está logada. Você pode revogar qualquer sessão que não reconheça.</div>
+
+        <div class="pf-sessions">
+          <div class="pf-sess-row curr">
+            <span class="ico">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>
+              </svg>
+            </span>
+            <div class="dv">
+              MacBook Pro 14" · Chrome 128
+              <div class="loc curr">● Sessão atual · São Paulo, BR</div>
+            </div>
+            <a href="#">Revogar</a>
+          </div>
+
+          <div class="pf-sess-row">
+            <span class="ico">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="5" y="2" width="14" height="20" rx="2"/><circle cx="12" cy="18" r="0.5"/>
+              </svg>
+            </span>
+            <div class="dv">
+              iPhone 15 · Safari Mobile
+              <div class="loc">Ativo há 2 horas · São Paulo, BR</div>
+            </div>
+            <a href="#" onclick="event.preventDefault();flash('Sessão revogada no iPhone')">Revogar</a>
+          </div>
+
+          <div class="pf-sess-row">
+            <span class="ico">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>
+              </svg>
+            </span>
+            <div class="dv">
+              iMac · Safari 17
+              <div class="loc">Ativo há 3 dias · escritório</div>
+            </div>
+            <a href="#" onclick="event.preventDefault();flash('Sessão revogada no iMac')">Revogar</a>
+          </div>
+        </div>
+
+        <div class="pf-actions">
+          <a href="#" class="btn" onclick="event.preventDefault();flash('Todas as outras sessões foram encerradas')">Encerrar todas as outras sessões</a>
+        </div>
+      </section>
+
+      <!-- ZONA PERIGO -->
+      <section class="pf-card" style="border-color:#e4c2a8;background:#fdf7f2">
+        <h3 style="color:var(--alert)">Zona de <em>risco</em></h3>
+        <div class="pf-sub">Ações irreversíveis — exportar seus dados ou desativar a conta.</div>
+
+        <div class="pf-sec-row">
+          <div class="sc-info">
+            <div class="t">Exportar meus dados</div>
+            <div class="s">Gera um arquivo com tudo que está vinculado ao seu usuário (perfil, logs, preferências).</div>
+          </div>
+          <a href="#" class="btn-mini">Exportar JSON</a>
+        </div>
+
+        <div class="pf-sec-row" style="border-bottom:none">
+          <div class="sc-info">
+            <div class="t" style="color:var(--alert)">Desativar minha conta</div>
+            <div class="s">Revoga acesso imediatamente. Dados da empresa são preservados para os outros sócios.</div>
+          </div>
+          <a href="#" class="btn-mini" style="color:var(--alert);border-color:#e4c2a8">Solicitar desativação</a>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <div class="saved-flash" id="saved-flash">✓ Dados salvos</div>
+</main>
+
+<footer>
+  <div>Cabral e Lima Design LTDA · CNPJ 59.525.877/0001-49 · CAU/BR A148704-5</div>
+  <div>sistema.zenonco.com.br · v2 — protótipo</div>
+</footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script src="supabase-client.js"></script>
+  <script src="shell-user.js"></script>
+<script src="shell-fx.js"></script>
+<script>
+  // preenche o formulário a partir do localStorage
+  document.addEventListener('DOMContentLoaded', function(){
+    const nome = ZenonUser.getName();
+    if(nome && nome !== 'Rodrigo'){
+      const parts = nome.trim().split(/\s+/);
+      document.getElementById('f-nome').value = parts[0] || '';
+      document.getElementById('f-sobrenome').value = parts.slice(1).join(' ') || '';
+    }
+    const cargo = ZenonUser.getRole();
+    if(cargo) document.getElementById('f-cargo').value = cargo;
+    applyPhotoPreview();
+    atualizaDisplayName();
+  });
+
+  function handlePhotoFile(input){
+    const file = input.files && input.files[0];
+    if(!file) return;
+    if(file.size > 2*1024*1024){ // 2MB
+      flash('Imagem muito grande (máx 2MB)');
+      input.value = '';
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = function(e){
+      const data = e.target.result;
+      ZenonUser.setPhoto(data);
+      applyPhotoPreview();
+      flash('✓ Foto atualizada');
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function removerFoto(){
+    ZenonUser.clearPhoto();
+    applyPhotoPreview();
+    flash('Foto removida');
+  }
+
+  function applyPhotoPreview(){
+    const wrap = document.getElementById('pf-photo');
+    const photo = ZenonUser.getPhoto();
+    if(photo){
+      wrap.style.backgroundImage = 'url("'+photo+'")';
+      wrap.classList.add('has-photo');
+    } else {
+      wrap.style.backgroundImage = '';
+      wrap.classList.remove('has-photo');
+    }
+    const nome = (document.getElementById('f-nome').value||'R').trim();
+    document.getElementById('pf-ini').textContent = nome.charAt(0).toUpperCase();
+  }
+
+  function atualizaDisplayName(){
+    const n = (document.getElementById('f-nome').value||'').trim();
+    const s = (document.getElementById('f-sobrenome').value||'').trim();
+    const full = (n + ' ' + s).trim();
+    const el = document.getElementById('pf-display-name');
+    if(full){
+      el.innerHTML = n + (s ? ' <em>'+s+'</em>' : '');
+    }
+  }
+
+  function salvarDados(){
+    const nome = document.getElementById('f-nome').value;
+    const sobrenome = document.getElementById('f-sobrenome').value;
+    const cargo = document.getElementById('f-cargo').value;
+    const full = (nome + ' ' + sobrenome).trim();
+    ZenonUser.setName(full);
+    ZenonUser.setRole(cargo);
+    atualizaDisplayName();
+    applyPhotoPreview();
+    flash('✓ Dados salvos');
+  }
+
+  // listeners ao digitar o nome → atualiza inicial do avatar ao vivo
+  ['f-nome','f-sobrenome'].forEach(id=>{
+    const el = document.getElementById(id);
+    if(el) el.addEventListener('input', function(){
+      applyPhotoPreview();
+      atualizaDisplayName();
+    });
+  });
+
+  function flash(msg){
+    const f = document.getElementById('saved-flash');
+    f.textContent = msg;
+    f.classList.add('show');
+    clearTimeout(f._t);
+    f._t = setTimeout(()=> f.classList.remove('show'), 2000);
+  }
+</script>
+
+</body>
+</html>
