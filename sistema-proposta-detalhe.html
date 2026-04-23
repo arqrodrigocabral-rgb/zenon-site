@@ -646,7 +646,7 @@ function _toast(msg, kind){
   setTimeout(()=> t.remove(), 2900);
 }
 function baixarPdf(){ _toast('✓ PDF da proposta gerado · download iniciado', 'ok'); }
-function abrirPortal(){ _toast('Portal do cliente abriria em nova aba', 'ok'); }
+function abrirPortal(){ window.open('index.html#portal', '_blank'); }
 function duplicarProposta(){
   if(!confirm('Criar uma cópia desta proposta como nova?')) return;
   _toast('✓ Proposta duplicada — abrindo o rascunho…', 'ok');
