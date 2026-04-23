@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cliente · Zenon Sistema</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shell.css">
+<style>
+  main{max-width:1320px;padding:22px 32px}
+  .breadc{display:flex;gap:6px;align-items:center;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-mute);font-weight:600;margin-bottom:14px}
+  .breadc a{color:var(--ink-soft);text-decoration:none}
+  .breadc a:hover{color:var(--accent-ink)}
+  .breadc .sep{opacity:.5}
+  .breadc .ovslot{margin-left:auto}
+
+  .client-head{background:linear-gradient(135deg,var(--paper),var(--accent-soft));border:1px solid var(--line);border-radius:4px;padding:26px 28px;margin-bottom:18px;display:grid;grid-template-columns:auto 1fr auto;gap:22px;align-items:center}
+  @media (max-width:900px){.client-head{grid-template-columns:1fr;text-align:left}}
+  .big-avatar{width:84px;height:84px;border-radius:50%;background:var(--accent-soft);color:var(--accent-ink);display:flex;align-items:center;justify-content:center;font-family:'Fraunces',serif;font-size:36px;font-weight:500;border:2px solid var(--paper);box-shadow:0 4px 14px -6px rgba(26,22,18,.18)}
+  .client-info .eyebrow{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:3px}
+  .client-info h1{font-family:'Fraunces',serif;font-size:38px;line-height:1.1;font-weight:500;margin-bottom:4px}
+  .client-info h1 em{color:var(--accent-ink);font-style:italic}
+  .client-info .contact{font-size:13px;color:var(--ink-soft);margin-top:4px;line-height:1.5}
+  .client-info .contact span + span::before{content:' · ';color:var(--ink-mute)}
+  .client-info .tags-h{display:flex;gap:5px;margin-top:10px;flex-wrap:wrap}
+  .client-actions{display:flex;flex-direction:column;gap:6px;align-items:flex-end}
+  @media (max-width:900px){.client-actions{flex-direction:row;flex-wrap:wrap;align-items:flex-start}}
+
+  .hero-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px}
+  @media (max-width:800px){.hero-kpis{grid-template-columns:repeat(2,1fr)}}
+  .hkpi{background:var(--paper);border:1px solid var(--line);border-radius:3px;padding:14px 16px}
+  .hkpi .l{font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-mute);font-weight:700;margin-bottom:5px}
+  .hkpi .v{font-family:'Fraunces',serif;font-size:24px;color:var(--ink);font-weight:500;line-height:1}
+  .hkpi .s{font-size:11px;color:var(--ink-soft);margin-top:4px;letter-spacing:.02em}
+  .hkpi.ok .v{color:var(--ok)}
+  .hkpi.warn .v{color:var(--warn)}
+  .hkpi.info .v{color:var(--accent-ink)}
+
+  .tab-sub{display:flex;gap:4px;border-bottom:1px solid var(--line);margin-bottom:18px;overflow-x:auto}
+  .tab-sub a{padding:11px 16px;border-bottom:2px solid transparent;font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;color:var(--ink-mute);white-space:nowrap;cursor:pointer}
+  .tab-sub a:hover{color:var(--ink)}
+  .tab-sub a.active{color:var(--ink);border-bottom-color:var(--accent-ink)}
+
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media (max-width:1000px){.two-col{grid-template-columns:1fr}}
+
+  .info-card{background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:20px 22px}
+  .info-card h3{font-family:'Inter',sans-serif;font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:var(--ink-mute);font-weight:700;margin-bottom:12px;display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:6px}
+  .info-card h3 em{font-family:'Fraunces',serif;font-style:italic;font-size:15px;letter-spacing:0;text-transform:none;color:var(--accent-ink);font-weight:500}
+
+  .info-grid{display:grid;grid-template-columns:130px 1fr;gap:10px 14px;align-items:baseline}
+  .info-grid dt{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-mute);font-weight:700}
+  .info-grid dd{font-size:14px;color:var(--ink);line-height:1.5}
+  .info-grid dd.obs{font-style:italic;color:var(--ink-soft)}
+
+  .timeline-mini{display:flex;flex-direction:column;gap:0}
+  .tm-item{display:grid;grid-template-columns:88px 1fr auto;gap:12px;padding:12px 0;border-bottom:1px dashed var(--line-soft);align-items:center}
+  .tm-item:last-child{border-bottom:none}
+  .tm-item .td{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-mute);font-weight:600}
+  .tm-item h4{font-size:13px;font-weight:600;color:var(--ink);margin-bottom:2px;line-height:1.3}
+  .tm-item p{font-size:12px;color:var(--ink-soft)}
+
+  .fin-snap{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:6px}
+  .fin-snap .fc{background:var(--bg-alt);border:1px solid var(--line-soft);border-radius:3px;padding:12px 14px}
+  .fin-snap .fc .l{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-mute);font-weight:700;margin-bottom:4px}
+  .fin-snap .fc .v{font-family:'Fraunces',serif;font-size:22px;color:var(--ink);font-weight:500;line-height:1}
+  .fin-snap .fc.pg .v{color:var(--ok)}
+  .fin-snap .fc.ab .v{color:var(--warn)}
+
+  .files-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}
+  .file-tile{background:var(--paper);border:1px solid var(--line);border-radius:3px;padding:14px;display:flex;flex-direction:column;gap:6px;cursor:pointer;transition:border-color .15s,transform .15s}
+  .file-tile:hover{border-color:var(--accent);transform:translateY(-2px)}
+  .file-tile .ic{font-family:'Fraunces',serif;font-size:22px;color:var(--accent-ink);font-weight:600}
+  .file-tile .nm{font-size:12px;color:var(--ink);font-weight:600;line-height:1.3}
+  .file-tile .meta{font-size:10px;color:var(--ink-mute);letter-spacing:.08em;text-transform:uppercase;font-weight:600;margin-top:auto}
+
+  .notes-list{display:flex;flex-direction:column;gap:10px}
+  .note{background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:14px 16px;border-left:3px solid var(--accent)}
+  .note .nh{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px}
+  .note .nh b{font-size:12px;color:var(--ink);font-weight:700}
+  .note .nh .when{font-size:10px;color:var(--ink-mute);letter-spacing:.14em;text-transform:uppercase;font-weight:600}
+  .note p{font-size:13px;color:var(--ink-body);line-height:1.55}
+
+  .modal-back{position:fixed;inset:0;background:rgba(20,17,13,.5);z-index:90;opacity:0;pointer-events:none;transition:opacity .2s;backdrop-filter:blur(2px)}
+  .modal-back.open{opacity:1;pointer-events:auto}
+  .modal-card{position:fixed;top:50%;left:50%;transform:translate(-50%,-48%);background:var(--paper);border:1px solid var(--line);border-radius:6px;width:min(720px,92vw);max-height:88vh;overflow:auto;z-index:91;opacity:0;pointer-events:none;transition:opacity .22s,transform .22s;box-shadow:0 24px 60px -20px rgba(20,17,13,.3)}
+  .modal-back.open + .modal-card{opacity:1;pointer-events:auto;transform:translate(-50%,-50%)}
+  .modal-head{padding:20px 24px;border-bottom:1px solid var(--line-soft);display:flex;justify-content:space-between;align-items:baseline}
+  .modal-head h2{font-family:'Fraunces',serif;font-size:26px;font-weight:500;line-height:1.1}
+  .modal-head h2 em{color:var(--accent-ink);font-style:italic}
+  .modal-head .close{background:none;border:none;font-size:22px;color:var(--ink-mute);cursor:pointer;padding:4px 8px;line-height:1}
+  .modal-head .close:hover{color:var(--ink)}
+  .modal-body{padding:20px 24px}
+  .modal-foot{padding:14px 24px;border-top:1px solid var(--line-soft);display:flex;gap:8px;justify-content:flex-end;background:var(--bg-alt)}
+  .fld{display:flex;flex-direction:column;gap:5px;margin-bottom:12px}
+  .fld.row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:0}
+  .fld.row .fld{margin-bottom:12px}
+  .fld label{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-mute);font-weight:700}
+  .fld input,.fld select,.fld textarea{border:1px solid var(--line);background:var(--paper);border-radius:3px;padding:9px 11px;font:inherit;font-size:13px;color:var(--ink);transition:border-color .15s,box-shadow .15s}
+  .fld input:focus,.fld select:focus,.fld textarea:focus{outline:none;border-color:var(--accent-ink);box-shadow:0 0 0 3px rgba(138,100,61,.1)}
+
+  .tab-panel{display:none}
+  .tab-panel.active{display:block;animation:fadeIn .22s}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+  .file-preview{position:fixed;bottom:24px;right:24px;z-index:50;background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:14px 18px;box-shadow:0 12px 30px -10px rgba(20,17,13,.25);opacity:0;transform:translateY(10px);pointer-events:none;transition:all .22s;font-size:13px;color:var(--ink);display:flex;align-items:center;gap:12px}
+  .file-preview.show{opacity:1;transform:none}
+  .file-preview .ic{color:var(--accent-ink);font-family:'Fraunces',serif;font-size:20px;font-weight:600}
+
+  .note-new{background:var(--bg-alt);border:1px dashed var(--line);border-radius:4px;padding:14px;margin-top:12px;display:none}
+  .note-new.open{display:block}
+  .note-new textarea{width:100%;border:1px solid var(--line);background:var(--paper);border-radius:3px;padding:10px;font:inherit;font-size:13px;color:var(--ink);min-height:70px;resize:vertical}
+  .note-new textarea:focus{outline:none;border-color:var(--accent-ink)}
+  .note-new .actions{display:flex;gap:8px;margin-top:8px;justify-content:flex-end}
+
+  .empty-card{padding:28px;text-align:center;color:var(--ink-mute);font-size:13px;font-style:italic;background:var(--bg-alt);border:1px dashed var(--line);border-radius:4px}
+
+  .mini-row{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;padding:10px 0;border-bottom:1px dashed var(--line-soft);font-size:13px}
+  .mini-row:last-child{border-bottom:none}
+  .mini-row .id-chip{font-family:'Fraunces',serif;color:var(--accent-ink);font-weight:600;font-size:12px}
+  .mini-row .t{color:var(--ink);font-weight:500}
+  .mini-row .s{font-size:11px;color:var(--ink-mute);margin-top:2px}
+  .mini-row .r{font-family:'Fraunces',serif;font-weight:500;color:var(--ink)}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-inner">
+    <div class="brand">Zen<span>o</span>n — Sistema</div>
+    <div class="search"><input type="search" placeholder="Buscar por nome, e-mail, CPF/CNPJ…"></div>
+    <div class="fx-chip" title="Cotação do dólar (USD/BRL)">
+      <span class="fx-code">USD</span>
+      <span class="fx-val"><span class="cur">R$</span>—</span>
+      <span class="fx-delta flat">…</span>
+      <div class="fx-tip"></div>
+    </div>
+    <div class="user-menu">
+      <button type="button" class="user-trigger" onclick="ZenonUser.toggleDropdown(event)" aria-haspopup="true" aria-expanded="false">
+        <span class="u-name" data-user-name>Rodrigo</span>
+        <span class="avatar" data-user="me">R</span>
+        <span class="u-caret">▾</span>
+      </button>
+      <div class="user-dropdown" role="menu">
+        <div class="ud-head">
+          <span class="avatar" data-user="me">R</span>
+          <div>
+            <div class="name" data-user-name>Rodrigo</div>
+            <div class="role" data-user-role>Sócio · Arquiteto responsável</div>
+          </div>
+        </div>
+        <a href="sistema-perfil.html"><span class="ic">◎</span>Ver perfil</a>
+        <a href="sistema-configuracoes.html"><span class="ic">⚙</span>Configurações</a>
+        <a href="sistema-empresa.html"><span class="ic">⌂</span>Dados da empresa</a>
+        <a href="https://www.notion.so/Zenon" target="_blank"><span class="ic">✱</span>Atividades · Notion ↗</a>
+        <div class="ud-sep"></div>
+        <a href="sistema-login.html" class="sign-out"><span class="ic">↪</span>Sair</a>
+      </div>
+    </div>
+  </div>
+  <nav class="tabs">
+    <a href="sistema-painel.html">Painel</a>
+    <a href="sistema-clientes.html" class="active">Clientes</a>
+    <a href="sistema-projetos.html">Projetos</a>
+    <a href="sistema-obra.html">Obra</a>
+    <a href="sistema-obra-financeiro.html">Obra financeiro</a>
+    <a href="sistema-propostas.html">Propostas</a>
+    <a href="sistema-financeiro.html">Financeiro</a>
+    <a href="sistema-empresa.html">Empresa</a>
+    <a href="sistema-log.html">Log da equipe</a>
+  </nav>
+</header>
+
+<main>
+  <div class="breadc">
+    <a href="sistema-clientes.html">Clientes</a>
+    <span class="sep">›</span>
+    <span id="brc-titulo">…</span>
+    <span class="ovslot" id="ovbar-mount"></span>
+  </div>
+
+  <div id="cliente-root">
+    <div class="empty-card">Carregando dados do cliente…</div>
+  </div>
+</main>
+
+<!-- Preview de arquivo -->
+<div class="file-preview" id="file-preview">
+  <span class="ic" id="fp-ic">PDF</span>
+  <div>
+    <div style="font-weight:600;font-size:12px" id="fp-nm">—</div>
+    <div style="font-size:10px;color:var(--ink-mute);letter-spacing:.1em;text-transform:uppercase">Visualização não disponível — baixando…</div>
+  </div>
+</div>
+
+<footer>
+  <div>Cabral e Lima Design LTDA · CNPJ 59.525.877/0001-49 · CAU/BR A148704-5</div>
+  <div>sistema.zenonco.com.br · v2 — protótipo</div>
+</footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script src="supabase-client.js"></script>
+  <script src="shell-user.js"></script>
+<script src="shell-fx.js"></script>
+<script src="sistema-data.js"></script>
+<script src="sistema-edit.js"></script>
+<script>
+(function () {
+  const SD = window.SistemaData;
+  const SE = window.SistemaEdit;
+  const id = SD.getParam('id', 'CLI-4');
+  const root = document.getElementById('cliente-root');
+  const brc  = document.getElementById('brc-titulo');
+  let activeSub = (location.hash || '').replace('#','') || 'geral';
+
+  function esc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+  function ed(path, type, fmt){
+    let a = 'data-edit="cliente:' + id + ':' + path + '" data-edit-type="' + (type||'text') + '"';
+    if (fmt) a += ' data-edit-fmt="' + fmt + '"';
+    return a;
+  }
+
+  function render() {
+    const cli = SD.getCliente(id);
+    if (!cli) {
+      document.title = 'Cliente não encontrado · Zenon Sistema';
+      brc.textContent = 'Cliente não encontrado';
+      root.innerHTML = '<div class="empty-card">Cliente <b>' + id + '</b> não encontrado.<br><a href="sistema-clientes.html" class="link" style="margin-top:10px;display:inline-block">← Voltar</a></div>';
+      return;
+    }
+
+    document.title = cli.nome + ' · Cliente · Zenon Sistema';
+    brc.textContent = cli.nome;
+
+    // override bar
+    const ovSlot = document.getElementById('ovbar-mount');
+    ovSlot.innerHTML = '';
+    if (SE && SD.hasOverride('cliente', id)) {
+      const bar = SE.mountOverrideBar('cliente', id);
+      if (bar) ovSlot.appendChild(bar);
+    }
+
+    const initials = cli.nome.split(/\s+/).filter(Boolean).slice(0,2).map(s => s[0]).join('').toUpperCase();
+
+    const projetosVinc     = (cli.projetos || []).map(pid => SD.getProjeto(pid)).filter(Boolean);
+    const propostasVinc    = (cli.propostas || []).map(pid => SD.getProposta(pid)).filter(Boolean);
+    const financeirosVinc  = (cli.financeiros || []).map(fid => SD.getFinanceiro(fid)).filter(Boolean);
+
+    const tagsHTML   = (cli.tags || []).map(t => '<span class="badge neutral">' + esc(t) + '</span>').join('');
+    const projBadge  = projetosVinc.length ? '<span class="badge info">' + projetosVinc.length + ' projeto' + (projetosVinc.length>1?'s':'') + '</span>' : '';
+    const propBadge  = propostasVinc.length ? '<span class="badge warn">' + propostasVinc.length + ' proposta' + (propostasVinc.length>1?'s':'') + '</span>' : '';
+    const ativoBadge = (projetosVinc.length || financeirosVinc.length) ? '<span class="badge ok">Ativo</span>' : '<span class="badge neutral">Sem atividade</span>';
+
+    // ----- HERO -----
+    const heroHTML = ''
+      + '<div class="client-head">'
+      +   '<div class="big-avatar">' + initials + '</div>'
+      +   '<div class="client-info">'
+      +     '<div class="eyebrow">' + cli.id + ' · ' + (cli.tipo === 'PJ' ? 'PESSOA JURÍDICA' : 'PESSOA FÍSICA') + '</div>'
+      +     '<h1 ' + ed('nome','text') + ' data-raw="' + esc(cli.nome) + '">' + esc(cli.nome) + '</h1>'
+      +     '<div class="contact">'
+      +       '<span ' + ed('email','text') + ' data-raw="' + esc(cli.email||'') + '">' + esc(cli.email || '—') + '</span>'
+      +       '<span ' + ed('telefone','text') + ' data-raw="' + esc(cli.telefone||'') + '">' + esc(cli.telefone || '—') + '</span>'
+      +     '</div>'
+      +     '<div class="tags-h">' + ativoBadge + projBadge + propBadge + tagsHTML + '</div>'
+      +   '</div>'
+      +   '<div class="client-actions">'
+      +     '<button type="button" class="btn ghost small" onclick="abrirEditar()">Editar cadastro</button>'
+      +     '<a href="sistema-proposta-nova.html?cliente=' + cli.id + '" class="btn ghost small">+ Nova proposta</a>'
+      +     '<a href="sistema-projeto-novo.html?cliente=' + cli.id + '" class="btn ghost small">+ Novo projeto</a>'
+      +   '</div>'
+      + '</div>';
+
+    // ----- KPIs hero -----
+    const totalContrato = financeirosVinc.reduce((s,f) => s + (f.total||0), 0);
+    const totalRecebido = financeirosVinc.reduce((s,f) => s + (f.recebido||0), 0);
+    const totalAReceber = financeirosVinc.reduce((s,f) => s + (f.aReceber||0), 0);
+    const totalPropostas = propostasVinc.reduce((s,p) => s + (p.valorTotal||0), 0);
+
+    const kpisHTML = ''
+      + '<div class="hero-kpis">'
+      +   '<div class="hkpi"><div class="l">Contrato total</div><div class="v">' + SD.fmtBRLshort(totalContrato) + '</div><div class="s">' + financeirosVinc.length + ' contrato' + (financeirosVinc.length!==1?'s':'') + '</div></div>'
+      +   '<div class="hkpi ok"><div class="l">Recebido</div><div class="v">' + SD.fmtBRLshort(totalRecebido) + '</div><div class="s">' + (totalContrato ? Math.round(totalRecebido/totalContrato*100) : 0) + '% do contrato</div></div>'
+      +   '<div class="hkpi warn"><div class="l">A receber</div><div class="v">' + SD.fmtBRLshort(totalAReceber) + '</div><div class="s">Em aberto</div></div>'
+      +   '<div class="hkpi info"><div class="l">Propostas abertas</div><div class="v">' + SD.fmtBRLshort(totalPropostas) + '</div><div class="s">' + propostasVinc.length + ' proposta' + (propostasVinc.length!==1?'s':'') + '</div></div>'
+      + '</div>';
+
+    // ----- SUB-TABS -----
+    const projTabLabel = 'Projetos (' + projetosVinc.length + ')';
+    const propTabLabel = 'Propostas (' + propostasVinc.length + ')';
+    const finTabLabel  = 'Financeiro' + (financeirosVinc.length ? ' (' + financeirosVinc.length + ')' : '');
+    const tabsHTML = ''
+      + '<div class="tab-sub" id="subTabs">'
+      +   '<a data-tab="geral">Visão geral</a>'
+      +   '<a data-tab="projetos">' + projTabLabel + '</a>'
+      +   '<a data-tab="propostas">' + propTabLabel + '</a>'
+      +   '<a data-tab="financeiro">' + finTabLabel + '</a>'
+      +   '<a data-tab="arquivos">Arquivos</a>'
+      +   '<a data-tab="historico">Histórico · notas</a>'
+      + '</div>';
+
+    // ----- CADASTRO DL (inline editable) -----
+    const cadastroDL = ''
+      + '<dl class="info-grid">'
+      +   '<dt>Tipo</dt><dd><span ' + ed('tipo','select') + ' data-edit-options="PF,PJ" data-raw="' + esc(cli.tipo||'') + '">' + (cli.tipo === 'PJ' ? 'Pessoa jurídica' : 'Pessoa física') + '</span></dd>'
+      +   '<dt>' + (cli.tipo === 'PJ' ? 'CNPJ' : 'CPF') + '</dt><dd><span ' + ed('doc','text') + ' data-raw="' + esc(cli.doc||'') + '">' + esc(cli.doc || '—') + '</span></dd>'
+      +   '<dt>E-mail</dt><dd><span ' + ed('email','text') + ' data-raw="' + esc(cli.email||'') + '">' + esc(cli.email || '—') + '</span></dd>'
+      +   '<dt>Telefone</dt><dd><span ' + ed('telefone','text') + ' data-raw="' + esc(cli.telefone||'') + '">' + esc(cli.telefone || '—') + '</span></dd>'
+      +   '<dt>Endereço</dt><dd><span ' + ed('endereco','text') + ' data-raw="' + esc(cli.endereco||'') + '">' + esc(cli.endereco || '—') + '</span></dd>'
+      +   '<dt>Origem</dt><dd><span ' + ed('origem','text') + ' data-raw="' + esc(cli.origem||'') + '">' + esc(cli.origem || '—') + '</span></dd>'
+      +   '<dt>Observação</dt><dd class="obs"><span ' + ed('obs','textarea') + ' data-rows="3" data-raw="' + esc(cli.obs||'') + '">' + esc(cli.obs || '—') + '</span></dd>'
+      + '</dl>';
+
+    // ----- RESUMO FIN -----
+    const finSnapHTML = financeirosVinc.length
+      ? '<div class="fin-snap">'
+        + '<div class="fc"><div class="l">Contrato</div><div class="v">' + SD.fmtBRLshort(totalContrato) + '</div></div>'
+        + '<div class="fc pg"><div class="l">Pago</div><div class="v">' + SD.fmtBRLshort(totalRecebido) + '</div></div>'
+        + '<div class="fc ab"><div class="l">A receber</div><div class="v">' + SD.fmtBRLshort(totalAReceber) + '</div></div>'
+      + '</div>'
+      : '<div class="empty-card">Sem cobrança formalizada para este cliente.</div>';
+
+    // ----- TIMELINE MINI -----
+    let tlItems = [];
+    financeirosVinc.forEach(f => {
+      (f.parcelas||[]).forEach(p => {
+        tlItems.push({ data: p.venc, titulo: 'Parcela ' + p.n + ' · ' + p.desc, sub: SD.fmtBRL(p.valor) + ' — ' + p.status, status: p.status });
+      });
+    });
+    tlItems.sort((a,b) => {
+      const pa = (a.data||'').split('/').reverse().join('');
+      const pb = (b.data||'').split('/').reverse().join('');
+      return pb.localeCompare(pa);
+    });
+    const tlHTML = tlItems.length
+      ? '<div class="timeline-mini">' + tlItems.slice(0,6).map(t => ''
+          + '<div class="tm-item"><div class="td">' + esc(t.data) + '</div>'
+          + '<div><h4>' + esc(t.titulo) + '</h4><p>' + esc(t.sub) + '</p></div>'
+          + '<span class="badge ' + (t.status === 'Recebido' ? 'ok' : 'warn') + '">' + esc(t.status) + '</span></div>').join('') + '</div>'
+      : '<div class="empty-card">Sem linha do tempo financeira.</div>';
+
+    // ----- MINI-LISTA propostas + projetos na visão geral -----
+    const propMiniHTML = propostasVinc.length
+      ? propostasVinc.slice(0,4).map(p => ''
+          + '<a class="mini-row" href="sistema-proposta-detalhe.html?id=' + p.id + '" style="text-decoration:none;color:inherit">'
+          + '<span class="id-chip">[' + p.id + ']</span>'
+          + '<div><div class="t">' + esc(p.titulo) + '</div><div class="s">' + esc(p.status) + ' · ' + esc(p.data) + '</div></div>'
+          + '<div class="r">' + SD.fmtBRLshort(p.valorTotal||0) + '</div>'
+          + '</a>').join('')
+      : '<div class="empty-card">Sem propostas vinculadas.</div>';
+
+    const projMiniHTML = projetosVinc.length
+      ? projetosVinc.slice(0,4).map(p => ''
+          + '<a class="mini-row" href="sistema-projeto-detalhe.html?p=' + p.id + '" style="text-decoration:none;color:inherit">'
+          + '<span class="id-chip">[' + p.id + ']</span>'
+          + '<div><div class="t">' + esc(p.titulo) + '</div><div class="s">' + esc(p.fase||'—') + ' · ' + esc(p.bairro||'—') + '</div></div>'
+          + '<div class="r">' + (p.progresso||0) + '%</div>'
+          + '</a>').join('')
+      : '<div class="empty-card">Sem projetos vinculados.</div>';
+
+    // ----- PANEL GERAL -----
+    const panelGeral = ''
+      + '<div class="tab-panel" data-panel="geral">'
+      +   '<div class="two-col">'
+      +     '<div class="stack" style="gap:18px;display:flex;flex-direction:column">'
+      +       '<div class="info-card"><h3>Cadastro <em>clique para editar</em></h3>' + cadastroDL + '</div>'
+      +       '<div class="info-card"><h3>Propostas recentes</h3>' + propMiniHTML + '</div>'
+      +     '</div>'
+      +     '<div class="stack" style="gap:18px;display:flex;flex-direction:column">'
+      +       '<div class="info-card"><h3>Resumo financeiro</h3>' + finSnapHTML + '</div>'
+      +       '<div class="info-card"><h3>Projetos ativos</h3>' + projMiniHTML + '</div>'
+      +       '<div class="info-card"><h3>Linha do tempo</h3>' + tlHTML + '</div>'
+      +     '</div>'
+      +   '</div>'
+      + '</div>';
+
+    // ----- PANEL PROJETOS -----
+    const projTableRows = projetosVinc.map(p => ''
+      + '<tr onclick="location.href=\'sistema-projeto-detalhe.html?p=' + p.id + '\'" style="cursor:pointer">'
+      +   '<td><span class="id-chip" style="font-family:Fraunces,serif;color:var(--accent-ink);font-weight:600">[' + p.id + ']</span></td>'
+      +   '<td><div class="name">' + esc(p.titulo) + '</div><div class="sub">' + esc(p.metragem || '—') + ' · ' + esc(p.bairro || '—') + '</div></td>'
+      +   '<td><span class="badge ' + ((p.progresso||0) >= 100 ? 'ok' : ((p.progresso||0) >= 50 ? 'info' : 'warn')) + '">' + esc(p.fase) + '</span></td>'
+      +   '<td><div class="bar ok" style="width:120px"><span style="width:' + (p.progresso||0) + '%"></span></div><div class="sub">' + (p.progresso||0) + '%</div></td>'
+      + '</tr>').join('');
+    const panelProjetos = ''
+      + '<div class="tab-panel" data-panel="projetos">'
+      +   '<div class="info-card"><h3>Projetos vinculados</h3>'
+      +     (projetosVinc.length
+          ? '<table class="tbl" style="margin-top:4px"><thead><tr><th>ID</th><th>Projeto</th><th>Fase</th><th>Progresso</th></tr></thead><tbody>' + projTableRows + '</tbody></table>'
+          : '<div class="empty-card">Cliente sem projeto vinculado.</div>')
+      +     '<div style="margin-top:14px"><a href="sistema-projeto-novo.html?cliente=' + cli.id + '" class="btn ghost small">+ Novo projeto</a></div>'
+      +   '</div>'
+      + '</div>';
+
+    // ----- PANEL PROPOSTAS -----
+    const propTableRows = propostasVinc.map(p => ''
+      + '<tr onclick="location.href=\'sistema-proposta-detalhe.html?id=' + p.id + '\'" style="cursor:pointer">'
+      +   '<td><span class="id-chip" style="font-family:Fraunces,serif;color:var(--accent-ink);font-weight:600">[' + p.id + ']</span></td>'
+      +   '<td><div class="name">' + esc(p.titulo) + '</div><div class="sub">' + esc(p.data||'—') + (p.validade ? ' · val. ' + esc(p.validade) : '') + '</div></td>'
+      +   '<td><span class="badge ' + (p.status==='Aceita'?'ok':p.status==='Recusada'?'alert':'warn') + '">' + esc(p.status) + '</span></td>'
+      +   '<td class="num">' + SD.fmtBRL(p.valorTotal||0) + '</td>'
+      + '</tr>').join('');
+    const panelPropostas = ''
+      + '<div class="tab-panel" data-panel="propostas">'
+      +   '<div class="info-card"><h3>Propostas deste cliente</h3>'
+      +     (propostasVinc.length
+          ? '<table class="tbl" style="margin-top:4px"><thead><tr><th>ID</th><th>Proposta</th><th>Status</th><th class="num">Valor</th></tr></thead><tbody>' + propTableRows + '</tbody></table>'
+          : '<div class="empty-card">Sem propostas emitidas para este cliente.</div>')
+      +     '<div style="margin-top:14px"><a href="sistema-proposta-nova.html?cliente=' + cli.id + '" class="btn ghost small">+ Nova proposta</a></div>'
+      +   '</div>'
+      + '</div>';
+
+    // ----- PANEL FINANCEIRO -----
+    const finCardsHTML = financeirosVinc.map(f => {
+      const parcelasHTML = (f.parcelas||[]).map(p => ''
+        + '<tr><td>' + p.n + '/' + f.parcelas.length + ' · ' + esc(p.desc) + '</td><td>' + esc(p.venc) + '</td><td class="num">' + SD.fmtBRL(p.valor) + '</td>'
+        + '<td><span class="badge ' + (p.status === 'Recebido' ? 'ok' : 'warn') + '">' + esc(p.status) + '</span></td>'
+        + '<td><a class="btn ghost small" href="sistema-financeiro.html?f=' + f.id + '">Abrir</a></td></tr>').join('');
+      return ''
+        + '<div class="info-card" style="margin-bottom:16px"><h3>' + f.id + ' · <em>' + esc(f.titulo) + '</em></h3>'
+        +   '<div class="fin-snap">'
+        +     '<div class="fc"><div class="l">Contrato</div><div class="v">' + SD.fmtBRLshort(f.total) + '</div></div>'
+        +     '<div class="fc pg"><div class="l">Pago</div><div class="v">' + SD.fmtBRLshort(f.recebido) + '</div></div>'
+        +     '<div class="fc ab"><div class="l">A receber</div><div class="v">' + SD.fmtBRLshort(f.aReceber) + '</div></div>'
+        +   '</div>'
+        +   '<table class="tbl" style="margin-top:16px"><thead><tr><th>Parcela</th><th>Vencimento</th><th class="num">Valor</th><th>Status</th><th></th></tr></thead><tbody>' + parcelasHTML + '</tbody></table>'
+        +   '<div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap"><a href="sistema-financeiro.html?f=' + f.id + '" class="btn ghost small">Abrir no Financeiro</a>' + '<a href="../yvyra-preview.html#entrar" target="_blank" class="btn ghost small">Portal do cliente ↗</a>' + '</div>'
+        + '</div>';
+    }).join('');
+
+    let obraBlock = '';
+    const projComObra = projetosVinc.find(p => p.obraId);
+    if (projComObra) {
+      const obra = SD.getObra(projComObra.obraId);
+      if (obra) {
+        const fornHTML = (obra.fornecedores||[]).map(f => ''
+          + '<tr><td><div class="name">' + esc(f.fornecedor) + '</div><div class="sub">' + esc(f.categoria) + '</div></td>'
+          + '<td>' + esc(f.categoria) + '</td>'
+          + '<td class="num">' + SD.fmtBRL(f.orcado) + '</td>'
+          + '<td class="num">' + SD.fmtBRL(f.realizado) + '</td>'
+          + '<td><span class="badge ' + (f.status === 'Pago' ? 'ok' : (String(f.status||'').indexOf('A pagar') === 0 ? 'warn' : 'neutral')) + '">' + esc(f.status) + '</span></td></tr>').join('');
+        obraBlock = ''
+          + '<div class="info-card" style="margin-top:16px"><h3>'
+          +   '<span>Despesas de obra · <em>' + esc(obra.titulo) + '</em></span>'
+          +   '<a href="sistema-obra-financeiro.html?p=' + projComObra.id + '" style="font-family:Inter,sans-serif;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent-ink);text-decoration:none;font-weight:700">Abrir ↗</a>'
+          + '</h3>'
+          + '<div class="fin-snap" style="margin-bottom:12px">'
+          +   '<div class="fc"><div class="l">Orçamento obra</div><div class="v">' + SD.fmtBRLshort(obra.orcado) + '</div></div>'
+          +   '<div class="fc pg"><div class="l">Gasto</div><div class="v">' + SD.fmtBRLshort(obra.realizado) + '</div></div>'
+          +   '<div class="fc ab"><div class="l">A pagar</div><div class="v">' + SD.fmtBRLshort((obra.orcado||0) - (obra.realizado||0)) + '</div></div>'
+          + '</div>'
+          + '<table class="tbl"><thead><tr><th>Fornecedor</th><th>Categoria</th><th class="num">Orçado</th><th class="num">Realizado</th><th>Status</th></tr></thead><tbody>' + fornHTML + '</tbody></table></div>';
+      }
+    }
+
+    const panelFinanceiro = ''
+      + '<div class="tab-panel" data-panel="financeiro">'
+      +   (financeirosVinc.length ? finCardsHTML : '<div class="empty-card">Cliente sem cobrança formalizada.</div>')
+      +   obraBlock
+      + '</div>';
+
+    // ----- PANEL ARQUIVOS -----
+    const arquivosCli = projetosVinc.flatMap(p => (p.arquivos || []).map(a => Object.assign({}, a, { _proj: p.id })));
+    const arqGrid = arquivosCli.length
+      ? '<div class="files-grid">' + arquivosCli.map(a => ''
+          + '<div class="file-tile" onclick="abrirArquivo(this)" data-tipo="' + esc(a.ic) + '" data-nome="' + esc(a.nm) + '">'
+          +   '<div class="ic">' + esc(a.ic) + '</div><div class="nm">' + esc(a.nm) + '</div><div class="meta">' + esc(a.mt) + ' · ' + esc(a._proj) + '</div>'
+          + '</div>').join('') + '</div>'
+      : '<div class="empty-card">Nenhum arquivo cadastrado para este cliente.</div>';
+
+    const panelArquivos = ''
+      + '<div class="tab-panel" data-panel="arquivos">'
+      +   '<div class="info-card"><h3>Arquivos · pasta do cliente</h3>' + arqGrid
+      +     '<div style="margin-top:14px"><button class="btn ghost small" onclick="document.getElementById(\'upload-fake\').click()">+ Enviar arquivo</button>'
+      +     '<input type="file" id="upload-fake" style="display:none" onchange="uploadArquivo(this)"></div>'
+      +   '</div>'
+      + '</div>';
+
+    // ----- PANEL HISTÓRICO -----
+    const panelHistorico = ''
+      + '<div class="tab-panel" data-panel="historico">'
+      +   '<div class="info-card"><h3>Notas internas</h3>'
+      +     '<div class="notes-list" id="notas-list">'
+      +       '<div class="note"><div class="nh"><b>Sistema</b><span class="when">' + cli.id + '</span></div><p>' + esc(cli.obs || 'Sem notas iniciais.') + '</p></div>'
+      +     '</div>'
+      +     '<div class="note-new" id="note-new">'
+      +       '<textarea id="note-txt" placeholder="Escreva uma nota interna sobre este cliente…"></textarea>'
+      +       '<div class="actions"><button class="btn ghost small" onclick="cancelarNota()">Cancelar</button><button class="btn small" onclick="salvarNota()">Salvar nota</button></div>'
+      +     '</div>'
+      +     '<div style="margin-top:14px" id="note-new-btn"><button type="button" class="btn ghost small" onclick="novaNota()">+ Nova nota</button></div>'
+      +   '</div>'
+      + '</div>';
+
+    // ----- MODAL -----
+    const modalHTML = ''
+      + '<div class="modal-back" id="edit-back" onclick="fecharEditar()"></div>'
+      + '<div class="modal-card" id="edit-card" role="dialog" aria-modal="true">'
+      +   '<div class="modal-head"><h2>Editar <em>cadastro</em></h2><button type="button" class="close" onclick="fecharEditar()" aria-label="Fechar">✕</button></div>'
+      +   '<div class="modal-body">'
+      +     '<div class="fld"><label>Nome</label><input type="text" id="e-nome" value="' + esc(cli.nome) + '"></div>'
+      +     '<div class="fld row"><div class="fld"><label>Tipo</label><select id="e-tipo"><option value="PF"' + (cli.tipo==='PF'?' selected':'') + '>Pessoa física</option><option value="PJ"' + (cli.tipo==='PJ'?' selected':'') + '>Pessoa jurídica</option></select></div>'
+      +       '<div class="fld"><label>' + (cli.tipo==='PJ'?'CNPJ':'CPF') + '</label><input type="text" id="e-doc" value="' + esc(cli.doc||'') + '"></div></div>'
+      +     '<div class="fld row"><div class="fld"><label>E-mail</label><input type="email" id="e-email" value="' + esc(cli.email==='—'?'':cli.email||'') + '"></div>'
+      +       '<div class="fld"><label>Telefone</label><input type="text" id="e-tel" value="' + esc(cli.telefone==='—'?'':cli.telefone||'') + '"></div></div>'
+      +     '<div class="fld"><label>Endereço</label><input type="text" id="e-end" value="' + esc(cli.endereco==='—'?'':cli.endereco||'') + '"></div>'
+      +     '<div class="fld"><label>Origem</label><input type="text" id="e-canal" value="' + esc(cli.origem==='—'?'':cli.origem||'') + '"></div>'
+      +     '<div class="fld"><label>Observação</label><textarea id="e-obs" rows="3">' + esc(cli.obs||'') + '</textarea></div>'
+      +   '</div>'
+      +   '<div class="modal-foot"><button type="button" class="btn ghost small" onclick="fecharEditar()">Cancelar</button><button type="button" class="btn small" onclick="salvarCadastro()">Salvar alterações</button></div>'
+      + '</div>';
+
+    root.innerHTML = heroHTML + kpisHTML + tabsHTML + panelGeral + panelProjetos + panelPropostas + panelFinanceiro + panelArquivos + panelHistorico + modalHTML;
+
+    // sub-tabs
+    const tabs = document.querySelectorAll('#subTabs a');
+    const panels = document.querySelectorAll('.tab-panel');
+    function setTab(t) {
+      activeSub = t;
+      tabs.forEach(x => x.classList.toggle('active', x.dataset.tab === t));
+      panels.forEach(p => p.classList.toggle('active', p.dataset.panel === t));
+      history.replaceState(null, '', '#' + t);
+    }
+    tabs.forEach(a => a.addEventListener('click', e => { e.preventDefault(); setTab(a.dataset.tab); }));
+    setTab(activeSub);
+  }
+
+  render();
+
+  // re-render after any inline edit that changes this cliente
+  document.addEventListener('sistema-edit-saved', (e) => {
+    const d = e.detail || {};
+    if (d.tipo === 'cliente' && d.id === id) render();
+  });
+
+  // expor id p/ funções globais
+  window.__cliId = id;
+})();
+
+// ===== modal funcs =====
+function abrirEditar(){
+  const b = document.getElementById('edit-back');
+  if(b){ b.classList.add('open'); document.body.style.overflow='hidden'; }
+}
+function fecharEditar(){
+  const b = document.getElementById('edit-back');
+  if(b){ b.classList.remove('open'); document.body.style.overflow=''; }
+}
+function salvarCadastro(){
+  const SD = window.SistemaData;
+  const id = window.__cliId;
+  const tipoMap = { 'PF':'PF', 'PJ':'PJ', 'Pessoa física':'PF', 'Pessoa jurídica':'PJ' };
+  const v = {
+    nome:     (document.getElementById('e-nome')||{}).value || '',
+    tipo:     tipoMap[(document.getElementById('e-tipo')||{}).value] || 'PF',
+    doc:      (document.getElementById('e-doc')||{}).value || '',
+    email:    (document.getElementById('e-email')||{}).value || '',
+    telefone: (document.getElementById('e-tel')||{}).value || '',
+    endereco: (document.getElementById('e-end')||{}).value || '',
+    origem:   (document.getElementById('e-canal')||{}).value || '',
+    obs:      (document.getElementById('e-obs')||{}).value || ''
+  };
+  let ok = true;
+  Object.keys(v).forEach(k => {
+    if (!SD.update('cliente', id, k, v[k])) ok = false;
+  });
+  fecharEditar();
+  flash(ok ? 'Cadastro atualizado.' : 'Erro ao salvar cadastro.');
+  // o evento sistema-edit-saved não dispara para update() via código — forçamos render
+  document.dispatchEvent(new CustomEvent('sistema-edit-saved', { detail: { tipo: 'cliente', id: id, path: '*', value: null } }));
+}
+document.addEventListener('keydown', e => { if(e.key === 'Escape') fecharEditar(); });
+
+// ===== arquivos =====
+function abrirArquivo(el){
+  const tipo = el.dataset.tipo, nome = el.dataset.nome;
+  const fp = document.getElementById('file-preview');
+  document.getElementById('fp-ic').textContent = tipo;
+  document.getElementById('fp-nm').textContent = nome + '.' + tipo.toLowerCase();
+  fp.classList.add('show');
+  setTimeout(() => fp.classList.remove('show'), 2400);
+}
+function uploadArquivo(input){
+  if(!input.files || !input.files[0]) return;
+  const f = input.files[0];
+  const ext = (f.name.split('.').pop() || 'FILE').toUpperCase().slice(0,4);
+  const tile = document.createElement('div');
+  tile.className = 'file-tile';
+  tile.dataset.tipo = ext;
+  tile.dataset.nome = f.name.replace(/\.[^.]+$/, '');
+  tile.onclick = () => abrirArquivo(tile);
+  tile.innerHTML = '<div class="ic">'+ext+'</div><div class="nm">'+f.name.replace(/\.[^.]+$/, '')+'</div><div class="meta">hoje</div>';
+  document.querySelector('.tab-panel[data-panel="arquivos"] .files-grid')?.appendChild(tile);
+  input.value = '';
+  flash('Arquivo '+f.name+' anexado (protótipo).');
+}
+
+// ===== notas =====
+function novaNota(){
+  document.getElementById('note-new').classList.add('open');
+  document.getElementById('note-new-btn').style.display = 'none';
+  document.getElementById('note-txt').focus();
+}
+function cancelarNota(){
+  document.getElementById('note-new').classList.remove('open');
+  document.getElementById('note-new-btn').style.display = '';
+  document.getElementById('note-txt').value = '';
+}
+function salvarNota(){
+  const txt = document.getElementById('note-txt').value.trim();
+  if(!txt){ flash('Escreva algo na nota.'); return; }
+  const autor = (window.ZenonUser && ZenonUser.getName && ZenonUser.getName()) || 'Rodrigo';
+  const d = new Date();
+  const dd = String(d.getDate()).padStart(2,'0');
+  const mm = String(d.getMonth()+1).padStart(2,'0');
+  const hh = String(d.getHours()).padStart(2,'0');
+  const mi = String(d.getMinutes()).padStart(2,'0');
+  const el = document.createElement('div');
+  el.className = 'note';
+  el.innerHTML = '<div class="nh"><b>'+autor+'</b><span class="when">'+dd+' / '+mm+' · '+hh+':'+mi+'</span></div><p>'+txt.replace(/</g,'&lt;')+'</p>';
+  const list = document.getElementById('notas-list');
+  list.insertBefore(el, list.firstChild);
+  cancelarNota();
+  flash('Nota salva (protótipo).');
+}
+
+// ===== flash =====
+function flash(msg){
+  let el = document.getElementById('__flash');
+  if(!el){
+    el = document.createElement('div');
+    el.id = '__flash';
+    el.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 18px;border-radius:4px;font-size:13px;z-index:100;box-shadow:0 8px 24px -8px rgba(0,0,0,.3);opacity:0;transition:opacity .2s';
+    document.body.appendChild(el);
+  }
+  el.textContent = msg;
+  el.style.opacity = '1';
+  clearTimeout(window.__flashTO);
+  window.__flashTO = setTimeout(() => el.style.opacity = '0', 2400);
+}
+</script>
+</body>
+</html>
