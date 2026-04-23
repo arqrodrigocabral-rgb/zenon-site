@@ -590,5 +590,26 @@ document.querySelectorAll('a[href="#"]').forEach(function(a){
 });
 })();
 </script>
+
+<script>
+(function(){
+  // "Todos" - show all project cards
+  var todosBtn=Array.from(document.querySelectorAll('a[href="#"]')).find(function(a){return a.textContent.trim()==='Todos';});
+  if(todosBtn){
+    todosBtn.addEventListener('click',function(e){
+      e.preventDefault();
+      var grp=this.closest('.filters,.pill-group,nav')||this.parentElement;
+      grp.querySelectorAll('a').forEach(function(x){x.classList.remove('active');});
+      this.classList.add('active');
+      document.querySelectorAll('.proj').forEach(function(el){el.style.display='';});
+    });
+  }
+  // Timeline period buttons
+  ['30 d','Semana','Trimestre'].forEach(function(txt){
+    var btn=Array.from(document.querySelectorAll('a[href="#"]')).find(function(a){return a.textContent.trim()===txt;});
+    if(btn) btn.addEventListener('click',function(e){e.preventDefault();if(typeof toast==='function')toast('Timeline · '+txt+' · em breve');});
+  });
+})();
+</script>
 </body>
 </html>
