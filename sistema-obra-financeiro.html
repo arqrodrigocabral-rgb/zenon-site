@@ -1,0 +1,2625 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Obra · Financeiro — Zenon Sistema</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shell.css">
+<style>
+  /* ---------- SUBNAV (mesmo do financeiro principal) ---------- */
+  .fin-subnav{display:flex;gap:0;margin:-8px 0 28px;padding:0;border-bottom:1px solid var(--line);flex-wrap:wrap}
+  .fin-subnav a{font-family:'Inter',sans-serif;text-transform:uppercase;letter-spacing:.16em;font-size:10.5px;font-weight:700;color:var(--ink-mute);text-decoration:none;padding:12px 18px 14px;border-bottom:2px solid transparent;margin-bottom:-1px;display:inline-flex;align-items:center;gap:8px;transition:color .15s, border-color .15s}
+  .fin-subnav a:hover{color:var(--ink)}
+  .fin-subnav a.active{color:var(--ink);border-bottom-color:var(--accent,#b89455)}
+  .fin-subnav a .sn-sub{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-style:italic;font-weight:500;text-transform:none;letter-spacing:0;font-size:13px;color:var(--ink-mute);margin-left:2px}
+  .fin-subnav a.active .sn-sub{color:var(--accent,#b89455)}
+  .fin-subnav .sn-spacer{flex:1}
+  .fin-subnav .sn-hint{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-style:italic;font-size:13px;color:var(--ink-mute);padding:12px 0 14px}
+
+  /* ---------- KPIs ---------- */
+  .kpis-obra{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:22px}
+  @media (max-width:900px){.kpis-obra{grid-template-columns:repeat(2,1fr)}}
+  @media (max-width:500px){.kpis-obra{grid-template-columns:1fr}}
+  .kpi-ob{background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:18px 20px;display:flex;flex-direction:column;gap:6px}
+  .kpi-ob.accent{background:linear-gradient(140deg,#f8efe2 0%, #efe4d0 100%);border-color:#e5d5b4}
+  .kpi-ob .l{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-mute);font-weight:600}
+  .kpi-ob .n{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:34px;color:var(--ink);line-height:1;font-weight:500}
+  .kpi-ob .n em{color:var(--accent-ink,#8a643d)}
+  .kpi-ob .d{font-size:11px;color:var(--ink-soft);letter-spacing:.04em}
+  .kpi-ob .d.up{color:var(--ok,#4a7752)}
+  .kpi-ob .d.down{color:var(--alert,#b44)}
+
+  /* ---------- FILTRO POR OBRA ---------- */
+  .obra-filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px;align-items:center}
+  .obra-filters .flabel{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-style:italic;color:var(--ink-mute);font-size:14px;margin-right:6px}
+  .obra-filters a{
+    padding:7px 14px;border:1px solid var(--line);border-radius:999px;
+    font-family:'Inter',sans-serif;font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;color:var(--ink-soft);
+    background:var(--paper);transition:all .18s;text-decoration:none;cursor:pointer;
+    display:inline-flex;align-items:center;gap:6px;
+  }
+  .obra-filters a:hover{border-color:var(--accent,#b89455);color:var(--ink)}
+  .obra-filters a.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .obra-filters a .cnt{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-style:italic;font-size:13px;letter-spacing:0;font-weight:500;opacity:.7}
+
+  /* ---------- BLOCO POR OBRA ---------- */
+  .obra-block{
+    background:var(--paper);border:1px solid var(--line);border-radius:4px;
+    margin-bottom:22px;overflow:hidden;
+  }
+  .obra-block.collapsed .ob-body{display:none}
+  .ob-head{
+    display:flex;align-items:center;gap:18px;padding:18px 22px;
+    border-bottom:1px solid var(--line-soft);background:var(--bg-alt,#f8f3e9);cursor:pointer;
+  }
+  .ob-head .toggle{
+    font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:22px;color:var(--accent-ink,#8a643d);
+    width:24px;text-align:center;transition:transform .18s;
+  }
+  .obra-block.collapsed .ob-head .toggle{transform:rotate(-90deg)}
+  .ob-head .title{flex:1;display:flex;flex-direction:column;gap:3px}
+  .ob-head .title h3{
+    font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:24px;color:var(--ink);font-weight:500;margin:0;
+  }
+  .ob-head .title h3 em{font-style:italic;color:var(--accent-ink,#8a643d)}
+  .ob-head .title .cli{
+    font-family:'Inter',sans-serif;font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--ink-mute);font-weight:600;
+  }
+  .ob-head .title .cli a{color:var(--ink-soft);text-decoration:none;border-bottom:1px dotted var(--line)}
+  .ob-head .title .cli a:hover{color:var(--ink);border-color:var(--accent,#b89455)}
+  .ob-head .status{
+    padding:4px 10px;border-radius:999px;font-family:'Inter',sans-serif;
+    font-size:10px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;
+  }
+  .status.ex{background:#edf2e8;color:#4a7752;border:1px solid #c8d8b8}
+  .status.pj{background:#f0e8d8;color:#7a5720;border:1px solid #d8c89a}
+  .status.pe{background:#ece3d8;color:#6a5433;border:1px solid #c8b89a}
+  .status.pause{background:#f5e8e4;color:#a05040;border:1px solid #e5c8bc}
+
+  .ob-mini{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:0;
+    border-bottom:1px solid var(--line-soft);
+  }
+  @media (max-width:700px){.ob-mini{grid-template-columns:repeat(2,1fr)}}
+  .ob-mini .c{
+    padding:14px 20px;border-right:1px solid var(--line-soft);
+    display:flex;flex-direction:column;gap:4px;
+  }
+  .ob-mini .c:last-child{border-right:none}
+  @media (max-width:700px){.ob-mini .c:nth-child(2n){border-right:none}}
+  .ob-mini .c .l{
+    font-family:'Inter',sans-serif;font-size:9px;letter-spacing:.22em;
+    text-transform:uppercase;color:var(--ink-mute);font-weight:600;
+  }
+  .ob-mini .c .v{
+    font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:22px;color:var(--ink);
+    line-height:1;font-weight:500;
+  }
+  .ob-mini .c.pago .v{color:var(--ok,#4a7752)}
+  .ob-mini .c.apagar .v{color:var(--alert,#b44)}
+  .ob-mini .c.reemb .v{color:var(--accent-ink,#8a643d)}
+  .ob-mini .c .s{font-size:10px;color:var(--ink-soft);letter-spacing:.04em}
+
+  .ob-bar{
+    height:6px;background:var(--bg-alt,#f8f3e9);position:relative;overflow:hidden;
+  }
+  .ob-bar .fill{
+    height:100%;background:linear-gradient(90deg,#a98850 0%,#c8a870 100%);
+    transition:width .4s;
+  }
+
+  .ob-body{padding:18px 22px 22px}
+  .ob-body h4{
+    font-family:'Inter',sans-serif;font-size:10px;letter-spacing:.22em;
+    text-transform:uppercase;color:var(--ink-mute);font-weight:700;
+    margin:18px 0 10px;padding-bottom:8px;border-bottom:1px solid var(--line-soft);
+    display:flex;justify-content:space-between;align-items:center;
+  }
+  .ob-body h4:first-child{margin-top:0}
+  .ob-body h4 .tot{
+    font-family:'Fraunces','Source Serif 4',Georgia,serif;font-style:italic;font-size:14px;
+    color:var(--ink-soft);letter-spacing:0;font-weight:500;text-transform:none;
+  }
+  .ob-body h4 .add{
+    font-family:'Inter',sans-serif;font-size:10px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--accent-ink,#8a643d);font-weight:700;
+    text-decoration:none;letter-spacing:.14em;cursor:pointer;
+  }
+  .ob-body h4 .add:hover{color:var(--ink)}
+
+  /* ---------- LINHA DE FORNECEDOR / DESPESA ----------
+     8 colunas alinhadas aos 8 elementos: chk · main · cat · files · when · val · stat · menu */
+  .exp-row{
+    display:grid;grid-template-columns:22px minmax(260px,1fr) 108px 130px 72px 118px 98px 32px;
+    gap:12px;align-items:center;padding:14px 4px;border-bottom:1px solid var(--line-soft);
+    transition:background .12s;cursor:pointer;
+  }
+  .exp-row:last-child{border-bottom:none}
+  .exp-row:hover{background:var(--bg-alt,#f8f3e9)}
+  @media (max-width:1240px){
+    .exp-row{grid-template-columns:22px minmax(240px,1fr) 120px 72px 118px 98px 32px;gap:10px}
+    .exp-row .exp-cat{display:none}
+  }
+  @media (max-width:1020px){
+    .exp-row{grid-template-columns:22px 1fr 118px 90px 32px;gap:10px}
+    .exp-row .exp-when,.exp-row .exp-cat,.exp-row .exp-files{display:none}
+  }
+  @media (max-width:760px){
+    .exp-row{grid-template-columns:22px 1fr 110px 32px;gap:10px;padding:12px 2px}
+    .exp-row .exp-when,.exp-row .exp-cat,.exp-row .exp-files,.exp-row .exp-stat{display:none}
+  }
+
+  /* ---------- CHIPS DE ARQUIVO (NF + comprovante) ---------- */
+  .exp-files{
+    display:flex;flex-direction:column;gap:4px;align-items:flex-start;
+  }
+  .fchip{
+    display:inline-flex;align-items:center;gap:4px;
+    font-family:'Inter',sans-serif;font-size:10px;letter-spacing:.06em;font-weight:600;
+    padding:3px 8px;border-radius:3px;border:1px dashed var(--line);color:var(--ink-mute);
+    background:#fff;cursor:pointer;transition:all .15s;text-decoration:none;white-space:nowrap;
+    max-width:118px;overflow:hidden;text-overflow:ellipsis;
+  }
+  .fchip:hover{border-color:var(--accent-ink,#8a643d);color:var(--ink);border-style:solid}
+  .fchip.filled{
+    background:#e8ebdf;border-color:#b4c48c;border-style:solid;color:#4a7752;
+  }
+  .fchip.filled:hover{background:#d8e0c8;color:#2e4a2e}
+  .fchip.filled.cmp{background:#e7e2d6;border-color:#c0b898;color:#6a5a3e}
+  .fchip.filled.cmp:hover{background:#dcd5c0}
+  .fchip .fc-ico{font-size:11px;line-height:1}
+  .fchip .fc-lbl{max-width:78px;overflow:hidden;text-overflow:ellipsis}
+  .exp-row .chk{
+    width:16px;height:16px;border:1.5px solid var(--line);border-radius:2px;background:#fff;
+    cursor:pointer;transition:all .15s;
+  }
+  .exp-row .chk:hover{border-color:var(--accent-ink,#8a643d)}
+  .exp-row .chk.on{background:var(--accent-ink,#8a643d);border-color:var(--accent-ink,#8a643d);position:relative}
+  .exp-row .chk.on::after{content:'✓';position:absolute;top:-3px;left:2px;color:#fff;font-size:13px;font-weight:700}
+  .exp-row .exp-main .name{
+    font-family:'Inter',sans-serif;font-size:13px;color:var(--ink);font-weight:500;
+    display:flex;align-items:center;gap:6px;flex-wrap:wrap;
+  }
+  .exp-row .exp-main .name a{color:var(--ink);text-decoration:none;border-bottom:1px dotted var(--line)}
+  .exp-row .exp-main .name a:hover{border-color:var(--accent-ink,#8a643d)}
+  .exp-row .exp-main .sub{
+    font-family:'Fraunces','Source Serif 4',Georgia,serif;font-style:italic;font-size:13px;
+    color:var(--ink-mute);margin-top:2px;
+  }
+  .exp-row .exp-main .sub .atr-lbl{color:var(--alert,#b44);font-weight:600;font-style:normal;font-family:'Inter',sans-serif;font-size:10px;letter-spacing:.12em;text-transform:uppercase;margin-left:4px}
+  .exp-row .exp-cat{font-size:11px;color:var(--ink-soft);letter-spacing:.04em}
+  .exp-row .exp-when{
+    font-family:'Inter',sans-serif;font-size:11px;color:var(--ink-soft);
+    display:flex;flex-direction:column;line-height:1.3;
+  }
+  .exp-row .exp-when strong{color:var(--ink);font-weight:600;font-size:12px}
+  .exp-row .exp-val{
+    font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:17px;color:var(--alert,#b44);
+    text-align:right;font-weight:500;white-space:nowrap;font-variant-numeric:tabular-nums;
+    letter-spacing:-0.01em;
+  }
+  .exp-row .exp-val.paid{color:var(--ok,#4a7752);text-decoration:line-through;opacity:.7}
+  .exp-row .exp-val .usd-pair{
+    display:block;font-family:'Inter',sans-serif;font-size:10px;font-style:italic;
+    color:var(--ink-mute);font-weight:500;letter-spacing:.04em;margin-top:2px;
+  }
+  .exp-row .exp-stat{
+    padding:3px 8px;border-radius:999px;font-family:'Inter',sans-serif;font-size:9px;
+    letter-spacing:.12em;text-transform:uppercase;font-weight:700;
+    justify-self:center;cursor:pointer;white-space:nowrap;text-align:center;min-width:78px;
+  }
+  .exp-row .exp-stat.pendente{background:#ece3d8;color:#7a5720;border:1px solid #d8c89a}
+  .exp-row .exp-stat.pago{background:#e5ecdf;color:#4a7752;border:1px solid #c0d2ae}
+  .exp-row .exp-stat.atrasado{background:#f5e4e0;color:#b4504a;border:1px solid #e5c0b8}
+  .exp-row .exp-stat.repasse{background:#e7e2d6;color:#6a5a3e;border:1px solid #cbc0a8}
+  .exp-row .exp-stat.aguard{background:#f0e8d8;color:#7a5720;border:1px solid #d8c89a}
+  .exp-row .exp-menu{
+    width:28px;text-align:center;color:var(--ink-mute);cursor:pointer;font-size:16px;
+    border-radius:3px;transition:all .15s;
+  }
+  .exp-row .exp-menu:hover{background:var(--line-soft);color:var(--ink)}
+
+  .cur-tag{display:inline-flex;align-items:center;font-family:'Inter',sans-serif;font-size:9px;letter-spacing:.14em;text-transform:uppercase;font-weight:800;padding:2px 7px;border-radius:10px;margin-left:2px;vertical-align:middle}
+  .cur-tag.usd{background:#f0e8d8;color:#7a5720;border:1px solid #d8c89a}
+  .cur-tag.usd::before{content:'$';font-weight:900;margin-right:2px}
+  .fx-conv{display:inline-block;margin-left:6px;font-size:11px;color:var(--ink-mute);letter-spacing:.04em;font-weight:500;font-style:italic;font-family:'Fraunces','Source Serif 4',Georgia,serif}
+
+  /* ---------- BANNER CONCEITUAL ---------- */
+  .ob-banner{
+    background:linear-gradient(140deg,#f8efe2 0%, #efe4d0 100%);
+    border:1px solid #e5d5b4;border-left:3px solid var(--accent-ink,#8a643d);
+    border-radius:4px;padding:18px 22px;margin-bottom:26px;
+    display:flex;gap:18px;align-items:flex-start;
+  }
+  .ob-banner .ico{
+    font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:32px;color:var(--accent-ink,#8a643d);
+    line-height:1;font-style:italic;
+  }
+  .ob-banner h4{
+    font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:19px;font-weight:500;color:var(--ink);
+    margin:0 0 6px;
+  }
+  .ob-banner h4 em{font-style:italic;color:var(--accent-ink,#8a643d)}
+  .ob-banner p{
+    font-family:'Inter',sans-serif;font-size:12.5px;line-height:1.6;color:var(--ink-body,#4a4138);
+    margin:0;
+  }
+  .ob-banner p strong{color:var(--ink);font-weight:600}
+
+  /* ---------- RESUMO CONSOLIDADO ---------- */
+  .cons-row{
+    display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr;gap:12px;align-items:center;
+    padding:14px 18px;border-bottom:1px solid var(--line-soft);
+    font-family:'Inter',sans-serif;font-size:13px;
+  }
+  @media (max-width:820px){.cons-row{grid-template-columns:1fr 1fr;gap:8px}}
+  .cons-row:last-child{border-bottom:none}
+  .cons-row .obra-name{font-weight:600;color:var(--ink);display:flex;flex-direction:column;gap:2px}
+  .cons-row .obra-name .cli{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-style:italic;font-size:13px;color:var(--ink-soft);font-weight:400}
+  .cons-row .num{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:18px;font-weight:500;color:var(--ink);text-align:right}
+  .cons-row .num.gasto{color:var(--ink-soft)}
+  .cons-row .num.apag{color:var(--alert,#b44)}
+  .cons-row .num.reemb{color:var(--accent-ink,#8a643d)}
+  .cons-row .orc-bar-wrap{display:flex;flex-direction:column;gap:4px}
+  .cons-row .orc-bar{height:4px;background:var(--bg-alt,#f8f3e9);border-radius:2px;overflow:hidden}
+  .cons-row .orc-bar .f{height:100%;background:linear-gradient(90deg,#a98850 0%,#c8a870 100%)}
+  .cons-row .orc-bar .f.over{background:var(--alert,#b44)}
+  .cons-row .pc{font-size:10px;color:var(--ink-mute);letter-spacing:.04em;text-align:right}
+
+  .consolidado{background:var(--paper);border:1px solid var(--line);border-radius:4px}
+  .consolidado .cons-head{
+    display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr;gap:12px;
+    padding:12px 18px;border-bottom:1px solid var(--line);
+    font-family:'Inter',sans-serif;font-size:9.5px;letter-spacing:.22em;
+    text-transform:uppercase;color:var(--ink-mute);font-weight:700;
+  }
+  @media (max-width:820px){.consolidado .cons-head{display:none}}
+  .consolidado .cons-head .num{text-align:right}
+
+  /* ---------- AÇÃO BAR ---------- */
+  .ob-actions{
+    display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:26px;
+  }
+  .ob-actions .spc{flex:1}
+
+  /* ---------- LEGENDA ---------- */
+  .legenda{
+    margin-top:26px;padding:16px 20px;background:var(--bg-alt,#f8f3e9);
+    border:1px dashed var(--line);border-radius:4px;
+    display:flex;gap:22px;flex-wrap:wrap;
+    font-family:'Fraunces','Source Serif 4',Georgia,serif;font-style:italic;font-size:13px;color:var(--ink-soft);
+  }
+  .legenda b{font-family:'Inter',sans-serif;font-style:normal;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink);font-weight:700;margin-right:4px}
+
+  /* ---------- KPIs 6 COLUNAS ---------- */
+  .kpis-obra.kpis-6{grid-template-columns:repeat(6,1fr)}
+  @media (max-width:1200px){.kpis-obra.kpis-6{grid-template-columns:repeat(3,1fr)}}
+  @media (max-width:700px){.kpis-obra.kpis-6{grid-template-columns:repeat(2,1fr)}}
+
+  /* ---------- FILTROS MULTI-LINHA ---------- */
+  .of-wrap{background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:14px 18px;margin-bottom:26px;display:flex;flex-direction:column;gap:10px}
+  .of-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .of-lbl{font-family:'Inter',sans-serif;font-size:10px;letter-spacing:.2em;text-transform:uppercase;font-weight:700;color:var(--ink-mute);min-width:86px}
+  .of-chips{display:flex;gap:6px;flex-wrap:wrap;flex:1}
+  .of-chips a{padding:5px 11px;border:1px solid var(--line);border-radius:999px;font-family:'Inter',sans-serif;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;font-weight:600;color:var(--ink-soft);background:#fff;text-decoration:none;transition:all .15s;cursor:pointer;display:inline-flex;align-items:center;gap:5px}
+  .of-chips a:hover{border-color:var(--accent,#b89455);color:var(--ink)}
+  .of-chips a.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .of-chips a .cnt{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-style:italic;font-size:12px;letter-spacing:0;opacity:.7;font-weight:500}
+
+  /* ---------- GRÁFICOS ---------- */
+  .charts-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:28px}
+  .charts-grid .chart-wide{grid-column:1 / -1}
+  @media (max-width:980px){.charts-grid{grid-template-columns:1fr}}
+  .chart-card{background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:22px 24px;display:flex;flex-direction:column;gap:18px}
+  .ch-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap}
+  .ch-head h3{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:22px;font-weight:500;color:var(--ink);margin:4px 0 0}
+  .ch-head h3 em{font-style:italic;color:var(--accent-ink,#8a643d)}
+  .ch-head .ch-sub{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-style:italic;font-size:12.5px;color:var(--ink-mute);max-width:240px;text-align:right}
+
+  /* DONUT */
+  .donut-wrap{position:relative;width:220px;height:220px;margin:0 auto}
+  .donut{width:100%;height:100%;transform:rotate(-90deg)}
+  .donut-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
+  .donut-center .dc-val{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:34px;color:var(--ink);font-weight:500;line-height:1}
+  .donut-center .dc-val em{font-style:italic;color:var(--accent-ink,#8a643d)}
+  .donut-center .dc-lbl{font-family:'Inter',sans-serif;font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-mute);font-weight:600}
+  .donut-legend{display:flex;flex-direction:column;gap:5px;font-family:'Inter',sans-serif;font-size:11.5px;color:var(--ink-soft)}
+  .donut-legend > div{display:flex;align-items:center;gap:8px}
+  .donut-legend em{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-style:italic;color:var(--accent-ink,#8a643d);font-weight:500;margin-left:auto;margin-right:8px}
+  .sw{display:inline-block;width:10px;height:10px;border-radius:2px;flex-shrink:0}
+
+  /* HBAR */
+  .hbar-list{display:flex;flex-direction:column;gap:14px}
+  .hbar .hb-lbl{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px}
+  .hbar .hb-lbl strong{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:16px;color:var(--ink);font-weight:500;font-style:italic}
+  .hbar .hb-lbl span{font-family:'Inter',sans-serif;font-size:10.5px;letter-spacing:.08em;color:var(--ink-mute)}
+  .hbar .hb-track{height:20px;background:#f2eee1;border-radius:3px;position:relative;overflow:hidden;display:flex;align-items:center}
+  .hbar .hb-fill{height:100%;background:#b89455;transition:width .4s;display:block}
+  .hbar .hb-fill.ok{background:#6e8d68}
+  .hbar .hb-fill.warn{background:#c89455}
+  .hbar .hb-fill.alert{background:#b47044}
+  .hbar .hb-pct{position:absolute;right:8px;top:50%;transform:translateY(-50%);font-family:'Inter',sans-serif;font-size:10.5px;font-weight:700;color:var(--ink);letter-spacing:.06em;text-shadow:0 0 4px rgba(255,255,255,.9)}
+  .hbar .hb-cli{margin-top:4px;font-family:'Inter',sans-serif;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-mute);font-weight:600}
+  .hbar .hb-cli a{color:var(--accent-ink,#8a643d);text-decoration:none;border-bottom:1px dotted var(--line);text-transform:none;letter-spacing:0;font-family:'Fraunces','Source Serif 4',Georgia,serif;font-style:italic;font-size:13px}
+  .hbar .hb-cli a:hover{color:var(--ink);border-color:var(--accent,#b89455)}
+
+  /* LINE CHART */
+  .lchart{width:100%;height:auto;min-height:180px;display:block}
+  .lch-foot{display:flex;gap:24px;flex-wrap:wrap;font-family:'Inter',sans-serif;font-size:11.5px;color:var(--ink-soft)}
+  .lch-foot > div{display:flex;align-items:center;gap:6px}
+  .lch-foot em{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-style:italic;color:var(--accent-ink,#8a643d);margin-left:4px}
+
+  /* ---------- MODAL ---------- */
+  .zmodal{position:fixed;inset:0;background:rgba(20,18,12,0.55);z-index:1000;display:none;align-items:flex-start;justify-content:center;padding:40px 20px;overflow:auto}
+  .zmodal.open{display:flex}
+  .zmodal .zm-box{background:var(--paper);border:1px solid var(--line);border-radius:4px;width:100%;max-width:720px;padding:0;box-shadow:0 18px 60px rgba(0,0,0,0.35);animation:zm-in .25s ease-out}
+  @keyframes zm-in{from{opacity:0;transform:translateY(-14px)}to{opacity:1;transform:translateY(0)}}
+  .zm-head{padding:22px 26px 18px;border-bottom:1px solid var(--line);display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+  .zm-head .eyebrow{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-mute);font-weight:600;margin-bottom:4px}
+  .zm-head h2{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:26px;font-weight:500;color:var(--ink);margin:0}
+  .zm-head h2 em{font-style:italic;color:var(--accent-ink,#8a643d)}
+  .zm-close{border:none;background:transparent;font-size:22px;cursor:pointer;color:var(--ink-mute);padding:4px 8px;line-height:1;border-radius:3px}
+  .zm-close:hover{background:var(--bg-alt,#f8f3e9);color:var(--ink)}
+  .zm-body{padding:22px 26px}
+  .zm-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px 18px}
+  .zm-grid .full{grid-column:1 / -1}
+  .zm-field{display:flex;flex-direction:column;gap:5px}
+  .zm-field label{font-family:'Inter',sans-serif;font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-mute);font-weight:700}
+  .zm-field label .req{color:var(--accent-ink,#8a643d);margin-left:3px}
+  .zm-field input,.zm-field select,.zm-field textarea{
+    font-family:'Inter',sans-serif;font-size:13px;padding:9px 12px;border:1px solid var(--line);border-radius:3px;
+    background:#fff;color:var(--ink);transition:border-color .15s;
+  }
+  .zm-field input:focus,.zm-field select:focus,.zm-field textarea:focus{outline:none;border-color:var(--accent,#b89455);box-shadow:0 0 0 3px rgba(184,148,85,0.12)}
+  .zm-field textarea{min-height:64px;resize:vertical}
+  .zm-field .hint{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-style:italic;font-size:12px;color:var(--ink-mute)}
+  .zm-field.has-err input, .zm-field.has-err select{border-color:var(--alert,#b44)}
+  .zm-split{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+
+  /* DROPZONE */
+  .zm-drop{
+    border:2px dashed var(--line-strong);border-radius:4px;background:var(--bg-alt,#f8f3e9);
+    padding:18px 20px;display:flex;align-items:center;gap:14px;cursor:pointer;transition:all .15s;
+  }
+  .zm-drop:hover,.zm-drop.drag{border-color:var(--accent,#b89455);background:rgba(184,148,85,0.08)}
+  .zm-drop .ic{font-size:28px;color:var(--accent-ink,#8a643d)}
+  .zm-drop .t{flex:1;display:flex;flex-direction:column;gap:2px}
+  .zm-drop .t strong{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-style:italic;font-size:16px;color:var(--ink);font-weight:500}
+  .zm-drop .t span{font-family:'Inter',sans-serif;font-size:11px;color:var(--ink-mute);letter-spacing:.06em}
+  .zm-drop.filled{border-style:solid;border-color:#b4c48c;background:#edf2e0}
+  .zm-drop.filled .t strong{color:#4a7752}
+
+  .zm-foot{padding:18px 26px 22px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:10px;background:var(--bg-alt,#f8f3e9);border-radius:0 0 4px 4px}
+  .zm-foot .links{display:flex;gap:14px;font-family:'Fraunces','Source Serif 4',Georgia,serif;font-style:italic;font-size:13px}
+  .zm-foot .links a{color:var(--accent-ink,#8a643d);text-decoration:none;border-bottom:1px dotted var(--line)}
+  .zm-foot .btns{display:flex;gap:10px}
+  .zm-bar{height:1px;background:var(--line);margin:18px 0}
+
+  /* IMPORT PREVIEW (batch upload) */
+  .import-preview{display:flex;flex-direction:column;gap:8px;max-height:360px;overflow:auto;margin-top:14px}
+  .ip-row{display:grid;grid-template-columns:24px 1fr 150px 130px 90px;gap:10px;padding:10px 12px;background:#fff;border:1px solid var(--line);border-radius:3px;align-items:center;font-family:'Inter',sans-serif;font-size:12px}
+  .ip-row .ip-st{font-size:16px;text-align:center}
+  .ip-row.ok .ip-st{color:#4a7752}
+  .ip-row.warn .ip-st{color:#a88630}
+  .ip-row.err .ip-st{color:#b44}
+  .ip-row .ip-fn{font-weight:600;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .ip-row .ip-fn .sub{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-style:italic;font-weight:400;color:var(--ink-mute);font-size:11.5px;display:block;margin-top:1px}
+  .ip-row select{font-size:11px;padding:4px 6px;border:1px solid var(--line);border-radius:2px;font-family:'Inter',sans-serif;background:#fff}
+  .ip-row .ip-v{font-weight:700;color:var(--accent-ink,#8a643d);text-align:right;letter-spacing:.03em}
+  .ip-row .ip-act{text-align:right}
+  .ip-row .ip-act a{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-mute);text-decoration:none;font-weight:700;cursor:pointer}
+  .ip-row .ip-act a:hover{color:var(--accent-ink,#8a643d)}
+  .ip-summary{margin-top:12px;padding:12px 16px;background:var(--bg-alt,#f8f3e9);border-left:3px solid var(--accent,#b89455);border-radius:2px;font-family:'Fraunces','Source Serif 4',Georgia,serif;font-style:italic;color:var(--ink-soft);font-size:13.5px}
+  .ip-summary strong{font-family:'Inter',sans-serif;font-style:normal;font-weight:700;color:var(--ink);letter-spacing:.04em}
+
+  /* PAGE-HEAD OVERRIDE — esta página tem muitos CTAs, precisamos de layout mais largo e proporcional */
+  main > .page-head{
+    display:grid;
+    grid-template-columns: minmax(320px, 1fr) auto;
+    align-items:end;
+    gap:32px;
+    padding-bottom:26px;
+    border-bottom:1px solid var(--line);
+    margin-bottom:30px;
+  }
+  main > .page-head > div:first-child{min-width:0}
+  main > .page-head h1{font-size:44px;line-height:1.05;font-weight:500;white-space:nowrap}
+  main > .page-head .sub{font-size:13.5px;color:var(--ink-soft);margin-top:8px;max-width:640px;line-height:1.55}
+  main > .page-head .eyebrow{font-size:10.5px;letter-spacing:.34em;margin-bottom:10px;white-space:nowrap}
+
+  /* actions: toolbar organizada em duas linhas quando necessário */
+  main > .page-head .actions{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:flex-end;
+    align-items:center;
+    gap:8px;
+    max-width:680px;
+  }
+  main > .page-head .actions .btn{white-space:nowrap;font-size:11px;letter-spacing:.16em;padding:10px 14px;min-height:38px;display:inline-flex;align-items:center;gap:6px}
+  main > .page-head .actions .btn.small{font-size:10.5px;padding:9px 13px;min-height:36px}
+  main > .page-head .actions .btn-sep{width:1px;height:22px;background:var(--line);margin:0 4px;align-self:center}
+
+  /* Export dropdown: garantir que menu fica escondido por padrão e alinhado à direita */
+  main > .page-head .export-wrap{position:relative;display:inline-block}
+  main > .page-head .export-menu{
+    display:none;
+    position:absolute;top:calc(100% + 6px);right:0;
+    background:#fff;border:1px solid var(--line);border-radius:3px;
+    box-shadow:0 8px 24px rgba(60,40,20,.08);
+    padding:6px;min-width:240px;z-index:40;
+  }
+  main > .page-head .export-wrap.open .export-menu{display:flex;flex-direction:column}
+  main > .page-head .export-menu a{
+    display:block;padding:9px 12px;text-decoration:none;
+    font-family:'Inter',sans-serif;font-size:11.5px;letter-spacing:.06em;
+    color:var(--ink);border-radius:2px;
+  }
+  main > .page-head .export-menu a:hover{background:var(--bg-alt,#f8f3e9);color:var(--accent-ink)}
+
+  /* Responsivo: em telas <1280, actions vai pra linha de baixo */
+  @media (max-width:1280px){
+    main > .page-head{grid-template-columns:1fr;align-items:flex-start;gap:20px}
+    main > .page-head .actions{justify-content:flex-start;max-width:none;width:100%}
+  }
+  @media (max-width:720px){
+    main > .page-head h1{font-size:36px;white-space:normal}
+    main > .page-head .actions .btn{flex:1 1 auto;justify-content:center}
+  }
+
+  /* ====================================================================
+     WORK MODE — contraste e fonte priorizados pra facilitar o trabalho.
+     Foge um pouco da paleta cream/brown pra ganhar legibilidade:
+     - background de dados: branco puro
+     - texto de dados: #1a1a1a (quase preto)
+     - fonte de dados: Inter (sans) em vez de Cormorant (serif)
+     - KPIs e tabelas com bordas firmes e hierarquia clara
+     ==================================================================== */
+  :root{
+    --wm-bg:#ffffff;
+    --wm-bg-soft:#f7f7f5;
+    --wm-ink:#1a1a1a;
+    --wm-ink-2:#3d3d3d;
+    --wm-ink-3:#6b6b6b;
+    --wm-line:#d9d6cf;
+    --wm-line-strong:#a8a39a;
+    --wm-accent:#8a5a2b;
+    --wm-accent-2:#2d5c8a;
+    --wm-ok:#2d6b3f;
+    --wm-warn:#a86b12;
+    --wm-danger:#a8321a;
+  }
+  main{color:var(--wm-ink)}
+  main p, main li, main td, main th, main label, main span, main div{letter-spacing:0}
+
+  /* Título: manter serif italic, mas garantir alto contraste */
+  main > .page-head h1{color:#1a1a1a;letter-spacing:-.01em}
+  main > .page-head h1 em{color:var(--wm-accent);font-style:italic}
+  main > .page-head .sub{color:var(--wm-ink-2);font-family:'Inter',sans-serif;font-size:14px;line-height:1.55;font-weight:400}
+  main > .page-head .sub strong{color:var(--wm-ink);font-weight:600}
+  main > .page-head .eyebrow{color:var(--wm-accent);font-weight:700}
+
+  /* Botões de ação: maior legibilidade */
+  main > .page-head .actions .btn{
+    font-family:'Inter',sans-serif;font-weight:600;letter-spacing:.1em;
+    border:1px solid var(--wm-line-strong);background:#fff;color:var(--wm-ink);
+    text-transform:uppercase;font-size:10.5px;
+    transition:all .15s ease;
+  }
+  main > .page-head .actions .btn:hover{border-color:var(--wm-ink);background:var(--wm-bg-soft)}
+  main > .page-head .actions .btn.ghost{background:#fff}
+  main > .page-head .actions a.btn.small:not(.ghost){
+    background:var(--wm-ink);color:#fff;border-color:var(--wm-ink);
+  }
+  main > .page-head .actions a.btn.small:not(.ghost):hover{background:#000;border-color:#000}
+
+  /* Banner explicativo: mais contraste, texto sans */
+  .ob-banner{background:#fffdf6;border:1px solid var(--wm-line);border-left:4px solid var(--wm-accent);border-radius:4px;padding:18px 22px;display:flex;gap:16px;align-items:flex-start;margin-bottom:30px}
+  .ob-banner .ico{font-size:22px;color:var(--wm-accent);line-height:1}
+  .ob-banner h4{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:19px;font-weight:500;color:var(--wm-ink);margin:0 0 6px 0;letter-spacing:-.005em}
+  .ob-banner h4 em{color:var(--wm-accent);font-style:italic}
+  .ob-banner p{font-family:'Inter',sans-serif;font-size:13px;line-height:1.6;color:var(--wm-ink-2);margin:0}
+  .ob-banner p strong{color:var(--wm-ink);font-weight:700}
+
+  /* KPIs: branco puro, número bem grande e escuro */
+  .kpis-obra{display:grid;gap:14px;margin-bottom:8px}
+  .kpis-obra.kpis-6{grid-template-columns:repeat(6,1fr)}
+  @media (max-width:1400px){.kpis-obra.kpis-6{grid-template-columns:repeat(3,1fr)}}
+  @media (max-width:720px){.kpis-obra.kpis-6{grid-template-columns:repeat(2,1fr)}}
+  .kpi-ob{
+    background:#fff;border:1px solid var(--wm-line);border-radius:4px;
+    padding:18px 18px 16px 18px;display:flex;flex-direction:column;gap:6px;
+    transition:border-color .15s;
+  }
+  .kpi-ob:hover{border-color:var(--wm-line-strong)}
+  .kpi-ob .l{
+    font-family:'Inter',sans-serif;font-size:10.5px;font-weight:700;
+    letter-spacing:.18em;text-transform:uppercase;color:var(--wm-ink-3);
+  }
+  .kpi-ob .n{
+    font-family:'Inter',sans-serif;font-size:28px;font-weight:700;
+    color:var(--wm-ink);line-height:1.1;letter-spacing:-.02em;
+  }
+  .kpi-ob .n em{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-weight:500;color:var(--wm-accent);font-style:italic;font-size:30px}
+  .kpi-ob .d{
+    font-family:'Inter',sans-serif;font-size:11.5px;color:var(--wm-ink-3);
+    line-height:1.4;margin-top:2px;
+  }
+  .kpi-ob .d.up{color:var(--wm-ok);font-weight:600}
+  .kpi-ob .d.down{color:var(--wm-danger);font-weight:600}
+  .kpi-ob.accent{background:#fffaf0;border-color:#e5c896;border-left:4px solid var(--wm-accent)}
+
+  /* Filtros: chips com melhor contraste */
+  .of-wrap{background:var(--wm-bg-soft);border:1px solid var(--wm-line);border-radius:4px;padding:14px 18px;display:flex;flex-direction:column;gap:10px;margin-bottom:8px}
+  .of-row{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+  .of-lbl{
+    font-family:'Inter',sans-serif;font-size:10px;font-weight:700;
+    letter-spacing:.2em;text-transform:uppercase;color:var(--wm-ink-3);
+    min-width:76px;
+  }
+  .of-chips{display:flex;gap:6px;flex-wrap:wrap;flex:1}
+  .of-chips a{
+    font-family:'Inter',sans-serif;font-size:12px;font-weight:500;
+    color:var(--wm-ink-2);background:#fff;border:1px solid var(--wm-line);
+    padding:6px 12px;border-radius:18px;text-decoration:none;
+    transition:all .15s;display:inline-flex;align-items:center;gap:6px;
+  }
+  .of-chips a:hover{border-color:var(--wm-line-strong);color:var(--wm-ink)}
+  .of-chips a.active{background:var(--wm-ink);color:#fff;border-color:var(--wm-ink);font-weight:600}
+  .of-chips .cnt{font-size:10.5px;opacity:.7;font-weight:600}
+  .of-chips a.active .cnt{opacity:1}
+
+  /* Gráficos: títulos e labels em sans + mais contraste */
+  .charts-grid h3, .section-head h2, section h2, section h3{
+    font-family:'Inter',sans-serif;font-size:13px;font-weight:700;
+    letter-spacing:.14em;text-transform:uppercase;color:var(--wm-ink);
+    margin:0 0 12px 0;
+  }
+  .charts-grid h3 em, section h2 em, section h3 em{
+    font-family:'Fraunces','Source Serif 4',Georgia,serif;font-weight:500;
+    color:var(--wm-accent);font-style:italic;text-transform:none;letter-spacing:0;
+  }
+
+  /* Chart cards */
+  .chart-card, .charts-grid > div{
+    background:#fff;border:1px solid var(--wm-line);border-radius:4px;padding:18px 20px;
+  }
+  .chart-card .legend, .chart-card .lg, .legend{
+    font-family:'Inter',sans-serif;font-size:11.5px;color:var(--wm-ink-2);
+  }
+
+  /* hbar-list: barras mais contrastadas */
+  .hbar-list{display:flex;flex-direction:column;gap:12px}
+  .hbar-row{font-family:'Inter',sans-serif}
+  .hbar-row .hb-top{display:flex;justify-content:space-between;font-size:12px;margin-bottom:5px;color:var(--wm-ink)}
+  .hbar-row .hb-top .hb-name{font-weight:600;color:var(--wm-ink)}
+  .hbar-row .hb-top .hb-val{font-weight:700;color:var(--wm-ink);font-variant-numeric:tabular-nums}
+  .hbar-row .hb-bar{background:#efede7;border-radius:3px;height:9px;overflow:hidden}
+  .hbar-row .hb-bar .hb-fill{background:var(--wm-accent);height:100%;border-radius:3px}
+  .hbar-row .hb-sub{font-size:10.5px;color:var(--wm-ink-3);margin-top:3px;letter-spacing:.04em}
+  .hbar-row .hb-sub a{color:var(--wm-accent-2);text-decoration:none;font-weight:600}
+  .hbar-row .hb-sub a:hover{text-decoration:underline}
+
+  /* Modal + form: sempre em sans, alto contraste */
+  .zmodal{position:fixed;inset:0;background:rgba(20,15,10,.45);display:none;align-items:flex-start;justify-content:center;z-index:100;padding:40px 20px;overflow-y:auto}
+  .zmodal.open{display:flex}
+  .zm-box{background:#fff;border-radius:6px;max-width:820px;width:100%;box-shadow:0 20px 60px rgba(20,10,0,.22);font-family:'Inter',sans-serif}
+  .zm-head{padding:22px 28px 16px;border-bottom:1px solid var(--wm-line);display:flex;justify-content:space-between;align-items:flex-start;gap:20px}
+  .zm-head h3{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:26px;font-weight:500;color:var(--wm-ink);margin:0;letter-spacing:-.01em}
+  .zm-head h3 em{color:var(--wm-accent);font-style:italic}
+  .zm-head .zm-sub{font-family:'Inter',sans-serif;font-size:12.5px;color:var(--wm-ink-2);margin-top:4px;line-height:1.5}
+  .zm-close{background:none;border:none;font-size:22px;color:var(--wm-ink-3);cursor:pointer;padding:0;line-height:1}
+  .zm-close:hover{color:var(--wm-ink)}
+  .zm-body{padding:22px 28px}
+  .zm-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px 18px}
+  .zm-grid.cols-1{grid-template-columns:1fr}
+  .zm-grid.cols-3{grid-template-columns:1fr 1fr 1fr}
+  .zm-field{display:flex;flex-direction:column;gap:5px}
+  .zm-field.span-2{grid-column:span 2}
+  .zm-field label{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--wm-ink-3)}
+  .zm-field input, .zm-field select, .zm-field textarea{
+    font-family:'Inter',sans-serif;font-size:13.5px;color:var(--wm-ink);
+    background:#fff;border:1px solid var(--wm-line-strong);border-radius:3px;
+    padding:9px 12px;outline:none;transition:border-color .15s;
+  }
+  .zm-field input:focus, .zm-field select:focus, .zm-field textarea:focus{border-color:var(--wm-ink)}
+  .zm-field textarea{min-height:72px;resize:vertical;line-height:1.5}
+  .zm-drop{
+    border:2px dashed var(--wm-line-strong);border-radius:4px;
+    padding:24px;text-align:center;color:var(--wm-ink-2);
+    background:var(--wm-bg-soft);cursor:pointer;transition:all .15s;
+    font-family:'Inter',sans-serif;font-size:13px;
+  }
+  .zm-drop:hover{border-color:var(--wm-ink);background:#fff}
+  .zm-drop strong{color:var(--wm-ink);display:block;margin-bottom:3px;font-size:13.5px}
+  .zm-drop .zm-drop-hint{font-size:11.5px;color:var(--wm-ink-3);margin-top:6px}
+  .zm-foot{padding:16px 28px 22px;border-top:1px solid var(--wm-line);display:flex;justify-content:space-between;align-items:center;gap:12px;background:var(--wm-bg-soft);border-radius:0 0 6px 6px}
+  .zm-foot .hint{font-family:'Inter',sans-serif;font-size:11.5px;color:var(--wm-ink-3);font-style:italic}
+  .zm-foot .zm-btns{display:flex;gap:10px}
+  .zm-foot button{
+    font-family:'Inter',sans-serif;font-size:11.5px;font-weight:600;
+    letter-spacing:.14em;text-transform:uppercase;
+    padding:10px 18px;border-radius:3px;cursor:pointer;border:1px solid;transition:all .15s;
+  }
+  .zm-foot .btn-cancel{background:#fff;border-color:var(--wm-line-strong);color:var(--wm-ink-2)}
+  .zm-foot .btn-cancel:hover{border-color:var(--wm-ink);color:var(--wm-ink)}
+  .zm-foot .btn-primary{background:var(--wm-ink);color:#fff;border-color:var(--wm-ink)}
+  .zm-foot .btn-primary:hover{background:#000}
+
+  /* Import preview: linhas mais densas e legíveis */
+  .import-preview{background:var(--wm-bg-soft);border:1px solid var(--wm-line);border-radius:4px;padding:10px;margin-top:14px;max-height:360px;overflow:auto}
+  .ip-row{background:#fff;border:1px solid var(--wm-line);padding:10px 12px;font-size:12.5px;color:var(--wm-ink)}
+  .ip-row .ip-fn{color:var(--wm-ink);font-weight:600}
+  .ip-row .ip-fn .sub{color:var(--wm-ink-3);font-family:'Inter',sans-serif;font-style:normal;font-size:11px}
+  .ip-row .ip-v{color:var(--wm-accent);font-weight:700;font-variant-numeric:tabular-nums}
+  .ip-summary{background:#fffdf6;border-left-color:var(--wm-accent);color:var(--wm-ink-2);font-family:'Inter',sans-serif;font-style:normal;font-size:12.5px}
+  .ip-summary strong{color:var(--wm-ink)}
+
+  /* Global: qualquer tabela nesta página fica mais densa e legível */
+  main table{font-family:'Inter',sans-serif;font-size:13px;color:var(--wm-ink);border-collapse:collapse;width:100%;background:#fff}
+  main table thead th{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--wm-ink-3);font-weight:700;padding:12px 14px;border-bottom:2px solid var(--wm-line-strong);text-align:left;background:var(--wm-bg-soft)}
+  main table tbody td{padding:12px 14px;border-bottom:1px solid var(--wm-line);vertical-align:middle}
+  main table tbody tr:hover{background:var(--wm-bg-soft)}
+
+  /* ============ MODAL DETALHE DO FORNECEDOR ============ */
+  .sup-modal-backdrop{
+    position:fixed;inset:0;background:rgba(28,24,18,0.48);backdrop-filter:blur(2px);
+    display:none;align-items:flex-start;justify-content:center;z-index:9998;
+    padding:48px 24px;overflow-y:auto;
+  }
+  .sup-modal-backdrop.open{display:flex}
+  .sup-modal{
+    background:#fdfbf5;border:1px solid #d9cba8;border-radius:6px;width:100%;max-width:820px;
+    box-shadow:0 24px 72px rgba(0,0,0,0.28);overflow:hidden;
+    font-family:'Inter',sans-serif;color:var(--ink,#2a241a);
+  }
+  .sup-m-head{
+    background:linear-gradient(140deg,#f5efe2 0%, #ece3cf 100%);
+    border-bottom:1px solid #d9cba8;padding:22px 28px;
+    display:flex;align-items:flex-start;justify-content:space-between;gap:16px;
+  }
+  .sup-m-head .eyebrow{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:#8a7a55;font-weight:700;margin-bottom:6px}
+  .sup-m-head h3{
+    font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:26px;font-weight:500;
+    color:var(--ink,#2a241a);margin:0;line-height:1.22;letter-spacing:-0.01em;
+  }
+  .sup-m-head h3 em{font-style:italic;color:#8a643d}
+  .sup-m-head .cat-chip{
+    display:inline-block;margin-top:8px;padding:4px 10px;border-radius:999px;
+    background:#fff;border:1px solid #d9cba8;font-size:10.5px;letter-spacing:.14em;
+    text-transform:uppercase;font-weight:700;color:#7a5720;
+  }
+  .sup-m-close{
+    width:34px;height:34px;display:flex;align-items:center;justify-content:center;
+    border:1px solid #d0c2a0;background:#fff;border-radius:4px;cursor:pointer;
+    font-size:18px;color:#7a6a4a;transition:all .15s;flex-shrink:0;
+  }
+  .sup-m-close:hover{border-color:#8a643d;color:#8a643d;background:#fdfbf5}
+
+  .sup-m-body{padding:24px 28px}
+  .sup-m-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:18px 22px;
+    padding-bottom:20px;border-bottom:1px dashed #d9cba8;margin-bottom:20px;
+  }
+  @media (max-width:700px){.sup-m-grid{grid-template-columns:1fr 1fr}}
+  .sup-m-field{display:flex;flex-direction:column;gap:4px;min-width:0}
+  .sup-m-field .lbl{
+    font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;
+    color:#8a7a55;font-weight:700;
+  }
+  .sup-m-field .val{
+    font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:15.5px;
+    color:var(--ink,#2a241a);font-weight:500;word-break:break-word;
+  }
+  .sup-m-field .val a{color:#8a643d;text-decoration:none;border-bottom:1px dotted #c8b892}
+  .sup-m-field .val a:hover{border-bottom-style:solid}
+  .sup-m-field .val .copy{
+    display:inline-flex;align-items:center;gap:4px;cursor:pointer;
+    font-family:'Inter',sans-serif;font-size:10px;letter-spacing:.08em;
+    color:#a69378;margin-left:6px;opacity:.7;transition:opacity .15s;
+  }
+  .sup-m-field .val .copy:hover{opacity:1;color:#8a643d}
+  .sup-m-field.na .val{color:#b8ad8c;font-style:italic;font-size:14px}
+
+  .sup-m-amounts{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:22px;
+  }
+  @media (max-width:600px){.sup-m-amounts{grid-template-columns:1fr}}
+  .sup-m-amt{
+    padding:14px 18px;background:#fff;border:1px solid #e5d9b8;border-radius:4px;
+    display:flex;flex-direction:column;gap:4px;
+  }
+  .sup-m-amt.paid{background:#f2f6ec;border-color:#c0d2ae}
+  .sup-m-amt.due{background:#fbf2e8;border-color:#e5c89a}
+  .sup-m-amt .lbl{font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:#8a7a55;font-weight:700}
+  .sup-m-amt .val{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:22px;color:var(--ink,#2a241a);font-weight:500;line-height:1}
+  .sup-m-amt.paid .val{color:#3f6745}
+  .sup-m-amt.due .val{color:#8a5720}
+  .sup-m-amt .d{font-size:10.5px;color:#8a7a55;font-style:italic;font-family:'Fraunces','Source Serif 4',Georgia,serif}
+
+  .sup-m-section{margin-top:22px}
+  .sup-m-section h4{
+    font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:16px;font-weight:500;
+    color:var(--ink,#2a241a);margin:0 0 10px;letter-spacing:0;
+  }
+  .sup-m-section h4 em{font-style:italic;color:#8a643d}
+  .sup-m-parc{
+    display:flex;flex-direction:column;gap:6px;
+  }
+  .sup-m-parc-row{
+    display:grid;grid-template-columns:22px minmax(160px,1fr) 92px 100px 138px;gap:12px;align-items:center;
+    padding:10px 14px;background:#fff;border:1px solid #e5d9b8;border-radius:4px;
+    font-size:13px;transition:background .15s;
+  }
+  .sup-m-parc-row.pago{background:#f3f6ec;border-color:#c8d6b4}
+  .sup-m-parc-row.pend{background:#fff}
+  .sup-m-parc-row .dot{width:10px;height:10px;border-radius:50%;background:#d9cba8}
+  .sup-m-parc-row.pago .dot{background:#4a7752}
+  .sup-m-parc-row.pend .dot{background:#d4a860}
+  .sup-m-parc-row .lbl{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-style:italic;color:var(--ink,#2a241a);font-size:14px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .sup-m-parc-row .dt{font-family:'Inter',sans-serif;font-size:10.5px;color:#8a7a55;letter-spacing:.04em;text-transform:uppercase;font-weight:600;white-space:nowrap}
+  .sup-m-parc-row .vl{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:15px;font-weight:500;color:var(--ink,#2a241a);text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+  .sup-m-parc-row.pago .vl{color:#3f6745}
+  .parc-btn{
+    font-family:'Inter',sans-serif;font-size:10.5px;letter-spacing:.09em;font-weight:700;text-transform:uppercase;
+    padding:7px 10px;border-radius:4px;cursor:pointer;border:1px solid;white-space:nowrap;
+    transition:all .15s;justify-self:end;width:100%;text-align:center;
+  }
+  .parc-btn.go{background:#4a7752;border-color:#4a7752;color:#fff}
+  .parc-btn.go:hover{background:#3a6042;border-color:#3a6042;box-shadow:0 2px 6px rgba(74,119,82,.3)}
+  .parc-btn.undo{background:transparent;border-color:#c8bfa0;color:#6a5a3e}
+  .parc-btn.undo:hover{border-color:#8a643d;color:#8a643d;background:#fff}
+  @media (max-width:560px){
+    .sup-m-parc-row{grid-template-columns:18px 1fr 96px;gap:8px}
+    .sup-m-parc-row .dt{display:none}
+    .parc-btn{grid-column:1/-1;margin-top:6px}
+  }
+
+  .sup-m-files{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media (max-width:600px){.sup-m-files{grid-template-columns:1fr}}
+  .sup-m-file{
+    display:flex;align-items:center;gap:10px;padding:12px 14px;background:#fff;
+    border:1px dashed #d9cba8;border-radius:4px;cursor:pointer;transition:all .15s;
+  }
+  .sup-m-file:hover{border-color:#8a643d;border-style:solid}
+  .sup-m-file.has{border-style:solid;border-color:#c0d2ae;background:#f2f6ec}
+  .sup-m-file.has.comp{background:#f4eedc;border-color:#d4c18a}
+  .sup-m-file .f-ico{font-size:18px;flex-shrink:0}
+  .sup-m-file .f-body{display:flex;flex-direction:column;gap:2px;flex:1;min-width:0}
+  .sup-m-file .f-lbl{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#8a7a55;font-weight:700}
+  .sup-m-file .f-name{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:13px;font-style:italic;color:var(--ink,#2a241a);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .sup-m-file.empty .f-name{color:#b8ad8c}
+
+  .sup-m-foot{
+    padding:18px 28px;border-top:1px solid #d9cba8;background:#f9f4e6;
+    display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap;
+  }
+  .sup-m-foot .sm-btn{
+    padding:9px 16px;border-radius:4px;font-family:'Inter',sans-serif;
+    font-size:11px;letter-spacing:.1em;font-weight:600;text-transform:uppercase;
+    border:1px solid #d0c2a0;background:#fff;color:#5a4a2a;cursor:pointer;
+    transition:all .15s;
+  }
+  .sup-m-foot .sm-btn:hover{border-color:#8a643d;color:#8a643d}
+  .sup-m-foot .sm-btn.danger:hover{border-color:#b44;color:#b44}
+  .sup-m-foot .sm-btn.primary{background:#8a643d;border-color:#8a643d;color:#fff}
+  .sup-m-foot .sm-btn.primary:hover{background:#6a4a28;border-color:#6a4a28}
+  .sup-m-foot .sm-btn.ok{background:#4a7752;border-color:#4a7752;color:#fff}
+  .sup-m-foot .sm-btn.ok:hover{background:#3a6042;border-color:#3a6042}
+  .sup-m-source{
+    font-family:'Fraunces','Source Serif 4',Georgia,serif;font-style:italic;
+    font-size:11.5px;color:#8a7a55;padding:10px 28px 0;
+  }
+  .sup-m-source strong{font-family:'Inter',sans-serif;font-style:normal;color:var(--ink,#2a241a);font-weight:600;letter-spacing:.04em}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-inner">
+    <div class="brand">Zen<span>o</span>n — Sistema</div>
+    <div class="search"><input type="search" placeholder="Buscar fornecedor, nota fiscal, obra…"></div>
+    <div class="fx-chip" title="Cotação do dólar (USD/BRL)">
+      <span class="fx-code">USD</span>
+      <span class="fx-val"><span class="cur">R$</span>—</span>
+      <span class="fx-delta flat">…</span>
+      <div class="fx-tip"></div>
+    </div>
+
+    <div class="user-menu">
+      <button type="button" class="user-trigger" onclick="ZenonUser.toggleDropdown(event)" aria-haspopup="true" aria-expanded="false">
+        <span class="u-name" data-user-name>Rodrigo</span>
+        <span class="avatar" data-user="me">R</span>
+        <span class="u-caret">▾</span>
+      </button>
+      <div class="user-dropdown" role="menu">
+        <div class="ud-head">
+          <span class="avatar" data-user="me">R</span>
+          <div>
+            <div class="name" data-user-name>Rodrigo</div>
+            <div class="role" data-user-role>Sócio · Arquiteto responsável</div>
+          </div>
+        </div>
+        <a href="sistema-perfil.html"><span class="ic">◎</span>Ver perfil</a>
+        <a href="sistema-configuracoes.html"><span class="ic">⚙</span>Configurações</a>
+        <a href="sistema-empresa.html"><span class="ic">⌂</span>Dados da empresa</a>
+        <a href="https://www.notion.so/Zenon" target="_blank"><span class="ic">✱</span>Atividades · Notion ↗</a>
+        <div class="ud-sep"></div>
+        <a href="sistema-login.html" class="sign-out"><span class="ic">↪</span>Sair</a>
+      </div>
+    </div>
+  </div>
+  <nav class="tabs">
+    <a href="sistema-painel.html">Painel</a>
+    <a href="sistema-clientes.html">Clientes</a>
+    <a href="sistema-projetos.html">Projetos</a>
+    <a href="sistema-obra.html">Obra</a>
+    <a href="sistema-obra-financeiro.html" class="active">Obra financeiro</a>
+    <a href="sistema-propostas.html">Propostas</a>
+    <a href="sistema-financeiro.html">Financeiro</a>
+    <a href="sistema-empresa.html">Empresa</a>
+    <a href="sistema-log.html">Log da equipe</a>
+  </nav>
+</header>
+
+<main>
+  <div class="page-head">
+    <div>
+      <div class="eyebrow">Financeiro de obra · fornecedores · notas · comprovantes</div>
+      <h1>Obra <em>financeiro</em></h1>
+      <div class="sub">Dashboard de todas as obras · cada despesa vinculada a uma <strong>obra</strong> e a um <strong>cliente</strong> · saldo espelhado automático no cliente · não entra no caixa da empresa</div>
+    </div>
+    <div class="actions">
+      <a href="sistema-obra.html" class="btn ghost small" title="Voltar pra visão operacional das obras">Ver obras</a>
+      <div class="export-wrap">
+        <button class="btn ghost small" type="button" onclick="toggleExport(this)">Exportar ▾</button>
+        <div class="export-menu">
+          <a href="#" onclick="exportarObraCSV('todas');return false">Tudo (CSV)</a>
+          <a href="#" onclick="exportarObraCSV('ativa');return false">Só obras ativas (CSV)</a>
+          <a href="#" onclick="exportarObraCSV('xlsx');return false">Relatório por obra (XLSX)</a>
+          <a href="#" onclick="baixarArquivosObra();return false">Zip de NFs + comprovantes</a>
+        </div>
+      </div>
+      <a href="#import-nf" class="btn ghost small" onclick="abrirImportNF();return false" title="Leitura automática de XML de NFe">📥 Importar NFs</a>
+      <a href="#import-comp" class="btn ghost small" onclick="abrirImportComp();return false" title="Upload múltiplo de comprovantes">📥 Importar comprovantes</a>
+      <a href="#novo" class="btn small" onclick="novaDespesaObra();return false">+ Novo lançamento</a>
+    </div>
+  </div>
+
+  <!-- BANNER EXPLICATIVO -->
+  <div class="ob-banner">
+    <div class="ico">◈</div>
+    <div>
+      <h4>Cada lançamento vive <em>em três lugares ao mesmo tempo</em></h4>
+      <p><strong>1.</strong> Aqui, no extrato consolidado de todas as obras (com NF + comprovante).
+      <strong>2.</strong> Na ficha do cliente daquela obra (aba Financeiro da obra).
+      <strong>3.</strong> No relatório semanal da própria obra.
+      Um só registro alimenta os três — <strong>não precisa duplicar</strong>. Esse caixa <strong>não é da Zenon</strong>; o fee de administração vai pro Financeiro Empresa.</p>
+    </div>
+  </div>
+
+  <!-- KPIs GLOBAIS DE OBRA (6 cards) -->
+  <section>
+    <div class="kpis-obra kpis-6">
+      <div class="kpi-ob"><div class="l">Obras ativas</div><div class="n">1</div><div class="d">Clínica ECCO · Brooklin Novo · 125 m²</div></div>
+      <div class="kpi-ob"><div class="l">Contratado (fornecedores)</div><div class="n">R$ 243.180</div><div class="d">16 fornecedores · xlsx FLUXO PAGAMENTO</div></div>
+      <div class="kpi-ob"><div class="l">Pago até 20/04</div><div class="n">R$ 130.555</div><div class="d up">54% do contratado</div></div>
+      <div class="kpi-ob"><div class="l">A pagar (parcelas seguintes)</div><div class="n">R$ 112.626</div><div class="d down">saldo 2ª/3ª parcelas dos fornecedores</div></div>
+      <div class="kpi-ob"><div class="l">Gerenciamento Zenon</div><div class="n">R$ 39.453</div><div class="d">7 parcelas · 5 de 7 pagas</div></div>
+      <div class="kpi-ob accent"><div class="l">Reembolsos pendentes</div><div class="n"><em>R$ 0</em></div><div class="d">cliente paga fornecedor direto (PIX)</div></div>
+    </div>
+    <div style="margin-top:8px;padding:10px 14px;background:#fffdf6;border-left:3px solid #b89455;font-family:'Fraunces','Source Serif 4',Georgia,serif;font-style:italic;color:var(--ink-mute);font-size:12.5px;line-height:1.55">
+      Fonte: <strong style="font-family:'Inter',sans-serif;font-style:normal;color:var(--ink);font-weight:600;letter-spacing:.04em">BASE DE CUSTOS DETALHADA - obra Clínica ECCO.xlsx</strong> · aba <em>FLUXO PAGAMENTO</em>. Todos os valores espelham o que foi efetivamente contratado e pago via PIX/boleto/link — sem cotações hipotéticas.
+    </div>
+  </section>
+
+  <!-- FILTROS COMPLETOS (obra + cliente + período + categoria + status) -->
+  <section>
+    <div class="of-wrap">
+      <div class="of-row">
+        <span class="of-lbl">Obra</span>
+        <div class="of-chips" data-grp="obra">
+          <a href="#" class="active" data-v="todas">Todas <span class="cnt">1</span></a>
+          <a href="#" data-v="clinica-ecco">Clínica ECCO <span class="cnt">27</span></a>
+        </div>
+      </div>
+      <div class="of-row">
+        <span class="of-lbl">Cliente</span>
+        <div class="of-chips" data-grp="cliente">
+          <a href="#" class="active" data-v="todos">Todos</a>
+          <a href="#" data-v="rafael-monici">Rafael Monici · ECCO</a>
+        </div>
+      </div>
+      <div class="of-row">
+        <span class="of-lbl">Período</span>
+        <div class="of-chips" data-grp="periodo">
+          <a href="#" data-v="7">7 dias</a>
+          <a href="#" data-v="30" class="active">30 dias</a>
+          <a href="#" data-v="90">90 dias</a>
+          <a href="#" data-v="mes">Este mês</a>
+          <a href="#" data-v="tudo">Tudo</a>
+        </div>
+      </div>
+      <div class="of-row">
+        <span class="of-lbl">Categoria</span>
+        <div class="of-chips" data-grp="categoria">
+          <a href="#" class="active" data-v="todas">Todas</a>
+          <a href="#" data-v="mao-obra">Mão de obra</a>
+          <a href="#" data-v="marcenaria">Marcenaria</a>
+          <a href="#" data-v="acabamentos">Acabamentos</a>
+          <a href="#" data-v="eletrica">Elétrica / hidráulica</a>
+          <a href="#" data-v="loucas">Louças / metais</a>
+          <a href="#" data-v="logistica">Logística</a>
+          <a href="#" data-v="outros">Outros</a>
+        </div>
+      </div>
+      <div class="of-row">
+        <span class="of-lbl">Status</span>
+        <div class="of-chips" data-grp="status">
+          <a href="#" class="active" data-v="todos">Todos</a>
+          <a href="#" data-v="pendente">Pendente</a>
+          <a href="#" data-v="aguard">Aguardando NF</a>
+          <a href="#" data-v="pago">Pago</a>
+          <a href="#" data-v="atrasado">Atrasado</a>
+          <a href="#" data-v="repasse">A repassar</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GRÁFICOS: donut por categoria + barras por obra + linha evolução -->
+  <section>
+    <div class="charts-grid">
+      <!-- DONUT: gasto por categoria -->
+      <div class="chart-card">
+        <div class="ch-head">
+          <div>
+            <div class="eyebrow">Onde o dinheiro foi</div>
+            <h3>Por <em>categoria</em></h3>
+          </div>
+          <span class="ch-sub">R$ 243k contratado · 16 fornecedores reais</span>
+        </div>
+        <div class="donut-wrap">
+          <svg viewBox="0 0 42 42" class="donut">
+            <circle cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#eeeae0" stroke-width="6"/>
+            <!-- IDL Anderson · Oxigênio R$ 32.900 · 14% -->
+            <circle cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#b89455" stroke-width="6"
+              stroke-dasharray="14 86" stroke-dashoffset="25" />
+            <!-- Casa Nova Tião · Civil R$ 32.527 · 13% -->
+            <circle cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#8a643d" stroke-width="6"
+              stroke-dasharray="13 87" stroke-dashoffset="11" />
+            <!-- ARI · Ar-cond R$ 32.000 · 13% -->
+            <circle cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#4a7752" stroke-width="6"
+              stroke-dasharray="13 87" stroke-dashoffset="-2" />
+            <!-- Leandro Xavier · Marcenaria R$ 26.500 · 11% -->
+            <circle cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#6e8d68" stroke-width="6"
+              stroke-dasharray="11 89" stroke-dashoffset="-15" />
+            <!-- Josué · Elétrica R$ 23.000 · 9% -->
+            <circle cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#c08d5b" stroke-width="6"
+              stroke-dasharray="9 91" stroke-dashoffset="-26" />
+            <!-- Naldo · Pintura R$ 22.440 · 9% -->
+            <circle cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#a67a48" stroke-width="6"
+              stroke-dasharray="9 91" stroke-dashoffset="-35" />
+            <!-- Brasfortti · Vinílico R$ 20.691 · 9% -->
+            <circle cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#5c7352" stroke-width="6"
+              stroke-dasharray="9 91" stroke-dashoffset="-44" />
+            <!-- Outros 10 fornecedores · R$ 53.121 · 22% -->
+            <circle cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#b5a78a" stroke-width="6"
+              stroke-dasharray="22 78" stroke-dashoffset="-53" />
+          </svg>
+          <div class="donut-center">
+            <div class="dc-val">R$ 243<em>k</em></div>
+            <div class="dc-lbl">Contratado · ECCO</div>
+          </div>
+        </div>
+        <div class="donut-legend">
+          <div><span class="sw" style="background:#b89455"></span>Oxigênio · IDL (Anderson) <em>14%</em> · R$ 32,9k</div>
+          <div><span class="sw" style="background:#8a643d"></span>Obra civil · Casa Nova (Tião) <em>13%</em> · R$ 32,5k</div>
+          <div><span class="sw" style="background:#4a7752"></span>Ar-cond · ARI <em>13%</em> · R$ 32,0k</div>
+          <div><span class="sw" style="background:#6e8d68"></span>Marcenaria · Leandro Xavier <em>11%</em> · R$ 26,5k</div>
+          <div><span class="sw" style="background:#c08d5b"></span>Elétrica · Josué <em>9%</em> · R$ 23,0k</div>
+          <div><span class="sw" style="background:#a67a48"></span>Pintura · Naldo <em>9%</em> · R$ 22,4k</div>
+          <div><span class="sw" style="background:#5c7352"></span>Piso vinílico · Brasfortti (Andrea) <em>9%</em> · R$ 20,7k</div>
+          <div><span class="sw" style="background:#b5a78a"></span>Outros (10 fornecedores) <em>22%</em> · R$ 53,1k</div>
+        </div>
+        <div style="margin-top:12px;padding-top:12px;border-top:1px dashed var(--line-soft);font-family:'Fraunces',Georgia,serif;font-style:italic;color:var(--ink-mute);font-size:12.5px">
+          Fonte: <strong style="font-family:'Inter',sans-serif;font-style:normal;color:var(--ink);font-weight:600;letter-spacing:.04em">xlsx BASE DE CUSTOS · aba FLUXO PAGAMENTO</strong>. Contratado real ECCO R$ 243.180,49 · pago R$ 130.554,58 (54%).
+        </div>
+      </div>
+
+      <!-- BARRAS HORIZONTAIS: executado vs orçado por obra -->
+      <div class="chart-card">
+        <div class="ch-head">
+          <div>
+            <div class="eyebrow">Consumo por obra</div>
+            <h3>Executado <em>vs. orçado</em></h3>
+          </div>
+          <span class="ch-sub">% gasto sobre o orçamento aprovado</span>
+        </div>
+        <div class="hbar-list">
+          <div class="hbar"><div class="hb-lbl"><strong>Clínica ECCO</strong><span>R$ 130,6k pago / R$ 243,2k contratado</span></div><div class="hb-track"><span class="hb-fill ok" style="width:54%"></span><span class="hb-pct">54%</span></div><div class="hb-cli">Rafael Monici · <a href="sistema-cliente-detalhe.html?id=CLI-4">ver cliente</a></div></div>
+        </div>
+        <div style="margin-top:14px;padding-top:14px;border-top:1px dashed var(--line-soft);font-family:'Fraunces','Source Serif 4',Georgia,serif;font-style:italic;font-size:13px;color:var(--ink-mute);line-height:1.5">
+          Única obra ativa. 54% do valor contratado já foi liberado via PIX aos fornecedores (parcela 1). Saldo de R$ 112,6k em parcelas 2 e 3 ao longo das próximas semanas. APT 344 (Zenon Stay) entra na carteira quando o endereço/metragem forem definidos.
+        </div>
+      </div>
+
+      <!-- LINHA: evolução semanal de gasto -->
+      <div class="chart-card chart-wide">
+        <div class="ch-head">
+          <div>
+            <div class="eyebrow">Evolução semanal · Clínica ECCO</div>
+            <h3>Saída de caixa <em>nas últimas 12 semanas</em></h3>
+          </div>
+          <span class="ch-sub">R$ 130,6k liberados · obra iniciada em 31/01/2026</span>
+        </div>
+        <svg class="lchart" viewBox="0 0 600 180" preserveAspectRatio="none" aria-label="Gráfico de evolução semanal">
+          <!-- grid -->
+          <g stroke="#efeadd" stroke-width="1">
+            <line x1="40" y1="30" x2="590" y2="30"/>
+            <line x1="40" y1="70" x2="590" y2="70"/>
+            <line x1="40" y1="110" x2="590" y2="110"/>
+            <line x1="40" y1="150" x2="590" y2="150"/>
+          </g>
+          <!-- y labels -->
+          <g fill="#9a9282" font-family="Inter" font-size="9" letter-spacing=".1em">
+            <text x="5" y="33">30k</text>
+            <text x="5" y="73">20k</text>
+            <text x="5" y="113">10k</text>
+            <text x="5" y="153">0</text>
+          </g>
+          <!-- área preenchida -->
+          <path d="M 45,130 L 90,140 L 135,120 L 180,100 L 225,110 L 270,80 L 315,50 L 360,65 L 405,90 L 450,75 L 495,95 L 540,85 L 585,105 L 585,160 L 45,160 Z"
+                fill="#b89455" fill-opacity="0.12"/>
+          <!-- linha -->
+          <path d="M 45,130 L 90,140 L 135,120 L 180,100 L 225,110 L 270,80 L 315,50 L 360,65 L 405,90 L 450,75 L 495,95 L 540,85 L 585,105"
+                fill="none" stroke="#8a643d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <!-- pontos -->
+          <g fill="#8a643d">
+            <circle cx="45" cy="130" r="3"/><circle cx="90" cy="140" r="3"/><circle cx="135" cy="120" r="3"/>
+            <circle cx="180" cy="100" r="3"/><circle cx="225" cy="110" r="3"/><circle cx="270" cy="80" r="3"/>
+            <circle cx="315" cy="50" r="4" stroke="#fff" stroke-width="1.5"/>
+            <circle cx="360" cy="65" r="3"/><circle cx="405" cy="90" r="3"/><circle cx="450" cy="75" r="3"/>
+            <circle cx="495" cy="95" r="3"/><circle cx="540" cy="85" r="3"/><circle cx="585" cy="105" r="3"/>
+          </g>
+          <!-- x labels -->
+          <g fill="#9a9282" font-family="Inter" font-size="9" letter-spacing=".08em" text-anchor="middle">
+            <text x="45" y="174">S01</text><text x="135" y="174">S03</text><text x="225" y="174">S05</text>
+            <text x="315" y="174">S07</text><text x="405" y="174">S09</text><text x="495" y="174">S11</text>
+            <text x="585" y="174">S12</text>
+          </g>
+        </svg>
+        <div class="lch-foot">
+          <div><span class="sw" style="background:#8a643d"></span>Pagamentos PIX · <em>R$ 130,6k</em> em 12 semanas</div>
+          <div><span class="sw" style="background:#b89455;opacity:.4"></span>Média · <em>R$ 10,9k/sem</em> · fonte: aba FLUXO PAGAMENTO</div>
+        </div>
+      </div>
+
+      <!-- DISTRIBUIÇÃO POR UNIDADE DE NEGÓCIO -->
+      <div class="chart-card">
+        <div class="ch-head">
+          <div>
+            <div class="eyebrow">Distribuição por marca</div>
+            <h3>Volume por <em>unidade de negócio</em></h3>
+          </div>
+          <span class="ch-sub">ECCO é projeto Yvyra Arquitetura</span>
+        </div>
+        <div class="hbar-list">
+          <div class="hbar"><div class="hb-lbl"><strong>Yvyra Arquitetura</strong><span>1 obra · R$ 130,6k pago / R$ 243,2k contratado</span></div><div class="hb-track"><span class="hb-fill" style="width:100%;background:#4a7752"></span><span class="hb-pct">100%</span></div></div>
+          <div class="hbar"><div class="hb-lbl"><strong>Zenon Stay</strong><span>APT 344 pendente · aguarda dados</span></div><div class="hb-track"><span class="hb-fill" style="width:0%;background:#6e8d68"></span><span class="hb-pct">0%</span></div></div>
+          <div class="hbar"><div class="hb-lbl"><strong>Zenon Vision</strong><span>braço interno · sem obra externa</span></div><div class="hb-track"><span class="hb-fill" style="width:0%;background:#8a643d"></span><span class="hb-pct">—</span></div></div>
+          <div class="hbar"><div class="hb-lbl"><strong>Zenon Co.</strong><span>guarda-chuva · sem obra</span></div><div class="hb-track"><span class="hb-fill" style="width:0%;background:#cfcbbe"></span><span class="hb-pct">—</span></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESUMO CONSOLIDADO POR OBRA -->
+  <section>
+    <div class="section-head">
+      <div><div class="eyebrow">Visão consolidada</div><h2>Orçado × <em>gasto</em> por obra</h2></div>
+    </div>
+
+    <div class="consolidado" style="margin-bottom:26px">
+      <div class="cons-head">
+        <div>Obra · cliente</div>
+        <div class="num">Orçamento</div>
+        <div class="num">Gasto</div>
+        <div class="num">A pagar</div>
+        <div class="num">Reembolso</div>
+      </div>
+
+      <div class="cons-row" data-obra="clinica-ecco">
+        <div class="obra-name">
+          <a href="sistema-obra.html" style="color:inherit;text-decoration:none">Clínica ECCO</a>
+          <span class="cli">Rafael Monici · <em>em obra · 54% contratado liberado</em></span>
+        </div>
+        <div class="orc-bar-wrap">
+          <div class="num gasto">R$ 130.555 / 243.180</div>
+          <div class="orc-bar"><div class="f" style="width:54%"></div></div>
+          <div class="pc">54% do contratado pago (parcela 1)</div>
+        </div>
+        <div class="num">R$ 130.555</div>
+        <div class="num apag">R$ 112.626</div>
+        <div class="num reemb">R$ —</div>
+      </div>
+
+      <div class="cons-row" data-obra="apt-344" style="opacity:.6">
+        <div class="obra-name">
+          <span style="color:var(--ink-mute)">APT 344 · Zenon Stay</span>
+          <span class="cli">aguardando dados · <em>sem orçamento</em></span>
+        </div>
+        <div class="orc-bar-wrap">
+          <div class="num gasto" style="color:var(--ink-mute)">—</div>
+          <div class="orc-bar"><div class="f" style="width:0%"></div></div>
+          <div class="pc">não iniciada</div>
+        </div>
+        <div class="num" style="color:var(--ink-mute)">—</div>
+        <div class="num" style="color:var(--ink-mute)">—</div>
+        <div class="num" style="color:var(--ink-mute)">—</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- BLOCOS POR OBRA -->
+  <section>
+    <div class="section-head">
+      <div><div class="eyebrow">Detalhe por obra</div><h2>Fornecedores, <em>notas</em> e reembolsos</h2></div>
+    </div>
+
+    <!-- ========== CLÍNICA ECCO ========== -->
+    <div class="obra-block" data-obra="clinica-ecco" data-cliente="rafael-monici">
+      <div class="ob-head" onclick="toggleObraBlock(this)">
+        <span class="toggle">▾</span>
+        <div class="title">
+          <h3>Clínica ECCO · <em>Brooklin Novo</em></h3>
+          <div class="cli">Rafael Monici · <a href="sistema-cliente-detalhe.html?id=CLI-4">abrir cliente →</a> · 125 m² · clínica médica</div>
+        </div>
+        <span class="status ex">Em obra</span>
+      </div>
+
+      <div class="ob-mini">
+        <div class="c"><span class="l">Contratado (xlsx)</span><span class="v">R$ 248.180</span><span class="s">16 fornecedores · soma das parcelas</span></div>
+        <div class="c pago"><span class="l">Pago até 21/04</span><span class="v">R$ 185.480</span><span class="s">75% do contratado liquidado</span></div>
+        <div class="c apagar"><span class="l">A pagar · próx. vencimentos</span><span class="v">R$ 62.701</span><span class="s">9 fornecedores · 12 parcelas</span></div>
+        <div class="c reemb"><span class="l">Reembolso</span><span class="v">R$ —</span><span class="s">cliente paga fornecedor direto</span></div>
+      </div>
+      <div class="ob-bar" title="75% do contratado pago"><div class="fill" style="width:75%"></div></div>
+
+      <div class="ob-body">
+        <h4>A pagar · próximos vencimentos (xlsx FLUXO PAGAMENTO) <span class="tot">9 fornecedores · 12 parcelas · R$ 62.701</span><span class="add" onclick="novaDespesaObra('ecco')">+ Adicionar despesa</span></h4>
+
+        <!-- 1. Leandro Marcenaria · P2 final · 30/04 -->
+        <div class="exp-row" data-cat="marcenaria">
+          <span class="chk" onclick="event.stopPropagation();this.classList.toggle('on')"></span>
+          <div class="exp-main">
+            <div class="name">Leandro Xavier Marcenaria · saldo final (P2 de 2)</div>
+            <div class="sub">Leandro · (35) 9864-7337 · leandroxavier2112@gmail.com · PIX · 1 parcela restante · 50% de R$ 26.500 contratado</div>
+          </div>
+          <div class="exp-cat">Marcenaria</div>
+          <div class="exp-files"><span class="fchip" onclick="event.stopPropagation();uploadArq(this,'nf')" title="Anexar nota fiscal"><span class="fc-ico">🧾</span><span class="fc-lbl">+ NF</span></span><span class="fchip" onclick="event.stopPropagation();uploadArq(this,'comp')" title="Anexar comprovante"><span class="fc-ico">✓</span><span class="fc-lbl">+ comprovante</span></span></div>
+          <div class="exp-when"><strong>30/04</strong>9 dias</div>
+          <div class="exp-val">− R$ 13.250</div>
+          <span class="exp-stat pendente" onclick="event.stopPropagation();cicloExp(this)">Pendente</span>
+          <span class="exp-menu" onclick="event.stopPropagation();abrirMenu(this)">⋮</span>
+        </div>
+
+        <!-- 2. Casa Nova Reformas · 3 complementos (22/04 + 22/04 + 30/04) -->
+        <div class="exp-row" data-cat="mao-obra">
+          <span class="chk" onclick="event.stopPropagation();this.classList.toggle('on')"></span>
+          <div class="exp-main">
+            <div class="name">Casa Nova Reformas · saldo obra civil (3 complementos)</div>
+            <div class="sub">Sebastião "Tião" · CNPJ 24.835.328/0001-96 · (11) 97208-4518 · PIX · R$ 3.227,50 + R$ 4.057,26 + R$ 4.057,26 · vencs 22/04 + 22/04 + 30/04</div>
+          </div>
+          <div class="exp-cat">Obra civil</div>
+          <div class="exp-files"><span class="fchip" onclick="event.stopPropagation();uploadArq(this,'nf')" title="Anexar nota fiscal"><span class="fc-ico">🧾</span><span class="fc-lbl">+ NF</span></span><span class="fchip" onclick="event.stopPropagation();uploadArq(this,'comp')" title="Anexar comprovante"><span class="fc-ico">✓</span><span class="fc-lbl">+ comprovante</span></span></div>
+          <div class="exp-when"><strong>22/04</strong>amanhã</div>
+          <div class="exp-val">− R$ 11.342</div>
+          <span class="exp-stat pendente" onclick="event.stopPropagation();cicloExp(this)">Pendente</span>
+          <span class="exp-menu" onclick="event.stopPropagation();abrirMenu(this)">⋮</span>
+        </div>
+
+        <!-- 3. ARI · P3 final · 06/05 -->
+        <div class="exp-row" data-cat="ar-cond">
+          <span class="chk" onclick="event.stopPropagation();this.classList.toggle('on')"></span>
+          <div class="exp-main">
+            <div class="name">ARI · saldo ar-cond / exaustão (P3 de 3)</div>
+            <div class="sub">Ari · CNPJ 03.247.672/0001-94 · (11) 95956-2158 · PIX · 1 parcela restante · 33% de R$ 31.500 contratado</div>
+          </div>
+          <div class="exp-cat">Ar-cond / exaustão</div>
+          <div class="exp-files"><span class="fchip" onclick="event.stopPropagation();uploadArq(this,'nf')" title="Anexar nota fiscal"><span class="fc-ico">🧾</span><span class="fc-lbl">+ NF</span></span><span class="fchip" onclick="event.stopPropagation();uploadArq(this,'comp')" title="Anexar comprovante"><span class="fc-ico">✓</span><span class="fc-lbl">+ comprovante</span></span></div>
+          <div class="exp-when"><strong>06/05</strong>15 dias</div>
+          <div class="exp-val">− R$ 10.500</div>
+          <span class="exp-stat pendente" onclick="event.stopPropagation();cicloExp(this)">Pendente</span>
+          <span class="exp-menu" onclick="event.stopPropagation();abrirMenu(this)">⋮</span>
+        </div>
+
+        <!-- 4. IDL Instalações · P3 final · 30/04 -->
+        <div class="exp-row" data-cat="acabamentos">
+          <span class="chk" onclick="event.stopPropagation();this.classList.toggle('on')"></span>
+          <div class="exp-main">
+            <div class="name">IDL Instalações · saldo oxigênio (P3 de 3)</div>
+            <div class="sub">Anderson · CNPJ 62.513.527/0001-76 · (10) 96607-5908 · PIX · 1 parcela restante · final de R$ 22.900 contratado</div>
+          </div>
+          <div class="exp-cat">Oxigênio</div>
+          <div class="exp-files"><span class="fchip" onclick="event.stopPropagation();uploadArq(this,'nf')" title="Anexar nota fiscal"><span class="fc-ico">🧾</span><span class="fc-lbl">+ NF</span></span><span class="fchip" onclick="event.stopPropagation();uploadArq(this,'comp')" title="Anexar comprovante"><span class="fc-ico">✓</span><span class="fc-lbl">+ comprovante</span></span></div>
+          <div class="exp-when"><strong>30/04</strong>9 dias</div>
+          <div class="exp-val">− R$ 10.000</div>
+          <span class="exp-stat pendente" onclick="event.stopPropagation();cicloExp(this)">Pendente</span>
+          <span class="exp-menu" onclick="event.stopPropagation();abrirMenu(this)">⋮</span>
+        </div>
+
+        <!-- 5. Overall Decor · P2 final · 30/04 -->
+        <div class="exp-row" data-cat="acabamentos">
+          <span class="chk" onclick="event.stopPropagation();this.classList.toggle('on')"></span>
+          <div class="exp-main">
+            <div class="name">Overall Decor · saldo envelopamento (P2 de 2)</div>
+            <div class="sub">Xileno · CNPJ 48.786.835/0001-45 · (11) 96606-0617 · PIX · 1 parcela restante · 60% de R$ 7.800 contratado</div>
+          </div>
+          <div class="exp-cat">Envelopamento</div>
+          <div class="exp-files"><span class="fchip" onclick="event.stopPropagation();uploadArq(this,'nf')" title="Anexar nota fiscal"><span class="fc-ico">🧾</span><span class="fc-lbl">+ NF</span></span><span class="fchip" onclick="event.stopPropagation();uploadArq(this,'comp')" title="Anexar comprovante"><span class="fc-ico">✓</span><span class="fc-lbl">+ comprovante</span></span></div>
+          <div class="exp-when"><strong>30/04</strong>9 dias</div>
+          <div class="exp-val">− R$ 4.680</div>
+          <span class="exp-stat pendente" onclick="event.stopPropagation();cicloExp(this)">Pendente</span>
+          <span class="exp-menu" onclick="event.stopPropagation();abrirMenu(this)">⋮</span>
+        </div>
+
+        <!-- 6. Brasfortti · P2 final · 30/04 -->
+        <div class="exp-row" data-cat="acabamentos">
+          <span class="chk" onclick="event.stopPropagation();this.classList.toggle('on')"></span>
+          <div class="exp-main">
+            <div class="name">Brasfortti · saldo piso vinílico (P2 de 2)</div>
+            <div class="sub">Andrea · CNPJ 26.473.526/0001-82 · (11) 91336-2215 · PIX · 1 parcela restante · 22% de R$ 20.691 contratado</div>
+          </div>
+          <div class="exp-cat">Piso vinílico</div>
+          <div class="exp-files"><span class="fchip" onclick="event.stopPropagation();uploadArq(this,'nf')" title="Anexar nota fiscal"><span class="fc-ico">🧾</span><span class="fc-lbl">+ NF</span></span><span class="fchip" onclick="event.stopPropagation();uploadArq(this,'comp')" title="Anexar comprovante"><span class="fc-ico">✓</span><span class="fc-lbl">+ comprovante</span></span></div>
+          <div class="exp-when"><strong>30/04</strong>9 dias</div>
+          <div class="exp-val">− R$ 4.484</div>
+          <span class="exp-stat pendente" onclick="event.stopPropagation();cicloExp(this)">Pendente</span>
+          <span class="exp-menu" onclick="event.stopPropagation();abrirMenu(this)">⋮</span>
+        </div>
+
+        <!-- 7. Naldo Pintura · P2 · 22/04 (amanhã) -->
+        <div class="exp-row" data-cat="acabamentos">
+          <span class="chk" onclick="event.stopPropagation();this.classList.toggle('on')"></span>
+          <div class="exp-main">
+            <div class="name">Naldo Pintura · saldo pintura (P2 · contrato 8.690)</div>
+            <div class="sub">Naldo · CPF 301.839.588-37 · (11) 96629-1002 · PIX · 1 parcela restante · 50% do contrato de R$ 8.690</div>
+          </div>
+          <div class="exp-cat">Pintura</div>
+          <div class="exp-files"><span class="fchip" onclick="event.stopPropagation();uploadArq(this,'nf')" title="Anexar nota fiscal"><span class="fc-ico">🧾</span><span class="fc-lbl">+ NF</span></span><span class="fchip" onclick="event.stopPropagation();uploadArq(this,'comp')" title="Anexar comprovante"><span class="fc-ico">✓</span><span class="fc-lbl">+ comprovante</span></span></div>
+          <div class="exp-when"><strong>22/04</strong>amanhã</div>
+          <div class="exp-val">− R$ 4.345</div>
+          <span class="exp-stat pendente" onclick="event.stopPropagation();cicloExp(this)">Pendente</span>
+          <span class="exp-menu" onclick="event.stopPropagation();abrirMenu(this)">⋮</span>
+        </div>
+
+        <!-- 8. Josué Elétrica · 2 contratos menores · P2 · 30/04 -->
+        <div class="exp-row" data-cat="eletrica">
+          <span class="chk" onclick="event.stopPropagation();this.classList.toggle('on')"></span>
+          <div class="exp-main">
+            <div class="name">Josué Elétrica · saldo elétrica (2 contratos menores)</div>
+            <div class="sub">Josué · CNPJ 53.636.539/0001-06 · (11) 98184-3167 · PIX · R$ 1.400 + R$ 1.600 · venc 30/04</div>
+          </div>
+          <div class="exp-cat">Elétrica</div>
+          <div class="exp-files"><span class="fchip" onclick="event.stopPropagation();uploadArq(this,'nf')" title="Anexar nota fiscal"><span class="fc-ico">🧾</span><span class="fc-lbl">+ NF</span></span><span class="fchip" onclick="event.stopPropagation();uploadArq(this,'comp')" title="Anexar comprovante"><span class="fc-ico">✓</span><span class="fc-lbl">+ comprovante</span></span></div>
+          <div class="exp-when"><strong>30/04</strong>9 dias</div>
+          <div class="exp-val">− R$ 3.000</div>
+          <span class="exp-stat pendente" onclick="event.stopPropagation();cicloExp(this)">Pendente</span>
+          <span class="exp-menu" onclick="event.stopPropagation();abrirMenu(this)">⋮</span>
+        </div>
+
+        <!-- 9. Gean Hidráulica · complemento P2 · 30/04 -->
+        <div class="exp-row" data-cat="hidraulica">
+          <span class="chk" onclick="event.stopPropagation();this.classList.toggle('on')"></span>
+          <div class="exp-main">
+            <div class="name">Gean Hidráulica · saldo complementar (P2)</div>
+            <div class="sub">Gean · CPF 757.213.503-00 · (11/12) 95151-7127 · PIX · 1 parcela restante · complemento R$ 2.200</div>
+          </div>
+          <div class="exp-cat">Hidráulica</div>
+          <div class="exp-files"><span class="fchip" onclick="event.stopPropagation();uploadArq(this,'nf')" title="Anexar nota fiscal"><span class="fc-ico">🧾</span><span class="fc-lbl">+ NF</span></span><span class="fchip" onclick="event.stopPropagation();uploadArq(this,'comp')" title="Anexar comprovante"><span class="fc-ico">✓</span><span class="fc-lbl">+ comprovante</span></span></div>
+          <div class="exp-when"><strong>30/04</strong>9 dias</div>
+          <div class="exp-val">− R$ 1.100</div>
+          <span class="exp-stat pendente" onclick="event.stopPropagation();cicloExp(this)">Pendente</span>
+          <span class="exp-menu" onclick="event.stopPropagation();abrirMenu(this)">⋮</span>
+        </div>
+
+        <h4>Pago até 21/04/2026 <span class="tot">16 fornecedores · R$ 185.480 · 75% do contratado</span></h4>
+
+        <!-- Brasfortti piso vinílico pago -->
+        <div class="exp-row" data-cat="acabamentos">
+          <span class="chk" onclick="event.stopPropagation();this.classList.toggle('on')"></span>
+          <div class="exp-main">
+            <div class="name">Brasfortti · piso vinílico (parcela 1)</div>
+            <div class="sub">Andrea · PIX CNPJ 26.473.526/0001-82 · R$ 16.207,10 de R$ 20.691 contratado</div>
+          </div>
+          <div class="exp-cat">Piso vinílico</div>
+          <div class="exp-files"><span class="fchip" onclick="event.stopPropagation();uploadArq(this,'nf')" title="Anexar nota fiscal"><span class="fc-ico">🧾</span><span class="fc-lbl">+ NF</span></span><span class="fchip" onclick="event.stopPropagation();uploadArq(this,'comp')" title="Anexar comprovante"><span class="fc-ico">✓</span><span class="fc-lbl">+ comprovante</span></span></div>
+          <div class="exp-when"><strong>—</strong>pago</div>
+          <div class="exp-val paid">− R$ 16.207</div>
+          <span class="exp-stat pago" onclick="event.stopPropagation();cicloExp(this)">Pago</span>
+          <span class="exp-menu" onclick="event.stopPropagation();abrirMenu(this)">⋮</span>
+        </div>
+
+        <!-- Casa Nova civil pago (P1+P2 + complementos P1) -->
+        <div class="exp-row" data-cat="mao-obra">
+          <span class="chk" onclick="event.stopPropagation();this.classList.toggle('on')"></span>
+          <div class="exp-main">
+            <div class="name">Casa Nova Reformas · obra civil (P1+P2 + 2 complementos P1)</div>
+            <div class="sub">Tião · PIX CNPJ 24.835.328/0001-96 · R$ 6.950 + R$ 6.950 + R$ 3.227,50 + R$ 4.057,26</div>
+          </div>
+          <div class="exp-cat">Obra civil</div>
+          <div class="exp-files"><span class="fchip" onclick="event.stopPropagation();uploadArq(this,'nf')" title="Anexar nota fiscal"><span class="fc-ico">🧾</span><span class="fc-lbl">+ NF</span></span><span class="fchip" onclick="event.stopPropagation();uploadArq(this,'comp')" title="Anexar comprovante"><span class="fc-ico">✓</span><span class="fc-lbl">+ comprovante</span></span></div>
+          <div class="exp-when"><strong>15/04</strong>último</div>
+          <div class="exp-val paid">− R$ 21.185</div>
+          <span class="exp-stat pago" onclick="event.stopPropagation();cicloExp(this)">Pago</span>
+          <span class="exp-menu" onclick="event.stopPropagation();abrirMenu(this)">⋮</span>
+        </div>
+
+        <!-- IDL oxigênio pago (P1+P2 + complementos P1+P2) -->
+        <div class="exp-row" data-cat="acabamentos">
+          <span class="chk" onclick="event.stopPropagation();this.classList.toggle('on')"></span>
+          <div class="exp-main">
+            <div class="name">IDL Instalações · oxigênio (P1 02/03 + P2 02/04 + complementos P1+P2)</div>
+            <div class="sub">Anderson · PIX CNPJ 62.513.527/0001-76 · R$ 10.000 + R$ 10.000 + R$ 2.900 + R$ 5.000</div>
+          </div>
+          <div class="exp-cat">Oxigênio</div>
+          <div class="exp-files"><span class="fchip" onclick="event.stopPropagation();uploadArq(this,'nf')" title="Anexar nota fiscal"><span class="fc-ico">🧾</span><span class="fc-lbl">+ NF</span></span><span class="fchip" onclick="event.stopPropagation();uploadArq(this,'comp')" title="Anexar comprovante"><span class="fc-ico">✓</span><span class="fc-lbl">+ comprovante</span></span></div>
+          <div class="exp-when"><strong>02/04</strong>último</div>
+          <div class="exp-val paid">− R$ 27.900</div>
+          <span class="exp-stat pago" onclick="event.stopPropagation();cicloExp(this)">Pago</span>
+          <span class="exp-menu" onclick="event.stopPropagation();abrirMenu(this)">⋮</span>
+        </div>
+
+        <!-- Leandro marcenaria pago -->
+        <div class="exp-row" data-cat="marcenaria">
+          <span class="chk" onclick="event.stopPropagation();this.classList.toggle('on')"></span>
+          <div class="exp-main">
+            <div class="name">Leandro Xavier · marcenaria (parcela 1)</div>
+            <div class="sub">Leandro · PIX leandroxavier2112@gmail.com · 50% de R$ 26.500 contratado</div>
+          </div>
+          <div class="exp-cat">Marcenaria</div>
+          <div class="exp-files"><span class="fchip" onclick="event.stopPropagation();uploadArq(this,'nf')" title="Anexar nota fiscal"><span class="fc-ico">🧾</span><span class="fc-lbl">+ NF</span></span><span class="fchip" onclick="event.stopPropagation();uploadArq(this,'comp')" title="Anexar comprovante"><span class="fc-ico">✓</span><span class="fc-lbl">+ comprovante</span></span></div>
+          <div class="exp-when"><strong>—</strong>pago</div>
+          <div class="exp-val paid">− R$ 13.250</div>
+          <span class="exp-stat pago" onclick="event.stopPropagation();cicloExp(this)">Pago</span>
+          <span class="exp-menu" onclick="event.stopPropagation();abrirMenu(this)">⋮</span>
+        </div>
+
+        <!-- Eltrinox bancada (quitado) -->
+        <div class="exp-row" data-cat="acabamentos">
+          <span class="chk" onclick="event.stopPropagation();this.classList.toggle('on')"></span>
+          <div class="exp-main">
+            <div class="name">Eltrinox · bancada inox (quitado)</div>
+            <div class="sub">Leonardo · (19) 97410-9707 · LINK 3x cartão · R$ 11.481,72 quitado</div>
+          </div>
+          <div class="exp-cat">Bancada inox</div>
+          <div class="exp-files"><span class="fchip" onclick="event.stopPropagation();uploadArq(this,'nf')" title="Anexar nota fiscal"><span class="fc-ico">🧾</span><span class="fc-lbl">+ NF</span></span><span class="fchip" onclick="event.stopPropagation();uploadArq(this,'comp')" title="Anexar comprovante"><span class="fc-ico">✓</span><span class="fc-lbl">+ comprovante</span></span></div>
+          <div class="exp-when"><strong>—</strong>quitado</div>
+          <div class="exp-val paid">− R$ 11.482</div>
+          <span class="exp-stat pago" onclick="event.stopPropagation();cicloExp(this)">Pago</span>
+          <span class="exp-menu" onclick="event.stopPropagation();abrirMenu(this)">⋮</span>
+        </div>
+
+        <!-- Josué elétrica pago (R26 P1+P2 + R27 P1+P2 + R33 P1 + R36 P1) -->
+        <div class="exp-row" data-cat="eletrica">
+          <span class="chk" onclick="event.stopPropagation();this.classList.toggle('on')"></span>
+          <div class="exp-main">
+            <div class="name">Josué Elétrica · elétrica e rede (4 contratos · P1+P2 dos 2 grandes + P1 dos 2 menores)</div>
+            <div class="sub">Josué · PIX CNPJ 53.636.539/0001-06 · R$ 4.540 + R$ 4.540 + R$ 3.960 + R$ 3.960 + R$ 1.400 + R$ 1.600</div>
+          </div>
+          <div class="exp-cat">Elétrica</div>
+          <div class="exp-files"><span class="fchip" onclick="event.stopPropagation();uploadArq(this,'nf')" title="Anexar nota fiscal"><span class="fc-ico">🧾</span><span class="fc-lbl">+ NF</span></span><span class="fchip" onclick="event.stopPropagation();uploadArq(this,'comp')" title="Anexar comprovante"><span class="fc-ico">✓</span><span class="fc-lbl">+ comprovante</span></span></div>
+          <div class="exp-when"><strong>15/04</strong>último</div>
+          <div class="exp-val paid">− R$ 20.000</div>
+          <span class="exp-stat pago" onclick="event.stopPropagation();cicloExp(this)">Pago</span>
+          <span class="exp-menu" onclick="event.stopPropagation();abrirMenu(this)">⋮</span>
+        </div>
+
+        <!-- ARI ar-cond pago (P1 10/03 + P2 27/03) -->
+        <div class="exp-row" data-cat="ar-cond">
+          <span class="chk" onclick="event.stopPropagation();this.classList.toggle('on')"></span>
+          <div class="exp-main">
+            <div class="name">ARI · ar-cond / exaustão (P1 10/03 + P2 27/03)</div>
+            <div class="sub">Ari · PIX CNPJ 03.247.672/0001-94 · R$ 11.000 + R$ 10.500 · 67% de R$ 32.000 contratado</div>
+          </div>
+          <div class="exp-cat">Ar-cond / exaustão</div>
+          <div class="exp-files"><span class="fchip" onclick="event.stopPropagation();uploadArq(this,'nf')" title="Anexar nota fiscal"><span class="fc-ico">🧾</span><span class="fc-lbl">+ NF</span></span><span class="fchip" onclick="event.stopPropagation();uploadArq(this,'comp')" title="Anexar comprovante"><span class="fc-ico">✓</span><span class="fc-lbl">+ comprovante</span></span></div>
+          <div class="exp-when"><strong>27/03</strong>último</div>
+          <div class="exp-val paid">− R$ 21.500</div>
+          <span class="exp-stat pago" onclick="event.stopPropagation();cicloExp(this)">Pago</span>
+          <span class="exp-menu" onclick="event.stopPropagation();abrirMenu(this)">⋮</span>
+        </div>
+
+        <!-- Naldo pintura pago (R28 P1 + R29 P1+P2+P3) -->
+        <div class="exp-row" data-cat="acabamentos">
+          <span class="chk" onclick="event.stopPropagation();this.classList.toggle('on')"></span>
+          <div class="exp-main">
+            <div class="name">Naldo Pintura · pintura geral (2 contratos · 4 parcelas pagas)</div>
+            <div class="sub">Naldo · PIX 301.839.588-37 · R$ 4.345 + R$ 4.125 + R$ 2.750 + R$ 6.875</div>
+          </div>
+          <div class="exp-cat">Pintura</div>
+          <div class="exp-files"><span class="fchip" onclick="event.stopPropagation();uploadArq(this,'nf')" title="Anexar nota fiscal"><span class="fc-ico">🧾</span><span class="fc-lbl">+ NF</span></span><span class="fchip" onclick="event.stopPropagation();uploadArq(this,'comp')" title="Anexar comprovante"><span class="fc-ico">✓</span><span class="fc-lbl">+ comprovante</span></span></div>
+          <div class="exp-when"><strong>15/04</strong>último</div>
+          <div class="exp-val paid">− R$ 18.095</div>
+          <span class="exp-stat pago" onclick="event.stopPropagation();cicloExp(this)">Pago</span>
+          <span class="exp-menu" onclick="event.stopPropagation();abrirMenu(this)">⋮</span>
+        </div>
+
+        <!-- Tintas MC (quitado) -->
+        <div class="exp-row" data-cat="acabamentos">
+          <span class="chk" onclick="event.stopPropagation();this.classList.toggle('on')"></span>
+          <div class="exp-main">
+            <div class="name">Tintas MC · tintas (5 compras · quitado)</div>
+            <div class="sub">Alessandro · PIX 421945370002-60 · Chácara Santo Antônio · R$ 4.807,70 + 250 + 974,70 + 974,70 + 890</div>
+          </div>
+          <div class="exp-cat">Tintas</div>
+          <div class="exp-files"><span class="fchip" onclick="event.stopPropagation();uploadArq(this,'nf')" title="Anexar nota fiscal"><span class="fc-ico">🧾</span><span class="fc-lbl">+ NF</span></span><span class="fchip" onclick="event.stopPropagation();uploadArq(this,'comp')" title="Anexar comprovante"><span class="fc-ico">✓</span><span class="fc-lbl">+ comprovante</span></span></div>
+          <div class="exp-when"><strong>—</strong>quitado</div>
+          <div class="exp-val paid">− R$ 7.897</div>
+          <span class="exp-stat pago" onclick="event.stopPropagation();cicloExp(this)">Pago</span>
+          <span class="exp-menu" onclick="event.stopPropagation();abrirMenu(this)">⋮</span>
+        </div>
+
+        <!-- Gean hidráulica pago (R15 P1+P2 + R17 complemento + R32 P1) -->
+        <div class="exp-row" data-cat="hidraulica">
+          <span class="chk" onclick="event.stopPropagation();this.classList.toggle('on')"></span>
+          <div class="exp-main">
+            <div class="name">Gean Hidráulica · hidráulica (3 contratos · 4 parcelas pagas)</div>
+            <div class="sub">Gean · PIX 757.213.503-00 · R$ 2.600 + R$ 2.600 + R$ 3.000 + R$ 1.100</div>
+          </div>
+          <div class="exp-cat">Hidráulica</div>
+          <div class="exp-files"><span class="fchip" onclick="event.stopPropagation();uploadArq(this,'nf')" title="Anexar nota fiscal"><span class="fc-ico">🧾</span><span class="fc-lbl">+ NF</span></span><span class="fchip" onclick="event.stopPropagation();uploadArq(this,'comp')" title="Anexar comprovante"><span class="fc-ico">✓</span><span class="fc-lbl">+ comprovante</span></span></div>
+          <div class="exp-when"><strong>15/04</strong>último</div>
+          <div class="exp-val paid">− R$ 9.300</div>
+          <span class="exp-stat pago" onclick="event.stopPropagation();cicloExp(this)">Pago</span>
+          <span class="exp-menu" onclick="event.stopPropagation();abrirMenu(this)">⋮</span>
+        </div>
+
+        <!-- Service Duto (quitado) -->
+        <div class="exp-row" data-cat="ar-cond">
+          <span class="chk" onclick="event.stopPropagation();this.classList.toggle('on')"></span>
+          <div class="exp-main">
+            <div class="name">Service Duto · exaustores (quitado)</div>
+            <div class="sub">Junior · PIX CNPJ 49.624.095/0001-03 · (11) 99574-6844 · quitado à vista</div>
+          </div>
+          <div class="exp-cat">Exaustores</div>
+          <div class="exp-files"><span class="fchip" onclick="event.stopPropagation();uploadArq(this,'nf')" title="Anexar nota fiscal"><span class="fc-ico">🧾</span><span class="fc-lbl">+ NF</span></span><span class="fchip" onclick="event.stopPropagation();uploadArq(this,'comp')" title="Anexar comprovante"><span class="fc-ico">✓</span><span class="fc-lbl">+ comprovante</span></span></div>
+          <div class="exp-when"><strong>—</strong>quitado</div>
+          <div class="exp-val paid">− R$ 5.200</div>
+          <span class="exp-stat pago" onclick="event.stopPropagation();cicloExp(this)">Pago</span>
+          <span class="exp-menu" onclick="event.stopPropagation();abrirMenu(this)">⋮</span>
+        </div>
+
+        <!-- Milena limpeza (quitado) -->
+        <div class="exp-row" data-cat="logistica">
+          <span class="chk" onclick="event.stopPropagation();this.classList.toggle('on')"></span>
+          <div class="exp-main">
+            <div class="name">Milena · limpeza grossa entre obra (quitado · 4 visitas)</div>
+            <div class="sub">Milena · PIX CNPJ 52.853.672/0001-43 · (51) 8349-0675 · R$ 900 + 700 + 850 + 850</div>
+          </div>
+          <div class="exp-cat">Limpeza</div>
+          <div class="exp-files"><span class="fchip" onclick="event.stopPropagation();uploadArq(this,'nf')" title="Anexar nota fiscal"><span class="fc-ico">🧾</span><span class="fc-lbl">+ NF</span></span><span class="fchip" onclick="event.stopPropagation();uploadArq(this,'comp')" title="Anexar comprovante"><span class="fc-ico">✓</span><span class="fc-lbl">+ comprovante</span></span></div>
+          <div class="exp-when"><strong>—</strong>quitado</div>
+          <div class="exp-val paid">− R$ 3.300</div>
+          <span class="exp-stat pago" onclick="event.stopPropagation();cicloExp(this)">Pago</span>
+          <span class="exp-menu" onclick="event.stopPropagation();abrirMenu(this)">⋮</span>
+        </div>
+
+        <!-- Overall Decor envelopamento pago -->
+        <div class="exp-row" data-cat="acabamentos">
+          <span class="chk" onclick="event.stopPropagation();this.classList.toggle('on')"></span>
+          <div class="exp-main">
+            <div class="name">Overall Decor · envelopamento (parcela 1)</div>
+            <div class="sub">Xileno · PIX CNPJ 48.786.835/0001-45 · 40% de R$ 7.800 contratado</div>
+          </div>
+          <div class="exp-cat">Envelopamento</div>
+          <div class="exp-files"><span class="fchip" onclick="event.stopPropagation();uploadArq(this,'nf')" title="Anexar nota fiscal"><span class="fc-ico">🧾</span><span class="fc-lbl">+ NF</span></span><span class="fchip" onclick="event.stopPropagation();uploadArq(this,'comp')" title="Anexar comprovante"><span class="fc-ico">✓</span><span class="fc-lbl">+ comprovante</span></span></div>
+          <div class="exp-when"><strong>—</strong>pago</div>
+          <div class="exp-val paid">− R$ 3.120</div>
+          <span class="exp-stat pago" onclick="event.stopPropagation();cicloExp(this)">Pago</span>
+          <span class="exp-menu" onclick="event.stopPropagation();abrirMenu(this)">⋮</span>
+        </div>
+
+        <!-- Chico engenheiro quitado (P1 19/02 + P2 05/03) -->
+        <div class="exp-row" data-cat="eletrica">
+          <span class="chk" onclick="event.stopPropagation();this.classList.toggle('on')"></span>
+          <div class="exp-main">
+            <div class="name">Chico engenheiro · projeto AR + UTA (quitado · P1+P2)</div>
+            <div class="sub">Chico · PIX 048.599.988-98 · (11) 96368-3304 · R$ 1.750 + R$ 1.750 · 100% de R$ 3.500</div>
+          </div>
+          <div class="exp-cat">Projeto HVAC</div>
+          <div class="exp-files"><span class="fchip" onclick="event.stopPropagation();uploadArq(this,'nf')" title="Anexar nota fiscal"><span class="fc-ico">🧾</span><span class="fc-lbl">+ NF</span></span><span class="fchip" onclick="event.stopPropagation();uploadArq(this,'comp')" title="Anexar comprovante"><span class="fc-ico">✓</span><span class="fc-lbl">+ comprovante</span></span></div>
+          <div class="exp-when"><strong>05/03</strong>quitado</div>
+          <div class="exp-val paid">− R$ 3.500</div>
+          <span class="exp-stat pago" onclick="event.stopPropagation();cicloExp(this)">Pago</span>
+          <span class="exp-menu" onclick="event.stopPropagation();abrirMenu(this)">⋮</span>
+        </div>
+
+        <!-- Solid Plus seguros (quitado) -->
+        <div class="exp-row" data-cat="outros">
+          <span class="chk" onclick="event.stopPropagation();this.classList.toggle('on')"></span>
+          <div class="exp-main">
+            <div class="name">Solid Plus · seguro obra (quitado)</div>
+            <div class="sub">Cipriano · boleto · (11) 97622-5885 · R$ 710,33 · quitado</div>
+          </div>
+          <div class="exp-cat">Seguro</div>
+          <div class="exp-files"><span class="fchip" onclick="event.stopPropagation();uploadArq(this,'nf')" title="Anexar nota fiscal"><span class="fc-ico">🧾</span><span class="fc-lbl">+ NF</span></span><span class="fchip" onclick="event.stopPropagation();uploadArq(this,'comp')" title="Anexar comprovante"><span class="fc-ico">✓</span><span class="fc-lbl">+ comprovante</span></span></div>
+          <div class="exp-when"><strong>—</strong>quitado</div>
+          <div class="exp-val paid">− R$ 710</div>
+          <span class="exp-stat pago" onclick="event.stopPropagation();cicloExp(this)">Pago</span>
+          <span class="exp-menu" onclick="event.stopPropagation();abrirMenu(this)">⋮</span>
+        </div>
+
+        <!-- RRTs + insumos gerais (compilado) -->
+        <div class="exp-row" data-cat="outros">
+          <span class="chk" onclick="event.stopPropagation();this.classList.toggle('on')"></span>
+          <div class="exp-main">
+            <div class="name">Taxas, insumos e papelaria (quitado · 8 compras)</div>
+            <div class="sub">RRTs projeto+obra R$ 261 · EPI Obramax R$ 605,56 · Leroy Merlin R$ 410,59 + 791,58 · Obramax R$ 520,63 · impressões R$ 161,45 + 82,48</div>
+          </div>
+          <div class="exp-cat">Outros insumos</div>
+          <div class="exp-files"><span class="fchip" onclick="event.stopPropagation();uploadArq(this,'nf')" title="Anexar nota fiscal"><span class="fc-ico">🧾</span><span class="fc-lbl">+ NF</span></span><span class="fchip" onclick="event.stopPropagation();uploadArq(this,'comp')" title="Anexar comprovante"><span class="fc-ico">✓</span><span class="fc-lbl">+ comprovante</span></span></div>
+          <div class="exp-when"><strong>—</strong>quitado</div>
+          <div class="exp-val paid">− R$ 2.834</div>
+          <span class="exp-stat pago" onclick="event.stopPropagation();cicloExp(this)">Pago</span>
+          <span class="exp-menu" onclick="event.stopPropagation();abrirMenu(this)">⋮</span>
+        </div>
+
+        <h4>Gerenciamento Zenon · fee da obra <span class="tot">7 parcelas · R$ 39.453</span></h4>
+        <div style="padding:14px 8px;font-family:'Fraunces','Source Serif 4',Georgia,serif;font-style:italic;font-size:13px;color:var(--ink-mute);line-height:1.55">
+          Parcelas de <strong style="font-family:'Inter',sans-serif;font-style:normal;color:var(--ink)">acompanhamento e gestão</strong> que alimentam o Financeiro Empresa (receita Yvyra): p1 R$ 4.341 (18/12/2025) · p2 R$ 4.995,82 (29/01) · p3 R$ 4.960,66 (20/02) · p4 R$ 7.165,41 (17/03) · p5 R$ 5.996,76 (15/04) · p6 R$ 5.996,76 (14/05) · p7 R$ 5.996,76 (12/06). <br>As 5 primeiras já pagas (≈ R$ 27.459,65); restam p6 e p7 nos próximos 2 meses. <em>Valores conforme aba FLUXO PAGAMENTO &gt; GERENCIAMENTO DE OBRA E CUSTO</em>.
+        </div>
+
+        <h4>Reembolsos <span class="tot">0 · cliente ECCO paga direto fornecedor</span></h4>
+        <div style="padding:14px 8px;font-family:'Fraunces','Source Serif 4',Georgia,serif;font-style:italic;font-size:13px;color:var(--ink-mute);line-height:1.5">
+          Nesta obra não há reembolso: o cliente paga diretamente cada fornecedor via PIX após aprovação da Zenon (ver chaves PIX acima). O escritório recebe apenas o fee de gerenciamento (R$ 39.453,16 em 7 parcelas).
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ========== APT 344 · ZENON STAY (PLACEHOLDER — primeira unidade) ========== -->
+    <div class="obra-block collapsed" data-obra="apt-344" data-cliente="zenon-stay" style="opacity:.6">
+      <div class="ob-head" onclick="toggleObraBlock(this)">
+        <span class="toggle">▸</span>
+        <div class="title">
+          <h3>APT 344 · <em>Zenon Stay</em></h3>
+          <div class="cli">Primeira unidade · aguardando endereço/metragem/fotos · <span style="color:var(--accent-ink,#8a643d);font-family:'Fraunces','Source Serif 4',Georgia,serif;font-style:italic">nenhum lançamento financeiro ainda</span></div>
+        </div>
+        <span class="status pj">Pré-obra</span>
+      </div>
+
+      <div class="ob-mini">
+        <div class="c"><span class="l">Orçamento</span><span class="v">R$ —</span><span class="s">a definir</span></div>
+        <div class="c pago"><span class="l">Pago</span><span class="v">R$ 0</span><span class="s">sem lançamento</span></div>
+        <div class="c apagar"><span class="l">A pagar</span><span class="v">R$ 0</span><span class="s">—</span></div>
+        <div class="c reemb"><span class="l">Reembolso</span><span class="v">R$ —</span><span class="s">—</span></div>
+      </div>
+      <div class="ob-bar"><div class="fill" style="width:0%"></div></div>
+    </div>
+
+  </section>
+
+  <!-- LEGENDA -->
+  <div class="legenda">
+    <span><b>Status</b>Pendente · Aguardando NF · Pago · Atrasado · A cobrar (reembolso)</span>
+    <span><b>USD</b>Mostra valor em dólar e a conversão em BRL pela cotação Wise do dia</span>
+    <span><b>Reembolso</b>Lançamento que vira receita em Financeiro Empresa quando o cliente paga</span>
+  </div>
+
+</main>
+
+<script>
+  /* ---------- TOGGLE BLOCO ---------- */
+  function toggleObraBlock(head){
+    const b = head.closest('.obra-block');
+    b.classList.toggle('collapsed');
+  }
+
+  /* ---------- FILTRO POR OBRA (antigo chips simples) ---------- */
+  document.querySelectorAll('.obra-filters a').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      document.querySelectorAll('.obra-filters a').forEach(x => x.classList.remove('active'));
+      a.classList.add('active');
+      const f = a.dataset.f;
+      document.querySelectorAll('.obra-block, .cons-row').forEach(b => {
+        if(f === 'todas') b.style.display = '';
+        else b.style.display = (b.dataset.obra === f) ? '' : 'none';
+      });
+      flash(f === 'todas' ? 'Mostrando todas as obras' : 'Filtrado: ' + a.textContent.replace(/\(.+\)/,'').trim());
+    });
+  });
+
+  /* ---------- FILTROS MULTI-GRUPO (obra/cliente/periodo/categoria/status) ---------- */
+  const filtroEstado = { obra:'todas', cliente:'todos', periodo:'30', categoria:'todas', status:'todos' };
+  document.querySelectorAll('.of-chips').forEach(grp => {
+    const nome = grp.dataset.grp;
+    grp.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        grp.querySelectorAll('a').forEach(x => x.classList.remove('active'));
+        a.classList.add('active');
+        filtroEstado[nome] = a.dataset.v;
+        aplicarFiltrosMulti();
+      });
+    });
+  });
+  function aplicarFiltrosMulti(){
+    const { obra, cliente, categoria, status } = filtroEstado;
+    let visiveis = 0;
+    document.querySelectorAll('.obra-block').forEach(b => {
+      const matchObra = obra === 'todas' || b.dataset.obra === obra;
+      const matchCli = cliente === 'todos' || (b.dataset.cliente || '').toLowerCase() === cliente;
+      let anyRow = false;
+      b.querySelectorAll('.exp-row').forEach(r => {
+        const matchCat = categoria === 'todas' || (r.dataset.cat || '').toLowerCase() === categoria;
+        const matchSt = status === 'todos' || r.querySelector('.exp-stat')?.classList.contains(status);
+        const show = matchObra && matchCli && matchCat && matchSt;
+        r.style.display = show ? '' : 'none';
+        if(show) anyRow = true;
+      });
+      b.style.display = (matchObra && matchCli && anyRow) ? '' : 'none';
+      if(b.style.display !== 'none') visiveis++;
+    });
+    flash('Filtros aplicados · ' + visiveis + ' obra(s) visível(is)');
+  }
+
+  /* ---------- IMPORTAR OFX ---------- */
+  function importarOFXObra(){
+    const inp = document.createElement('input');
+    inp.type = 'file';
+    inp.accept = '.ofx,.qfx,.csv';
+    inp.onchange = e => {
+      const file = e.target.files[0];
+      if(!file) return;
+      flash('Processando ' + file.name + ' · conciliação será aberta');
+    };
+    inp.click();
+  }
+
+  /* ---------- CICLO DE STATUS ---------- */
+  const ciclo = ['pendente','aguard','pago','atrasado','repasse'];
+  const rotulo = {pendente:'Pendente', aguard:'Aguardando', pago:'Pago', atrasado:'Atrasado', repasse:'A cobrar'};
+  function cicloExp(el){
+    const cur = ciclo.find(c => el.classList.contains(c)) || 'pendente';
+    const nxt = ciclo[(ciclo.indexOf(cur)+1) % ciclo.length];
+    ciclo.forEach(c => el.classList.remove(c));
+    el.classList.add(nxt);
+    el.textContent = rotulo[nxt];
+    // tachar valor se pago
+    const row = el.closest('.exp-row');
+    const val = row.querySelector('.exp-val');
+    if(nxt === 'pago') val.classList.add('paid'); else val.classList.remove('paid');
+    flash('Status: ' + rotulo[nxt]);
+  }
+
+  /* ---------- ABRIR MENU (placeholder) ---------- */
+  function abrirMenu(el){
+    flash('Menu do lançamento · em breve');
+  }
+
+  /* ---------- EXPORT ---------- */
+  function toggleExport(btn){
+    const w = btn.closest('.export-wrap');
+    w.classList.toggle('open');
+    document.addEventListener('click', function close(e){
+      if(!w.contains(e.target)){ w.classList.remove('open'); document.removeEventListener('click', close); }
+    });
+  }
+  function exportarObraCSV(tipo){
+    const linhas = [['Obra','Fornecedor','Categoria','Vencimento','Valor','Status']];
+    document.querySelectorAll('.obra-block').forEach(b => {
+      if(b.style.display === 'none') return;
+      const obra = b.querySelector('.ob-head .title h3').textContent.trim();
+      b.querySelectorAll('.exp-row').forEach(r => {
+        const nm = r.querySelector('.exp-main .name').textContent.trim();
+        const cat = (r.querySelector('.exp-cat')?.textContent || '').trim();
+        const when = (r.querySelector('.exp-when strong')?.textContent || '').trim();
+        const val = r.querySelector('.exp-val').textContent.split('\n')[0].trim();
+        const st = (r.querySelector('.exp-stat')?.textContent || '').trim();
+        linhas.push([obra, nm, cat, when, val, st]);
+      });
+    });
+    const BOM = '\ufeff';
+    const csv = BOM + linhas.map(l => l.map(c => '"' + (c||'').replace(/"/g,'""') + '"').join(',')).join('\n');
+    const blob = new Blob([csv], {type:'text/csv;charset=utf-8'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'financeiro-obra-' + tipo + '-' + new Date().toISOString().slice(0,10) + '.csv';
+    a.click();
+    URL.revokeObjectURL(url);
+    flash('Exportado · ' + a.download);
+  }
+  function novaDespesaObra(){
+    flash('Novo lançamento de obra · selecione a obra acima');
+  }
+
+  /* ---------- UPLOAD NF / COMPROVANTE (arquivo real, salva em memória) ---------- */
+  // Estrutura interna: por row (id gerado), guarda {nf:{name,dataUrl}, comp:{...}}
+  window.ZObraArq = window.ZObraArq || {};
+  function rowId(row){
+    if(!row.dataset.oid){
+      row.dataset.oid = 'ob-' + Math.random().toString(36).slice(2,8);
+    }
+    return row.dataset.oid;
+  }
+  function uploadArq(chip, kind){
+    const row = chip.closest('.exp-row');
+    const id = rowId(row);
+    // se já tem arquivo, oferece remover/baixar
+    const existing = (window.ZObraArq[id] || {})[kind];
+    if(existing && existing.name){
+      const msg = (kind === 'nf' ? 'NF: ' : 'Comprovante: ') + existing.name + '\n\nEscolha:\n• OK = baixar arquivo\n• Cancelar = remover e anexar outro';
+      if(confirm(msg)){
+        // baixar
+        const a = document.createElement('a');
+        a.href = existing.dataUrl;
+        a.download = existing.name;
+        a.click();
+        return;
+      } else {
+        delete window.ZObraArq[id][kind];
+        renderChip(chip, kind, null);
+        flash('Arquivo removido');
+        return;
+      }
+    }
+    // abre file picker
+    const inp = document.createElement('input');
+    inp.type = 'file';
+    inp.accept = '.pdf,.png,.jpg,.jpeg,.xml,.ofx';
+    inp.onchange = (e) => {
+      const file = e.target.files[0];
+      if(!file) return;
+      const fr = new FileReader();
+      fr.onload = () => {
+        window.ZObraArq[id] = window.ZObraArq[id] || {};
+        window.ZObraArq[id][kind] = {name:file.name, size:file.size, dataUrl:fr.result, when:new Date().toISOString()};
+        renderChip(chip, kind, window.ZObraArq[id][kind]);
+        flash((kind === 'nf' ? 'NF' : 'Comprovante') + ' anexada · espelhada no cliente');
+        // auto-baixa se for comprovante (já que pagamento virou pago)
+        if(kind === 'comp'){
+          // marca status como pago no row
+          const stat = row.querySelector('.exp-stat');
+          if(stat && !stat.classList.contains('pago')){
+            ['pendente','aguard','atrasado','repasse'].forEach(c => stat.classList.remove(c));
+            stat.classList.add('pago');
+            stat.textContent = 'Pago';
+            row.querySelector('.exp-val')?.classList.add('paid');
+          }
+        }
+      };
+      fr.readAsDataURL(file);
+    };
+    inp.click();
+  }
+  function renderChip(chip, kind, data){
+    const lbl = chip.querySelector('.fc-lbl');
+    const ico = chip.querySelector('.fc-ico');
+    chip.classList.remove('filled','cmp');
+    if(data && data.name){
+      chip.classList.add('filled');
+      if(kind === 'comp') chip.classList.add('cmp');
+      ico.textContent = (kind === 'nf') ? '🧾' : '✓';
+      // encurta nome do arquivo
+      const nm = data.name.length > 14 ? data.name.slice(0,11) + '…' : data.name;
+      lbl.textContent = nm;
+      chip.title = (kind === 'nf' ? 'NF anexada: ' : 'Comprovante: ') + data.name + ' · clique p/ baixar';
+    } else {
+      ico.textContent = (kind === 'nf') ? '🧾' : '✓';
+      lbl.textContent = (kind === 'nf') ? '+ NF' : '+ comprovante';
+      chip.title = (kind === 'nf') ? 'Anexar nota fiscal' : 'Anexar comprovante';
+    }
+  }
+  function baixarArquivosObra(){
+    const total = Object.values(window.ZObraArq || {}).reduce((acc,o) => acc + Object.keys(o).length, 0);
+    flash(total ? 'Zipando ' + total + ' arquivo(s)…' : 'Nenhum arquivo anexado ainda');
+  }
+
+  /* ---------- DEMO · marca alguns rows como já tendo NF + comprovante ---------- */
+  document.addEventListener('DOMContentLoaded', () => {
+    // Preenche os chips dos rows que já estão "Pago" com nomes de arquivo fake
+    document.querySelectorAll('.exp-row').forEach(r => {
+      const stat = r.querySelector('.exp-stat');
+      if(!stat) return;
+      const id = rowId(r);
+      if(stat.classList.contains('pago')){
+        // NF + comprovante fake
+        window.ZObraArq[id] = {
+          nf:   {name:'NF-' + id.slice(3) + '.pdf', size:342112, dataUrl:'data:application/pdf;base64,JVBERi0xLjQK', when:new Date().toISOString()},
+          comp: {name:'comp-' + id.slice(3) + '.pdf', size:187456, dataUrl:'data:application/pdf;base64,JVBERi0xLjQK', when:new Date().toISOString()}
+        };
+        const chips = r.querySelectorAll('.fchip');
+        if(chips[0]) renderChip(chips[0], 'nf', window.ZObraArq[id].nf);
+        if(chips[1]) renderChip(chips[1], 'comp', window.ZObraArq[id].comp);
+      } else if(stat.classList.contains('atrasado')){
+        // só NF anexada, faltando comprovante
+        window.ZObraArq[id] = {nf: {name:'NF-' + id.slice(3) + '.pdf', size:298433, dataUrl:'data:application/pdf;base64,JVBERi0xLjQK', when:new Date().toISOString()}};
+        const chips = r.querySelectorAll('.fchip');
+        if(chips[0]) renderChip(chips[0], 'nf', window.ZObraArq[id].nf);
+      }
+    });
+  });
+
+  /* ---------- CONVERSÃO USD LIVE ---------- */
+  function atualizarConversoesFX(){
+    let bid = null;
+    try {
+      const raw = localStorage.getItem('zenon_fx_usd_brl');
+      if(raw){
+        const q = JSON.parse(raw);
+        bid = parseFloat(q.bid);
+      }
+    } catch(e){}
+    if(!bid || isNaN(bid)) bid = 5.20;
+    document.querySelectorAll('.fx-conv[data-usd]').forEach(el => {
+      const usd = parseFloat(el.dataset.usd);
+      if(isNaN(usd)) return;
+      const brl = usd * bid;
+      const fmt = brl.toLocaleString('pt-BR',{minimumFractionDigits:0,maximumFractionDigits:0});
+      el.textContent = '≈ R$ ' + fmt + ' · cotação R$ ' + bid.toFixed(4).replace('.',',');
+    });
+  }
+  atualizarConversoesFX();
+  setInterval(atualizarConversoesFX, 15000);
+
+  /* ---------- FLASH TOAST ---------- */
+  function flash(msg){
+    let t = document.getElementById('flash-toast');
+    if(!t){
+      t = document.createElement('div');
+      t.id = 'flash-toast';
+      t.style.cssText = 'position:fixed;bottom:24px;right:24px;background:var(--ink);color:#fff;padding:12px 20px;border-radius:4px;font-family:Inter,sans-serif;font-size:12px;letter-spacing:.05em;box-shadow:0 6px 18px rgba(0,0,0,.22);z-index:9999;opacity:0;transition:opacity .2s';
+      document.body.appendChild(t);
+    }
+    t.textContent = msg;
+    t.style.opacity = '1';
+    clearTimeout(t._h);
+    t._h = setTimeout(()=>{ t.style.opacity = '0'; }, 2200);
+  }
+</script>
+<script src="shell-user.js" defer></script>
+<script src="shell-fx.js" defer></script>
+<script src="sistema-data.js"></script>
+<script>
+/* ═══ FILA DE CONFIRMAÇÃO DE PAGAMENTOS — Admin Zenon ══════════════════════
+ * Lista todas as parcelas em 'Aguardando confirmação' (cliente marcou "já paguei")
+ * e oferece ✓ Confirmar  / ✗ Rejeitar. Também permite ajuste de vencimento
+ * nas parcelas 'A pagar' (só admin).  Rende a partir de SistemaData.            */
+(function(){
+  if (typeof window.SistemaData === 'undefined') return;
+  var SD = window.SistemaData;
+
+  /* ---- monta seção (injetada após KPIs globais) ---- */
+  var main = document.querySelector('main');
+  if (!main) return;
+  var afterEl = main.querySelector('.kpis-obra') ? main.querySelector('.kpis-obra').closest('section') : null;
+
+  var secAguard = document.createElement('section');
+  secAguard.className = 'conf-queue';
+  secAguard.id = 'sec-conf-aguard';
+  secAguard.innerHTML =
+    '<div class="cq-head">' +
+      '<h3>Fila de confirmação <em>pagamentos cliente</em></h3>' +
+      '<span class="cq-sub">Parcelas que o cliente marcou como "já paguei" — confira no extrato e aprove</span>' +
+    '</div>' +
+    '<div class="cq-list" id="cq-aguard-list"></div>';
+
+  var secApagar = document.createElement('section');
+  secApagar.className = 'conf-queue conf-queue-ajuste';
+  secApagar.id = 'sec-conf-apagar';
+  secApagar.innerHTML =
+    '<div class="cq-head">' +
+      '<h3>Parcelas em aberto <em>ajuste de vencimento</em></h3>' +
+      '<span class="cq-sub">Você pode remarcar a data aqui e o portal do cliente atualiza automaticamente</span>' +
+    '</div>' +
+    '<div class="cq-list" id="cq-apagar-list"></div>';
+
+  if (afterEl && afterEl.parentNode) {
+    afterEl.parentNode.insertBefore(secAguard, afterEl.nextSibling);
+    afterEl.parentNode.insertBefore(secApagar, secAguard.nextSibling);
+  } else {
+    main.insertBefore(secAguard, main.firstChild);
+    main.insertBefore(secApagar, secAguard.nextSibling);
+  }
+
+  /* ---- estilos ---- */
+  var st = document.createElement('style');
+  st.textContent =
+    '.conf-queue{margin:28px 0;border:1px solid var(--border,#e2d9c7);border-radius:14px;background:#fff;padding:18px 22px}' +
+    '.conf-queue .cq-head{display:flex;flex-direction:column;gap:4px;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid var(--border,#e2d9c7)}' +
+    '.conf-queue .cq-head h3{font-family:"Fraunces",serif;font-size:18px;font-weight:500;letter-spacing:-0.015em;margin:0;color:#1F1A14}' +
+    '.conf-queue .cq-head h3 em{font-style:italic;color:#8E826D;font-weight:400}' +
+    '.conf-queue .cq-sub{font-size:12px;color:#8E826D;letter-spacing:0.01em}' +
+    '.conf-queue .cq-list{display:flex;flex-direction:column;gap:10px}' +
+    '.cq-row{display:grid;grid-template-columns:1fr auto auto auto;gap:14px;align-items:center;padding:12px 14px;border:1px solid var(--border,#e2d9c7);border-radius:10px;background:#fbf6ec}' +
+    '.cq-row.cq-ajuste{background:#fff}' +
+    '.cq-row .cq-info{min-width:0}' +
+    '.cq-row .cq-forn{font-family:"Fraunces",serif;font-weight:500;font-size:15px;color:#1F1A14;letter-spacing:-0.01em}' +
+    '.cq-row .cq-meta{font-size:12px;color:#5E5243;margin-top:2px}' +
+    '.cq-row .cq-meta strong{color:#1F1A14;font-weight:500}' +
+    '.cq-row .cq-valor{font-family:"Fraunces",serif;font-weight:500;font-size:16px;color:#1F1A14;text-align:right;white-space:nowrap}' +
+    '.cq-row .cq-valor small{display:block;font-family:"Inter",sans-serif;font-weight:400;font-size:11px;color:#8E826D;letter-spacing:0.01em;margin-top:2px}' +
+    '.cq-row .cq-venc{text-align:right;font-size:12px;color:#5E5243;min-width:110px}' +
+    '.cq-row .cq-venc input{font-family:inherit;font-size:12px;border:1px solid var(--border,#e2d9c7);border-radius:6px;padding:5px 8px;background:#fff;color:#1F1A14;width:130px}' +
+    '.cq-row .cq-act{display:inline-flex;gap:6px}' +
+    '.cq-row .cq-btn{font-family:inherit;font-size:12px;font-weight:500;padding:7px 12px;border-radius:999px;border:1px solid;cursor:pointer;background:#fff;transition:all .15s}' +
+    '.cq-row .cq-btn-ok{border-color:#3D5E33;color:#3D5E33}' +
+    '.cq-row .cq-btn-ok:hover{background:#3D5E33;color:#fff}' +
+    '.cq-row .cq-btn-no{border-color:#A65435;color:#A65435}' +
+    '.cq-row .cq-btn-no:hover{background:#A65435;color:#fff}' +
+    '.cq-empty{padding:26px 18px;text-align:center;color:#8E826D;font-size:13px;border:1px dashed var(--border,#e2d9c7);border-radius:10px}' +
+    '.cq-toast{position:fixed;right:24px;bottom:24px;background:#1F1A14;color:#F4EDDC;padding:12px 18px;border-radius:999px;font-size:13px;font-weight:500;opacity:0;transform:translateY(8px);transition:all .2s;z-index:1000;pointer-events:none}' +
+    '.cq-toast.show{opacity:1;transform:translateY(0)}';
+  document.head.appendChild(st);
+
+  /* ---- helpers ---- */
+  function fmtBRL(v){ return 'R$ ' + Number(v||0).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2}); }
+  function escapeHtml(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+  function parseDMY(s){ var m=/^(\d{2})\/(\d{2})\/(\d{4})$/.exec(s||''); return m ? new Date(+m[3],+m[2]-1,+m[1]) : null; }
+  function toDMY(iso){
+    if (!iso) return '';
+    var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso);
+    return m ? (m[3] + '/' + m[2] + '/' + m[1]) : '';
+  }
+  function toISO(dmy){
+    var d = parseDMY(dmy); if (!d) return '';
+    return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+  }
+  var toastEl = null;
+  function toast(msg){
+    if (!toastEl){ toastEl = document.createElement('div'); toastEl.className = 'cq-toast'; document.body.appendChild(toastEl); }
+    toastEl.textContent = msg;
+    toastEl.classList.add('show');
+    clearTimeout(toastEl._t);
+    toastEl._t = setTimeout(function(){ toastEl.classList.remove('show'); }, 2200);
+  }
+
+  /* ---- coleta ---- */
+  function coletarAguard(){
+    return (SD.parcelasAguardandoConfirmacao ? SD.parcelasAguardandoConfirmacao() : []).map(function(it){
+      var obra = SD.getObra(it.obraId) || {};
+      var cli = SD.getCliente(obra.cliente) || {};
+      return {
+        obraId: it.obraId, fornIdx: it.fornecedorIdx, parcIdx: it.parcelaIdx,
+        fornecedor: it.fornecedor.fornecedor || 'fornecedor',
+        descricao: it.fornecedor.descricao || it.fornecedor.categoria || '',
+        parcelaN: it.parcela.n, parcelaTot: (it.fornecedor.parcelas||[]).length,
+        parcelaDesc: it.parcela.desc || '',
+        valor: it.parcela.valor,
+        venc: it.parcela.venc,
+        clienteMarcouEm: it.parcela.clienteMarcouEm || '—',
+        obraTitulo: obra.titulo || '',
+        clienteNome: cli.nome || obra.cliente || ''
+      };
+    });
+  }
+
+  function coletarAPagar(){
+    var rows = [];
+    var OBRAS = SD.OBRAS || {};
+    Object.keys(OBRAS).forEach(function(obraId){
+      var o = OBRAS[obraId]; if (!o || !Array.isArray(o.fornecedores)) return;
+      var cli = SD.getCliente(o.cliente) || {};
+      o.fornecedores.forEach(function(f, fIdx){
+        (f.parcelas||[]).forEach(function(p, pIdx){
+          if (p.status !== 'A pagar') return;
+          rows.push({
+            obraId: obraId, fornIdx: fIdx, parcIdx: pIdx,
+            fornecedor: f.fornecedor || 'fornecedor',
+            descricao: f.descricao || f.categoria || '',
+            parcelaN: p.n, parcelaTot: f.parcelas.length,
+            parcelaDesc: p.desc || '',
+            valor: p.valor, venc: p.venc,
+            obraTitulo: o.titulo || '',
+            clienteNome: cli.nome || o.cliente || ''
+          });
+        });
+      });
+    });
+    /* ordena por vencimento */
+    rows.sort(function(a,b){
+      var da = parseDMY(a.venc), db = parseDMY(b.venc);
+      if (!da) return 1; if (!db) return -1; return da - db;
+    });
+    return rows;
+  }
+
+  /* ---- render fila aguardando ---- */
+  function renderAguard(){
+    var list = document.getElementById('cq-aguard-list');
+    var rows = coletarAguard();
+    if (!rows.length){
+      list.innerHTML = '<div class="cq-empty">nada na fila · tudo confirmado</div>';
+      return;
+    }
+    list.innerHTML = rows.map(function(r){
+      return '<div class="cq-row" data-obra="' + r.obraId + '" data-fidx="' + r.fornIdx + '" data-pidx="' + r.parcIdx + '">' +
+        '<div class="cq-info">' +
+          '<div class="cq-forn">' + escapeHtml(r.fornecedor) + ' <span style="font-weight:400;color:#8E826D;font-size:12px">· parcela ' + r.parcelaN + '/' + r.parcelaTot + '</span></div>' +
+          '<div class="cq-meta"><strong>' + escapeHtml(r.obraTitulo) + '</strong> · ' + escapeHtml(r.clienteNome) + ' · ' + escapeHtml(r.descricao) + ' · cliente marcou em ' + escapeHtml(r.clienteMarcouEm) + '</div>' +
+        '</div>' +
+        '<div class="cq-venc">venc <strong>' + escapeHtml(r.venc) + '</strong></div>' +
+        '<div class="cq-valor">' + fmtBRL(r.valor) + '<small>' + escapeHtml(r.parcelaDesc) + '</small></div>' +
+        '<div class="cq-act">' +
+          '<button class="cq-btn cq-btn-no" data-act="rejeitar" title="Rejeitar: volta pra A pagar">✗ rejeitar</button>' +
+          '<button class="cq-btn cq-btn-ok" data-act="confirmar" title="Confirmar: vira Pago">✓ confirmar</button>' +
+        '</div>' +
+      '</div>';
+    }).join('');
+  }
+
+  /* ---- render parcelas a pagar (ajuste de vencimento) ---- */
+  function renderAPagar(){
+    var list = document.getElementById('cq-apagar-list');
+    var rows = coletarAPagar();
+    if (!rows.length){
+      list.innerHTML = '<div class="cq-empty">nenhuma parcela em aberto</div>';
+      return;
+    }
+    list.innerHTML = rows.map(function(r){
+      return '<div class="cq-row cq-ajuste" data-obra="' + r.obraId + '" data-fidx="' + r.fornIdx + '" data-pidx="' + r.parcIdx + '">' +
+        '<div class="cq-info">' +
+          '<div class="cq-forn">' + escapeHtml(r.fornecedor) + ' <span style="font-weight:400;color:#8E826D;font-size:12px">· parcela ' + r.parcelaN + '/' + r.parcelaTot + '</span></div>' +
+          '<div class="cq-meta"><strong>' + escapeHtml(r.obraTitulo) + '</strong> · ' + escapeHtml(r.clienteNome) + ' · ' + escapeHtml(r.descricao) + '</div>' +
+        '</div>' +
+        '<div class="cq-venc"><input type="date" value="' + toISO(r.venc) + '" data-act="venc" title="ajustar vencimento"></div>' +
+        '<div class="cq-valor">' + fmtBRL(r.valor) + '<small>' + escapeHtml(r.parcelaDesc) + '</small></div>' +
+        '<div class="cq-act"><span style="font-size:11px;color:#8E826D;letter-spacing:.04em;text-transform:uppercase">aguarda cliente</span></div>' +
+      '</div>';
+    }).join('');
+  }
+
+  /* ---- eventos ---- */
+  document.getElementById('cq-aguard-list').addEventListener('click', function(e){
+    var btn = e.target.closest('button.cq-btn'); if (!btn) return;
+    var row = btn.closest('.cq-row');
+    var obraId = row.getAttribute('data-obra');
+    var fidx = parseInt(row.getAttribute('data-fidx'),10);
+    var pidx = parseInt(row.getAttribute('data-pidx'),10);
+    var act = btn.getAttribute('data-act');
+    var ok = false;
+    if (act === 'confirmar') ok = SD.confirmarPagamento(obraId, fidx, pidx);
+    else if (act === 'rejeitar') ok = SD.rejeitarPagamento(obraId, fidx, pidx);
+    if (ok){
+      toast(act === 'confirmar' ? '✓ pagamento confirmado · cliente notificado' : '✗ pagamento rejeitado · volta pra fila a pagar');
+      renderAguard(); renderAPagar();
+    } else {
+      toast('ação não permitida nesse status');
+    }
+  });
+
+  document.getElementById('cq-apagar-list').addEventListener('change', function(e){
+    var inp = e.target.closest('input[type="date"][data-act="venc"]');
+    if (!inp) return;
+    var row = inp.closest('.cq-row');
+    var obraId = row.getAttribute('data-obra');
+    var fidx = parseInt(row.getAttribute('data-fidx'),10);
+    var pidx = parseInt(row.getAttribute('data-pidx'),10);
+    var novoDMY = toDMY(inp.value);
+    if (!novoDMY){ toast('data inválida'); return; }
+    var ok = SD.update('obra', obraId, 'fornecedores.' + fidx + '.parcelas.' + pidx + '.venc', novoDMY);
+    if (ok){ toast('vencimento ajustado pra ' + novoDMY + ' · portal do cliente atualizado'); renderAPagar(); }
+    else { toast('não foi possível ajustar'); }
+  });
+
+  /* render inicial */
+  renderAguard();
+  renderAPagar();
+  /* re-render se outro lugar da tela editar */
+  document.addEventListener('sistema-edit-saved', function(){ renderAguard(); renderAPagar(); });
+})();
+</script>
+
+<!-- ================== MODAL DETALHE DO FORNECEDOR ================== -->
+<div class="sup-modal-backdrop" id="sup-modal-backdrop" onclick="if(event.target===this)fecharDetalheFornecedor()">
+  <div class="sup-modal" role="dialog" aria-modal="true" aria-labelledby="sup-m-title">
+    <div class="sup-m-head">
+      <div style="min-width:0;flex:1">
+        <div class="eyebrow">Fornecedor · Clínica ECCO</div>
+        <h3 id="sup-m-title">—</h3>
+        <span class="cat-chip" id="sup-m-cat">—</span>
+      </div>
+      <button class="sup-m-close" type="button" onclick="fecharDetalheFornecedor()" aria-label="Fechar">✕</button>
+    </div>
+
+    <div class="sup-m-body">
+      <div class="sup-m-grid" id="sup-m-grid">
+        <!-- campos populados em JS -->
+      </div>
+
+      <div class="sup-m-amounts" id="sup-m-amounts">
+        <!-- cards de valores populados em JS -->
+      </div>
+
+      <div class="sup-m-section">
+        <h4>Parcelas <em>do contrato</em></h4>
+        <div class="sup-m-parc" id="sup-m-parc"></div>
+      </div>
+
+      <div class="sup-m-section">
+        <h4>Documentos <em>anexados</em></h4>
+        <div class="sup-m-files" id="sup-m-files"></div>
+      </div>
+    </div>
+
+    <div class="sup-m-source">
+      Fonte: <strong>xlsx BASE DE CUSTOS DETALHADA</strong> · aba FLUXO PAGAMENTO · campos parseados da linha do financeiro.
+    </div>
+
+    <div class="sup-m-foot">
+      <button class="sm-btn danger" type="button" onclick="removerFornecedor()">Excluir lançamento</button>
+      <button class="sm-btn" type="button" onclick="exportarFornecedor()">Exportar PDF</button>
+      <button class="sm-btn" type="button" onclick="editarFornecedor()">Editar</button>
+      <button class="sm-btn ok" type="button" id="sup-m-btn-pagar" onclick="marcarPagoFornecedor()" title="Dá baixa em todas as parcelas pendentes de uma vez">✓ Dar baixa em todas</button>
+      <button class="sm-btn primary" type="button" onclick="anexarComprovanteFornecedor()">Anexar comprovante</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ============ MODAL DETALHE FORNECEDOR ============ */
+(function(){
+  const backdrop = document.getElementById('sup-modal-backdrop');
+  let currentRow = null;
+
+  function parseContato(sub, nameText){
+    // sub pode conter: "Anderson · CNPJ 62.513.527/0001-76 · (10) 96607-5908 · PIX · 2 parcelas restantes"
+    const parts = sub.split(' · ').map(p => p.trim());
+    const out = {
+      pessoa: null, cnpj: null, cpf: null, telefone: null, email: null,
+      forma: null, observ: null, saldoInfo: null
+    };
+    const reCnpj = /\b(\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2})\b/;
+    const reCpf  = /\b(\d{3}\.\d{3}\.\d{3}-\d{2})\b/;
+    const reTel  = /\(\s*\d{2}(?:\s*\/\s*\d{2})?\s*\)\s*\d{4,5}-\d{4}/;
+    const reMail = /[\w.\-+]+@[\w.\-]+\.[a-z]{2,}/i;
+    const reNum  = /^\d{5,}/;
+
+    parts.forEach((p,i) => {
+      if(i===0 && !reCnpj.test(p) && !reCpf.test(p) && !reTel.test(p) && !reMail.test(p)) {
+        out.pessoa = p;
+        return;
+      }
+      const mCnpj = p.match(reCnpj); if(mCnpj){ out.cnpj = mCnpj[1]; return; }
+      const mCpf  = p.match(reCpf);  if(mCpf){ out.cpf  = mCpf[1]; return; }
+      const mTel  = p.match(reTel);  if(mTel){ out.telefone = mTel[0]; return; }
+      const mMail = p.match(reMail); if(mMail){ out.email = mMail[0]; return; }
+      if(/^PIX$|^BOLETO$|^LINK$|^CART[AÃ]O|cartão|à vista|avista|boleto/i.test(p)){ out.forma = p; return; }
+      if(/^CNPJ\s/i.test(p)){ const c = p.match(reCnpj); if(c){ out.cnpj = c[1]; return; } }
+      if(/^CPF\s/i.test(p)){ const c = p.match(reCpf); if(c){ out.cpf = c[1]; return; } }
+      if(!out.observ) out.observ = p; else out.observ += ' · ' + p;
+    });
+
+    // Detecta forma no sub geral
+    if(!out.forma){
+      if(/PIX\b/.test(sub)) out.forma = 'PIX';
+      else if(/LINK\b/i.test(sub)) out.forma = 'LINK de pagamento';
+      else if(/boleto\b/i.test(sub)) out.forma = 'Boleto';
+    }
+    return out;
+  }
+
+  function parseValoresSub(sub){
+    // detecta valores prefixados por R$ (ex: "R$ 8,7k + R$ 13,75k") ou em listas "R$ 6.950 + R$ 3.227,50 + R$ 4.057,26"
+    // suporta sufixo k/K para milhares (R$ 8,7k = 8700)
+    const list = [];
+    // captura "R$ 8,7k" ou "R$ 18.000" ou "R$ 39.453,00"
+    const re = /R\$\s*([\d.]+(?:,\d+)?)\s*(k|K)?/g;
+    let m;
+    while((m = re.exec(sub)) !== null){
+      let raw = m[1].replace(/\./g,'').replace(',','.');
+      let v = parseFloat(raw);
+      if(m[2]) v *= 1000; // sufixo k
+      if(!isNaN(v) && v >= 100) list.push(v);
+    }
+    // também captura padrões tipo "+ 3.960 + 1.400" quando precedidos por R$ no início
+    if(list.length > 0){
+      // busca valores soltos (após o primeiro R$) no formato "+ X" ou ": X"
+      const soltoRe = /[+:]\s*([\d]{1,3}(?:\.\d{3})+(?:,\d+)?|\d+,\d+)\s*(k|K)?/g;
+      let m2;
+      while((m2 = soltoRe.exec(sub)) !== null){
+        let raw = m2[1].replace(/\./g,'').replace(',','.');
+        let v = parseFloat(raw);
+        if(m2[2]) v *= 1000;
+        if(!isNaN(v) && v >= 100 && !list.includes(v)) list.push(v);
+      }
+    }
+    return list;
+  }
+
+  function fmtBRL(v){
+    return 'R$ ' + v.toLocaleString('pt-BR',{minimumFractionDigits:0,maximumFractionDigits:0});
+  }
+
+  window.abrirDetalheFornecedor = function(row){
+    if(!row || !row.classList.contains('exp-row')) return;
+    currentRow = row;
+
+    const name = row.querySelector('.exp-main .name')?.textContent.trim() || '—';
+    const sub = row.querySelector('.exp-main .sub')?.textContent.trim() || '';
+    const cat = row.querySelector('.exp-cat')?.textContent.trim() || 'Geral';
+    const whenLbl = row.querySelector('.exp-when strong')?.nextSibling?.textContent?.trim()
+                 || row.querySelector('.exp-when')?.textContent.trim() || '—';
+    const valTxt = row.querySelector('.exp-val')?.textContent.trim() || 'R$ 0';
+    const isPaid = row.querySelector('.exp-val')?.classList.contains('paid');
+    const statEl = row.querySelector('.exp-stat');
+    const statCls = ['pendente','aguard','pago','atrasado','repasse'].find(c => statEl?.classList.contains(c)) || 'pendente';
+
+    // parse valor numérico
+    const valMatch = valTxt.match(/[\d.]+(?:,\d+)?/);
+    const valNum = valMatch ? parseFloat(valMatch[0].replace(/\./g,'').replace(',','.')) : 0;
+
+    const info = parseContato(sub, name);
+    const histValores = parseValoresSub(sub);
+
+    // Empresa = parte antes do " · " no nome
+    const empresa = name.split(' · ')[0];
+    const desc    = name.split(' · ').slice(1).join(' · ') || '—';
+
+    // Header
+    document.getElementById('sup-m-title').innerHTML = empresa + ' <em style="font-style:italic">· ' + desc + '</em>';
+    document.getElementById('sup-m-cat').textContent = cat;
+
+    // Grid de campos
+    const fields = [
+      {lbl:'Contato', val: info.pessoa || '—', na: !info.pessoa},
+      {lbl:'Telefone', val: info.telefone ? '<a href="tel:'+info.telefone.replace(/\D/g,'')+'">'+info.telefone+'</a> <span class="copy" onclick="copiarTxt(event,\''+info.telefone+'\')">⎘ copiar</span>' : '—', na: !info.telefone},
+      {lbl: info.cnpj ? 'CNPJ' : (info.cpf ? 'CPF' : 'CNPJ / CPF'),
+       val: info.cnpj ? info.cnpj + ' <span class="copy" onclick="copiarTxt(event,\''+info.cnpj+'\')">⎘ copiar</span>'
+            : (info.cpf ? info.cpf + ' <span class="copy" onclick="copiarTxt(event,\''+info.cpf+'\')">⎘ copiar</span>' : '—'),
+       na: !info.cnpj && !info.cpf},
+      {lbl:'E-mail', val: info.email ? '<a href="mailto:'+info.email+'">'+info.email+'</a>' : '—', na: !info.email},
+      {lbl:'Forma de pagamento', val: info.forma || 'PIX (padrão)', na: !info.forma},
+      {lbl:'Chave PIX', val: info.cnpj || info.cpf || info.email || '—', na: !info.cnpj && !info.cpf && !info.email}
+    ];
+    document.getElementById('sup-m-grid').innerHTML = fields.map(f =>
+      '<div class="sup-m-field '+(f.na?'na':'')+'"><span class="lbl">'+f.lbl+'</span><span class="val">'+f.val+'</span></div>'
+    ).join('');
+
+    // Valores: contratado (se pago mostra valor total, se pendente mostra saldo)
+    // tenta extrair "R$ X contratado" ou "de R$ X" no sub
+    let contratado = valNum;
+    const mContr = sub.match(/de\s+R\$\s*([\d.]+(?:,\d+)?)\s*contratado/i);
+    if(mContr){
+      contratado = parseFloat(mContr[1].replace(/\./g,'').replace(',','.'));
+    } else if(histValores.length > 1){
+      const tot = histValores.reduce((a,b)=>a+b,0);
+      if(tot > valNum) contratado = tot;
+    } else if(isPaid){
+      contratado = valNum;
+    } else {
+      // se é pendente e já foi parcialmente baixado em sessão anterior, soma parcelas
+      const rid0 = getRowId(row);
+      if(window.ZObraParc[rid0]){
+        contratado = window.ZObraParc[rid0].reduce((s,p)=>s+p.valor,0);
+      }
+    }
+
+    // Parcelas: state persistente em window.ZObraParc[rid]
+    const parcBox = document.getElementById('sup-m-parc');
+    const rowId = getRowId(row);
+    const parcelas = getParcelaState(row, {valNum, contratado, isPaid, histValores});
+
+    // recalcula contratado/pago/saldo a partir do state de parcelas (fonte da verdade)
+    contratado = parcelas.reduce((s,p)=>s+p.valor,0);
+    const pago = parcelas.filter(p=>p.pago).reduce((s,p)=>s+p.valor,0);
+    const saldo = contratado - pago;
+
+    document.getElementById('sup-m-amounts').innerHTML =
+      '<div class="sup-m-amt"><span class="lbl">Contratado</span><span class="val">'+fmtBRL(contratado)+'</span><span class="d">valor negociado total</span></div>' +
+      '<div class="sup-m-amt paid"><span class="lbl">Pago</span><span class="val">'+fmtBRL(pago)+'</span><span class="d">'+(pago>0?(contratado>0?Math.round(pago/contratado*100)+'% do contratado':'liquidado'):'nenhum pagamento')+'</span></div>' +
+      '<div class="sup-m-amt due"><span class="lbl">Saldo</span><span class="val">'+fmtBRL(Math.max(0,saldo))+'</span><span class="d">'+(saldo>0?whenLbl:'tudo quitado')+'</span></div>';
+
+    parcBox.innerHTML = parcelas.map((p,i) => {
+      const cls = p.pago ? 'pago' : 'pend';
+      const dt = p.pago ? ('pago · ' + (p.pagoEm || 'hoje')) : (p.etapa || 'a pagar');
+      const btn = p.pago
+        ? '<button class="parc-btn undo" type="button" onclick="event.stopPropagation();desfazerParcela(\''+rowId+'\','+i+')">✗ Desfazer</button>'
+        : '<button class="parc-btn go" type="button" onclick="event.stopPropagation();darBaixaParcela(\''+rowId+'\','+i+')">✓ Dar baixa</button>';
+      return '<div class="sup-m-parc-row '+cls+'" data-pidx="'+i+'">' +
+          '<span class="dot"></span>' +
+          '<span class="lbl">'+(p.label || ('Parcela '+(i+1)))+'</span>' +
+          '<span class="dt">'+dt+'</span>' +
+          '<span class="vl">'+fmtBRL(p.valor)+'</span>' +
+          btn +
+        '</div>';
+    }).join('');
+
+    // Arquivos (NF + comprovante)
+    const rid = row.dataset.oid || rowId;
+    const arq = (window.ZObraArq && rid) ? window.ZObraArq[rid] || {} : {};
+    document.getElementById('sup-m-files').innerHTML =
+      '<div class="sup-m-file '+(arq.nf?'has':'empty')+'" onclick="abrirArqModal(\'nf\')">' +
+        '<span class="f-ico">🧾</span>' +
+        '<div class="f-body"><span class="f-lbl">Nota fiscal</span><span class="f-name">'+(arq.nf?arq.nf.name:'nenhum anexo — clique para adicionar')+'</span></div>' +
+      '</div>' +
+      '<div class="sup-m-file '+(arq.comp?'has comp':'empty')+'" onclick="abrirArqModal(\'comp\')">' +
+        '<span class="f-ico">✓</span>' +
+        '<div class="f-body"><span class="f-lbl">Comprovante</span><span class="f-name">'+(arq.comp?arq.comp.name:'nenhum anexo — clique para adicionar')+'</span></div>' +
+      '</div>';
+
+    // Botão pagar: só exibe se alguma parcela ainda estiver pendente
+    const btnPag = document.getElementById('sup-m-btn-pagar');
+    const pendCount = parcelas.filter(p => !p.pago).length;
+    if(pendCount === 0){
+      btnPag.style.display = 'none';
+    } else {
+      btnPag.style.display = '';
+      btnPag.innerHTML = '✓ Dar baixa em ' + (pendCount === parcelas.length ? 'todas' : ('nas ' + pendCount + ' pendentes'));
+    }
+
+    // abre
+    backdrop.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  };
+
+  window.fecharDetalheFornecedor = function(){
+    backdrop.classList.remove('open');
+    document.body.style.overflow = '';
+    currentRow = null;
+  };
+
+  window.copiarTxt = function(ev, txt){
+    ev.stopPropagation();
+    navigator.clipboard?.writeText(txt).then(()=>{
+      flash('Copiado: ' + txt);
+    }).catch(()=>{ flash('Não foi possível copiar'); });
+  };
+
+  window.abrirArqModal = function(kind){
+    if(!currentRow) return;
+    const chips = currentRow.querySelectorAll('.fchip');
+    const chip = (kind==='nf') ? chips[0] : chips[1];
+    if(chip) uploadArq(chip, kind);
+    // re-render após 200ms
+    setTimeout(()=> { if(currentRow) abrirDetalheFornecedor(currentRow); }, 250);
+  };
+
+  window.anexarComprovanteFornecedor = function(){ abrirArqModal('comp'); };
+
+  // ==================== STATE DE PARCELAS ====================
+  window.ZObraParc = window.ZObraParc || {};
+
+  function getRowId(row){
+    if(!row) return '';
+    if(!row.dataset.pid){
+      // gera id determinístico baseado em posição + nome
+      const idx = Array.from(document.querySelectorAll('.exp-row')).indexOf(row);
+      const name = (row.querySelector('.exp-main .name')?.textContent || '').trim().slice(0,28).replace(/[^a-z0-9]/gi,'_');
+      row.dataset.pid = 'r'+idx+'_'+name;
+    }
+    return row.dataset.pid;
+  }
+
+  function getParcelaState(row, ctx){
+    const rid = getRowId(row);
+    if(window.ZObraParc[rid]) return window.ZObraParc[rid];
+
+    const {valNum, contratado, isPaid, histValores} = ctx;
+    const sub = row.querySelector('.exp-main .sub')?.textContent.trim() || '';
+    const parcelas = [];
+
+    // cenário 1: sub menciona múltiplos lançamentos (ex: "3 lançamentos: R$ 6.950 + R$ 3.227 + R$ 4.057")
+    // cenário 2: Gerenciamento Zenon tem 7 parcelas mensais identificadas no sub
+    // cenário 3: sub diz "1ª paga / 2 pendentes"
+    const mGer = sub.match(/(\d+)\s*parcela[s]?\s+de\s+R\$\s*([\d.]+(?:,\d+)?)/i);
+    const mLanc = sub.match(/(\d+)\s*lançamento[s]?/i);
+    const mPagoDe = sub.match(/(\d+)\s+pag[oa]s?\s+de\s+(\d+)/i); // "1 pago de 3"
+    const mRest = sub.match(/(\d+)\s*parcela[s]?\s+(?:restante|pendente|a pagar)/i); // "2 parcelas restantes"
+    const mContratos = sub.match(/(\d+)\s*contrato[s]?\s+parciai[s]?/i); // "3 contratos parciais"
+
+    if(mGer){
+      // N parcelas iguais (gerenciamento / aluguel / recorrente)
+      const nP = parseInt(mGer[1]);
+      const vP = parseFloat(mGer[2].replace(/\./g,'').replace(',','.'));
+      // pagas = total já liquidado / vP
+      const pagasCount = isPaid ? nP : Math.max(0, Math.round((contratado - valNum) / vP));
+      for(let i=0;i<nP;i++){
+        parcelas.push({
+          label: 'Parcela '+(i+1)+' de '+nP,
+          valor: vP,
+          pago: i < pagasCount,
+          pagoEm: i < pagasCount ? 'mês '+(i+1) : null,
+          etapa: 'mensal'
+        });
+      }
+    } else if(histValores.length > 1 && Math.abs(histValores.reduce((a,b)=>a+b,0) - contratado) < contratado*0.12){
+      // múltiplos valores heterogêneos no sub
+      const total = histValores.reduce((a,b)=>a+b,0);
+      let acum = 0;
+      // se isPaid, todas estão pagas. Senão, marca como pagas as primeiras até completar (contratado-valNum)
+      const pagoTgt = isPaid ? total : (contratado - valNum);
+      histValores.forEach((v,i) => {
+        const wasPaid = acum + v <= pagoTgt + v*0.05;
+        parcelas.push({
+          label: 'Lançamento '+(i+1),
+          valor: v,
+          pago: isPaid ? true : wasPaid,
+          pagoEm: (isPaid || wasPaid) ? 'confirmado' : null,
+          etapa: i===0 ? 'entrada' : (i===histValores.length-1 ? 'final' : 'intermediário')
+        });
+        if(isPaid || wasPaid) acum += v;
+      });
+    } else if(mRest || mContratos){
+      // "N parcelas restantes" ou "N contratos parciais" → divide valNum em N partes iguais
+      const n = parseInt((mRest || mContratos)[1]);
+      const cada = Math.round(valNum / n);
+      const isContrato = !!mContratos;
+      for(let i=0;i<n;i++){
+        const v = (i === n-1) ? (valNum - cada*(n-1)) : cada;
+        parcelas.push({
+          label: (isContrato ? 'Contrato ' : 'Parcela ') + (i+1) + ' de ' + n,
+          valor: v,
+          pago: false,
+          etapa: isContrato ? 'frente de serviço' : 'a pagar'
+        });
+      }
+    } else if(isPaid){
+      // única parcela quitada
+      parcelas.push({
+        label: 'Pagamento único',
+        valor: valNum,
+        pago: true,
+        pagoEm: 'confirmado',
+        etapa: 'à vista'
+      });
+    } else {
+      // pendente: tenta 2 parcelas (50/50) como padrão editável
+      const p1 = Math.round(valNum/2);
+      parcelas.push({label:'Parcela 1 · adiantamento', valor:p1, pago:false, etapa:'na aprovação'});
+      parcelas.push({label:'Parcela 2 · entrega final', valor: valNum - p1, pago:false, etapa:'na entrega'});
+    }
+
+    window.ZObraParc[rid] = parcelas;
+    return parcelas;
+  }
+
+  function atualizarRowStatus(row){
+    if(!row) return;
+    const rid = getRowId(row);
+    const parcelas = window.ZObraParc[rid];
+    if(!parcelas) return;
+
+    const total = parcelas.reduce((s,p)=>s+p.valor,0);
+    const pagoVal = parcelas.filter(p=>p.pago).reduce((s,p)=>s+p.valor,0);
+    const saldo = total - pagoVal;
+    const countPago = parcelas.filter(p=>p.pago).length;
+    const n = parcelas.length;
+
+    const stat = row.querySelector('.exp-stat');
+    const val = row.querySelector('.exp-val');
+    if(!stat || !val) return;
+
+    // limpa classes de status
+    ['pendente','aguard','pago','atrasado','repasse'].forEach(c => stat.classList.remove(c));
+
+    if(countPago === 0){
+      stat.classList.add('pendente');
+      stat.textContent = 'Pendente';
+      val.classList.remove('paid');
+      val.textContent = fmtBRL(saldo);
+    } else if(countPago === n){
+      stat.classList.add('pago');
+      stat.textContent = 'Pago';
+      val.classList.add('paid');
+      val.textContent = fmtBRL(total);
+    } else {
+      stat.classList.add('aguard');
+      stat.textContent = countPago + '/' + n;
+      val.classList.remove('paid');
+      val.textContent = fmtBRL(saldo);
+    }
+  }
+
+  window.darBaixaParcela = function(rid, idx){
+    const parcelas = window.ZObraParc[rid];
+    if(!parcelas || !parcelas[idx]) return;
+    if(parcelas[idx].pago) return;
+
+    parcelas[idx].pago = true;
+    const hoje = new Date().toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'});
+    parcelas[idx].pagoEm = hoje;
+
+    // encontra a row correspondente
+    const row = document.querySelector('.exp-row[data-pid="'+rid+'"]');
+    if(row) atualizarRowStatus(row);
+
+    const valor = fmtBRL(parcelas[idx].valor);
+    flash('✓ Baixa registrada · ' + valor + ' · ' + (parcelas[idx].label || ''));
+
+    // re-render do modal se ainda estiver aberto
+    if(currentRow && getRowId(currentRow) === rid){
+      abrirDetalheFornecedor(currentRow);
+    }
+  };
+
+  window.desfazerParcela = function(rid, idx){
+    const parcelas = window.ZObraParc[rid];
+    if(!parcelas || !parcelas[idx]) return;
+    if(!parcelas[idx].pago) return;
+
+    parcelas[idx].pago = false;
+    parcelas[idx].pagoEm = null;
+
+    const row = document.querySelector('.exp-row[data-pid="'+rid+'"]');
+    if(row) atualizarRowStatus(row);
+
+    flash('↺ Baixa desfeita · ' + (parcelas[idx].label || 'parcela ' + (idx+1)));
+
+    if(currentRow && getRowId(currentRow) === rid){
+      abrirDetalheFornecedor(currentRow);
+    }
+  };
+
+  window.marcarPagoFornecedor = function(){
+    // dá baixa em todas as parcelas pendentes
+    if(!currentRow) return;
+    const rid = getRowId(currentRow);
+    const parcelas = window.ZObraParc[rid];
+    if(!parcelas) return;
+    const pendentes = parcelas.filter(p => !p.pago).length;
+    if(pendentes === 0){ flash('Todas as parcelas já estão pagas'); return; }
+
+    const hoje = new Date().toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'});
+    parcelas.forEach(p => { if(!p.pago){ p.pago = true; p.pagoEm = hoje; } });
+
+    atualizarRowStatus(currentRow);
+    flash('✓ Dadas baixas em ' + pendentes + ' parcela' + (pendentes>1?'s':''));
+    abrirDetalheFornecedor(currentRow);
+  };
+
+  window.editarFornecedor = function(){
+    flash('Modo edição · em breve (próximo release)');
+  };
+
+  window.exportarFornecedor = function(){
+    if(!currentRow) return;
+    const name = currentRow.querySelector('.exp-main .name')?.textContent.trim() || 'fornecedor';
+    flash('Gerando PDF · ' + name.slice(0,30));
+  };
+
+  window.removerFornecedor = function(){
+    if(!currentRow) return;
+    const name = currentRow.querySelector('.exp-main .name')?.textContent.trim() || 'este lançamento';
+    if(confirm('Excluir "' + name + '"?\n\nEssa ação remove o lançamento da obra, mas mantém histórico no log.')){
+      currentRow.style.opacity = '0';
+      currentRow.style.transition = 'opacity .25s';
+      setTimeout(()=>{ currentRow.remove(); fecharDetalheFornecedor(); flash('Lançamento removido'); }, 260);
+    }
+  };
+
+  // abrir modal ao clicar em qualquer parte da .exp-row (exceto elementos interativos internos)
+  document.addEventListener('click', function(e){
+    const row = e.target.closest('.exp-row');
+    if(!row) return;
+    // ignora clique em elementos que já têm ação própria
+    if(e.target.closest('.chk, .fchip, .exp-stat, .exp-menu, a, button, input, select')) return;
+    window.abrirDetalheFornecedor(row);
+  });
+
+  // conecta o menu ⋮ para também abrir o modal
+  window.abrirMenu = function(el){
+    const row = el.closest('.exp-row');
+    if(row) window.abrirDetalheFornecedor(row);
+  };
+
+  // ESC fecha
+  document.addEventListener('keydown', e => {
+    if(e.key === 'Escape' && backdrop.classList.contains('open')) fecharDetalheFornecedor();
+  });
+})();
+</script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script src="supabase-client.js"></script>
+</body>
+</html>
