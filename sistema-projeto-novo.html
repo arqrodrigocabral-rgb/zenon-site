@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Novo projeto — Zenon Sistema</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shell.css">
+<style>
+  main.form{max-width:960px;padding:24px 36px 72px;display:flex;flex-direction:column;gap:22px}
+
+  .crumbs{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-mute);font-weight:600;display:flex;gap:8px;align-items:center}
+  .crumbs a{color:var(--ink-soft);text-decoration:none}
+  .crumbs a:hover{color:var(--accent-ink)}
+  .crumbs .sep{color:var(--line-strong)}
+
+  .form-head{background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:26px 30px;display:flex;justify-content:space-between;align-items:flex-start;gap:20px}
+  .form-head h1{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:36px;font-weight:400;color:var(--ink);line-height:1.05}
+  .form-head h1 em{font-style:italic;color:var(--accent-ink)}
+  .form-head p{font-size:13px;color:var(--ink-body);margin-top:6px;max-width:520px;line-height:1.6}
+  .form-head .status{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-mute);font-weight:700}
+
+  .form-group{background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:24px 28px;display:flex;flex-direction:column;gap:18px}
+  .fg-head{padding-bottom:14px;border-bottom:1px solid var(--line-soft)}
+  .fg-head h3{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:22px;font-weight:500;color:var(--ink);line-height:1}
+  .fg-head h3 em{font-style:italic;color:var(--accent-ink)}
+  .fg-head .sub{font-size:12px;color:var(--ink-soft);margin-top:4px}
+
+  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+  .grid.three{grid-template-columns:repeat(3,1fr)}
+  .grid.four{grid-template-columns:repeat(4,1fr)}
+  .grid .span-2{grid-column:span 2}
+  .grid .span-3{grid-column:span 3}
+  .grid .span-4{grid-column:span 4}
+
+  .field{display:flex;flex-direction:column;gap:6px}
+  .field label{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft);font-weight:600}
+  .field label .req{color:var(--alert)}
+  .field input,.field select,.field textarea{border:1px solid var(--line);background:var(--bg);padding:10px 13px;font-family:'Inter',sans-serif;font-size:13px;color:var(--ink);border-radius:3px;transition:border-color .15s}
+  .field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--accent)}
+  .field textarea{resize:vertical;min-height:80px;line-height:1.5}
+  .field .hint{font-size:11px;color:var(--ink-mute);margin-top:2px}
+
+  .seg{display:flex;gap:0;border:1px solid var(--line);border-radius:3px;overflow:hidden}
+  .seg button{flex:1;background:var(--bg);border:none;padding:10px;font-family:'Inter',sans-serif;font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:600;color:var(--ink-soft);cursor:pointer;border-right:1px solid var(--line)}
+  .seg button:last-child{border-right:none}
+  .seg button.on{background:var(--ink);color:#fff}
+
+  .unid-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px}
+  .unid{padding:12px 10px;border:1px solid var(--line);border-radius:3px;text-align:center;cursor:pointer;transition:all .15s;background:var(--bg)}
+  .unid:hover{border-color:var(--line-strong)}
+  .unid.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .unid .nm{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:15px;font-weight:500;line-height:1;margin-bottom:3px}
+  .unid .sub{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-mute);font-weight:600}
+  .unid.on .sub{color:rgba(255,255,255,.7)}
+
+  .team-list{display:flex;flex-direction:column;gap:10px}
+  .team-row{display:grid;grid-template-columns:36px 1fr auto auto;gap:12px;align-items:center;padding:10px 14px;background:var(--bg);border:1px solid var(--line-soft);border-radius:3px}
+  .tm-av{width:36px;height:36px;border-radius:50%;background:var(--accent-soft);color:var(--accent-ink);display:flex;align-items:center;justify-content:center;font-weight:600;font-size:13px}
+  .tm-nm{font-size:13px;color:var(--ink);font-weight:500}
+  .tm-nm span{display:block;font-size:11px;color:var(--ink-soft);font-weight:400;margin-top:2px}
+  .tm-role{min-width:140px;border:1px solid var(--line);background:var(--bg);padding:6px 10px;font-size:12px;border-radius:3px;color:var(--ink)}
+  .tm-rm{font-size:11px;color:var(--warn);cursor:pointer;letter-spacing:.08em}
+
+  .add-row{border:1px dashed var(--line-strong);background:var(--bg-alt);padding:11px;text-align:center;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);font-weight:600;border-radius:3px;cursor:pointer}
+  .add-row:hover{border-color:var(--accent);color:var(--accent-ink)}
+
+  .fases-list{display:flex;flex-direction:column;gap:8px}
+  .fase-row{display:grid;grid-template-columns:32px 1fr 140px 140px 32px;gap:10px;align-items:center;padding:10px 12px;background:var(--bg);border:1px solid var(--line-soft);border-radius:3px}
+  .fase-num{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:18px;color:var(--accent-ink);font-weight:500;text-align:center}
+  .fase-row input,.fase-row select{border:1px solid var(--line);background:var(--bg);padding:7px 10px;font-size:12px;border-radius:2px;font-family:'Inter',sans-serif;color:var(--ink)}
+  .fase-rm{color:var(--warn);cursor:pointer;text-align:center}
+
+  .foot{position:sticky;bottom:0;background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:16px 24px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 -4px 12px rgba(26,22,18,.04)}
+  .foot .msg{font-size:12px;color:var(--ink-soft)}
+  .foot .actions{display:flex;gap:10px}
+  .btn{font-family:'Inter',sans-serif;font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;padding:11px 22px;border-radius:3px;cursor:pointer;text-align:center;text-decoration:none;border:1px solid var(--line-strong);color:var(--ink-soft);background:var(--bg)}
+  .btn:hover{border-color:var(--accent);color:var(--accent-ink)}
+  .btn.primary{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .btn.primary:hover{background:var(--accent-ink);border-color:var(--accent-ink);color:#fff}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-inner">
+    <div class="brand">Zen<span>o</span>n — Sistema</div>
+    <div class="search"><input type="search" placeholder="Buscar…"></div>
+    <div class="fx-chip" title="Cotação do dólar (USD/BRL)">
+      <span class="fx-code">USD</span>
+      <span class="fx-val"><span class="cur">R$</span>—</span>
+      <span class="fx-delta flat">…</span>
+      <div class="fx-tip"></div>
+    </div>
+
+    <div class="user-menu">
+      <button type="button" class="user-trigger" onclick="ZenonUser.toggleDropdown(event)" aria-haspopup="true" aria-expanded="false">
+        <span class="u-name" data-user-name>Rodrigo</span>
+        <span class="avatar" data-user="me">R</span>
+        <span class="u-caret">▾</span>
+      </button>
+      <div class="user-dropdown" role="menu">
+        <div class="ud-head">
+          <span class="avatar" data-user="me">R</span>
+          <div>
+            <div class="name" data-user-name>Rodrigo</div>
+            <div class="role" data-user-role>Sócio · Arquiteto responsável</div>
+          </div>
+        </div>
+        <a href="sistema-perfil.html"><span class="ic">◎</span>Ver perfil</a>
+        <a href="sistema-configuracoes.html"><span class="ic">⚙</span>Configurações</a>
+        <a href="sistema-empresa.html"><span class="ic">⌂</span>Dados da empresa</a>
+        <a href="https://www.notion.so/Zenon" target="_blank"><span class="ic">✱</span>Atividades · Notion ↗</a>
+        <div class="ud-sep"></div>
+        <a href="sistema-login.html" class="sign-out"><span class="ic">↪</span>Sair</a>
+      </div>
+    </div>
+  </div>
+  <nav class="tabs">
+    <a href="sistema-painel.html">Painel</a>
+    <a href="sistema-clientes.html">Clientes</a>
+    <a href="sistema-projetos.html" class="active">Projetos</a>
+    <a href="sistema-obra.html">Obra</a>
+    <a href="sistema-obra-financeiro.html">Obra financeiro</a>
+    <a href="sistema-propostas.html">Propostas</a>
+    <a href="sistema-financeiro.html">Financeiro</a>
+    <a href="sistema-empresa.html">Empresa</a>
+    <a href="sistema-log.html">Log da equipe</a>
+  </nav>
+</header>
+
+<main class="form">
+
+  <div class="crumbs">
+    <a href="sistema-projetos.html">Projetos</a>
+    <span class="sep">›</span>
+    <span>Novo projeto</span>
+  </div>
+
+  <!-- HEAD -->
+  <section class="form-head">
+    <div>
+      <h1>Novo <em>projeto</em></h1>
+      <p>Crie um projeto vinculado a um cliente. Você pode começar direto do início, ou partir de uma proposta já aceita. O código é gerado automaticamente.</p>
+    </div>
+    <span class="status">Próximo código: #P-09</span>
+  </section>
+
+  <!-- UNIDADE + ORIGEM -->
+  <section class="form-group">
+    <div class="fg-head">
+      <h3><em>Unidade de negócio</em></h3>
+      <div class="sub">A partir de qual unidade Zenon esse projeto será entregue</div>
+    </div>
+
+    <div class="unid-grid" style="grid-template-columns:repeat(4,1fr)">
+      <div class="unid"><div class="nm">Zenon Co.</div><div class="sub">Guarda-chuva · não entrega projeto</div></div>
+      <div class="unid on"><div class="nm">Yvyra Arquitetura</div><div class="sub">Principal · projetos e obras</div></div>
+      <div class="unid"><div class="nm">Zenon Stay</div><div class="sub">Hospedagem · apartamentos</div></div>
+      <div class="unid"><div class="nm">Zenon Vision</div><div class="sub">Interno · gestão própria</div></div>
+    </div>
+    <div style="margin-top:10px;padding:10px 14px;background:#fbf8f3;border:1px solid #dcc8a8;border-radius:3px;font-size:11px;color:#8b5a3c;line-height:1.5">
+      <strong>Cabana</strong> e <strong>Casa Blue</strong> não geram projeto de arquitetura — são despesas pessoais centralizadas no Financeiro, não unidades de negócio.
+    </div>
+
+    <div class="grid">
+      <div class="field">
+        <label>Origem do projeto</label>
+        <div class="seg">
+          <button class="on">Zero</button>
+          <button>Proposta aceita</button>
+          <button>Duplicar projeto</button>
+        </div>
+      </div>
+      <div class="field">
+        <label>Proposta vinculada (se houver)</label>
+        <select>
+          <option>— nenhuma —</option>
+          <option>PRO-1 — CT Darkhouse / Jakson Nantes</option>
+          <option>PRO-5 — Juliana e Felipe Vasconcellos</option>
+        </select>
+      </div>
+    </div>
+  </section>
+
+  <!-- DADOS -->
+  <section class="form-group">
+    <div class="fg-head">
+      <h3><em>Dados do projeto</em></h3>
+      <div class="sub">Informações essenciais</div>
+    </div>
+
+    <div class="grid">
+      <div class="field span-2">
+        <label>Nome do projeto <span class="req">*</span></label>
+        <input type="text" placeholder="Ex: Residência Prado / Loft Pinheiros">
+      </div>
+      <div class="field">
+        <label>Tipo de projeto <span class="req">*</span></label>
+        <select>
+          <option>Residencial</option>
+          <option>Reforma</option>
+          <option>Regularização</option>
+          <option>Comercial</option>
+          <option>Institucional</option>
+          <option>Interno</option>
+          <option>Manifesto / pesquisa</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Cliente <span class="req">*</span></label>
+        <select>
+          <option>— selecione —</option>
+          <option>CLI-1 — Jakson Nantes (CT Darkhouse)</option>
+          <option>CLI-4 — Rafael Monici (Clínica ECCO)</option>
+        </select>
+        <span class="hint"><a href="sistema-cliente-novo.html" style="color:var(--accent-ink);text-decoration:none">+ Cadastrar novo cliente</a></span>
+      </div>
+      <div class="field">
+        <label>Área (m²)</label>
+        <input type="number" placeholder="180">
+      </div>
+      <div class="field">
+        <label>Localização</label>
+        <input type="text" placeholder="Bairro, cidade">
+      </div>
+      <div class="field span-2">
+        <label>Resumo / partido</label>
+        <textarea placeholder="Descrição curta do projeto, diretrizes principais e objetivo"></textarea>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRAZO -->
+  <section class="form-group">
+    <div class="fg-head">
+      <h3><em>Prazo e valores</em></h3>
+      <div class="sub">Datas e referências financeiras</div>
+    </div>
+
+    <div class="grid four">
+      <div class="field">
+        <label>Data de início <span class="req">*</span></label>
+        <input type="date">
+      </div>
+      <div class="field">
+        <label>Previsão de entrega</label>
+        <input type="date">
+      </div>
+      <div class="field">
+        <label>Valor do contrato</label>
+        <input type="text" placeholder="R$ 0,00">
+      </div>
+      <div class="field">
+        <label>Horas estimadas</label>
+        <input type="number" placeholder="0">
+      </div>
+    </div>
+  </section>
+
+  <!-- EQUIPE -->
+  <section class="form-group">
+    <div class="fg-head">
+      <h3><em>Equipe responsável</em></h3>
+      <div class="sub">Quem trabalha nesse projeto e em qual papel</div>
+    </div>
+
+    <div class="team-list">
+      <div class="team-row">
+        <div class="tm-av">RC</div>
+        <div class="tm-nm">Rodrigo Cabral<span>Arquiteto · CAU A148704-5 · Admin</span></div>
+        <select class="tm-role">
+          <option selected>Líder de projeto</option>
+          <option>Arquiteto responsável</option>
+          <option>Revisor</option>
+        </select>
+        <span class="tm-rm">Remover</span>
+      </div>
+      <div class="team-row">
+        <div class="tm-av">LU</div>
+        <div class="tm-nm">Luana<span>Editor · colaboração</span></div>
+        <select class="tm-role">
+          <option selected>Colaborador</option>
+          <option>Revisor</option>
+          <option>Líder de projeto</option>
+        </select>
+        <span class="tm-rm">Remover</span>
+      </div>
+      <div class="team-row">
+        <div class="tm-av">AN</div>
+        <div class="tm-nm">Anderson<span>Acompanhamento de obra</span></div>
+        <select class="tm-role">
+          <option selected>Acompanhamento de obra</option>
+          <option>Mestre de obras</option>
+          <option>Colaborador</option>
+        </select>
+        <span class="tm-rm">Remover</span>
+      </div>
+      <div class="add-row">+ Adicionar membro</div>
+    </div>
+  </section>
+
+  <!-- FASES -->
+  <section class="form-group">
+    <div class="fg-head">
+      <h3><em>Fases do projeto</em></h3>
+      <div class="sub">Sugestão inicial com base no tipo. Você poderá ajustar a qualquer momento.</div>
+    </div>
+
+    <div class="fases-list">
+      <div class="fase-row">
+        <span class="fase-num">1</span>
+        <input type="text" value="Briefing e levantamento">
+        <input type="date">
+        <input type="date">
+        <span class="fase-rm">×</span>
+      </div>
+      <div class="fase-row">
+        <span class="fase-num">2</span>
+        <input type="text" value="Estudo preliminar">
+        <input type="date">
+        <input type="date">
+        <span class="fase-rm">×</span>
+      </div>
+      <div class="fase-row">
+        <span class="fase-num">3</span>
+        <input type="text" value="Anteprojeto">
+        <input type="date">
+        <input type="date">
+        <span class="fase-rm">×</span>
+      </div>
+      <div class="fase-row">
+        <span class="fase-num">4</span>
+        <input type="text" value="Projeto executivo">
+        <input type="date">
+        <input type="date">
+        <span class="fase-rm">×</span>
+      </div>
+      <div class="fase-row">
+        <span class="fase-num">5</span>
+        <input type="text" value="Acompanhamento de obra">
+        <input type="date">
+        <input type="date">
+        <span class="fase-rm">×</span>
+      </div>
+      <div class="add-row">+ Adicionar fase</div>
+    </div>
+  </section>
+
+  <!-- ACESSO PORTAL -->
+  <section class="form-group">
+    <div class="fg-head">
+      <h3><em>Acesso do cliente ao portal</em></h3>
+      <div class="sub">O cliente poderá acompanhar evolução, decisões pendentes e arquivos liberados</div>
+    </div>
+
+    <div class="grid">
+      <div class="field">
+        <label>Liberar projeto no portal</label>
+        <div class="seg">
+          <button class="on">Sim</button>
+          <button>Não (privado)</button>
+        </div>
+      </div>
+      <div class="field">
+        <label>Arquivos visíveis para o cliente</label>
+        <select>
+          <option>Apenas marcados como "visível"</option>
+          <option>Todos os arquivos</option>
+          <option>Nenhum até eu liberar</option>
+        </select>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOT -->
+  <div class="foot">
+    <span class="msg">Alterações salvas automaticamente como rascunho</span>
+    <div class="actions">
+      <a href="sistema-projetos.html" class="btn">Cancelar</a>
+      <button type="button" class="btn" onclick="salvarRascunhoProjeto()">Salvar rascunho</button>
+      <a href="sistema-projeto-detalhe.html" class="btn primary" onclick="return criarProjeto(event)">Criar projeto</a>
+    </div>
+  </div>
+
+</main>
+
+<script>
+  function salvarRascunhoProjeto(){
+    const nome = document.querySelector('.form-side input[type="text"]')?.value || 'Projeto sem nome';
+    const toast = document.createElement('div');
+    toast.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1a1a1a;color:#fff;padding:12px 20px;border-radius:4px;font-family:Inter,sans-serif;font-size:13px;z-index:9999;box-shadow:0 10px 28px rgba(0,0,0,.22)';
+    toast.textContent = '✓ Rascunho salvo · "' + nome + '"';
+    document.body.appendChild(toast);
+    setTimeout(()=> toast.style.opacity='0', 2400);
+    setTimeout(()=> toast.remove(), 2900);
+  }
+  function criarProjeto(ev){
+    const obrig = document.querySelectorAll('input[required], select[required]');
+    let falta = false;
+    obrig.forEach(inp=>{
+      if(!inp.value || !inp.value.trim()){ inp.style.borderColor = '#c62828'; falta = true; }
+      else{ inp.style.borderColor = ''; }
+    });
+    if(falta){
+      if(ev) ev.preventDefault();
+      alert('Preencha os campos obrigatórios antes de criar.');
+      return false;
+    }
+    return true;
+  }
+</script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script src="supabase-client.js"></script>
+  <script src="shell-user.js"></script>
+<script src="shell-fx.js"></script>
+</body>
+</html>
