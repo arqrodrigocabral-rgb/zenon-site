@@ -320,7 +320,7 @@
     // Portal link → abre o portal Yvyra (yvyra-preview.html) na seção de login
     const portalBtn = status.legado
       ? '<span class="portal-link" style="opacity:.6;pointer-events:none">Portal <span class="ar">↗</span></span>'
-      : '<a href="index.html#portal" target="_blank" class="portal-link">Portal <span class="ar">↗</span></a>';
+      : '<a href="index.html?cliente='+cli.id+'#portal" target="_blank" class="portal-link">Portal <span class="ar">↗</span></a>';
 
     return ''
       + '<tr data-cli="'+cli.id+'"'+rowOpacity+'>'
