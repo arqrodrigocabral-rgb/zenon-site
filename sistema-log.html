@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Log da equipe — Zenon Sistema</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shell.css">
+<style>
+  .filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+  .filters a{
+    padding:8px 14px;border:1px solid var(--line);border-radius:999px;
+    font-size:12px;letter-spacing:.12em;text-transform:uppercase;font-weight:500;color:var(--ink-soft);
+    background:var(--paper);transition:all .2s;
+  }
+  .filters a:hover{border-color:var(--accent);color:var(--ink)}
+  .filters a.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+
+  .log-grid{display:grid;grid-template-columns:1fr 320px;gap:22px}
+  @media (max-width:960px){.log-grid{grid-template-columns:1fr}}
+
+  .day-block{margin-bottom:28px}
+  .day-head{
+    display:flex;align-items:baseline;gap:12px;margin-bottom:12px;
+    padding-bottom:8px;border-bottom:1px solid var(--line);
+  }
+  .day-head .date{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:24px;font-weight:500;color:var(--ink)}
+  .day-head .weekday{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-mute);font-weight:600}
+  .day-head .count{margin-left:auto;font-size:11px;color:var(--ink-soft)}
+
+  .log-item{
+    display:grid;grid-template-columns:56px 1fr auto;gap:14px;align-items:flex-start;
+    padding:14px 0;border-bottom:1px solid var(--line-soft);
+  }
+  .log-item:last-child{border-bottom:none}
+  .log-avatar{
+    width:40px;height:40px;border-radius:50%;
+    background:var(--accent-soft);color:var(--accent-ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:17px;font-weight:600;
+  }
+  .log-avatar.br{background:#e6dfcf;color:#3e342a}
+  .log-avatar.lu{background:#e4d7c2;color:#5c4428}
+  .log-avatar.an{background:#d7cbb6;color:#3d342a}
+  .log-body .who{font-size:13px;font-weight:600;color:var(--ink)}
+  .log-body .who .action{font-weight:400;color:var(--ink-soft)}
+  .log-body .ref{font-size:12px;color:var(--accent-ink);margin-top:2px;font-weight:500}
+  .log-body .note{
+    font-size:13px;color:var(--ink-body);margin-top:6px;line-height:1.55;
+    padding:10px 12px;background:var(--bg-alt);border-left:2px solid var(--line);border-radius:0 4px 4px 0;
+  }
+  .log-body .meta{font-size:11px;color:var(--ink-mute);letter-spacing:.08em;text-transform:uppercase;margin-top:6px;font-weight:600}
+  .log-time{font-size:11px;color:var(--ink-mute);white-space:nowrap;padding-top:3px;letter-spacing:.06em}
+
+  .team-panel{
+    background:var(--paper);border:1px solid var(--line);border-radius:4px;padding:20px;
+    display:flex;flex-direction:column;gap:16px;
+    position:sticky;top:24px;align-self:flex-start;
+  }
+  .team-panel h3{
+    font-family:'Inter',sans-serif;font-size:11px;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--ink);font-weight:700;
+  }
+  .team-member{
+    display:grid;grid-template-columns:36px 1fr auto;gap:12px;align-items:center;
+    padding:10px 0;border-bottom:1px solid var(--line-soft);
+  }
+  .team-member:last-child{border-bottom:none}
+  .team-member .who{font-size:13px;font-weight:600;color:var(--ink)}
+  .team-member .role{font-size:11px;color:var(--ink-soft)}
+  .team-member .count{
+    font-family:'Fraunces','Source Serif 4',Georgia,serif;font-size:22px;color:var(--accent-ink);font-weight:600;line-height:1;
+  }
+  .team-member .count-sub{font-size:10px;color:var(--ink-mute);text-align:right;letter-spacing:.08em;text-transform:uppercase}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-inner">
+    <div class="brand">Zen<span>o</span>n — Sistema</div>
+    <div class="search"><input type="search" placeholder="Buscar por autor, projeto, palavra-chave…"></div>
+    <div class="fx-chip" title="Cotação do dólar (USD/BRL)">
+      <span class="fx-code">USD</span>
+      <span class="fx-val"><span class="cur">R$</span>—</span>
+      <span class="fx-delta flat">…</span>
+      <div class="fx-tip"></div>
+    </div>
+
+    <div class="user-menu">
+      <button type="button" class="user-trigger" onclick="ZenonUser.toggleDropdown(event)" aria-haspopup="true" aria-expanded="false">
+        <span class="u-name" data-user-name>Rodrigo</span>
+        <span class="avatar" data-user="me">R</span>
+        <span class="u-caret">▾</span>
+      </button>
+      <div class="user-dropdown" role="menu">
+        <div class="ud-head">
+          <span class="avatar" data-user="me">R</span>
+          <div>
+            <div class="name" data-user-name>Rodrigo</div>
+            <div class="role" data-user-role>Sócio · Arquiteto responsável</div>
+          </div>
+        </div>
+        <a href="sistema-perfil.html"><span class="ic">◎</span>Ver perfil</a>
+        <a href="sistema-configuracoes.html"><span class="ic">⚙</span>Configurações</a>
+        <a href="sistema-empresa.html"><span class="ic">⌂</span>Dados da empresa</a>
+        <a href="https://www.notion.so/Zenon" target="_blank"><span class="ic">✱</span>Atividades · Notion ↗</a>
+        <div class="ud-sep"></div>
+        <a href="sistema-login.html" class="sign-out"><span class="ic">↪</span>Sair</a>
+      </div>
+    </div>
+  </div>
+  <nav class="tabs">
+    <a href="sistema-painel.html">Painel</a>
+    <a href="sistema-clientes.html">Clientes</a>
+    <a href="sistema-projetos.html">Projetos</a>
+    <a href="sistema-obra.html">Obra</a>
+    <a href="sistema-obra-financeiro.html">Obra financeiro</a>
+    <a href="sistema-propostas.html">Propostas</a>
+    <a href="sistema-financeiro.html">Financeiro</a>
+    <a href="sistema-empresa.html">Empresa</a>
+    <a href="sistema-log.html" class="active">Log da equipe</a>
+  </nav>
+</header>
+
+<main>
+  <div class="page-head">
+    <div>
+      <div class="eyebrow">Diário</div>
+      <h1><em>Log</em> da equipe</h1>
+      <div class="sub">Abril / 2026 · 1 obra ativa · 1 proposta em diagnóstico · APT 344 Zenon Stay pendente de briefing</div>
+    </div>
+    <div class="actions">
+      <a href="#" class="btn ghost small">Exportar semana</a>
+      <a href="#" class="btn small">+ Novo check-in</a>
+    </div>
+  </div>
+
+  <section>
+    <div class="kpis">
+      <div class="kpi"><div class="l">Check-ins · semana</div><div class="n">8</div><div class="delta">ECCO + CT Darkhouse</div></div>
+      <div class="kpi"><div class="l">Obra em andamento</div><div class="n">1</div><div class="delta">Clínica ECCO · 78% executada</div></div>
+      <div class="kpi"><div class="l">Projetos ativos</div><div class="n">1</div><div class="delta">Clínica ECCO · P-04</div></div>
+      <div class="kpi accent"><div class="l">Destaque · mês</div><div class="n" style="font-size:26px"><em>Clínica ECCO</em></div><div class="delta" style="color:#e8a877">entrega prevista 28/04</div></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="filters">
+      <a href="#" class="active">Toda equipe</a>
+      <a href="#">Rodrigo</a>
+      <a href="#">Breno</a>
+      <a href="#">Luana</a>
+      <a href="#">Anderson</a>
+      <a href="#" style="margin-left:auto">Hoje</a>
+      <a href="#">Esta semana</a>
+      <a href="#">Este mês</a>
+    </div>
+
+    <div class="log-grid">
+      <div>
+        <div class="day-block">
+          <div class="day-head">
+            <span class="date">19 / 04</span>
+            <span class="weekday">Domingo · hoje</span>
+            <span class="count">2 check-ins</span>
+          </div>
+
+          <div class="log-item">
+            <div class="log-avatar">R</div>
+            <div class="log-body">
+              <div class="who">Rodrigo <span class="action">· atualizou projeto</span></div>
+              <div class="ref">Clínica ECCO · P-01 · obra 37% executada</div>
+              <div class="note">Conferência semanal: saldo Movelaria R$ 35.000 programado para 20/05; cotação de ar-condicionado (R$ 18.000) aguardando aprovação do cliente. Prazo final da obra: 20/05/2026.</div>
+              <div class="meta">Projetos · 45 min</div>
+            </div>
+            <div class="log-time">15:42</div>
+          </div>
+
+          <div class="log-item">
+            <div class="log-avatar">R</div>
+            <div class="log-body">
+              <div class="who">Rodrigo <span class="action">· revisou diagnóstico</span></div>
+              <div class="ref">CT Darkhouse · Jakson Nantes · proposta</div>
+              <div class="note">Revisão do diagnóstico técnico entregue 15/04. 14 pendências de alvará + regularização sistematizadas. Aguardando Jakson priorizar quais abordar primeiro em reunião nesta semana.</div>
+              <div class="meta">Propostas · 30 min</div>
+            </div>
+            <div class="log-time">10:18</div>
+          </div>
+        </div>
+
+        <div class="day-block">
+          <div class="day-head">
+            <span class="date">18 / 04</span>
+            <span class="weekday">Sábado</span>
+            <span class="count">1 check-in</span>
+          </div>
+
+          <div class="log-item">
+            <div class="log-avatar an">A</div>
+            <div class="log-body">
+              <div class="who">Anderson <span class="action">· visita de obra</span></div>
+              <div class="ref">Clínica ECCO · Brooklin Novo</div>
+              <div class="note">Vistoria de sábado: marcenaria de recepção 100% assentada. Pintura da parede de destaque aprovada. Equipe de João Silva entrega acabamento até terça. Fotos no drive (pasta abril/ECCO).</div>
+              <div class="meta">Obra · 1h20 · com fotos</div>
+            </div>
+            <div class="log-time">10:14</div>
+          </div>
+        </div>
+
+        <div class="day-block">
+          <div class="day-head">
+            <span class="date">17 / 04</span>
+            <span class="weekday">Sexta-feira</span>
+            <span class="count">3 check-ins</span>
+          </div>
+
+          <div class="log-item">
+            <div class="log-avatar lu">L</div>
+            <div class="log-body">
+              <div class="who">Luana <span class="action">· visita de obra</span></div>
+              <div class="ref">Clínica ECCO · louças sanitárias</div>
+              <div class="note">Recebi Deca (cubas + torneiras + acessórios). Tudo conferido contra pedido. NF 8842 subida para o drive. Valor R$ 3.880 a pagar 25/04 — boleto já em Contas a Pagar.</div>
+              <div class="meta">Obra · 1h · com fotos</div>
+            </div>
+            <div class="log-time">16:04</div>
+          </div>
+
+          <div class="log-item">
+            <div class="log-avatar">R</div>
+            <div class="log-body">
+              <div class="who">Rodrigo <span class="action">· aprovou RRT</span></div>
+              <div class="ref">Clínica ECCO · CAU RRT 20260104</div>
+              <div class="note">RRT de projeto e execução registrado junto ao CAU/SP · A148704-5. R$ 220 pago via Inter Zenon empresa. Cópia anexada ao prontuário do projeto.</div>
+              <div class="meta">Projetos · 25 min</div>
+            </div>
+            <div class="log-time">14:50</div>
+          </div>
+
+          <div class="log-item">
+            <div class="log-avatar an">A</div>
+            <div class="log-body">
+              <div class="who">Anderson <span class="action">· pagamento liberado</span></div>
+              <div class="ref">Clínica ECCO · João Silva Obras</div>
+              <div class="note">Liberada medição 4/6 da equipe de João Silva: R$ 4.680. Transferência via Inter Zenon empresa. Próxima medição prevista 24/04 com arremate de obra civil.</div>
+              <div class="meta">Financeiro · 10 min</div>
+            </div>
+            <div class="log-time">11:28</div>
+          </div>
+        </div>
+
+        <div class="day-block">
+          <div class="day-head">
+            <span class="date">15 / 04</span>
+            <span class="weekday">Quarta-feira</span>
+            <span class="count">2 check-ins</span>
+          </div>
+
+          <div class="log-item">
+            <div class="log-avatar">R</div>
+            <div class="log-body">
+              <div class="who">Rodrigo <span class="action">· entregou diagnóstico</span></div>
+              <div class="ref">CT Darkhouse · Jakson Nantes</div>
+              <div class="note">Entrega do diagnóstico técnico completo (14 pendências). Documento de 22 páginas cobrindo: alvará, regularização, adequações de acessibilidade e laudo estrutural preliminar. Jakson vai revisar e voltar com priorização.</div>
+              <div class="meta">Propostas · 4h</div>
+            </div>
+            <div class="log-time">18:02</div>
+          </div>
+
+          <div class="log-item">
+            <div class="log-avatar">R</div>
+            <div class="log-body">
+              <div class="who">Rodrigo <span class="action">· nota interna</span></div>
+              <div class="ref">Zenon Stay · APT 344</div>
+              <div class="note">Ainda pendente: endereço exato, metragem confirmada e fotos do imóvel. Sem esses dados não dá para abrir obra nem orçar reforma. Cobrar Zenon nesta semana para destravar.</div>
+              <div class="meta">Projetos · 10 min</div>
+            </div>
+            <div class="log-time">09:33</div>
+          </div>
+        </div>
+      </div>
+
+      <aside class="team-panel">
+        <div>
+          <h3>Equipe · abril</h3>
+          <div class="team-member">
+            <div class="log-avatar">R</div>
+            <div>
+              <div class="who">Rodrigo Cabral</div>
+              <div class="role">Sócio · Arquiteto responsável · CAU A148704-5</div>
+            </div>
+            <div style="text-align:right">
+              <div class="count">6</div>
+              <div class="count-sub">check-ins</div>
+            </div>
+          </div>
+          <div class="team-member">
+            <div class="log-avatar an">A</div>
+            <div>
+              <div class="who">Anderson</div>
+              <div class="role">Mestre de obra · terceirizado</div>
+            </div>
+            <div style="text-align:right">
+              <div class="count">1</div>
+              <div class="count-sub">check-in</div>
+            </div>
+          </div>
+          <div class="team-member">
+            <div class="log-avatar lu">L</div>
+            <div>
+              <div class="who">Luana</div>
+              <div class="role">Apoio pontual · obra</div>
+            </div>
+            <div style="text-align:right">
+              <div class="count">1</div>
+              <div class="count-sub">check-in</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="padding-top:14px;border-top:1px solid var(--line)">
+          <h3>Categorias · mês</h3>
+          <div style="display:flex;flex-direction:column;gap:10px;margin-top:10px">
+            <div>
+              <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px">
+                <span>Obra · ECCO</span><span class="strong">4</span>
+              </div>
+              <div class="bar ok"><span style="width:50%"></span></div>
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px">
+                <span>Propostas · CT Darkhouse</span><span class="strong">2</span>
+              </div>
+              <div class="bar info"><span style="width:25%"></span></div>
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px">
+                <span>Projetos</span><span class="strong">1</span>
+              </div>
+              <div class="bar warn"><span style="width:12%"></span></div>
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px">
+                <span>Financeiro</span><span class="strong">1</span>
+              </div>
+              <div class="bar"><span style="width:12%"></span></div>
+            </div>
+          </div>
+        </div>
+
+        <div style="padding-top:14px;border-top:1px solid var(--line)">
+          <h3>Pendências · Rodrigo</h3>
+          <ul style="list-style:none;display:flex;flex-direction:column;gap:8px;margin-top:8px">
+            <li style="font-size:12px;color:var(--ink-body)">
+              <span class="dot warn"></span> Programar pagamento movelaria RM 24/04
+              <div style="color:var(--ink-mute);padding-left:16px">R$ 18.400 · 5 itens · Clínica ECCO</div>
+            </li>
+            <li style="font-size:12px;color:var(--ink-body)">
+              <span class="dot alert"></span> Cobrar Zenon · dados do APT 344
+              <div style="color:var(--ink-mute);padding-left:16px">endereço/metragem/fotos — trava o projeto Zenon Stay</div>
+            </li>
+            <li style="font-size:12px;color:var(--ink-body)">
+              <span class="dot info"></span> Reunião de priorização · CT Darkhouse
+              <div style="color:var(--ink-mute);padding-left:16px">Jakson Nantes · 14 pendências de alvará</div>
+            </li>
+            <li style="font-size:12px;color:var(--ink-body)">
+              <span class="dot info"></span> Entrega final Clínica ECCO 28/04
+              <div style="color:var(--ink-mute);padding-left:16px">Rafael Monici · Brooklin Novo</div>
+            </li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div>Cabral e Lima Design LTDA · CNPJ 59.525.877/0001-49 · CAU/BR A148704-5</div>
+  <div>sistema.zenonco.com.br · v2 — protótipo</div>
+</footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script src="supabase-client.js"></script>
+  <script src="shell-user.js"></script>
+<script src="shell-fx.js"></script>
+</body>
+</html>
