@@ -183,7 +183,7 @@
         { st:'done', t:'Projetos complementares', d:'Elétrica, hidráulica, ar-condicionado e gases medicinais por Breno.', q:'25 / 02' },
         { st:'now',  t:'Obra em execução · acabamentos', d:'Pisos concluídos · marcenaria Movelaria em instalação.', q:'Em curso' },
         { st:'',     t:'Entrega técnica + vistoria sanitária', d:'Vistoria final e apoio no alvará sanitário.', q:'20 / 05' },
-        { st:'',     t:'Pós-entrega · 180 d', d:'Visitas em 30, 90 e 180 dias após operação.', q:'Nov / 26' }
+        { st:'',     t:'Entrega técnica + vistoria', d:'Vistoria final e apoio no alvará sanitário.', q:'20 / 05' }
       ],
       decisoes: [
         { t:'Posição da sinalização de emergência', d:'Exigência sanitária · 2 opções enviadas em 15/04' },
@@ -633,14 +633,14 @@
       bairro: 'Santana · SP',
       complexidade: 'Média',
       status: 'Entregue / Concluído',
-      fase: 'Pós-entrega (180 dias)',
+      fase: 'Projeto entregue',
       tags: ['Concluído', 'Residencial'],
       progresso: 100,
       etapas: '9 / 9',
       prazoInicio: '03 / 03 / 2026',
       prazoFinal: '14 / 04 / 2026',
       rrt: null,
-      obs: 'Projeto entregue. Pós-entrega ativo: visitas de assistência nos primeiros 180 dias.',
+      obs: 'Projeto concluído e entregue.',
       restanteDias: 0,
       obraId: null,
       financeiroId: null,
@@ -671,7 +671,7 @@
         { st:'done', t:'Executivo / Detalhamento',   d:'Executivo concluído, planta demolir/construir gerada com legendas.', q:'01 / 04' },
         { st:'done', t:'Detalhamento Marcenaria',    d:'Marcenaria detalhada e enviada ao fornecedor.', q:'—' },
         { st:'done', t:'Revisão Técnica',             d:'Revisão final concluída.', q:'—' },
-        { st:'done', t:'Finalização / Entrega',       d:'Projeto entregue à família Bruna e Thiago. Pós-entrega ativo (180 dias).', q:'14 / 04' }
+        { st:'done', t:'Finalização / Entrega',       d:'Projeto entregue à família Bruna e Thiago.', q:'14 / 04' }
       ],
       decisoes: [],
       arquivos: [
