@@ -2616,6 +2616,44 @@
     cancelado:'Cancelado'
   };
 
+  /* ── PERSISTÊNCIA DE STATUS ─────────────────────────────────────
+     Salva/carrega status de cada linha (data-id) em localStorage
+     chave: zenon_fin_status_v1 → { "FIN-01-p1": "pago", "PAG-01": "pago", ... }
+  ────────────────────────────────────────────────────────────────── */
+  const FIN_STATUS_KEY = 'zenon_fin_status_v1';
+
+  function _readStatusStore() {
+    try { return JSON.parse(localStorage.getItem(FIN_STATUS_KEY) || '{}'); } catch(e) { return {}; }
+  }
+
+  function _saveRowStatus(id, status) {
+    if (!id) return;
+    try {
+      const store = _readStatusStore();
+      store[id] = status;
+      localStorage.setItem(FIN_STATUS_KEY, JSON.stringify(store));
+    } catch(e) {}
+  }
+
+  function _applyRow(row, status) {
+    const pill = row.querySelector('.status-pill');
+    if (!pill) return;
+    STATUS_CYCLE.forEach(s => pill.classList.remove(s));
+    pill.classList.add(status);
+    pill.textContent = STATUS_LABEL[status] || status;
+    row.classList.remove('pago','atr');
+    if (status === 'pago') row.classList.add('pago');
+    if (status === 'atrasado') row.classList.add('atr');
+  }
+
+  function _loadSavedStatuses() {
+    const store = _readStatusStore();
+    Object.keys(store).forEach(id => {
+      const row = document.querySelector('.pay-row[data-id="' + id + '"]');
+      if (row) _applyRow(row, store[id]);
+    });
+  }
+
   function cycleStatus(pill){
     if(!pill) return;
     const cur = STATUS_CYCLE.find(s => pill.classList.contains(s)) || 'pendente';
@@ -2631,6 +2669,8 @@
       row.classList.remove('pago','atr');
       if(next === 'pago') row.classList.add('pago');
       if(next === 'atrasado') row.classList.add('atr');
+      // ── PERSISTE ──
+      _saveRowStatus(row.dataset.id, next);
     }
   }
 
@@ -3248,6 +3288,8 @@
     }
     row.classList.remove('atr');
     row.classList.add('pago');
+    // ── PERSISTE ──
+    _saveRowStatus(row.dataset.id, 'pago');
 
     const nome = (row.querySelector('.pay-name')||{}).textContent?.trim() || 'conta';
     const nomeCurto = nome.split('·')[0].trim();
@@ -3390,6 +3432,9 @@
   }
   atualizarConversoesFX();
   setInterval(atualizarConversoesFX, 15000); // revê a cada 15s (pega cache novo)
+
+  // Restaura status salvos (dar baixa / marcar pago persistente)
+  _loadSavedStatuses();
 </script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="supabase-config.js"></script>
