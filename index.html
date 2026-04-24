@@ -3900,14 +3900,16 @@ window.__SUPABASE_CONFIG__ = {
       +'</div>';
 
     /* ── NAVEGAÇÃO ──────────────────────────────────── */
-    var N='<nav style="position:sticky;top:70px;z-index:50;display:flex;margin:0 0 28px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none"><div class="portal-nav-inner" style="flex-shrink:0">'
+    var N='<nav style="position:sticky;top:70px;z-index:50;margin:0 0 28px;width:100%">'
+      +'<div style="overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;-ms-overflow-style:none">'
+      +'<div class="portal-nav-inner" style="display:inline-flex;white-space:nowrap">'
       +'<span class="portal-nav-label">menu</span>'
       +'<a href="#pt-progresso" class="active">Progresso</a>'
       +'<a href="#pt-relatorio">Relatório</a>'
       +'<a href="#pt-documentos">Documentos</a>'
       +'<a href="#pt-financeiro">Financeiro</a>'
       +'<a href="#pt-suporte">Suporte</a>'
-      +'</div></nav>';
+      +'</div></div></nav>';
 
     /* ── ETAPAS ─────────────────────────────────────── */
     var etapasHTML=total>0
