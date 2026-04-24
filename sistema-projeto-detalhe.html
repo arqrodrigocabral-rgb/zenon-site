@@ -411,8 +411,17 @@
       ? '<div class="files-grid">' + proj.arquivos.map(a => ''
           + '<div class="file-tile" onclick="alert(\'' + a.nm + ' · abrindo…\')"><div class="ic">' + a.ic + '</div><div class="nm">' + a.nm + '</div><div class="mt">' + a.mt + '</div></div>').join('') + '</div>'
       : '<div class="empty-card">Nenhum arquivo cadastrado ainda.</div>';
-    const arqDrive = proj.drive ? '<a href="https://drive.google.com/drive/folders/' + proj.drive + '" target="_blank" class="btn ghost small">Abrir Drive ↗</a>' : '';
-    const arqCard = '<div class="card-p" id="arquivos"><h3>Arquivos do projeto · Drive</h3>' + arqHTML + '<div style="margin-top:14px;display:flex;gap:8px"><a href="#" class="btn small" onclick="alert(\'Upload em construção — protótipo.\');return false">+ Upload</a>' + arqDrive + '</div></div>';
+    // driveLinks: links individuais de pastas do Notion
+    let driveLinksHTML = '';
+    if (proj.driveLinks && proj.driveLinks.length) {
+      driveLinksHTML = '<div style="margin-top:14px"><div style="font-size:12px;color:var(--ink-mute);margin-bottom:6px;font-weight:600;text-transform:uppercase;letter-spacing:.05em">Pastas no Drive</div>'
+        + '<div style="display:flex;flex-wrap:wrap;gap:6px">'
+        + proj.driveLinks.map(dl => '<a href="' + dl.url + '" target="_blank" class="btn ghost small" style="font-size:11px">' + dl.label + ' ↗</a>').join('')
+        + '</div></div>';
+    } else if (proj.drive) {
+      driveLinksHTML = '<div style="margin-top:10px"><a href="https://drive.google.com/drive/folders/' + proj.drive + '" target="_blank" class="btn ghost small">Abrir Drive ↗</a></div>';
+    }
+    const arqCard = '<div class="card-p" id="arquivos"><h3>Arquivos do projeto · Drive</h3>' + arqHTML + driveLinksHTML + '</div>';
 
     // ---------- equipe ----------
     const eqHTML = (proj.equipe || []).map(p => ''

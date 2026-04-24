@@ -168,6 +168,14 @@
       orcamentoObra: 260000,
       gastoObra: 95000,
       drive: '14a36gYjP5Ta9VESaZs3BO_2KocVS9ZSd',
+      driveLinks: [
+        { label: '🎨 Renders',         url: 'https://drive.google.com/drive/folders/1RNqpz3TJzdutMCmu-x7Ui6a6RiyInpq-' },
+        { label: '📄 Documentos',      url: 'https://drive.google.com/drive/folders/1gJE_mf7l2_BBLubMCDwTD1kgwJ388D5O' },
+        { label: '📐 Executivo',       url: 'https://drive.google.com/drive/folders/1VFGLt2DyVgI16yaJa_pQw6LdOGw0b4NS' },
+        { label: '📁 Pasta do Projeto',url: 'https://drive.google.com/drive/folders/14a36gYjP5Ta9VESaZs3BO_2KocVS9ZSd' },
+        { label: '📊 Planilha de Obra',url: 'https://docs.google.com/spreadsheets/d/1Bu1JAf-6CujV8cyWhIDe4KAPuojctQOX/edit' },
+        { label: '📅 Estimativas',     url: 'https://drive.google.com/drive/folders/1RvEjDDsPSQBVItdG51AeisKUwcaIs9ha' }
+      ],
       fases: [
         { st:'done', t:'Briefing · diagnóstico', d:'Reunião com Rafael, levantamento do imóvel, programa de necessidades da clínica.', q:'16 / 01' },
         { st:'done', t:'Estudo preliminar · layout clínico', d:'Fluxo paciente, sala de exames, recepção, áreas técnicas.', q:'28 / 01' },
@@ -213,56 +221,72 @@
       titulo: 'APT Terrazzas',
       destaque: 'Terrazzas',
       cliente: 'CLI-5',
-      clienteNome: 'Tiago',
+      clienteNome: 'Beth e Tiago',
       tipo: 'Residencial',
       porte: 'M (50–150 m²)',
       metragem: '—',
       endereco: 'Residencial Terrazzas — Av. Sen. César Lacerda Vergueiro 71, Ponta da Praia, Santos, 11030-220',
       bairro: 'Ponta da Praia · Santos',
       complexidade: 'Média',
-      status: 'Travado',
-      fase: 'Executivo / detalhamento',
-      tags: ['Travado', 'Aguardando cliente', 'Urgente'],
-      progresso: 48,
-      etapas: '5 / 12',
+      status: 'Aguardando cliente',
+      fase: 'Executivo / Detalhamento',
+      tags: ['Aguardando cliente', 'Urgente / Travado', 'Projeto Executivo'],
+      progresso: 87,
+      etapas: '7 / 8',
       prazoInicio: '—',
       prazoFinal: '—',
       rrt: null,
-      obs: 'TRAVADO — aguardando retorno do cliente para aprovar executivo. Urgente retomar contato.',
+      obs: 'Executivo concluído, aguardando cliente liberar entrega final. Pendente: seguir Proposta 2.',
       restanteDias: null,
       obraId: null,
       financeiroId: null,
       propostaId: null,
       horasMes: '—',
-      equipeResumo: 'Rodrigo, Luana',
+      equipeResumo: 'Rodrigo, Breno, Luana',
       honorarios: 0,
       honorariosPagos: 0,
       honorariosARecever: 0,
       proxParcela: '—',
       orcamentoObra: 0,
       gastoObra: 0,
-      drive: null,
+      drive: '1xJTRnfhPRzKZlJvUVfVtYnzj6bzH64t_',
+      driveLinks: [
+        { label: '🎨 Renders',         url: 'https://drive.google.com/drive/folders/1F22tmjQSAb3P8rxaKEvuS0ZnJBAaODrU' },
+        { label: '📄 Documentos',      url: 'https://drive.google.com/drive/folders/1hReQzLMsP5ZA2tFKc3Q0cEafQTm0WVK0' },
+        { label: '📐 Executivo',       url: 'https://drive.google.com/drive/folders/16PwwokWLDlCOXeZhHjnH3Ut2QbuOk0Oc' },
+        { label: '📁 Pasta do Projeto',url: 'https://drive.google.com/drive/folders/1xJTRnfhPRzKZlJvUVfVtYnzj6bzH64t_' },
+        { label: '📊 Planilha de Obra',url: 'https://drive.google.com/drive/folders/1Mlrjtl80yXaJ-1dkP5ACZ3ZEr2UpfCT1' },
+        { label: '📅 Estimativas',     url: 'https://drive.google.com/drive/folders/1TMbLkzP53CkSNgnoqRf30yMxcok91-Pn' }
+      ],
       fases: [
-        { st:'done', t:'Briefing', d:'Reunião com Tiago, pré-programa da reforma do APT.', q:'—' },
-        { st:'done', t:'Levantamento do imóvel', d:'Medição completa e diagnóstico de instalações.', q:'—' },
-        { st:'now',  t:'Executivo / detalhamento', d:'<b>Travado:</b> aguardando aprovação do cliente para seguir.', q:'Travado' },
-        { st:'',     t:'Projetos complementares', d:'A iniciar após liberação.', q:'—' },
-        { st:'',     t:'Obra', d:'A iniciar.', q:'—' }
+        { st:'done', t:'Setup / Arquivos',          d:'Pasta do projeto criada e arquivos organizados no Drive.', q:'—' },
+        { st:'done', t:'Base CAD / SketchUp',        d:'Levantamento do imóvel e base para modelagem.', q:'—' },
+        { st:'done', t:'3D Inicial (volumetria)',    d:'Volumetria aprovada internamente.', q:'—' },
+        { st:'done', t:'Materiais e Iluminação',     d:'Paleta de materiais e iluminação definida.', q:'—' },
+        { st:'done', t:'Render Final',               d:'Renders finalizados — exceto quarto das meninas.', q:'02 / 04' },
+        { st:'done', t:'Executivo / Detalhamento',   d:'Executivo concluído. Breno gerou planta demolir/construir com legendas.', q:'01 / 04' },
+        { st:'now',  t:'Revisão Técnica',            d:'Aguardando cliente retornar para liberar entrega. Seguir Proposta 2.', q:'Aguardando' },
+        { st:'',     t:'Finalização / Entrega',      d:'A entregar após aprovação do cliente.', q:'—' }
       ],
       decisoes: [
-        { t:'Aprovação do executivo', d:'Cliente precisa retornar com decisão sobre layout final' },
-        { t:'Definição de fornecedor de marcenaria', d:'2 cotações em aberto' }
+        { t:'Aprovação do executivo', d:'Cliente precisa retornar com decisão sobre layout final — Proposta 2 confirmada internamente' },
+        { t:'Entrega das renders', d:'Imagens finalizadas exceto quarto das meninas — aguarda retorno' }
       ],
       arquivos: [
-        { ic:'DWG', nm:'Levantamento APT Terrazzas', mt:'—' },
-        { ic:'PDF', nm:'Pré-briefing Tiago', mt:'—' }
+        { ic:'DWG', nm:'Executivo + Planta Demolir/Construir', mt:'01 / 04' },
+        { ic:'IMG', nm:'Renders — Sala e Cozinha',             mt:'02 / 04' },
+        { ic:'IMG', nm:'Renders — Quartos',                    mt:'02 / 04' }
       ],
       equipe: [
-        { i:'R', n:'Rodrigo', r:'Arquitetura titular', h:'—' },
-        { i:'L', n:'Luana',   r:'Interiores',          h:'—' }
+        { i:'R', n:'Rodrigo', r:'Arquiteto titular', h:'—' },
+        { i:'B', n:'Breno',   r:'CAD / Executivo',   h:'—' },
+        { i:'L', n:'Luana',   r:'Interiores / Renders', h:'—' }
       ],
       atividade: [
-        { q:'—', p:'Projeto marcado como <b>TRAVADO</b> · aguardando retorno do cliente.' }
+        { q:'02 / 04', p:'<b>Rodrigo</b>: Imagens finalizadas para enviar ao cliente — exceto quarto das meninas.' },
+        { q:'01 / 04', p:'<b>Rodrigo</b>: Confirmado — seguir Proposta 2.' },
+        { q:'01 / 04', p:'<b>Breno</b>: Tarefa CAD — gerar planta demolir/construir com legendas, indicações de remoção de piso e lareira.' },
+        { q:'30 / 03', p:'<b>Rodrigo</b>: Projeto atualizado, aguardando follow-up do cliente.' }
       ]
     },
 
@@ -279,11 +303,11 @@
       endereco: 'Dark House SP — R. Florianópolis 385, Água Rasa, SP, 03185-050',
       bairro: 'Água Rasa · SP',
       complexidade: 'Alta',
-      status: 'Em andamento',
-      fase: 'ALVARÁ + AS BUILT',
-      tags: ['Legal / Condomínio', 'Regularização'],
-      progresso: 55,
-      etapas: '6 / 11',
+      status: 'Legal / Aprovações',
+      fase: 'ART/RRT + Protocolo Prefeitura',
+      tags: ['Legal / Condomínio', 'Órgão Público', 'Regularização'],
+      progresso: 45,
+      etapas: '5 / 11',
       prazoInicio: '27 / 02 / 2026',
       prazoFinal: '10 / 05 / 2026',
       rrt: null,
@@ -301,12 +325,26 @@
       orcamentoObra: 0,
       gastoObra: 0,
       drive: null,
+      driveLinks: [
+        { label: '🎨 Renders',         url: 'https://drive.google.com/drive/folders/1ORwGn_RuBgPUfDypZtl-m2aW0IOhwwqc' },
+        { label: '📄 Documentos',      url: 'https://drive.google.com/drive/folders/1NcQ0zBuuU_tOrlApJJbHJnttZIpt8Xcc' },
+        { label: '📐 Executivo',       url: 'https://drive.google.com/drive/folders/1bQ6BzNU3dgJOr5_aoyH4HetzVHtBmvmU' },
+        { label: '📁 Pasta do Projeto',url: 'https://drive.google.com/drive/folders/1HWdGkng9VZowipENKNMvL7vF1CHzqPUk' },
+        { label: '📊 Planilha de Obra',url: 'https://drive.google.com/drive/folders/1OtXE6EMSCaYEb8XmiDPk4heXSha6VFQS' },
+        { label: '📅 Estimativas',     url: 'https://drive.google.com/drive/folders/1OshM2fUtx-Mw3CC74An57YBVKtbRr8OF' }
+      ],
       fases: [
-        { st:'done', t:'Levantamento técnico', d:'Vistoria completa do galpão e mapeamento das pendências.', q:'27 / 02' },
-        { st:'done', t:'Consultoria/impugnação IPTU', d:'Análise tributária e desenquadramento.', q:'15 / 03' },
-        { st:'now',  t:'Gestão de licenciamento · ALF', d:'Em tratativa com prefeitura. Prazo previsto 10/05.', q:'Em curso' },
-        { st:'',     t:'AS BUILT', d:'Documentação técnica final do imóvel regularizado.', q:'—' },
-        { st:'',     t:'Encerramento', d:'Entrega do alvará e arquivamento.', q:'—' }
+        { st:'done', t:'Setup / Arquivos',               d:'Pasta do projeto criada e arquivos organizados.', q:'—' },
+        { st:'done', t:'Levantamento Técnico',            d:'Visita ao galpão, medições e mapeamento das pendências de regularização.', q:'27 / 02' },
+        { st:'done', t:'Elaboração do Projeto Legal',     d:'Plantas, cortes e memorial descritivo elaborados.', q:'15 / 03' },
+        { st:'done', t:'Coleta de Documentação',          d:'Matrícula, IPTU e habite-se anterior coletados.', q:'—' },
+        { st:'done', t:'Montagem do Dossiê para Protocolo', d:'Dossiê montado e pronto para protocolo.', q:'—' },
+        { st:'now',  t:'ART / RRT + Revisão Técnica',    d:'Registro de Responsabilidade Técnica em elaboração. Revisão técnica interna em andamento.', q:'Em curso' },
+        { st:'',     t:'Protocolo na Prefeitura',         d:'SEI / Portal SP Obras — previsto após aprovação interna.', q:'28 / 04' },
+        { st:'',     t:'Acompanhamento da Análise',       d:'Monitoramento do processo junto à prefeitura.', q:'—' },
+        { st:'',     t:'Resposta a Exigências',           d:'A responder se houver exigências da prefeitura.', q:'—' },
+        { st:'',     t:'Aprovação / Emissão do Alvará',   d:'Meta: emitir alvará até 10/05.', q:'10 / 05' },
+        { st:'',     t:'Entrega Final ao Cliente',        d:'Entrega do alvará e documentação completa.', q:'—' }
       ],
       decisoes: [
         { t:'Resposta do condomínio sobre estacionamento', d:'Pendência levantada na vistoria' }
@@ -321,9 +359,10 @@
         { i:'B', n:'Breno',   r:'Compliance + documentação',          h:'10 h' }
       ],
       atividade: [
+        { q:'30 / 03', p:'<b>Rodrigo</b> → <b>Breno</b>: Projeto sendo ajustado — Breno acionado.' },
         { q:'05 / 04', p:'<b>Rodrigo</b> registrou recebimento da 2ª parcela (R$ 10.000).' },
         { q:'24 / 03', p:'<b>Rodrigo</b> registrou recebimento da 1ª entrada (R$ 1.880).' },
-        { q:'27 / 02', p:'Proposta PRO-1 aprovada.' }
+        { q:'27 / 02', p:'Proposta PRO-1 aprovada. Projeto iniciado.' }
       ]
     },
 
@@ -392,42 +431,56 @@
       endereco: 'Place Santana SP — R. Carlos Escobar 141, São Paulo, 02013-050',
       bairro: 'Santana · SP',
       complexidade: 'Média',
-      status: 'Briefing',
-      fase: 'Entrada / Briefing',
-      tags: ['Briefing', 'Residencial'],
-      progresso: 10,
-      etapas: '1 / 12',
+      status: 'Levantamento / Criação',
+      fase: 'Materiais e Iluminação',
+      tags: ['Aguardando cliente', 'Residencial'],
+      progresso: 37,
+      etapas: '3 / 8',
       prazoInicio: '—',
-      prazoFinal: '—',
+      prazoFinal: '22 / 05 / 2026',
       rrt: null,
-      obs: 'Em fase de briefing. Pendente: agendar visita técnica ao apartamento.',
-      restanteDias: null,
+      obs: 'APT Place Santana — levantamento concluído, aguardando cliente avançar na fase de materiais.',
+      restanteDias: 28,
       obraId: null,
       financeiroId: null,
       propostaId: null,
       horasMes: '—',
-      equipeResumo: 'Rodrigo',
+      equipeResumo: 'Rodrigo, Luana',
       honorarios: 0,
       honorariosPagos: 0,
       honorariosARecever: 0,
       proxParcela: '—',
       orcamentoObra: 0,
       gastoObra: 0,
-      drive: null,
+      drive: '1rJg-EtfMbFG97rMQzOeps33QKhQlT7QP',
+      driveLinks: [
+        { label: '🎨 Renders',         url: 'https://drive.google.com/drive/folders/1GTH36yDlccNOzcBB6Zm3SuWM1q4gJLBa' },
+        { label: '📄 Documentos',      url: 'https://drive.google.com/drive/folders/1GuZg9nbpi5WkDEIR0DiGzejwQtEVfqug' },
+        { label: '📐 Executivo',       url: 'https://drive.google.com/drive/folders/1YM-qDgU00mMCMvkeboEWHBWxHtddSbEJ' },
+        { label: '📁 Pasta do Projeto',url: 'https://drive.google.com/drive/folders/1rJg-EtfMbFG97rMQzOeps33QKhQlT7QP' },
+        { label: '📊 Planilha de Obra',url: 'https://drive.google.com/drive/folders/19k3BzkiGi916UmwYUK4cpS56t1bzQnDL' },
+        { label: '📅 Estimativas',     url: 'https://docs.google.com/spreadsheets/d/1FJoKpdmYjp1YlSojuSwE85FjqzxqVRPu/edit' }
+      ],
       fases: [
-        { st:'now', t:'Entrada / Briefing', d:'Coleta inicial de necessidades.', q:'Em curso' },
-        { st:'',    t:'Levantamento', d:'A iniciar.', q:'—' },
-        { st:'',    t:'Estudo preliminar', d:'A iniciar.', q:'—' }
+        { st:'done', t:'Setup / Arquivos',        d:'Pasta do projeto criada no Drive, arquivos organizados.', q:'—' },
+        { st:'done', t:'Base CAD / SketchUp',     d:'Base técnica do apartamento Place Santana levantada.', q:'—' },
+        { st:'done', t:'3D Inicial (volumetria)', d:'Volumetria inicial modelada.', q:'—' },
+        { st:'now',  t:'Materiais e Iluminação',  d:'Aguardando cliente: definir paleta e acabamentos.', q:'Aguardando' },
+        { st:'',     t:'Render Final',            d:'A realizar após aprovação de materiais.', q:'—' },
+        { st:'',     t:'Executivo / Detalhamento',d:'A iniciar após renders aprovados.', q:'—' },
+        { st:'',     t:'Revisão Técnica',         d:'A realizar.', q:'—' },
+        { st:'',     t:'Finalização / Entrega',   d:'Prazo previsto: 22/05/2026.', q:'22 / 05' }
       ],
       decisoes: [
-        { t:'Agendar visita ao APT', d:'Pendente com Cleber' }
+        { t:'Definir paleta de materiais e acabamentos', d:'Aguardando retorno de Cleber e Tamara' }
       ],
       arquivos: [],
       equipe: [
-        { i:'R', n:'Rodrigo', r:'Arquiteto titular', h:'—' }
+        { i:'R', n:'Rodrigo', r:'Arquiteto titular', h:'—' },
+        { i:'L', n:'Luana',   r:'Interiores',        h:'—' }
       ],
       atividade: [
-        { q:'—', p:'Projeto cadastrado em fase de briefing.' }
+        { q:'22 / 04', p:'Projeto cadastrado — aguardando cliente para avançar na fase de materiais.' }
       ]
     },
 
@@ -443,14 +496,14 @@
       metragem: '—',
       endereco: 'Estrada do Jaguari 9475, Represa do Jaguari, SJC, 12214-012',
       bairro: 'Represa do Jaguari · SJC',
-      complexidade: 'Média',
-      status: 'Levantamento',
-      fase: 'Levantamento / Criação',
-      tags: ['Levantamento', 'Rural', 'Consultoria'],
-      progresso: 22,
-      etapas: '2 / 9',
+      complexidade: 'Baixa',
+      status: 'Levantamento / Criação',
+      fase: '3D / Render em andamento',
+      tags: ['Projeto Andando', 'Rural', 'Consultoria'],
+      progresso: 37,
+      etapas: '3 / 8',
       prazoInicio: '—',
-      prazoFinal: '—',
+      prazoFinal: '29 / 04 / 2026',
       rrt: null,
       obs: 'Consultoria de paisagismo e exterior para propriedade rural na Represa do Jaguari.',
       restanteDias: null,
@@ -465,22 +518,35 @@
       proxParcela: '—',
       orcamentoObra: 0,
       gastoObra: 0,
-      drive: null,
+      drive: '10M5hO8xq3rOmuErpcYEru1u2O35i8Fhq',
+      driveLinks: [
+        { label: '🎨 Renders',         url: 'https://drive.google.com/drive/folders/11-EZhRnj-fCUhE4DMO9nW-Y_2rjFKi8U' },
+        { label: '📄 Documentos',      url: 'https://drive.google.com/drive/folders/1-uXdP5E7jgwLP1h1vIbUxzt9CGJfm8N-' },
+        { label: '📐 Executivo',       url: 'https://drive.google.com/drive/folders/11N4I7drxYOeLvtNUeJkdJbu0Tdy4ctCH' },
+        { label: '📁 Pasta do Projeto',url: 'https://drive.google.com/drive/folders/10M5hO8xq3rOmuErpcYEru1u2O35i8Fhq' },
+        { label: '📊 Planilha de Obra',url: 'https://drive.google.com/drive/folders/1VGaMOzC9aqdTYrLM4uDsWisBr5b2N7Vx' },
+        { label: '📅 Estimativas',     url: 'https://docs.google.com/spreadsheets/d/1de4tXXjGS4FVCwSMYmym9Kf6WRbdrU_1/edit' }
+      ],
       fases: [
-        { st:'done', t:'Briefing inicial', d:'Reunião com Eliana sobre paisagismo e exterior.', q:'—' },
-        { st:'now',  t:'Levantamento / Criação', d:'Análise do terreno e estudos preliminares.', q:'Em curso' },
-        { st:'',     t:'Anteprojeto', d:'A iniciar.', q:'—' }
+        { st:'done', t:'Setup / Arquivos',        d:'Pasta do projeto criada, arquivos organizados.', q:'—' },
+        { st:'done', t:'Base CAD / SketchUp',     d:'Base técnica do exterior da Represa do Jaguari levantada.', q:'—' },
+        { st:'done', t:'3D Inicial (volumetria)', d:'Volumetria externa modelada.', q:'—' },
+        { st:'now',  t:'Materiais e Iluminação',  d:'Definição de materiais e vegetação para consultoria exterior.', q:'Em curso' },
+        { st:'',     t:'Render Final',            d:'A realizar. Prazo: 29/04/2026.', q:'29 / 04' },
+        { st:'',     t:'Executivo / Detalhamento',d:'A iniciar.', q:'—' },
+        { st:'',     t:'Revisão Técnica',         d:'A realizar.', q:'—' },
+        { st:'',     t:'Finalização / Entrega',   d:'A entregar.', q:'—' }
       ],
       decisoes: [
-        { t:'Definir escopo de paisagismo', d:'Aguardando alinhamento com cliente' }
+        { t:'Render final — prazo 29/04', d:'Projeto andando, render previsto para data limite' }
       ],
       arquivos: [],
       equipe: [
-        { i:'R', n:'Rodrigo', r:'Arquiteto titular', h:'—' },
-        { i:'L', n:'Luana',   r:'Interiores / Paisagismo', h:'—' }
+        { i:'R', n:'Rodrigo', r:'Arquiteto titular · Exterior', h:'—' },
+        { i:'B', n:'Breno',   r:'CAD / SketchUp',               h:'—' }
       ],
       atividade: [
-        { q:'—', p:'Projeto em fase de levantamento técnico.' }
+        { q:'24 / 04', p:'Projeto em andamento — fase de materiais e iluminação.' }
       ]
     },
 
@@ -518,24 +584,38 @@
       proxParcela: 'aguarda assinatura PRO-5',
       orcamentoObra: 0,
       gastoObra: 0,
-      drive: null,
+      drive: '1tw_HTSwk5e0UFjGvF18HE8stjsNmjI7H',
+      driveLinks: [
+        { label: '🎨 Renders',         url: 'https://drive.google.com/drive/folders/1KpQgY4xj12Xk5k9MrM-_nBGFadZ7ETlk' },
+        { label: '📄 Documentos',      url: 'https://drive.google.com/drive/folders/1wQZuZdjNbHyMWuEFKgmajcyUfPC3DpNL' },
+        { label: '📐 Executivo',       url: 'https://drive.google.com/drive/folders/1NYxruBeHfHnZ1EW6PsR-Ah8HFSLHbLA1' },
+        { label: '📁 Pasta do Projeto',url: 'https://drive.google.com/drive/folders/1tw_HTSwk5e0UFjGvF18HE8stjsNmjI7H' },
+        { label: '📊 Planilha de Obra',url: 'https://drive.google.com/drive/folders/13DhVPqlYaTt36slHON4Nx9Y5ZBE5O-tz' },
+        { label: '📅 Estimativas',     url: 'https://docs.google.com/spreadsheets/d/1iOHA436_Lh-iznuHS1z9E7DcyfQqWbq4/edit' }
+      ],
       fases: [
-        { st:'now', t:'Entrada / Briefing', d:'Coleta de necessidades e alinhamento de proposta.', q:'Em curso' },
-        { st:'',    t:'Aprovação proposta PRO-5', d:'R$ 32.800 · validade 17/05/2026.', q:'—' },
-        { st:'',    t:'Executivo', d:'A iniciar após assinatura.', q:'—' }
+        { st:'now', t:'Entrada / Briefing',      d:'Coleta de necessidades, alinhamento inicial e envio de proposta PRO-5.', q:'Em curso' },
+        { st:'',    t:'Setup / Arquivos',         d:'A iniciar após assinatura da proposta.', q:'—' },
+        { st:'',    t:'Base CAD / SketchUp',      d:'Planta do Edifício Navegantes — tipo 2.', q:'—' },
+        { st:'',    t:'3D Inicial (volumetria)',   d:'A iniciar.', q:'—' },
+        { st:'',    t:'Materiais e Iluminação',    d:'A definir com clientes.', q:'—' },
+        { st:'',    t:'Render Final',              d:'A realizar.', q:'—' },
+        { st:'',    t:'Executivo / Detalhamento',  d:'A iniciar.', q:'—' },
+        { st:'',    t:'Finalização / Entrega',     d:'A entregar.', q:'—' }
       ],
       decisoes: [
-        { t:'Aprovação da proposta PRO-5', d:'R$ 32.800 enviada em 17/04 · validade 17/05' }
+        { t:'Aprovação da proposta PRO-5', d:'R$ 32.800 enviada em 17/04 · validade 17/05/2026' }
       ],
       arquivos: [
+        { ic:'PDF', nm:'Planta Tipo 2 — Edifício Navegantes', mt:'Referência' },
         { ic:'PDF', nm:'Proposta PRO-5 (rascunho)', mt:'17 / 04' }
       ],
       equipe: [
         { i:'R', n:'Rodrigo', r:'Arquiteto titular', h:'—' },
-        { i:'L', n:'Luana',   r:'Interiores',         h:'—' }
+        { i:'L', n:'Luana',   r:'Interiores',        h:'—' }
       ],
       atividade: [
-        { q:'17 / 04', p:'<b>Rodrigo</b> emitiu proposta PRO-5 em rascunho.' }
+        { q:'17 / 04', p:'<b>Rodrigo</b> emitiu proposta PRO-5 — R$ 32.800. Aguardando assinatura até 17/05.' }
       ]
     },
 
@@ -549,16 +629,16 @@
       tipo: 'Residencial',
       porte: 'L (150–500 m²)',
       metragem: '—',
-      endereco: 'Place Santana SP',
+      endereco: 'Place Santana SP — R. Carlos Escobar 141, Santana, SP, 02013-050',
       bairro: 'Santana · SP',
       complexidade: 'Média',
-      status: 'Concluído',
-      fase: 'Pós-entrega',
+      status: 'Entregue / Concluído',
+      fase: 'Pós-entrega (180 dias)',
       tags: ['Concluído', 'Residencial'],
       progresso: 100,
-      etapas: '12 / 12',
-      prazoInicio: '03 / 03 / 2025',
-      prazoFinal: '14 / 04 / 2026 (entregue)',
+      etapas: '9 / 9',
+      prazoInicio: '03 / 03 / 2026',
+      prazoFinal: '14 / 04 / 2026',
       rrt: null,
       obs: 'Projeto entregue. Pós-entrega ativo: visitas de assistência nos primeiros 180 dias.',
       restanteDias: 0,
@@ -573,24 +653,42 @@
       proxParcela: '—',
       orcamentoObra: 0,
       gastoObra: 0,
-      drive: null,
+      drive: '1yOLc6hI9yV6iGJevkLh_nhMc6U4nOqC4',
+      driveLinks: [
+        { label: '🎨 Renders',         url: 'https://drive.google.com/drive/folders/1t0ngBhElBpB7FIDKWBqNnxGEx1QDmAnM' },
+        { label: '📄 Documentos',      url: 'https://drive.google.com/drive/folders/1wDmNu-o39e572WiWQgU_ompM-bijKZz2' },
+        { label: '📐 Executivo',       url: 'https://drive.google.com/drive/folders/1fWGTVtYEheq1ZjoZI3x_OWZMht6bsKiE' },
+        { label: '📁 Pasta do Projeto',url: 'https://drive.google.com/drive/folders/1yOLc6hI9yV6iGJevkLh_nhMc6U4nOqC4' },
+        { label: '📊 Planilha de Obra',url: 'https://drive.google.com/drive/folders/1UtNqjirGhsdbheJwAbPkWKgyXLN4bWTY' },
+        { label: '📅 Estimativas',     url: 'https://drive.google.com/drive/folders/1ZpDKd5CxjlkNBtC1gT88fKvhsFXryAoY' }
+      ],
       fases: [
-        { st:'done', t:'Briefing', d:'—', q:'03 / 03' },
-        { st:'done', t:'Executivo', d:'—', q:'—' },
-        { st:'done', t:'Obra', d:'—', q:'—' },
-        { st:'done', t:'Entrega', d:'Apartamento entregue à família.', q:'14 / 04' },
-        { st:'now',  t:'Pós-entrega ativo', d:'Visitas de assistência em curso.', q:'180 d' }
+        { st:'done', t:'Setup / Arquivos',           d:'Pasta do projeto criada, arquivos organizados.', q:'03 / 03' },
+        { st:'done', t:'Base CAD / SketchUp',        d:'Base técnica do APT Place Santana levantada.', q:'—' },
+        { st:'done', t:'3D Inicial (volumetria)',     d:'Volumetria aprovada.', q:'—' },
+        { st:'done', t:'Materiais e Iluminação',      d:'Paleta final aprovada com clientes.', q:'—' },
+        { st:'done', t:'Render Final',                d:'Renders finalizados e entregues.', q:'02 / 04' },
+        { st:'done', t:'Executivo / Detalhamento',   d:'Executivo concluído, planta demolir/construir gerada com legendas.', q:'01 / 04' },
+        { st:'done', t:'Detalhamento Marcenaria',    d:'Marcenaria detalhada e enviada ao fornecedor.', q:'—' },
+        { st:'done', t:'Revisão Técnica',             d:'Revisão final concluída.', q:'—' },
+        { st:'done', t:'Finalização / Entrega',       d:'Projeto entregue à família Bruna e Thiago. Pós-entrega ativo (180 dias).', q:'14 / 04' }
       ],
       decisoes: [],
       arquivos: [
-        { ic:'PDF', nm:'Memorial entrega', mt:'14 / 04' }
+        { ic:'IMG', nm:'Renders — Sala, Cozinha, Quartos', mt:'02 / 04' },
+        { ic:'DWG', nm:'Executivo + Detalhamento Marcenaria', mt:'01 / 04' },
+        { ic:'PDF', nm:'Memorial descritivo de entrega', mt:'14 / 04' }
       ],
       equipe: [
         { i:'R', n:'Rodrigo', r:'Arquiteto titular', h:'—' },
-        { i:'L', n:'Luana',   r:'Interiores',         h:'—' }
+        { i:'L', n:'Luana',   r:'Interiores / Renders', h:'—' },
+        { i:'B', n:'Breno',   r:'CAD / Executivo', h:'—' }
       ],
       atividade: [
-        { q:'14 / 04', p:'<b>Rodrigo</b> registrou entrega final do apartamento.' }
+        { q:'14 / 04', p:'<b>Rodrigo</b> registrou entrega final do apartamento a Bruna e Thiago.' },
+        { q:'02 / 04', p:'<b>Rodrigo</b>: Imagens finalizadas para envio ao cliente — exceto quarto das meninas.' },
+        { q:'01 / 04', p:'<b>Breno</b>: Planta demolir/construir gerada com legendas e indicações de remoção.' },
+        { q:'30 / 03', p:'<b>Rodrigo</b>: Projeto atualizado, aguardando follow-up do cliente.' }
       ]
     }
   };
