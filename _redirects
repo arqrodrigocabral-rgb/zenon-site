@@ -1,0 +1,3 @@
+# Cloudflare Pages redirects
+# Sistema redireciona para login se não autenticado (handled by JS)
+/sistema /sistema-painel.html 200

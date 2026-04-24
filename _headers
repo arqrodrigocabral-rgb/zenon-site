@@ -1,0 +1,20 @@
+# Cloudflare Pages — cache control
+
+# HTML: nunca fica em cache — sempre serve versão fresca
+/*.html
+  Cache-Control: no-store, must-revalidate
+  X-Content-Type-Options: nosniff
+
+/
+  Cache-Control: no-store, must-revalidate
+
+# JS e CSS versionados: cache de 1 ano (imutável)
+/*.js
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.css
+  Cache-Control: public, max-age=31536000, immutable
+
+# Imagens: cache de 7 dias
+/images/*
+  Cache-Control: public, max-age=604800
