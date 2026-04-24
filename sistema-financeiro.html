@@ -436,7 +436,7 @@
   .kpi-usd{
     display:grid;grid-template-columns:repeat(4,1fr);gap:12px;
   }
-  @�edia (max-width:900px){.kpi-usd{grid-template-columns:repeat(2,1fr)}}
+  @media (max-width:900px){.kpi-usd{grid-template-columns:repeat(2,1fr)}}
   .kpi-usd > div{
     background:#fff8e8;border:1px solid #e0d1a6;border-radius:3px;padding:12px 14px;
     display:flex;flex-direction:column;gap:3px;
@@ -636,7 +636,7 @@
   @keyframes fadeSlide{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
 
   /* ============ modal detalhe conta ============ */
-  .pd-back�
+  .pd-back{
     position:fixed;inset:0;background:rgba(26,22,18,.48);backdrop-filter:blur(2px);
     z-index:200;display:none;align-items:center;justify-content:center;padding:40px 20px;overflow-y:auto;
   }
@@ -812,7 +812,7 @@
     <div>
       <div class="eyebrow">Caixa · fluxo</div>
       <h1><em>Financeiro</em> da empresa</h1>
-      <div class="sub">Só Zenon Co. + pessoais (Cabana / Casa Blue) · <a href="sistema-obra-financeiro.html" style="color:var(--accent-ink,#8a643d);text-decoration:none">fornecedores e despesas de obra ficam em Obra → Financeiro ↗</a> · Abril / 2026 · <strong>R$ 25.910</strong> em aberto · 2 clientes reais (ECCO + CT Darkhouse)</div>
+      <div class="sub">Só Zenon Co. + pessoais (Cabana / Casa Blue) · <a href="sistema-obra-financeiro.html" style="color:var(--accent-ink,#8a643d);text-decoration:none">fornecedores e despesas de obra ficam em Obra → Financeiro ↗</a> · Abril / 2026 · <strong>R$ 29.976</strong> a receber · ECCO · Bruna · Eliana · RT · Cleber · projeto USA</div>
     </div>
     <div class="actions">
       <a href="#conciliacao" class="btn ghost small">Conciliar banco</a>
@@ -841,7 +841,10 @@
     .fin-subnav .sn-hint{font-family:'Fraunces','Source Serif 4',Georgia,serif;font-style:italic;font-size:13px;color:var(--ink-mute);padding:12px 0 14px}
   </style>
   <nav class="fin-subnav" aria-label="Recorte do financeiro">
-    <a href="sistema-financeiro.html" class="active">Empresa <span class="sn-sub">Zenon,+r�g�&��7�������&Vc�'6�7FV��f���6V�&��F��7W76��#�W76���7�6�73�'6��7V"#�6&�+r66&�VS��7������F�b6�73�'6��76W"#���F�c��7�6�73�'2n-hint">Só <em>Zenon e pessoais</em> · fornecedores e despesas de obra ficam em <a href="sistema-obra-financeiro.html" style="color:var(--accent-ink,#8a643d);text-decoration:none;border-bottom:1px dotted var(--accent,#b89455)">Obra → Financeiro ↗</a></span>
+    <a href="sistema-financeiro.html" class="active">Empresa <span class="sn-sub">Zenon · Yvyra</span></a>
+    <a href="sistema-financeiro.html#pessoal">Pessoal <span class="sn-sub">Cabana · Casa Blue</span></a>
+    <div class="sn-spacer"></div>
+    <span class="sn-hint">Só <em>Zenon e pessoais</em> · fornecedores e despesas de obra ficam em <a href="sistema-obra-financeiro.html" style="color:var(--accent-ink,#8a643d);text-decoration:none;border-bottom:1px dotted var(--accent,#b89455)">Obra → Financeiro ↗</a></span>
   </nav>
 
   <!-- BANNER MIGRAÇÃO -->
@@ -859,38 +862,40 @@
 
   <section>
     <div class="kpis">
-      <div class="kpi"><div class="l">Saldo atual</div><div class="n">R$ 36.264</div><div class="delta">Inter PJ Zenon + BTG</div></div>
-      <div class="kpi"><div class="l">A receber · 30 d</div><div class="n">R$ 30.104</div><div class="delta up">8 parcelas · ECCO · RT · Bruna · Eliana · ALVARÁ</div></div>
-      <div class="kpi"><div class="l">Recebido 2026</div><div class="n">R$ 43.609</div><div class="delta up">10 parcelas compensadas</div></div>
-      <div class="kpi accent"><div class="l">Total contratado</div><div class="n"><em>R$ 95.712</em></div><div class="delta" style="color:#e8a877">ECCO · ALVARÁ · RT · Bruna · Eliana · Cleber</div></div>
+      <div class="kpi"><div class="l">A receber (R$)</div><div class="n">R$ 29.976</div><div class="delta up">ECCO · Bruna · Eliana · RT · Cleber</div></div>
+      <div class="kpi"><div class="l">A receber ($)</div><div class="n">$ 100</div><div class="delta up"><span class="fx-conv" data-usd="100">≈ R$ 502</span> · projeto USA</div></div>
+      <div class="kpi"><div class="l">A pagar</div><div class="n" style="color:var(--alert)">R$ 4.339</div><div class="delta">7 contas pendentes / atrasadas</div></div>
+      <div class="kpi"><div class="l">Vencidos</div><div class="n" style="color:var(--warn)">R$ 11.997</div><div class="delta">a receber vencido</div></div>
+      <div class="kpi"><div class="l">Recebido Abr/26</div><div class="n">R$ 11.596</div><div class="delta up">parcelas compensadas</div></div>
+      <div class="kpi accent"><div class="l">Saldo real</div><div class="n"><em>R$ 2.749</em></div><div class="delta" style="color:#e8a877">recebido − pago este mês</div></div>
     </div>
 
     <!-- === STRIP EM DÓLAR · contratos internacionais === -->
     <div class="kpi-usd-wrap">
       <div class="kpi-usd-head">
-        <span class="eyb">Em dólar · quando aplicável</span>
-        <span class="fx-note">Cotação de hoje · <strong>1&nbsp;USD&nbsp;=&nbsp;R$&nbsp;5,13</strong> · atualizado há 4 min · hoje sem contratos USD ativos</span>
+        <span class="eyb">Em dólar · contratos internacionais</span>
+        <span class="fx-note">Cotação ao vivo · <strong class="fx-conv" data-usd="1" style="font-style:normal">1 USD = R$ 5,02</strong> · atualizada a cada 60s via shell-fx.js</span>
       </div>
       <div class="kpi-usd">
         <div>
-          <div class="l">Saldo em dólar</div>
-          <div class="n"><span class="cur">US$</span>0</div>
-          <div class="sub">BTG PJ · conta USD reservada</div>
+          <div class="l">A receber (pendente)</div>
+          <div class="n"><span class="cur">US$</span>100</div>
+          <div class="sub ok"><span class="fx-conv" data-usd="100">≈ R$ 502</span> · projeto USA · 26/04</div>
         </div>
         <div>
-          <div class="l">A receber · 30 d</div>
+          <div class="l">A receber (futuro)</div>
           <div class="n"><span class="cur">US$</span>0</div>
-          <div class="sub">nenhum contrato USD ativo</div>
+          <div class="sub">sem contratos USD futuros</div>
         </div>
         <div>
-          <div class="l">A pagar · 30 d</div>
-          <div class="n"><span class="cur">US$</span>240</div>
-          <div class="sub alert">Figma + Notion · SaaS mensal</div>
+          <div class="l">Já recebido (total)</div>
+          <div class="n"><span class="cur">US$</span>400</div>
+          <div class="sub ok"><span class="fx-conv" data-usd="400">≈ R$ 2.009</span> · histórico 2026</div>
         </div>
         <div class="accent">
-          <div class="l">Histórico 2025</div>
+          <div class="l">Dólar futuro</div>
           <div class="n"><span class="cur">US$</span>0</div>
-          <div class="sub">ambos os contratos reais (ECCO + ALVARA) em BRL</div>
+          <div class="sub">sem contratos USD confirmados</div>
         </div>
       </div>
     </div>
@@ -900,168 +905,37 @@
     <div class="section-head">
       <div><div class="eyebrow">Extrato bancário</div><h2>Saldo por <em>conta</em></h2></div>
       <div style="display:flex;gap:8px">
-        <a href="#conciliacao" class="btn ghost small">Conciliar banco</a>
         <a href="sistema-configuracoes.html#integracoes" class="btn ghost small">Adicionar conta</a>
       </div>
     </div>
 
     <div class="bank-summary">
       <div>
-        <div class="l">Saldo consolidado PJ</div>
-        <div class="v">R$ 33.343</div>
-        <div class="sub">2 contas Zenon · Inter PJ + BTG PJ</div>
-      </div>
-      <div>
-        <div class="l">Entradas · Abr</div>
+        <div class="l">Recebido · Abr/26</div>
         <div class="v ok">+ R$ 11.596</div>
-        <div class="sub">2 lançamentos · ALVARÁ parcela 2/3 + Eliana 1ª parcela</div>
+        <div class="sub">parcelas recebidas no mês</div>
       </div>
       <div>
-        <div class="l">Saídas · Abr</div>
-        <div class="v alert">− R$ 2.100</div>
-        <div class="sub">SaaS + contabilidade mensal</div>
+        <div class="l">Pago · Abr/26</div>
+        <div class="v alert">− R$ 8.847</div>
+        <div class="sub">despesas liquidadas</div>
       </div>
       <div>
-        <div class="l">Resultado do mês</div>
-        <div class="v ok">+ R$ 9.496</div>
-        <div class="sub">margem operacional projetada</div>
+        <div class="l">Saldo real · Abr/26</div>
+        <div class="v">R$ 2.749</div>
+        <div class="sub">recebido − pago este mês</div>
+      </div>
+      <div>
+        <div class="l">Saldo bancário</div>
+        <div class="v" style="color:var(--ink-mute)">—</div>
+        <div class="sub">não sincronizado — adicione suas contas</div>
       </div>
     </div>
 
-    <!-- === LINHA EM DÓLAR · só operacional (SaaS) === -->
-    <div class="bank-summary-usd">
-      <div>
-        <span class="tag">USD</span>
-        <div>
-          <div class="l">Saldo em dólar</div>
-          <div class="v">US$ 0</div>
-          <div class="sub">BTG PJ · conta USD · reserva</div>
-        </div>
-      </div>
-      <div>
-        <span class="tag">USD</span>
-        <div>
-          <div class="l">Entradas · Abr</div>
-          <div class="v">+ US$ 0</div>
-          <div class="sub">sem contratos USD ativos</div>
-        </div>
-      </div>
-      <div>
-        <span class="tag">USD</span>
-        <div>
-          <div class="l">Saídas · Abr</div>
-          <div class="v alert">− US$ 240</div>
-          <div class="sub">Figma + Notion · SaaS mensal</div>
-        </div>
-      </div>
-      <div>
-        <span class="tag">USD</span>
-        <div>
-          <div class="l">Resultado · Abr</div>
-          <div class="v alert">− US$ 240</div>
-          <div class="sub">≈ R$ 1.231 convertidos via BTG</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="bank-grid">
-      <div class="bank-card inter">
-        <div class="b-head">
-          <div>
-            <div class="b-name">Banco Inter — PJ</div>
-            <div class="b-num">Ag. 0001 · Zenon Co. (Cabral e Lima Design LTDA)</div>
-          </div>
-          <span class="b-type">Principal</span>
-        </div>
-        <div class="b-sal"><span class="cur">R$</span>28.846</div>
-        <div class="b-flow">
-          <div class="f"><div class="l">Entradas · 2026</div><div class="v in">+ 33.343</div></div>
-          <div class="f"><div class="l">Saídas · 2026</div><div class="v out">− 4.497</div></div>
-        </div>
-        <div class="b-mini">
-          <div class="row"><span class="d">02/04</span><span class="n">PIX Rafael Monici · ECCO parcela 3/7</span><span class="v in">+4.497</span></div>
-          <div class="row"><span class="d">26/03</span><span class="n">PIX Rafael Monici · ECCO parcela 2/7</span><span class="v in">+7.884</span></div>
-          <div class="row"><span class="d">27/02</span><span class="n">PIX CT Darkhouse · ALVARA sinal + parcela 2/3</span><span class="v in">+11.880</span></div>
-        </div>
-        <div class="b-foot">
-          <a href="sistema-financeiro.html#extrato">Ver extrato completo →</a>
-          <span class="sync">Sincronizado há 4 min</span>
-        </div>
-      </div>
-
-      <div class="bank-card btg">
-        <div class="b-head">
-          <div>
-            <div class="b-name">BTG — PJ <span class="cur-mini">empresa</span></div>
-            <div class="b-num">Zenon Co. · conta digital · USD reserva</div>
-          </div>
-          <span class="b-type" style="background:#fff8e8;color:#7a5720;border-color:#d8c89a">Secundária</span>
-        </div>
-        <div class="b-sal"><span class="cur">R$</span>4.497<span class="cur-mini">+ US$ 0 reserva</span></div>
-        <div class="b-flow">
-          <div class="f"><div class="l">Entradas · Abr</div><div class="v in">+ 4.497</div></div>
-          <div class="f"><div class="l">Saídas · Abr</div><div class="v out">− 0</div></div>
-        </div>
-        <div class="b-mini">
-          <div class="row"><span class="d">10/04</span><span class="n">Transferência Inter → BTG (reserva caixa)</span><span class="v in">+4.497</span></div>
-          <div class="row"><span class="d">—</span><span class="n">Conta USD zerada · disponível para contratos internacionais</span><span class="v" style="color:var(--ink-mute)">US$ 0</span></div>
-        </div>
-        <div class="b-foot">
-          <a href="sistema-financeiro.html#extrato">Ver extrato completo →</a>
-          <span class="sync">Sincronizado há 6 min</span>
-        </div>
-      </div>
-
-      <div class="bank-card pessoal">
-        <div class="b-head">
-          <div>
-            <div class="b-name">Nubank — Thereza</div>
-            <div class="b-num">Conta PF Thereza · Cabana + Casa Blue</div>
-          </div>
-          <span class="b-type pess">Despesas pessoais</span>
-        </div>
-        <div class="b-sal"><span class="cur">R$</span>—</div>
-        <div class="b-flow">
-          <div class="f"><div class="l">Entradas · Abr</div><div class="v" style="color:var(--ink-mute)">— sem sync</div></div>
-          <div class="f"><div class="l">Saídas · Abr</div><div class="v" style="color:var(--ink-mute)">— sem sync</div></div>
-        </div>
-        <div class="b-mini">
-          <div class="row"><span class="d">—</span><span class="n">Importação manual · OFX mensal</span><span class="v" style="color:var(--ink-mute)">—</span></div>
-          <div class="row"><span class="d">—</span><span class="n">Cabana e Casa Blue = <strong>fontes pessoais</strong>, fora dos KPIs de empresa</span><span class="v" style="color:var(--ink-mute)">info</span></div>
-        </div>
-        <div class="b-foot">
-          <a href="sistema-financeiro.html#extrato">Ver extrato pessoal →</a>
-          <span class="sync warn">Importação manual</span>
-        </div>
-      </div>
-
-      <div class="bank-card pessoal">
-        <div class="b-head">
-          <div>
-            <div class="b-name">Inter — Rodrigo</div>
-            <div class="b-num">Conta PF Rodrigo · sócio · despesas pessoais</div>
-          </div>
-          <span class="b-type pess">Sócio PF</span>
-        </div>
-        <div class="b-sal"><span class="cur">R$</span>—</div>
-        <div class="b-flow">
-          <div class="f"><div class="l">Entradas · Abr</div><div class="v" style="color:var(--ink-mute)">— sem sync</div></div>
-          <div class="f"><div class="l">Saídas · Abr</div><div class="v" style="color:var(--ink-mute)">— sem sync</div></div>
-        </div>
-        <div class="b-mini">
-          <div class="row"><span class="d">—</span><span class="n">Conta do sócio · pró-labore Zenon Co. chega aqui mensalmente</span><span class="v" style="color:var(--ink-mute)">—</span></div>
-          <div class="row"><span class="d">—</span><span class="n">Sem integração · visão só para conciliar distribuição de lucros</span><span class="v" style="color:var(--ink-mute)">info</span></div>
-        </div>
-        <div class="b-foot">
-          <a href="sistema-financeiro.html#extrato">Ver extrato PF →</a>
-  2       <span class="sync warn">Importação manual</span>
-        </div>
-      </div>
-    </div>
-
-    <div style="margin-top:12px;padding:10px 14px;background:var(--bg-alt);border:1px dashed var(--line);border-radius:3px;font-size:11px;color:var(--ink-body);display:flex;align-items:center;gap:8px">
-      <strong style="color:var(--ink);font-size:12px">ℹ</strong>
-      <span>A conta Nubank pessoal é exibida aqui apenas para controle — <strong>não entra</strong> nos KPIs de receita, margem ou projeção de negócio. Cabana e Casa Blue são despesas pessoais centralizadas no sistema por conveniência.</span>
+    <div style="margin-top:12px;padding:14px 18px;background:var(--bg-alt);border:1px dashed var(--line);border-radius:4px;font-size:12px;color:var(--ink-body)">
+      <strong style="color:var(--ink)">ℹ Contas bancárias</strong> — Inter PJ Zenon · BTG PJ Zenon · Nubank Thereza · Inter Rodrigo.
+      Conecte suas contas em <a href="sistema-configuracoes.html#integracoes" style="color:var(--accent-ink)">Configurações → Integrações</a> para ver saldo em tempo real.
+      Cabana e Casa Blue são <strong>fontes pessoais</strong> — não entram nos KPIs de empresa.
     </div>
   </section>
 
@@ -1086,7 +960,7 @@
 
         <div class="caixa-row">
           <div class="caixa-cell pos">
-     0      <div class="l">30 dias</div>
+            <div class="l">30 dias</div>
             <div class="v">R$ 66.368</div>
             <div class="sub">+R$ 30.104 · ECCO 5ª · Bruna · Eliana · RT Marc. · RT Brasfort · ALVARÁ · ECCO 6ª</div>
           </div>
@@ -1127,7 +1001,7 @@
             <div class="sub">Vencida 17 / 04 · 6 dias em atraso</div>
           </div>
           <div class="value">R$ 6.000</div>
-     0  </div>
+        </div>
         <div class="alert-item">
           <div>
             <div class="name">Eliana · Consultoria exterior 2/2</div>
@@ -1136,7 +1010,7 @@
           <div class="value">R$ 1.330</div>
         </div>
         <div class="alert-item">
-     0    <div>
+          <div>
             <div class="name">CT Darkhouse · ALVARÁ parcela 3/3</div>
             <div class="sub">Vence 06 / 05 · na entrega do alvará</div>
           </div>
@@ -1164,7 +1038,7 @@
         <div class="pt-head">
           <div>
             <h3>A <em>receber</em></h3>
-            <div class="tot">11 parcelas · <strong>R$ 52.560</strong> · ECCO (3) · RT (3) · Bruna (1) · Eliana (1) · ALVARÁ (1) · Cleber (2)</div>
+            <div class="tot">8 parcelas · <strong>R$ 29.976</strong> · ECCO · Bruna · Eliana · RT Marc. · Cleber (2) · projeto USA</div>
           </div>
           <div style="display:flex;gap:6px">
             <span class="chk-box" onclick="toggleAll(this,'rec')" title="Selecionar todas"></span>
@@ -1187,7 +1061,7 @@
           <div class="pay-row atr" data-row="rec" data-id="rec-ecco-5" data-parc="5/7" data-tipo="receber"
                data-cat="Honorários · obra clínica" data-conta="Inter PJ Zenon" data-unidade="Yvyra Lab"
                data-projeto="Clínica ECCO" data-projeto-link="sistema-projeto-detalhe.html?p=P-01"
-    0          data-contato="Rafael Monici" data-contato-link="sistema-cliente-detalhe.html?id=CLI-4"
+               data-contato="Rafael Monici" data-contato-link="sistema-cliente-detalhe.html?id=CLI-4"
                data-obs="FIN-01 · parcela 5/7 · Finalização Acabamento + Instalações · vencida 16/04">
             <span class="chk-box" onclick="event.stopPropagation();toggleRow(this,'rec',5997)"></span>
             <div class="pay-main">
@@ -1229,7 +1103,7 @@
                 <div class="menu-list">
                   <a href="#">✓ Marcar como pago</a>
                   <a href="#">✉ Reenviar lembrete</a>
-             0    <a href="sistema-cliente-detalhe.html?id=CLI-3">Abrir cliente →</a>
+                  <a href="sistema-cliente-detalhe.html?id=CLI-3">Abrir cliente →</a>
                   <a href="#" class="sep">Editar parcela</a>
                   <a href="#" class="del">Cancelar parcela</a>
                 </div>
@@ -1266,7 +1140,7 @@
                data-cat="RT · Responsabilidade Técnica" data-conta="Inter PJ Zenon" data-unidade="Yvyra Lab"
                data-projeto="Clínica ECCO" data-contato="Rafael Monici" data-contato-link="sistema-cliente-detalhe.html?id=CLI-4"
                data-obs="FIN-05 · RT marcenaria complemento · R$ 380 total · parcela única pendente">
- 0          <span class="chk-box" onclick="event.stopPropagation();toggleRow(this,'rec',190)"></span>
+            <span class="chk-box" onclick="event.stopPropagation();toggleRow(this,'rec',190)"></span>
             <div class="pay-main">
               <div class="pay-name"><a href="sistema-cliente-detalhe.html?id=CLI-4" onclick="event.stopPropagation()">Rafael Monici</a> <span class="parc-tag">RT Marc.</span></div>
               <div class="pay-sub">Clínica ECCO · RT marcenaria complemento · PIX</div>
@@ -1287,142 +1161,16 @@
             </div>
           </div>
 
-          <div class="pay-row" data-row="rec" data-id="rec-rt-marc-2" data-parc="2/2" data-tipo="receber"
-               data-cat="RT · Responsabilidade Técnica" data-conta="Inter PJ Zenon" data-unidade="Yvyra Lab"
-               data-projeto="Clínica ECCO" data-contato="Rafael Monici" data-contato-link="sistema-cliente-detalhe.html?id=CLI-4"
-               data-obs="FIN-04 · RT marcenaria · R$ 2.650 total · 1ª R$ 1.325 recebida 28/01">
-            <span class="chk-box" onclick="event.stopPropagation();toggleRow(this,'rec',1325)"></span>
-            <div class="pay-main">
-              <div class="pay-name"><a href="sistema-cliente-detalhe.html?id=CLI-4" onclick="event.stopPropagation()">Rafael Monici</a> <span class="parc-tag">RT Marc. 2/2</span></div>
-              <div class="pay-sub">Clínica ECCO · RT marcenaria · parcela final · PIX</div>
-            </div>
-            <div class="pay-when"><strong>01 / 05</strong>em 8 d</div>
-            <div class="pay-val in">+ R$ 1.325</div>
-            <div style="display:flex;gap:4px;align-items:center">
-              <span class="status-pill pendente" onclick="cycleStatus(this)">Pendente</span>
-          2   <span class="row-menu" onclick="toggleMenu(this)">⋮
-                <div class="menu-list">
-                  <a href="#">✓ Marcar como pago</a>
-                  <a href="#">✉ Reenviar lembrete</a>
-                  <a href="sistema-cliente-detalhe.html?id=CLI-4">Abrir cliente →</a>
-   2              <a href="#" class="sep">Editar parcela</a>
-                  <a href="#" class="del">Cancelar parcela</a>
-                </div>
-              </span>
-            </div>
-          </div>
 
-          <div class="pay-row" data-row="rec" data-id="rec-rt-brasfort-2" data-parc="2/2" data-tipo="receber"
-               data-cat="RT · Responsabilidade Técnica" data-conta="Inter PJ Zenon" data-unidade="Yvyra Lab"
-               data-projeto="Clínica ECCO" data-contato="Rafael Monici" data-contato-link="sistema-cliente-detalhe.html?id=CLI-4"
-               data-obs="RT brasfort · R$ 2.690 total · 1ª R$ 1.345 recebida 28/01">
-            <span class="chk-box" onclick="event.stopPropagation();toggleRow(this,'rec',1345)"></span>
-            <div class="pay-main">
-              <div class="pay-name"><a href="sistema-cliente-detalhe.html?id=CLI-4" onclick="event.stopPropagation()">Rafael Monici</a> <span class="parc-tag">RT Brasfort 2/2</span></div>
-              <div class="pay-sub">Clínica ECCO · RT brasfort · parcela final · PIX</div>
-            </div>
-            <div class="pay-when"><strong>01 / 05</strong>em 8 d</div>
-            <div class="pay-val in">+ R$ 1.345</div>
-            <div style="display:flex;gap:4px;align-items:center">
-              <span class="status-pill pendente" onclick="cycleStatus(this)">Pendente</span>
-              <span class="row-menu" onclick="toggleMenu(this)">⋮
-                <div class="menu-list">
-                  <a href="#">✓ Marcar como pago</a>
-                  <a href="#">✉ Reenviar lembrete</a>
-                  <a href="sistema-cliente-detalhe.html?id=CLI-4">Abrir cliente →</a>
-                  <a href="#" class="sep">Editar parcela</a>
-                  <a href="#" class="del">Cancelar parcela</a>
-    2           </div>
-              </span>
-            </div>
-          </div>
-
-          <div class="pay-row" data-row="rec" data-id="rec-alvara-ct-3" data-parc="3/3" data-tipo="receber"
-               data-cat="Consultoria técnica · Alvará" data-conta="Inter PJ Zenon" data-unidade="Zenon Co."
-   2           data-projeto="CT Darkhouse · Regularização" data-projeto-link="sistema-projeto-detalhe.html?p=P-03"
-               data-contato="CT Darkhouse" data-contato-link="sistema-cliente-detalhe.html?id=CLI-1"
-               data-proposta="PRO-1" data-proposta-link="sistema-proposta-detalhe.html?p=PRO-1"
-               data-obs="FIN-02 · contrato 3x · R$ 19.800 total · parcela final na entrega do alvará">
-            <span class="chk-box" onclick="event.stopPropagation();toggleRow(this,'rec',7920)"></span>
-            <div class="pay-main">
-              <div class="pay-name"><a href="sistema-cliente-detalhe.html?id=CLI-1" onclick="event.stopPropagation()">CT Darkhouse</a> <span class="parc-tag">3/3</span></div>
-              <div class="pay-sub">ALVARA · consultoria técnica · parcela final na entrega</div>
-            </div>
-            <div class="pay-when"><strong>05 / 05</strong>em 16 d</div>
-            <div class="pay-val in">+ R$ 7.920</div>
-            <div style="display:flex;gap:4px;align-items:center">
-              <span class="status-pill pendente" onclick="cycleStatus(this)">Pendente</span>
-              <span class="row-menu" onclick="toggleMenu(this)">⋮
-                <div class="menu-list">
-                  <a href="#">✓ Marcar como pago</a>
-                  <a href="#">✉ Reenviar lembrete</a>
-                  <a href="#">🤝 Marcar negociado</a>
-                  <a href="sistema-proposta-detalhe.html?p=PRO-1">Abrir proposta →</a>
- 2                <a href="#" class="sep">Editar parcela</a>
-                  <a href="#" class="del">Cancelar parcela</a>
-                </div>
-              </span>
-            </div>
-          </div>
-
-          <div class="pay-row" data-row="rec" data-id="rec-ecco-6" data-parc="6/7" data-tipo="receber"
-               data-cat="Honorários · obra clínica" data-conta="Inter PJ Zenon" data-unidade="Zenon Co."
-               data-projeto="Clínica ECCO" data-contato="Rafael Monici" data-contato-link="sistema-cliente-detalhe.html?id=CLI-4"
-               data-obs="FIN-01 · parcela 6/7 · Finalização Obra · 15/05/2026">
-            <span class="chk-box" onclick="event.stopPropagation();toggleRow(this,'rec',5997)"></span>
-            <div class="pay-main">
-              <div class="pay-name"><a href="sistema-cliente-detalhe.html?id=CLI-4" onclick="event.stopPropagation()">Rafael Monici</a> <span class="parc-tag">6/7</span></div>
-              <div class="pay-sub">Clínica ECCO · Finalização Obra · PIX</div>
-            </div>
-            <div class="pay-when"><strong>15 / 05</strong>em 22 d</div>
-            <div class="pay-val in">+ R$ 5.997</div>
-            <div style="display:flex;gap:4px;align-items:center">
-              <span class="status-pill pendente" onclick="cycleStatus(this)">Pendente</span>
-              <span class="row-menu" onclick="toggleMenu(this)">⋮
-                <div class="menu-list">
-                  <a href="#">✓ Marcar como pago</a>
-   �2             <a href="#">✉ Reenviar lembrete</a>
-                  <a href="sistema-cliente-detalhe.html?id=CLI-4">Abrir cliente →</a>
-                  <a href="#" class="sep">Editar</a>
-                  <a href="#" class="del">Cancelar</a>
-                </div>
-              </span>
-      �2    </div>
-          </div>
-
-          <div class="pay-row" data-row="rec" data-id="rec-ecco-7" data-parc="7/7" data-tipo="receber"
-               data-cat="Honorários · obra clínica" data-conta="Inter PJ Zenon" data-unidade="Zenon Co."
-               data-projeto="Clínica ECCO" data-contato="Rafael Monici" data-contato-link="sistema-cliente-detalhe.html?id=CLI-4"
-               data-obs="FIN-01 · parcela 7/7 · Pós Obra · 13/06/2026">
-            <span class="chk-box" onclick="event.stopPropagation();toggleRow(this,'rec',5997)"></span>
-            <div class="pay-main">
-              <div class="pay-name"><a href="sistema-cliente-detalhe.html?id=CLI-4" onclick="event.stopPropagation()">Rafael Monici</a> <span class="parc-tag">7/7</span></div>
-              <div class="pay-sub">Clínica ECCO · Pós Obra · PIX</div>
-            </div>
-            <div class="pay-when"><strong>13 / 06</strong>em 51 d</div>
-            <div class="pay-val in">+ R$ 5.997</div>
-            <div style="display:flex;gap:4px;align-items:center">
-              <span class="status-pill pendente" onclick="cycleStatus(this)">Pendente</span>
-              <span class="row-menu" onclick="toggleMenu(this)">⋮
-                <div class="menu-list">
-                  <a href="#">✓ Marcar como pago</a>
-                  <a href="#">✉ Reenviar lembrete</a>
-                  <a href="sistema-cliente-detalhe.html?id=CLI-4">Abrir cliente →</a>
-                  <a href="#" class="sep">Editar</a>
-                  <a href="#" class="del">Cancelar</a>
-                </div>
-              </span>
-            </div>
-          </div>
 
 
           <div class="pay-row" data-row="rec" data-id="rec-cleber-1" data-parc="1/2" data-tipo="receber"
                data-cat="Honorários · projeto residencial" data-conta="Inter PJ Zenon" data-unidade="Yvyra Lab"
                data-projeto="Cleber e Tamara · Reforma" data-contato="Cleber e Tamara" data-contato-link="sistema-cliente-detalhe.html?id=CLI-8"
                data-obs="Cleber e Tamara · R$ 16.459 total · 60% entrada · data a definir">
- �2          <span class="chk-box" onclick="event.stopPropagation();toggleRow(this,'rec',9875)"></span>
+            <span class="chk-box" onclick="event.stopPropagation();toggleRow(this,'rec',9875)"></span>
             <div class="pay-main">
-              <div class="pay-name"><a href="sistema-cliente-detalhe.html?id=CLI-8" onclick="event.stopPropagation()">Cleber e Tamara</a> <span class="parc-tag">1/2/span></div>
+              <div class="pay-name"><a href="sistema-cliente-detalhe.html?id=CLI-8" onclick="event.stopPropagation()">Cleber e Tamara</a> <span class="parc-tag">1/2</span></div>
               <div class="pay-sub">Projeto reforma · 60% entrada · PIX</div>
             </div>
             <div class="pay-when" style="color:var(--ink-mute)">a definir</div>
@@ -1439,7 +1187,7 @@
                 </div>
               </span>
             </div>
- 2        </div>
+          </div>
 
           <div class="pay-row" data-row="rec" data-id="rec-cleber-2" data-parc="2/2" data-tipo="receber"
                data-cat="Honorários · projeto residencial" data-conta="Inter PJ Zenon" data-unidade="Yvyra Lab"
@@ -1474,17 +1222,311 @@
         <div class="pt-head">
           <div>
             <h3>A <em>pagar</em></h3>
-            <div class="tot">0 contas · <strong>R$ 0</strong> · despesas da empresa <span style="color:var(--ink-mute)">·</span> <a href="sistema-obra-financeiro.html" style="font-family:'Fraunces','Source Serif 4',Georgia,serif;font-style:italic;color:var(--accent,#b89455);text-decoration:none">obra → financeiro →</a></div>
+            <div class="tot">14 contas · <strong>R$ 12.495</strong> · Cabana · Casa Blue · Zenon Co. · Yvyra Lab</div>
           </div>
           <div style="display:flex;gap:6px">
             <a href="#" class="btn ghost small" style="font-size:10px;padding:5px 10px">+ Adicionar</a>
           </div>
         </div>
 
-        <div style="margin:14px;padding:24px 20px;background:var(--surface,#faf9f7);border:1px dashed var(--border,#e0dbd2);border-radius:6px;text-align:center;font-family:'Inter',sans-serif;color:var(--ink-mute,#9c9489)">
-          <div style="font-size:22px;margin-bottom:8px;opacity:.5">—</div>
-          <div style="font-size:13px;font-style:italic">Nenhuma conta a pagar cadastrada</div>
-          <div style="font-size:12px;margin-top:4px">Use <strong style="color:var(--ink,#2a2520)">+ Adicionar</strong> para registrar despesas da empresa</div>
+        <div class="pay-rows" id="rows-pag">
+
+          <!-- ATRASADAS -->
+          <div class="pay-row atr" data-row="pag" data-id="pag-carro" data-unidade="Cabana" data-tipo="pagar"
+               data-obs="Movida CARRO · Cabana · vencida 29/03">
+            <span class="chk-box" onclick="event.stopPropagation();toggleRow(this,'pag',2900)"></span>
+            <div class="pay-main">
+              <div class="pay-name">Movida · CARRO <span class="parc-tag" style="background:#fde8d8;color:#b53939;border-color:#f5c6c0">Atrasado</span></div>
+              <div class="pay-sub"><span class="atr-lbl">Vencida 29/03</span> · Cabana</div>
+            </div>
+            <div class="pay-when"><strong>29 / 03</strong>vencida</div>
+            <div class="pay-val out">− R$ 2.900</div>
+            <div style="display:flex;gap:4px;align-items:center">
+              <span class="status-pill atrasado" onclick="cycleStatus(this)">Atrasado</span>
+              <span class="row-menu" onclick="toggleMenu(this)">⋮
+                <div class="menu-list">
+                  <a href="#" onclick="marcarPago(this.closest('.pay-row'));return false">✓ Dar baixa</a>
+                  <a href="#" class="sep">Editar</a>
+                  <a href="#" class="del">Excluir</a>
+                </div>
+              </span>
+            </div>
+          </div>
+
+          <div class="pay-row atr" data-row="pag" data-id="pag-energia-cabana" data-unidade="Cabana" data-tipo="pagar"
+               data-obs="ENERGIA Cabana · vencida 03/04">
+            <span class="chk-box" onclick="event.stopPropagation();toggleRow(this,'pag',504)"></span>
+            <div class="pay-main">
+              <div class="pay-name">ENERGIA <span class="parc-tag" style="background:#fde8d8;color:#b53939;border-color:#f5c6c0">Atrasado</span></div>
+              <div class="pay-sub"><span class="atr-lbl">Vencida 03/04</span> · Cabana</div>
+            </div>
+            <div class="pay-when"><strong>03 / 04</strong>vencida</div>
+            <div class="pay-val out">− R$ 503,98</div>
+            <div style="display:flex;gap:4px;align-items:center">
+              <span class="status-pill atrasado" onclick="cycleStatus(this)">Atrasado</span>
+              <span class="row-menu" onclick="toggleMenu(this)">⋮
+                <div class="menu-list">
+                  <a href="#" onclick="marcarPago(this.closest('.pay-row'));return false">✓ Dar baixa</a>
+                  <a href="#" class="sep">Editar</a>
+                  <a href="#" class="del">Excluir</a>
+                </div>
+              </span>
+            </div>
+          </div>
+
+          <div class="pay-row atr" data-row="pag" data-id="pag-seguro-blue" data-unidade="Casa Blue" data-tipo="pagar"
+               data-obs="Seguro Blue · vencida 10/04">
+            <span class="chk-box" onclick="event.stopPropagation();toggleRow(this,'pag',298)"></span>
+            <div class="pay-main">
+              <div class="pay-name">Seguro Blue <span class="parc-tag" style="background:#fde8d8;color:#b53939;border-color:#f5c6c0">Atrasado</span></div>
+              <div class="pay-sub"><span class="atr-lbl">Vencida 10/04</span> · Casa Blue</div>
+            </div>
+            <div class="pay-when"><strong>10 / 04</strong>vencida</div>
+            <div class="pay-val out">− R$ 298,00</div>
+            <div style="display:flex;gap:4px;align-items:center">
+              <span class="status-pill atrasado" onclick="cycleStatus(this)">Atrasado</span>
+              <span class="row-menu" onclick="toggleMenu(this)">⋮
+                <div class="menu-list">
+                  <a href="#" onclick="marcarPago(this.closest('.pay-row'));return false">✓ Dar baixa</a>
+                  <a href="#" class="sep">Editar</a>
+                  <a href="#" class="del">Excluir</a>
+                </div>
+              </span>
+            </div>
+          </div>
+
+          <div class="pay-row atr" data-row="pag" data-id="pag-agua-blue" data-unidade="Casa Blue" data-tipo="pagar"
+               data-obs="Água · vencida 10/04">
+            <span class="chk-box" onclick="event.stopPropagation();toggleRow(this,'pag',76)"></span>
+            <div class="pay-main">
+              <div class="pay-name">Água <span class="parc-tag" style="background:#fde8d8;color:#b53939;border-color:#f5c6c0">Atrasado</span></div>
+              <div class="pay-sub"><span class="atr-lbl">Vencida 10/04</span> · Casa Blue</div>
+            </div>
+            <div class="pay-when"><strong>10 / 04</strong>vencida</div>
+            <div class="pay-val out">− R$ 76,06</div>
+            <div style="display:flex;gap:4px;align-items:center">
+              <span class="status-pill atrasado" onclick="cycleStatus(this)">Atrasado</span>
+              <span class="row-menu" onclick="toggleMenu(this)">⋮
+                <div class="menu-list">
+                  <a href="#" onclick="marcarPago(this.closest('.pay-row'));return false">✓ Dar baixa</a>
+                  <a href="#" class="sep">Editar</a>
+                  <a href="#" class="del">Excluir</a>
+                </div>
+              </span>
+            </div>
+          </div>
+
+          <div class="pay-row atr" data-row="pag" data-id="pag-energia-blue" data-unidade="Casa Blue" data-tipo="pagar"
+               data-obs="ENERGIA Blue · vencida 10/04">
+            <span class="chk-box" onclick="event.stopPropagation();toggleRow(this,'pag',261)"></span>
+            <div class="pay-main">
+              <div class="pay-name">ENERGIA <span class="parc-tag" style="background:#fde8d8;color:#b53939;border-color:#f5c6c0">Atrasado</span></div>
+              <div class="pay-sub"><span class="atr-lbl">Vencida 10/04</span> · Casa Blue</div>
+            </div>
+            <div class="pay-when"><strong>10 / 04</strong>vencida</div>
+            <div class="pay-val out">− R$ 260,91</div>
+            <div style="display:flex;gap:4px;align-items:center">
+              <span class="status-pill atrasado" onclick="cycleStatus(this)">Atrasado</span>
+              <span class="row-menu" onclick="toggleMenu(this)">⋮
+                <div class="menu-list">
+                  <a href="#" onclick="marcarPago(this.closest('.pay-row'));return false">✓ Dar baixa</a>
+                  <a href="#" class="sep">Editar</a>
+                  <a href="#" class="del">Excluir</a>
+                </div>
+              </span>
+            </div>
+          </div>
+
+          <div class="pay-row atr" data-row="pag" data-id="pag-starlink-cabana" data-unidade="Cabana" data-tipo="pagar"
+               data-obs="STARLINK Cabana · vencida 18/04">
+            <span class="chk-box" onclick="event.stopPropagation();toggleRow(this,'pag',265)"></span>
+            <div class="pay-main">
+              <div class="pay-name">STARLINK <span class="parc-tag" style="background:#fde8d8;color:#b53939;border-color:#f5c6c0">Atrasado</span></div>
+              <div class="pay-sub"><span class="atr-lbl">Vencida 18/04</span> · Cabana</div>
+            </div>
+            <div class="pay-when"><strong>18 / 04</strong>vencida</div>
+            <div class="pay-val out">− R$ 265,00</div>
+            <div style="display:flex;gap:4px;align-items:center">
+              <span class="status-pill atrasado" onclick="cycleStatus(this)">Atrasado</span>
+              <span class="row-menu" onclick="toggleMenu(this)">⋮
+                <div class="menu-list">
+                  <a href="#" onclick="marcarPago(this.closest('.pay-row'));return false">✓ Dar baixa</a>
+                  <a href="#" class="sep">Editar</a>
+                  <a href="#" class="del">Excluir</a>
+                </div>
+              </span>
+            </div>
+          </div>
+
+          <div class="pay-row atr" data-row="pag" data-id="pag-unitv" data-unidade="Zenon Co." data-tipo="pagar"
+               data-obs="UNITV · vencida 22/04">
+            <span class="chk-box" onclick="event.stopPropagation();toggleRow(this,'pag',35)"></span>
+            <div class="pay-main">
+              <div class="pay-name">UNITV <span class="parc-tag" style="background:#fde8d8;color:#b53939;border-color:#f5c6c0">Atrasado</span></div>
+              <div class="pay-sub"><span class="atr-lbl">Vencida 22/04</span> · Zenon Co.</div>
+            </div>
+            <div class="pay-when"><strong>22 / 04</strong>vencida</div>
+            <div class="pay-val out">− R$ 35,00</div>
+            <div style="display:flex;gap:4px;align-items:center">
+              <span class="status-pill atrasado" onclick="cycleStatus(this)">Atrasado</span>
+              <span class="row-menu" onclick="toggleMenu(this)">⋮
+                <div class="menu-list">
+                  <a href="#" onclick="marcarPago(this.closest('.pay-row'));return false">✓ Dar baixa</a>
+                  <a href="#" class="sep">Editar</a>
+                  <a href="#" class="del">Excluir</a>
+                </div>
+              </span>
+            </div>
+          </div>
+
+          <!-- PRÓXIMAS (Mai/26) -->
+          <div class="pay-row" data-row="pag" data-id="pag-vivo-rodrigo" data-unidade="Cabana" data-tipo="pagar"
+               data-obs="Vivo Rodrigo · 04/05">
+            <span class="chk-box" onclick="event.stopPropagation();toggleRow(this,'pag',38)"></span>
+            <div class="pay-main">
+              <div class="pay-name">Vivo · Rodrigo</div>
+              <div class="pay-sub">Cabana · celular</div>
+            </div>
+            <div class="pay-when"><strong>04 / 05</strong>em 10 d</div>
+            <div class="pay-val out">− R$ 38,00</div>
+            <div style="display:flex;gap:4px;align-items:center">
+              <span class="status-pill pendente" onclick="cycleStatus(this)">Pendente</span>
+              <span class="row-menu" onclick="toggleMenu(this)">⋮
+                <div class="menu-list">
+                  <a href="#" onclick="marcarPago(this.closest('.pay-row'));return false">✓ Dar baixa</a>
+                  <a href="#" class="sep">Editar</a>
+                  <a href="#" class="del">Excluir</a>
+                </div>
+              </span>
+            </div>
+          </div>
+
+          <div class="pay-row" data-row="pag" data-id="pag-vivo-thereza" data-unidade="Casa Blue" data-tipo="pagar"
+               data-obs="Vivo Thereza · 10/05">
+            <span class="chk-box" onclick="event.stopPropagation();toggleRow(this,'pag',41)"></span>
+            <div class="pay-main">
+              <div class="pay-name">Vivo · Thereza</div>
+              <div class="pay-sub">Casa Blue · celular</div>
+            </div>
+            <div class="pay-when"><strong>10 / 05</strong>em 16 d</div>
+            <div class="pay-val out">− R$ 41,00</div>
+            <div style="display:flex;gap:4px;align-items:center">
+              <span class="status-pill pendente" onclick="cycleStatus(this)">Pendente</span>
+              <span class="row-menu" onclick="toggleMenu(this)">⋮
+                <div class="menu-list">
+                  <a href="#" onclick="marcarPago(this.closest('.pay-row'));return false">✓ Dar baixa</a>
+                  <a href="#" class="sep">Editar</a>
+                  <a href="#" class="del">Excluir</a>
+                </div>
+              </span>
+            </div>
+          </div>
+
+          <div class="pay-row" data-row="pag" data-id="pag-aluguel-blue" data-unidade="Casa Blue" data-tipo="pagar"
+               data-obs="Aluguel Casa Blue · 10/05" data-rec="1">
+            <span class="chk-box" onclick="event.stopPropagation();toggleRow(this,'pag',2800)"></span>
+            <div class="pay-main">
+              <div class="pay-name">Aluguel <span class="rec-tag">↻</span></div>
+              <div class="pay-sub">Casa Blue · recorrente mensal</div>
+            </div>
+            <div class="pay-when"><strong>10 / 05</strong>em 16 d</div>
+            <div class="pay-val out">− R$ 2.800,00</div>
+            <div style="display:flex;gap:4px;align-items:center">
+              <span class="status-pill pendente" onclick="cycleStatus(this)">Pendente</span>
+              <span class="row-menu" onclick="toggleMenu(this)">⋮
+                <div class="menu-list">
+                  <a href="#" onclick="marcarPago(this.closest('.pay-row'));return false">✓ Dar baixa</a>
+                  <a href="#" class="sep">Editar</a>
+                  <a href="#" class="del">Excluir</a>
+                </div>
+              </span>
+            </div>
+          </div>
+
+          <div class="pay-row" data-row="pag" data-id="pag-claudia" data-unidade="Zenon Co." data-tipo="pagar"
+               data-obs="Claudia · 10/05" data-rec="1">
+            <span class="chk-box" onclick="event.stopPropagation();toggleRow(this,'pag',550)"></span>
+            <div class="pay-main">
+              <div class="pay-name">Claudia <span class="rec-tag">↻</span></div>
+              <div class="pay-sub">Zenon Co. · recorrente mensal</div>
+            </div>
+            <div class="pay-when"><strong>10 / 05</strong>em 16 d</div>
+            <div class="pay-val out">− R$ 550,00</div>
+            <div style="display:flex;gap:4px;align-items:center">
+              <span class="status-pill pendente" onclick="cycleStatus(this)">Pendente</span>
+              <span class="row-menu" onclick="toggleMenu(this)">⋮
+                <div class="menu-list">
+                  <a href="#" onclick="marcarPago(this.closest('.pay-row'));return false">✓ Dar baixa</a>
+                  <a href="#" class="sep">Editar</a>
+                  <a href="#" class="del">Excluir</a>
+                </div>
+              </span>
+            </div>
+          </div>
+
+          <div class="pay-row" data-row="pag" data-id="pag-starlink-blue" data-unidade="Casa Blue" data-tipo="pagar"
+               data-obs="STARLINK Blue · 13/05" data-rec="1">
+            <span class="chk-box" onclick="event.stopPropagation();toggleRow(this,'pag',189)"></span>
+            <div class="pay-main">
+              <div class="pay-name">STARLINK <span class="rec-tag">↻</span></div>
+              <div class="pay-sub">Casa Blue · internet recorrente</div>
+            </div>
+            <div class="pay-when"><strong>13 / 05</strong>em 19 d</div>
+            <div class="pay-val out">− R$ 188,89</div>
+            <div style="display:flex;gap:4px;align-items:center">
+              <span class="status-pill pendente" onclick="cycleStatus(this)">Pendente</span>
+              <span class="row-menu" onclick="toggleMenu(this)">⋮
+                <div class="menu-list">
+                  <a href="#" onclick="marcarPago(this.closest('.pay-row'));return false">✓ Dar baixa</a>
+                  <a href="#" class="sep">Editar</a>
+                  <a href="#" class="del">Excluir</a>
+                </div>
+              </span>
+            </div>
+          </div>
+
+          <div class="pay-row" data-row="pag" data-id="pag-estagiarios" data-unidade="Yvyra Lab" data-tipo="pagar"
+               data-obs="Estagiários · 16/05" data-rec="1">
+            <span class="chk-box" onclick="event.stopPropagation();toggleRow(this,'pag',2080)"></span>
+            <div class="pay-main">
+              <div class="pay-name">Estagiários <span class="rec-tag">↻</span></div>
+              <div class="pay-sub">Yvyra Lab · recorrente mensal</div>
+            </div>
+            <div class="pay-when"><strong>16 / 05</strong>em 22 d</div>
+            <div class="pay-val out">− R$ 2.080,00</div>
+            <div style="display:flex;gap:4px;align-items:center">
+              <span class="status-pill pendente" onclick="cycleStatus(this)">Pendente</span>
+              <span class="row-menu" onclick="toggleMenu(this)">⋮
+                <div class="menu-list">
+                  <a href="#" onclick="marcarPago(this.closest('.pay-row'));return false">✓ Dar baixa</a>
+                  <a href="#" class="sep">Editar</a>
+                  <a href="#" class="del">Excluir</a>
+                </div>
+              </span>
+            </div>
+          </div>
+
+          <div class="pay-row" data-row="pag" data-id="pag-aluguel-cabana" data-unidade="Cabana" data-tipo="pagar"
+               data-obs="Aluguel Cabana · 17/05" data-rec="1">
+            <span class="chk-box" onclick="event.stopPropagation();toggleRow(this,'pag',1780)"></span>
+            <div class="pay-main">
+              <div class="pay-name">Aluguel Cabana <span class="rec-tag">↻</span></div>
+              <div class="pay-sub">Cabana · recorrente mensal</div>
+            </div>
+            <div class="pay-when"><strong>17 / 05</strong>em 23 d</div>
+            <div class="pay-val out">− R$ 1.780,00</div>
+            <div style="display:flex;gap:4px;align-items:center">
+              <span class="status-pill pendente" onclick="cycleStatus(this)">Pendente</span>
+              <span class="row-menu" onclick="toggleMenu(this)">⋮
+                <div class="menu-list">
+                  <a href="#" onclick="marcarPago(this.closest('.pay-row'));return false">✓ Dar baixa</a>
+                  <a href="#" class="sep">Editar</a>
+                  <a href="#" class="del">Excluir</a>
+                </div>
+              </span>
+            </div>
+          </div>
+
         </div>
 
       </div>
@@ -1657,7 +1699,7 @@
           <svg viewBox="0 0 600 220" preserveAspectRatio="none">
             <g class="line-grid">
               <line x1="0" y1="55" x2="600" y2="55"></line>
-     0        <line x1="0" y1="110" x2="600" y2="110"></line>
+              <line x1="0" y1="110" x2="600" y2="110"></line>
               <line x1="0" y1="165" x2="600" y2="165"></line>
             </g>
             <path class="line-area" d="M 0 210 L 50 210 L 100 210 L 150 210 L 200 210 L 250 210 L 300 210 L 350 210 L 400 210 L 450 130 L 500 78 L 550 50 L 600 45 L 600 220 L 0 220 Z"></path>
@@ -1677,19 +1719,14 @@
             <g class="line-axis">
               <text x="6" y="50">R$ 33k</text>
               <text x="6" y="105">R$ 22k</text>
-              <text ="10 90" stroke-dashoffset="-65"></circle>
+              <text x="6" y="160">R$ 11k</text>
+            </g>
           </svg>
-          <div class="cen">
-            <div class="v" style="color:var(--alert)">R$ 14,4k</div>
-            <div class="l">Gastos 2026</div>
-          </div>
         </div>
-        <div class="pie-legend">
-          <h4>Gastos <em>por categoria</em></h4>
-          <div class="pl-row"><i style="background:#1a1612"></i><span class="pn">Operacional · contador, conta PJ</span><span class="pv">R$ 7.900</span><span class="pp">55%</span></div>
-          <div class="pl-row"><i style="background:#6b5b3b"></i><span class="pn">Impostos · DAS Simples</span><span class="pv">R$ 2.880</span><span class="pp">20%</span></div>
-          <div class="pl-row"><i style="background:#a84545"></i><span class="pn">RRTs · CAU BR</span><span class="pv">R$ 2.160</span><span class="pp">15%</span></div>
-          <div class="pl-row"><i style="background:#888"></i><span class="pn">Software · Notion + Figma</span><span class="pv">R$ 1.440</span><span class="pp">10%</span></div>
+        <div class="line-lbls">
+          <span>Mai</span><span>Jun</span><span>Jul</span><span>Ago</span>
+          <span>Set</span><span>Out</span><span>Nov</span><span>Dez</span>
+          <span>Jan</span><span>Fev</span><span>Mar</span><span class="now">Abr</span>
         </div>
       </div>
     </div>
@@ -1697,52 +1734,45 @@
 
   <section>
     <div class="section-head">
-      <div><div class="eyebrow">Extrato detalhado</div><h2>Todos os <em>lançamentos</em></h2></div>
-      <a href="#extrato" class="link">Exportar CSV →</a>
+      <div><div class="eyebrow">Distribuição por unidade de negócio</div><h2>Receita e <em>gastos</em> por unidade</h2></div>
     </div>
 
-    <div class="ext-toolbar">
-      <div class="grp">
-        <span class="chip on">Todos</span>
-        <span class="chip in on">Entradas</span>
-        <span class="chip out">Saídas</span>
+    <div class="pie-row">
+      <div class="pie-card">
+        <div class="donut">
+          <svg width="180" height="180" viewBox="0 0 42 42">
+            <circle cx="21" cy="21" r="15.9" fill="none" stroke="var(--bg-alt)" stroke-width="7"></circle>
+            <circle cx="21" cy="21" r="15.9" fill="none" stroke="#2f6f4f" stroke-width="7"
+                    stroke-dasharray="100 0" stroke-dashoffset="25"></circle>
+          </svg>
+          <div class="cen">
+            <div class="v">R$ 33,3k</div>
+            <div class="l">Receita 2026</div>
+          </div>
+        </div>
+        <div class="pie-legend">
+          <h4>Receita <em>por unidade</em></h4>
+          <div class="pl-row"><i style="background:#6a4f8a"></i><span class="pn">Yvyra Arquitetura</span><span class="pv">R$ 33.343</span><span class="pp">100%</span></div>
+          <div class="pl-row" style="opacity:.55"><i style="background:#b67a3b"></i><span class="pn">Zenon Stay</span><span class="pv">R$ 0</span><span class="pp">—</span></div>
+          <div class="pl-row" style="opacity:.55"><i style="background:#3a6db8"></i><span class="pn">Zenon Vision <span style="font-size:10px;color:var(--ink-mute)">· interno</span></span><span class="pv">R$ 0</span><span class="pp">—</span></div>
+          <div class="pl-row" style="font-size:11px;color:var(--ink-mute);border-top:1px dashed var(--line-soft);margin-top:4px;padding-top:6px">
+            <span>Cabana + Casa Blue são fontes pessoais — não entram no KPI empresa.</span>
+          </div>
+        </div>
       </div>
- 0    <div class="grp">
-        <span class="chip on">Abr / 2026</span>
-        <span class="chip">Mar / 2026</span>
-        <span class="chip">Fev / 2026</span>
-        <span class="chip">Trimestre</span>
-        <span class="chip">Ano</span>
-      </div>
-      <div class="grp">
-        <span class="chip on">Tudo</span>
-        <span class="chip">Negócios</span>
-        <span class="chip">Pessoal</span>
-      </div>
-      <div class="grp">
-        <span class="chip">Zenon Co.</span>
-        <span class="chip">Yvyra Lab</span>
-        <span class="chip" style="background:#efe5d6;color:#8b5a3c;border-color:#dcc8a8">Cabana</span>
-        <span class="chip" style="background:#efe5d6;color:#8b5a3c;border-color:#dcc8a8">Casa Blue</span>
-      </div>
-    </div>
 
-    <div class="bulk-bar hidden" id="bulk-ext" style="margin-bottom:10px">
-      <div class="sel-count">0 itens selecionados</div>
-  0   <div class="bulk-actions">
-        <button class="primary" onclick="bulkExtAction('conciliar')">Conciliar selecionados</button>
-        <button onclick="bulkExtAction('export')">Exportar CSV</button>
-        <button onclick="bulkExtAction('categorizar')">Recategorizar</button>
-        <button onclick="bulkExtAction('arquivar')">Arquivar</button>
-      </div>
-    </div>
-
-    <table class="tbl ext">
-      <thead>
-        <tr>
-          <th style="width:28px"><span class="chk-box" onclick="toggleAll(this,'ext')" title="Selecionar todas"></span></th>
-          <th>Data</th>
-          <th>Descri="10 90" stroke-dashoffset="-65"></circle>
+      <div class="pie-card">
+        <div class="donut">
+          <svg width="180" height="180" viewBox="0 0 42 42">
+            <circle cx="21" cy="21" r="15.9" fill="none" stroke="var(--bg-alt)" stroke-width="7"></circle>
+            <circle cx="21" cy="21" r="15.9" fill="none" stroke="#1a1612" stroke-width="7"
+                    stroke-dasharray="55 45" stroke-dashoffset="25"></circle>
+            <circle cx="21" cy="21" r="15.9" fill="none" stroke="#6b5b3b" stroke-width="7"
+                    stroke-dasharray="20 80" stroke-dashoffset="-30"></circle>
+            <circle cx="21" cy="21" r="15.9" fill="none" stroke="#a84545" stroke-width="7"
+                    stroke-dasharray="15 85" stroke-dashoffset="-50"></circle>
+            <circle cx="21" cy="21" r="15.9" fill="none" stroke="#888" stroke-width="7"
+                    stroke-dasharray="10 90" stroke-dashoffset="-65"></circle>
           </svg>
           <div class="cen">
             <div class="v" style="color:var(--alert)">R$ 14,4k</div>
@@ -1862,7 +1892,7 @@
           <td><span class="tag-un pess">Pessoal · Casa Blue</span></td>
           <td>Cond. Residencial Vila</td>
           <td class="pay-val out">− R$ 1.840</td>
-      0   <td><span class="status-pill pago" onclick="cycleStatus(this)">Pago</span></td>
+          <td><span class="status-pill pago" onclick="cycleStatus(this)">Pago</span></td>
           <td><span class="row-menu" onclick="toggleMenu(this)">⋮
             <div class="menu-list">
               <a href="#extrato">Baixar boleto</a>
@@ -2069,7 +2099,7 @@
       <div class="nf-preview">
         <div class="nf-preview-head">
           <div>
-            <div class="file-tag" style="margin-bottom:8px">NF-e · #000.042.118 · extraído h� 12s</div>
+            <div class="file-tag" style="margin-bottom:8px">NF-e · #000.042.118 · extraído há 12s</div>
             <h3>Leroy Merlin · <em>material de obra</em></h3>
           </div>
           <span class="proc-badge">Processado</span>
@@ -2788,7 +2818,7 @@
   // ----------------------------------------------------------------------
   // Requisitos do Zenon (19/04/2026):
   //  (a) clicar na linha → abre popup com todos os dados
-  //  (b) se data-rec="1" → ao dar baixa, cria uma nova linha p/ o mês seguinte
+  //  (b) se data-rec="1"  → ao dar baixa, cria uma nova linha p/ o mês seguinte
   //  (c) se data-parc="N/M" → dá baixa só na parcela atual, mantém as próximas
   // ======================================================================
   let __pdCurrentRow = null;
@@ -2824,7 +2854,7 @@
     if(!m) return null;
     const n = parseInt(m[1],10)+1, tot = parseInt(m[2],10);
     if(n > tot) return null;
-    return n+'x/'+tot;
+    return n+'/'+tot;
   }
 
   // delega clique em linha → abre modal (exceto se clicou em child interativo)
@@ -2998,6 +3028,7 @@
     const d = row.dataset;
     const tipo = d.tipo || (d.row === 'rec' ? 'receber' : 'pagar');
     const isIn = tipo === 'receber';
+
     const name = (row.querySelector('.pay-name')||{}).textContent?.trim() || '';
     const nameClean = name.replace(/\s*(mensal|\d+\/\d+)\s*$/,'').trim();
     const sub  = (row.querySelector('.pay-sub')||{}).textContent?.trim()  || '';
@@ -3014,18 +3045,20 @@
     // opções
     const catsIn = ['Projeto · Arquitetura','Projeto · Interiores','Projeto · Consultoria','Stay · Hospedagem','Stay · Diária extra','Vision · Licenciamento','Outros'];
     const catsOut = ['Folha CLT','Pró-labore','PJ · Hora arquiteto','Obra · Material','Obra · Mão de obra','Aluguel escritório','SaaS / Assinaturas','Impostos','Marketing','Outros'];
-    const contas = ['Inter PJ (Zenon)','BTG PJ (Jenon)",'Nubank PF (Thereza)','Inter PF (Rodrigo)'];
+    const contas = ['Inter PJ (Zenon)','BTG PJ (Zenon)','Nubank PF (Thereza)','Inter PF (Rodrigo)'];
     const unidades = ['Zenon Co.','Yvyra Arquitetura','Zenon Stay','Zenon Vision','Cabana (pessoal)','Casa Blue (pessoal)'];
     const statuses = ['pendente','pago','atrasado','negociado','cancelado'];
+
     const catOpts = (isIn ? catsIn : catsOut).map(c => '<option'+(c===d.cat?' selected':'')+'>'+c+'</option>').join('');
     const contaOpts = contas.map(c => '<option'+(c===d.conta?' selected':'')+'>'+c+'</option>').join('');
-    const uniOpts = unidades.map(u => '<option'+(u===d.unidade?' selected':'')+'>'+u�+'</option>').join('');
+    const uniOpts = unidades.map(u => '<option'+(u===d.unidade?' selected':'')+'>'+u+'</option>').join('');
     const stOpts = statuses.map(s => '<option value="'+s+'"'+(s===statusCls?' selected':'')+'>'+s.charAt(0).toUpperCase()+s.slice(1)+'</option>').join('');
+
     const html = ''
       + '<div class="pd-edit-form">'
       +   '<div class="ef-hero">'
       +     '<div class="ef-row"><label>Tipo</label>'
-      +       '<select id="ef-tipo"><option value="receber""+(isIn?' selected':'')+'>A receber (entrada)</option><option value="pagar"+(!isIn?' selected':'')+'>A pagar (saída)</option></select>'
+      +       '<select id="ef-tipo"><option value="receber"'+(isIn?' selected':'')+'>A receber (entrada)</option><option value="pagar"'+(!isIn?' selected':'')+'>A pagar (saída)</option></select>'
       +     '</div>'
       +     '<div class="ef-row"><label>Status</label><select id="ef-status">'+stOpts+'</select></div>'
       +   '</div>'
@@ -3034,13 +3067,13 @@
       +     '<div class="ef-row full"><label>Sub-descrição (projeto, detalhe)</label><input type="text" id="ef-sub" value="'+esc(sub)+'" placeholder="Ex.: Casa Juliana · obra em andamento"></div>'
       +     '<div class="ef-row"><label>Valor</label>'
       +       '<div class="ef-cur-wrap">'
-      +         '<select id="ef-cur"><option value="BRL"'+(currency==='BRL'?' selected':'')+'>R$</option><option value="USD"+(currency==='USD'?' selected':'')+'>US$</option></select>'
+      +         '<select id="ef-cur"><option value="BRL"'+(currency==='BRL'?' selected':'')+'>R$</option><option value="USD"'+(currency==='USD'?' selected':'')+'>US$</option></select>'
       +         '<input type="text" id="ef-val" value="'+esc(valNum)+'" placeholder="0,00">'
       +       '</div>'
       +     '</div>'
-      +     '<div class="ef-row"><label>Vencimento</label><input type="text" id="ef-when" value=""+esc(when)+'" placeholder="DD / MM"></div>'
+      +     '<div class="ef-row"><label>Vencimento</label><input type="text" id="ef-when" value="'+esc(when)+'" placeholder="DD / MM"></div>'
       +     '<div class="ef-row"><label>Categoria</label><select id="ef-cat"><option value="">—</option>'+catOpts+'</select></div>'
-      +     '<div classlass="ef-row"><label>Conta bancária</label><select id="ef-conta"><option value="">—</option>'+contaOpts+'</select></div>'
+      +     '<div class="ef-row"><label>Conta bancária</label><select id="ef-conta"><option value="">—</option>'+contaOpts+'</select></div>'
       +     '<div class="ef-row"><label>Unidade de negócio</label><select id="ef-uni"><option value="">—</option>'+uniOpts+'</select></div>'
       +     '<div class="ef-row"><label>'+(isIn?'Cliente':'Fornecedor')+'</label><input type="text" id="ef-contato" value="'+esc(d.contato||'')+'" placeholder="Nome"></div>'
       +     '<div class="ef-row full"><label>Observação</label><textarea id="ef-obs" placeholder="Contexto, link interno, instruções de cobrança…">'+esc(d.obs||'')+'</textarea></div>'
@@ -3140,7 +3173,7 @@
     const pill = row.querySelector('.status-pill');
     if(pill){
       pill.className = 'status-pill ' + status;
-      const label = {pendente:'Pendente',ipago:'Pago',atrasado:'Atrasado',onegociado:'Negociado',cancelado:'Cancelado'}[status] || 'Pendente';
+      const label = {pendente:'Pendente',pago:'Pago',atrasado:'Atrasado',negociado:'Negociado',cancelado:'Cancelado'}[status] || 'Pendente';
       pill.innerHTML = label + ' <span class="caret">▾</span>';
     }
 
@@ -3171,7 +3204,7 @@
     const nome = (row.querySelector('.pay-name')||{}).textContent?.trim() || 'lançamento';
     if(!confirm('Tem certeza que deseja excluir "'+nome+'"? Esta ação não pode ser desfeita.')) return;
     row.style.transition = 'opacity .2s, transform .2s';
-  row.style.opacity = '0';
+    row.style.opacity = '0';
     row.style.transform = 'translateX(-20px)';
     setTimeout(()=>{ row.remove(); }, 200);
     fecharDetalhe();
@@ -3287,8 +3320,17 @@
     // sub: troca "NF xxx" por "novo mês" genérico, senão mantém
     const sub = clone.querySelector('.pay-sub');
     if(sub){
-      sub.innerHTML = sub.textContent.replace(/atraso.*$/i, '').replace(/<span[^>]*>."?<\/span>/g,'').trim() || 'Gerado automaticamente pela recorr\ꛘ�XI�Y��X��[��\�S��[J
-HOOH	��H�X��[��\�SH	��\�Y�]]�X]X�[Y[�H[H�X�ܜ�:��6�s��Т&WGW&�6���S��Р���6���&,;7���&6V����Ғ��FV�F�2FF2�&�v���0�gV�7F���6���&����&6V��&�r�&��&2���6��7B6���R�&�r�6���T��FR�G'VR���6���R�6�74Ɨ7B�&V��fR�wv�r�vG"r�vfFR֖�r���6��7B����6���R�VW'�6V�V7F('.status-pill');
+      sub.innerHTML = sub.textContent.replace(/atraso.*$/i,'').replace(/<span[^>]*>.*?<\/span>/g,'').trim() || 'Gerado automaticamente pela recorrência';
+      if(sub.innerHTML.trim() === '') sub.innerHTML = 'Gerado automaticamente pela recorrência';
+    }
+    return clone;
+  }
+
+  // Clona para próxima parcela (N+1/M) mantendo as datas originais
+  function clonaProximaParcela(row, proxParc){
+    const clone = row.cloneNode(true);
+    clone.classList.remove('pago','atr','fade-in');
+    const pill = clone.querySelector('.status-pill');
     if(pill){
       STATUS_CYCLE.forEach(s => pill.classList.remove(s));
       pill.classList.add('pendente');
@@ -3347,7 +3389,7 @@ HOOH	��H�X��[��\�SH	��\�Y�]]�X]X�[Y[�H[H�X�ܜ�:��6�s��Т
     });
   }
   atualizarConversoesFX();
-  setInterval(atualizarConversoesFX, 15000); // revà a cada 15s (pega cache novo)
+  setInterval(atualizarConversoesFX, 15000); // revê a cada 15s (pega cache novo)
 </script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="supabase-config.js"></script>
