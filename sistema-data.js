@@ -827,7 +827,7 @@
       parcelas: [
         { n: 1, desc: '1ª parcela', venc: '30/04/2026', valor: 190.00, status: 'Pendente' }
       ]
-
+    }
   };
 
   /* ---------- 6. STORE: localStorage overrides ----------
