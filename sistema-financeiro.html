@@ -2659,17 +2659,15 @@
     const cur = STATUS_CYCLE.find(s => pill.classList.contains(s)) || 'pendente';
     const next = STATUS_CYCLE[(STATUS_CYCLE.indexOf(cur)+1) % STATUS_CYCLE.length];
     closeAllMenus();
-    const row = pill.closest('.pay-row');
-    // Se ciclo chega em "pago", delega para marcarPago (que remove a linha)
-    if(next === 'pago' && row){
-      marcarPago(row);
-      return;
-    }
     STATUS_CYCLE.forEach(s => pill.classList.remove(s));
     pill.classList.add(next);
     pill.textContent = STATUS_LABEL[next];
+    // Pill muda apenas a cor/status visual — não remove a linha
+    // Para remover + recorrência, usar "✓ Dar baixa" no menu
+    const row = pill.closest('.pay-row');
     if(row){
       row.classList.remove('pago','atr');
+      if(next === 'pago')     row.classList.add('pago');   // opacidade reduzida
       if(next === 'atrasado') row.classList.add('atr');
       _saveRowStatus(row.dataset.id, next);
     }
@@ -3346,9 +3344,11 @@
       }
     }
 
-    // 3) NORMAL (não recorrente, não parcelada) → some da lista
+    // 3) NORMAL (não recorrente, não parcelada) → marca visualmente, não remove
+    const pill2 = row.querySelector('.status-pill');
+    if(pill2){ STATUS_CYCLE.forEach(s=>pill2.classList.remove(s)); pill2.classList.add('pago'); pill2.textContent='Pago'; }
+    row.classList.remove('atr'); row.classList.add('pago');
     flash('✓ '+nomeCurto+' marcada como paga');
-    _fadeOutRow(row, ()=> row.remove());
   }
 
   // Clona a linha com vencimento no mês seguinte (recorrente)
