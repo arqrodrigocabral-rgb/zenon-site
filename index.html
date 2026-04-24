@@ -1009,7 +1009,7 @@ nav{background:var(--nav-bg)!important;box-shadow:0 2px 14px rgba(31,26,20,0.05)
 .brand-opt .brand-desc{font-style:italic;font-size:11px;font-weight:400;color:var(--ink-soft);font-variation-settings:"opsz" 24,"SOFT" 60;letter-spacing:0.01em;margin-left:1px}
 .brand-opt.active .brand-desc{color:rgba(239,230,212,0.7)}
 </style>
-<script src="rascunhos/sistema-data.js"></script>
+<script src="sistema-data.js?v=20260424b"></script>
 </head>
 <body class="yvyra">
 <a href="#home" class="zenon-mark" aria-label="Zenon — arquitetura &amp; gestão">
@@ -4294,6 +4294,157 @@ window.__SUPABASE_CONFIG__ = {
     setupLogin();
     carregarDados();
   }
+})();
+</script>
+<script>/* Portal Data Updater — renderiza conteúdo dinâmico por cliente */
+(function(){
+  'use strict';
+  var _circumference = 314.16; // 2π × r50
+
+  function _esc(s){ return String(s||'').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  function _strip(s){ return String(s||'').replace(/<[^>]*>/g,''); }
+  function _fmt(n){ return 'R$\u00a0' + Number(n||0).toLocaleString('pt-BR',{minimumFractionDigits:0,maximumFractionDigits:0}); }
+
+  function _dashOffset(pct){
+    return (_circumference * (1 - Math.min(1, Math.max(0, pct/100)))).toFixed(2);
+  }
+
+  function updatePortal(){
+    var SD = window.SistemaData;
+    if(!SD) return;
+    var CLIID = new URLSearchParams(location.search).get('cliente') || 'CLI-4';
+    var cli = SD.getCliente(CLIID);
+    if(!cli) return;
+
+    var projId = (cli.projetos||[])[0];
+    var proj   = projId ? SD.getProjeto(projId) : null;
+    if(!proj) return;
+
+    var fases  = proj.fases || [];
+    var done   = fases.filter(function(f){return f.st==='done';}).length;
+    var total  = fases.length;
+    var nowF   = fases.find(function(f){return f.st==='now';}) || {};
+    var projPct = total>0 ? Math.round(done/total*100) : (proj.progresso||0);
+
+    /* ── 1. portal-day caption ─────────────────────────── */
+    var lastA = (proj.atividade||[])[0];
+    var capH  = document.querySelector('.portal-day-caption h4');
+    var capS  = document.querySelector('.portal-day-caption span');
+    if(capH && lastA){ capH.textContent = _strip(lastA.p); }
+    if(capS && lastA){ capS.textContent = lastA.q; }
+
+    /* ── 2. progresso rings ────────────────────────────── */
+    var rings     = document.querySelectorAll('.ring-fill');
+    var ringTexts = document.querySelectorAll('.ring-text');
+    if(rings[0])    { rings[0].setAttribute('stroke-dashoffset', _dashOffset(projPct)); }
+    if(ringTexts[0]){ ringTexts[0].textContent = projPct+'%'; }
+
+    // hide obra ring if no obra
+    var progItems = document.querySelectorAll('.progresso-item');
+    if(!proj.obraId){
+      if(progItems[1]) progItems[1].style.display='none';
+    } else {
+      var obraId = proj.obraId;
+      var obra = SD.getObra(obraId);
+      if(obra){
+        var fornsParcelas = [];
+        (obra.fornecedores||[]).forEach(function(f){ fornsParcelas = fornsParcelas.concat(f.parcelas||[]); });
+        var obraDone = fornsParcelas.filter(function(p){return p.status==='Pago';}).length;
+        var obraTotal = fornsParcelas.length;
+        var obraPct = obraTotal>0 ? Math.round(obraDone/obraTotal*100) : 0;
+        if(rings[1])    { rings[1].setAttribute('stroke-dashoffset', _dashOffset(obraPct)); }
+        if(ringTexts[1]){ ringTexts[1].textContent = obraPct+'%'; }
+      }
+    }
+
+    /* ── 3. progresso-info (texto fase) ───────────────── */
+    var pInfos = document.querySelectorAll('.progresso-info');
+    if(pInfos[0]){
+      var h4 = pInfos[0].querySelector('h4');
+      var pp = pInfos[0].querySelector('p');
+      if(h4) h4.textContent = nowF.t || proj.fase || '—';
+      if(pp) pp.textContent = _strip(nowF.d) || _strip(proj.obs) || '';
+    }
+
+    /* ── 4. etapas-reais · projeto ────────────────────── */
+    var erGroups = document.querySelectorAll('.er-group');
+    if(erGroups[0]){
+      var erHead  = erGroups[0].querySelector('.er-head');
+      var erLabel = erHead ? erHead.querySelector('.er-label') : null;
+      var erCount = erHead ? erHead.querySelector('.er-count') : null;
+      var erUl    = erGroups[0].querySelector('.er-list');
+      if(erLabel) erLabel.textContent = 'Etapas do projeto';
+      if(erCount) erCount.textContent = done+' de '+total+' concluídas';
+      if(erUl)    erUl.innerHTML = fases.map(function(f){
+        var cls = f.st==='done' ? 'done' : (f.st==='now' ? 'now' : '');
+        return '<li'+(cls?' class="'+cls+'"':'')+'>'+_esc(f.t)+'</li>';
+      }).join('');
+    }
+    if(erGroups[1] && !proj.obraId){
+      erGroups[1].style.display='none';
+    }
+
+    /* ── 5. financeiro ────────────────────────────────── */
+    var finCard = document.querySelector('#pt-financeiro .portal-fin');
+    if(finCard && proj.honorarios>0){
+      finCard.innerHTML =
+        '<div class="fin-kpi"><span class="fk-l">Total honorários</span><span class="fk-v">'+_fmt(proj.honorarios)+'</span></div>'+
+        '<div class="fin-kpi"><span class="fk-l">Pago</span><span class="fk-v ok">'+_fmt(proj.honorariosPagos)+'</span></div>'+
+        '<div class="fin-kpi"><span class="fk-l">A receber</span><span class="fk-v warn">'+_fmt(proj.honorariosARecever)+'</span></div>';
+    } else if(finCard){
+      finCard.innerHTML = '<div class="fin-kpi"><span class="fk-l">Financeiro</span><span class="fk-v">—</span></div>';
+    }
+
+    /* ── 6. documentos · drive links ─────────────────── */
+    var docsCard = document.querySelector('#pt-documentos .portal-docs');
+    if(docsCard){
+      if(proj.driveLinks && proj.driveLinks.length){
+        docsCard.innerHTML = proj.driveLinks.map(function(dl){
+          return '<a href="'+dl.url+'" target="_blank" style="display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--border-soft);text-decoration:none;color:var(--ink)">'
+            +'<span style="font-size:18px">'+dl.label.split(' ')[0]+'</span>'
+            +'<span style="font-weight:500">'+dl.label.replace(/^[\S]+\s/,'')+'</span>'
+            +'<span style="margin-left:auto;color:var(--accent);font-weight:600;font-size:12px">↗</span>'
+            +'</a>';
+        }).join('');
+      } else if(proj.drive){
+        docsCard.innerHTML = '<a href="https://drive.google.com/drive/folders/'+proj.drive+'" target="_blank" style="display:flex;align-items:center;gap:12px;padding:12px 0;text-decoration:none;color:var(--ink)">📁 <span>Pasta do Projeto</span><span style="margin-left:auto;color:var(--accent);font-size:12px">↗</span></a>';
+      } else {
+        docsCard.innerHTML = '<div style="color:var(--ink-muted);font-style:italic;padding:12px 0">Documentos em organização — em breve aqui.</div>';
+      }
+    }
+
+    /* ── 7. relatório · atividade recente ──────────────── */
+    var relList = document.querySelector('#pt-relatorio');
+    if(relList && (proj.atividade||[]).length){
+      var relItems = relList.querySelectorAll('.portal-list-item');
+      var atv = proj.atividade;
+      relItems.forEach(function(item, idx){
+        if(atv[idx]){
+          var titleEl = item.querySelector('.pli-title');
+          var subEl   = item.querySelector('.pli-sub');
+          var rightEl = item.querySelector('.pli-right');
+          if(titleEl) titleEl.innerHTML = atv[idx].p;
+          if(subEl)   subEl.textContent = '';
+          if(rightEl) rightEl.textContent = atv[idx].q;
+        } else {
+          item.style.display='none';
+        }
+      });
+    }
+  }
+
+  /* run after SistemaData is ready */
+  function _init(){
+    if(window.SistemaData){ updatePortal(); return; }
+    var n=0; var t=setInterval(function(){
+      if(window.SistemaData||++n>40){ clearInterval(t); if(window.SistemaData) updatePortal(); }
+    },80);
+  }
+  if(document.readyState==='loading'){ document.addEventListener('DOMContentLoaded',_init); }
+  else { _init(); }
+
+  /* re-run when cliente param changes (hash navigation) */
+  window.addEventListener('hashchange', updatePortal);
 })();
 </script>
 <script>/* Portal Header Updater */(function(){'use strict';var _PC={'CLI-1':{nome:'CT Darkhouse',projeto:'Regularização + Comercial',meta:'Água Rasa, São Paulo · +500 m²'},'CLI-3':{nome:'Bruna e Thiago',projeto:'Residencial',meta:'São Paulo'},'CLI-4':{nome:'Rafael',projeto:'Clínica ECCO · Endoscopia',meta:'Itaim Bibi, São Paulo · 125 m² · projeto iniciado em janeiro de 2026'},'CLI-5':{nome:'Tiago',projeto:'Residencial Terrazzas',meta:'Ponta da Praia, Santos'},'CLI-6':{nome:'Eliana',projeto:'Consultoria Rural · Jaguari',meta:'Represa do Jaguari, São José dos Campos'},'CLI-7':{nome:'Juliana e Felipe',projeto:'Residencial Alta Complexidade',meta:'São Paulo'},'CLI-8':{nome:'Cleber e Tamara',projeto:'Residencial Santana',meta:'Santana, São Paulo'},'CLI-9':{nome:'Juliana e Felipe Vasconcellos',projeto:'Residencial Alta Complexidade',meta:'São Paulo'}};function _upd(){var _id=new URLSearchParams(location.search).get('cliente');if(!_id||!_PC[_id])return;var _i=_PC[_id];var _h=document.querySelector('.portal-head h1');if(_h)_h.textContent=_i.nome+'.';var _p=document.querySelector('.ph-project');if(_p)_p.textContent=_i.projeto;var _m=document.querySelector('.ph-meta');if(_m)_m.textContent=_i.meta;}if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',_upd);}else{_upd();}})()</script>
