@@ -86,18 +86,19 @@
     },
     'CLI-7': {
       id: 'CLI-7',
-      nome: 'Juliana e Felipe',
+      _alias: 'CLI-9',
+      nome: 'Juliana e Felipe Vasconcellos',
       tipo: 'PF',
       doc: '—',
-      email: '—',
-      telefone: '—',
-      endereco: '—',
+      email: 'arq.rodrigocabral@gmail.com (contato)',
+      telefone: '(13) 99701-1158',
+      endereco: 'Av. Bartolomeu de Gusmão 116, Aparecida, Santos, 11045-401',
       origem: 'VIP',
-      tags: ['L', 'A consolidar'],
+      tags: ['L', 'Residencial', 'VIP'],
       projetos: ['P-07'],
       propostas: ['PRO-5'],
       financeiros: [],
-      obs: 'Possível duplicado de CLI-9 — a consolidar no Notion.'
+      obs: '⚠️ Consolidado com CLI-9. Registro mantido para compatibilidade. Use CLI-9 como referência principal.'
     },
     'CLI-8': {
       id: 'CLI-8',
@@ -128,6 +129,21 @@
       propostas: ['PRO-5'],
       financeiros: [],
       obs: 'Edifício Navegantes — proposta PRO-5 em rascunho.'
+    },
+    'CLI-10': {
+      id: 'CLI-10',
+      nome: 'Cremilda',
+      tipo: 'PF',
+      doc: '—',
+      email: '—',
+      telefone: '—',
+      endereco: 'Zona rural — dados a confirmar',
+      origem: 'Indicação',
+      tags: ['Cortesia', '🎁 Gratuito'],
+      projetos: ['P-04'],
+      propostas: [],
+      financeiros: [],
+      obs: '🎁 Serviço gratuito de regularização rural. Aguardando documentação do imóvel.'
     }
   };
 
@@ -182,8 +198,7 @@
         { st:'done', t:'Projeto executivo + RRT CAU', d:'Plantas executivas, cortes e detalhamentos. RRT CAU 20260104.', q:'12 / 02' },
         { st:'done', t:'Projetos complementares', d:'Elétrica, hidráulica, ar-condicionado e gases medicinais por Breno.', q:'25 / 02' },
         { st:'now',  t:'Obra em execução · acabamentos', d:'Pisos concluídos · marcenaria Movelaria em instalação.', q:'Em curso' },
-        { st:'',     t:'Entrega técnica + vistoria sanitária', d:'Vistoria final e apoio no alvará sanitário.', q:'20 / 05' },
-        { st:'',     t:'Entrega técnica + vistoria', d:'Vistoria final e apoio no alvará sanitário.', q:'20 / 05' }
+        { st:'',     t:'Entrega técnica + vistoria sanitária', d:'Vistoria final, checklist de entrega, apoio no alvará sanitário da clínica.', q:'20 / 05' }
       ],
       decisoes: [
         { t:'Posição da sinalização de emergência', d:'Exigência sanitária · 2 opções enviadas em 15/04' },
@@ -371,7 +386,7 @@
       ref: '05/2026',
       titulo: 'CREMILDA — Regularização',
       destaque: 'CREMILDA',
-      cliente: null,
+      cliente: 'CLI-10',
       clienteNome: 'Cremilda',
       tipo: 'Rural · cortesia',
       porte: 'Rural',
@@ -499,14 +514,14 @@
       complexidade: 'Baixa',
       status: 'Levantamento / Criação',
       fase: '3D / Render em andamento',
-      tags: ['Projeto Andando', 'Rural', 'Consultoria'],
+      tags: ['Projeto Andando', 'Rural', 'Consultoria', '⚠️ Prazo em 5 dias'],
       progresso: 37,
       etapas: '3 / 8',
       prazoInicio: '—',
       prazoFinal: '29 / 04 / 2026',
       rrt: null,
-      obs: 'Consultoria de paisagismo e exterior para propriedade rural na Represa do Jaguari.',
-      restanteDias: null,
+      obs: '⚠️ Prazo em 5 dias (29/04). Consultoria de paisagismo e exterior para propriedade rural na Represa do Jaguari.',
+      restanteDias: 5,
       obraId: null,
       financeiroId: null,
       propostaId: null,
