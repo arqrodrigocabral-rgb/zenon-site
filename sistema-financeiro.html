@@ -2658,18 +2658,19 @@
     if(!pill) return;
     const cur = STATUS_CYCLE.find(s => pill.classList.contains(s)) || 'pendente';
     const next = STATUS_CYCLE[(STATUS_CYCLE.indexOf(cur)+1) % STATUS_CYCLE.length];
+    closeAllMenus();
+    const row = pill.closest('.pay-row');
+    // Se ciclo chega em "pago", delega para marcarPago (que remove a linha)
+    if(next === 'pago' && row){
+      marcarPago(row);
+      return;
+    }
     STATUS_CYCLE.forEach(s => pill.classList.remove(s));
     pill.classList.add(next);
     pill.textContent = STATUS_LABEL[next];
-    // Fechar menus abertos
-    closeAllMenus();
-    // Reflexos: se pago, deixa row opaca; se atrasado, adiciona bg
-    const row = pill.closest('.pay-row');
     if(row){
       row.classList.remove('pago','atr');
-      if(next === 'pago') row.classList.add('pago');
       if(next === 'atrasado') row.classList.add('atr');
-      // ── PERSISTE ──
       _saveRowStatus(row.dataset.id, next);
     }
   }
@@ -3272,6 +3273,24 @@
     fecharDetalhe();
   }
 
+  // Anima saída da linha (fade + colapso) e executa callback ao terminar
+  function _fadeOutRow(row, callback){
+    const h = row.getBoundingClientRect().height;
+    row.style.transition = 'none';
+    row.style.maxHeight  = h + 'px';
+    row.style.overflow   = 'hidden';
+    requestAnimationFrame(()=> requestAnimationFrame(()=>{
+      row.style.transition = 'opacity .28s ease, max-height .38s ease .1s, margin .38s ease .1s, padding .38s ease .1s';
+      row.style.opacity    = '0';
+      row.style.maxHeight  = '0';
+      row.style.marginTop  = '0';
+      row.style.marginBottom = '0';
+      row.style.paddingTop   = '0';
+      row.style.paddingBottom= '0';
+      setTimeout(callback, 440);
+    }));
+  }
+
   function marcarPago(row){
     if(!row) return;
     const d = row.dataset;
@@ -3279,52 +3298,57 @@
     const parc   = d.parc || '';
     const isParc = !!parc;
 
-    // 1) marca a linha atual como paga
-    const pill = row.querySelector('.status-pill');
-    if(pill){
-      STATUS_CYCLE.forEach(s => pill.classList.remove(s));
-      pill.classList.add('pago');
-      pill.textContent = 'Pago';
-    }
-    row.classList.remove('atr');
-    row.classList.add('pago');
-    // ── PERSISTE ──
+    // 1) salva status
     _saveRowStatus(row.dataset.id, 'pago');
 
-    const nome = (row.querySelector('.pay-name')||{}).textContent?.trim() || 'conta';
-    const nomeCurto = nome.split('·')[0].trim();
+    const nomeEl = row.querySelector('.pay-name');
+    const nome   = (nomeEl?.textContent || 'conta').trim();
+    const nomeCurto = nome.replace(/↻/g,'').split('·')[0].trim();
 
-    // 2a) RECORRENTE → cria clone para o próximo mês
+    // 2a) RECORRENTE → prepara clone para próximo mês, remove original
     if(isRec){
       const clone = cloneParaProximoMes(row);
       if(clone){
-        const container = row.parentNode;
-        container.appendChild(clone);
-        requestAnimationFrame(()=> clone.classList.add('fade-in'));
         flash('✓ Baixa feita · próxima '+nomeCurto+' gerada em '+clone.dataset.nextDate);
+        _fadeOutRow(row, ()=>{
+          const container = row.parentNode;
+          if(container){
+            container.insertBefore(clone, row.nextSibling || null);
+            requestAnimationFrame(()=> clone.classList.add('fade-in'));
+          }
+          row.remove();
+        });
         return;
       }
     }
 
-    // 2b) PARCELADA → atualiza texto pra mostrar próxima parcela no sistema
+    // 2b) PARCELADA → cria próxima parcela e remove original
     if(isParc){
       const prox = nextParc(parc);
       if(prox){
         const clone = clonaProximaParcela(row, prox);
         if(clone){
-          const container = row.parentNode;
-          container.appendChild(clone);
-          requestAnimationFrame(()=> clone.classList.add('fade-in'));
           flash('✓ Parcela '+parc+' paga · parcela '+prox+' em aberto');
+          _fadeOutRow(row, ()=>{
+            const container = row.parentNode;
+            if(container){
+              container.insertBefore(clone, row.nextSibling || null);
+              requestAnimationFrame(()=> clone.classList.add('fade-in'));
+            }
+            row.remove();
+          });
           return;
         }
       } else {
         flash('✓ Última parcela ('+parc+') paga — contrato quitado');
+        _fadeOutRow(row, ()=> row.remove());
         return;
       }
     }
 
+    // 3) NORMAL (não recorrente, não parcelada) → some da lista
     flash('✓ '+nomeCurto+' marcada como paga');
+    _fadeOutRow(row, ()=> row.remove());
   }
 
   // Clona a linha com vencimento no mês seguinte (recorrente)
